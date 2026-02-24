@@ -1168,7 +1168,7 @@ function setTab(tab) {
    Search interactions
 ========================= */
 const DEFAULT_QUERY =
-  "querying portfolio: Gene Elpie Landoy tech stack, projects, timeline, certificates, achievements...";
+  "querying portfolio: Gene Elpie Landoy.";
 
 function typeIntoInput(text, speedMin = 25, speedMax = 55) {
   const input = $("#searchInput");
