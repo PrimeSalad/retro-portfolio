@@ -12,7 +12,10 @@ body {
     radial-gradient(900px 600px at 80% 10%, rgba(234, 67, 53, 0.10), transparent 55%),
     radial-gradient(900px 600px at 50% 110%, rgba(52, 168, 83, 0.10), transparent 60%),
     linear-gradient(180deg, #0d1117 0%, #0b0f14 60%, #070a0f 100%);
+    overflow-x: hidden;
 }
+
+
 
 /* ===== Focus ring helper ===== */
 .f-ring:focus-visible {
