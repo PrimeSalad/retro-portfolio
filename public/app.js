@@ -52,17 +52,17 @@ const IMAGE_ITEMS = [
 const PROJECTS = [
   {
     id: "p1",
-    title: "Orbit UI Kit",
+    title: "salitAI.orbit",
     year: 2026,
-    category: "Design System",
-    role: "Lead Frontend / Maintainer",
-    impact: "Adoption across 6 squads · A11y baseline +22pts · Bundle -18%",
+    category: "Speech to Text AI Assistant",
+    role: "Developer + Designer",
+    impact: "AI takes the notes, letting the team focus completely on the meeting.",
     description:
-      "Reusable components, motion primitives, and accessibility defaults. Token-driven theming, keyboard patterns, and consistent focus states.",
+      "The tool can automatically extract and highlight who was assigned a specific task and what the deadlines are. This ensures accountability and guarantees that no deliverables fall through the cracks.",
     image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=70",
-    tech: ["React", "TypeScript", "Tailwind", "Storybook", "A11y"],
-    demo: "#",
+      "images/projects/salitai.jpg",
+    tech: ["React", "TypeScript", "Tailwind", "Gemini API"],
+    demo: "https://salit-ai-orbit.space/",
     repo: "https://github.com",
     score: 95,
   },
@@ -117,39 +117,51 @@ const PROJECTS = [
 ];
 
 const TIMELINE_ITEMS = [
-  {
+    {
     id: "t1",
     year: "2026",
-    date: "Feb 2026",
-    title: "Senior Frontend Engineer @ TechCorp OS",
-    tags: ["engineering", "leadership"],
+    date: "Jan - Present",
+    title: "Founder and Lead Developer, DotOrbit Development Team",
+    tags: ["backend", "leadership", "design", "publication","frontend"],
     bullets: [
-      "Led React platform migration and component standardization.",
-      "Improved LCP and TTI; shipped perf instrumentation and budgets.",
-      "Raised accessibility score with consistent focus states and ARIA patterns.",
+      "Took charge of the team's task board, keeping a close eye on progress to make sure everyone was hitting their deadlines and staying unblocked.     ",
+      "Built and managed microservices to keep the app modular, making sure each service could run and scale without breaking the rest of the system.",
     ],
-    metrics: ["Load time -40%", "A11y +22 pts", "Bundle -18%"],
-    stack: ["React", "TypeScript", "Tailwind", "Vite"],
+    metrics: ["Balanced coding with product strategy", "Team focused on building features that actually mattered for the project’s success"],
+    stack: ["PostreSQL", "Tailwind", "Podman", "Postman"],
   },
   {
     id: "t2",
     year: "2025",
-    date: "Oct 2025",
-    title: "Open Source Sprint — UI Libraries",
-    tags: ["engineering"],
+    date: "Jan - Apr 2026",
+    title: "Backend Developer | Product Owner, Department of Science and Technology, League of Developers Initiative x Region",
+    tags: ["backend", "leadership"],
     bullets: [
-      "Contributed to design system primitives and documentation.",
-      "Implemented token-driven theming and dark mode improvements.",
+      "Took charge of the team's task board, keeping a close eye on progress to make sure everyone was hitting their deadlines and staying unblocked.     ",
+      "Built and managed microservices to keep the app modular, making sure each service could run and scale without breaking the rest of the system.",
     ],
-    metrics: ["PRs merged 60+", "Docs coverage +35%"],
-    stack: ["TS", "Storybook", "MDX"],
+    metrics: ["Balanced coding with product strategy", "Team focused on building features that actually mattered for the project’s success"],
+    stack: ["PostreSQL", "Tailwind", "Podman", "Postman"],
   },
   {
     id: "t3",
-    year: "2024",
-    date: "Jun 2024",
-    title: "Speaker — Future of Web Design Summit",
-    tags: ["design", "leadership"],
+    year: "2023",
+    date: "Jul - Jul 2026",
+    title: "Organization Canva Admin, MARSU - College of Information and Computing Sciences",
+    tags: ["publication", "design", "leadership"],
+    bullets: [
+      "Tasked to add student orgs to the Canva for Education account and manage licenses, ensuring everyone had access to the design tools they needed.",
+      "Led workshops to help students learn how to use Canva effectively for their projects and events, boosting overall design quality across the board.",
+    ],
+    metrics: ["Onboarded 200+ student orgs", "Led workshops with 100+ attendees"],
+    stack: ["Canva for Education"],
+  },
+    {
+    id: "t4",
+    year: "2025",
+    date: "Jul - Jan 2026 ",
+    title: "Correspondent, Sentro Publication",
+    tags: ["design", "leadership", "publication"],
     bullets: [
       "Talk: ‘Design Systems That Don’t Fight Engineers’.",
       "Shared practical a11y + performance patterns for product teams.",
@@ -158,11 +170,50 @@ const TIMELINE_ITEMS = [
     stack: ["Design systems", "A11y", "Perf"],
   },
   {
-    id: "t4",
-    year: "2023",
-    date: "Jan 2023",
-    title: "Web Developer @ CyberDyne Digital",
-    tags: ["engineering", "design"],
+    id: "t5",
+    year: "2025",
+    date: "Jul - Jul 2026 ",
+    title: "Associate Editor-in-Chief, Infocus Publication and Broadcasting Team",
+    tags: [ "design", "leadership", "publication", "frontend", "video"],
+    bullets: [
+      "Talk: ‘Design Systems That Don’t Fight Engineers’.",
+      "Shared practical a11y + performance patterns for product teams.",
+    ],
+    metrics: ["Audience 1,200+", "Q&A 30 mins"],
+    stack: ["Design systems", "A11y", "Perf"],
+  },
+    {
+    id: "t6",
+    year: "2024",
+    date: "Jul - Jul 2025",
+    title: "Editor-in-Chief, Infocus Publication and Broadcasting Team",
+    tags: [ "design", "leadership", "publication", "frontend", "video"],
+    bullets: [
+      "Talk: ‘Design Systems That Don’t Fight Engineers’.",
+      "Shared practical a11y + performance patterns for product teams.",
+    ],
+    metrics: ["Audience 1,200+", "Q&A 30 mins"],
+    stack: ["Design systems", "A11y", "Perf"],
+  },
+  {
+    id: "t7",
+    year: "2022",
+    date: "Jul -Jul 2023",
+    title: "Chief Layout Artist, Infocus Publication and Broadcasting Team",
+    tags: ["frontend","publication","leadership","video","design"],
+    bullets: [
+      "Built responsive interfaces and improved UX consistency across pages.",
+      "Collaborated with designers to implement pixel-perfect components.",
+    ],
+    metrics: ["Conversion +8%", "Bug reports -25%"],
+    stack: ["Tailwind", "JS", "Node"],
+  },
+    {
+    id: "t8",
+    year: "2021",
+    date: "Aug - Sep 2022",
+    title: "Head Layout Artist, The Heart Publication",
+    tags: ["publication", "design"],
     bullets: [
       "Built responsive interfaces and improved UX consistency across pages.",
       "Collaborated with designers to implement pixel-perfect components.",
@@ -680,9 +731,12 @@ let timelineExpandedAll = false;
 
 function timelineTagPill(tag) {
   const map = {
-    engineering: "text-gBlue",
+    backend: "text-gBlue",
+    frontend: "text-gYellow",
     design: "text-gYellow",
     leadership: "text-gGreen",
+    publication: "text-gRed",
+    video: "text-gBlue",
   };
   const c = map[tag] || "text-gray-300";
   return `<span class="text-[11px] px-2 py-0.5 rounded-full border border-borderDim bg-bgPanel ${c}">${tag}</span>`;
