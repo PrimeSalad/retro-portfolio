@@ -260,33 +260,61 @@ const CERTS = [
 ];
 
 const ACHIEVEMENTS = [
-  {
-    badge: "Winner",
+     {
+    badge: "Champion",
     badgeColor: "gYellow",
-    title: "Global Open Source Hackathon (2025)",
-    desc: "Built a modular UI kit with token-driven theming and accessibility defaults.",
-    meta: "Focus: DX + A11y",
+    title: "Marinduque State University Official Logo",
+    desc: "Designed and implemented the official university logo and branding system.",
+    meta: "Tech: Figma, Adobe Illustrator, Ibis Paint",
   },
   {
-    badge: "Speaker",
-    badgeColor: "gRed",
-    title: "Future of Web Design Summit (2024)",
-    desc: "Presented practical design system patterns for faster shipping without UX drift.",
-    meta: "Topic: systems + UI",
-  },
-  {
-    badge: "Open Source",
-    badgeColor: "gGreen",
-    title: "100+ merged PRs",
-    desc: "Contributions across UI libraries, docs, and performance improvements.",
-    meta: "Areas: TS, docs, a11y",
-  },
-  {
-    badge: "Performance",
+    badge: "1st Place",
     badgeColor: "gBlue",
-    title: "Load time reduced by 40%",
-    desc: "Audited bundles, reduced JS, tuned caching, and improved rendering paths.",
-    meta: "Metrics: LCP, TTI",
+    title: "Base PH Hackathon 2025",
+    desc: "Built games of the generals-inspired strategy game using ohara.",
+    meta: "Tech: Ohara, WebSockets, React",
+  },
+  {
+    badge: "5th Place",
+    badgeColor: "gRed",
+    title: "DICT - MIMAROPA Hack for Gov 3",
+    desc: "Focused in web exploitation and reverse engineering challenges.",
+    meta: "Tech: Linux, Metasploit",
+  },
+  {
+    badge: "6th Place",
+    badgeColor: "gGreen",
+    title: "DICT - MIMAROPA Hack for Gov 4",
+    desc: "Focused in web exploitation and reverse engineering challenges.",
+    meta: "Tech: Linux, Metasploit",
+  },
+  {
+    badge: "Presenter",
+    badgeColor: "gBlue",
+    title: "ICITE2025: International Conference on Information Technology Education",
+    desc: "SHAPE: A Speech, Hearing, Autism Personalized Education Mobile Application.",
+    meta: "Tech: Flutter, Dart, Firebase",
+  },
+   {
+    badge: "Presenter",
+    badgeColor: "gRed",
+    title: "Y4IT Research Summit 2024",
+    desc: " Presented Carabao Cart a smart inventory management system for small businesses using computer vision to track stock levels and predict demand.",
+    meta: "Tech: Figma",
+  },
+  {
+    badge: "Presenter",
+    badgeColor: "gYellow",
+    title: "NPK Deficiency Detection using Leaf Color Scanning Technology",
+    desc: "Developed a system to detect nitrogen, phosphorus, and potassium deficiencies in crops using leaf color analysis.",
+    meta: "Tech: Arduino",
+  },
+  {
+    badge: "Presenter",
+    badgeColor: "gGreen",
+    title: "DOST: Regional Innovation Contest and Exhibition (RICE)",
+    desc: "Presented a system for detecting nitrogen, phosphorus, and potassium deficiencies in crops using leaf color analysis.",
+    meta: "Tech: Arduino",
   },
 ];
 
