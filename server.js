@@ -173,7 +173,6 @@ app.get("/api/search", (req, res) => {
 app.post("/api/search", async (req, res) => {
   const query = String(req.body?.query || "").trim();
   if (!query) return res.status(400).json({ ok: false, error: "Missing query" });
-
   const prompt = `
 You are an AI assistant for a portfolio.
 
