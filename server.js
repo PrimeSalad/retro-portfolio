@@ -165,13 +165,11 @@ app.get("/api/models", async (req, res) => {
     res.status(e.status || 500).json({ ok: false, error: e.message });
   }
 });
-
 app.get("/api/search", (req, res) => {
   res.status(405).json({
     error: "Method Not Allowed. Use POST /api/search with JSON: { query: string }",
   });
 });
-
 app.post("/api/search", async (req, res) => {
   const query = String(req.body?.query || "").trim();
   if (!query) return res.status(400).json({ ok: false, error: "Missing query" });
