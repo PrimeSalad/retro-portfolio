@@ -15,8 +15,6 @@ body {
     overflow-x: hidden;
 }
 
-
-
 /* ===== Focus ring helper ===== */
 .f-ring:focus-visible {
   outline: none;
