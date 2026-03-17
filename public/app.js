@@ -1,51 +1,78 @@
 /**
- * RETRO-GOOGLE FUTURISTIC PORTFOLIO
  * File: app.js
- * Version: 2.5.0
- * Purpose:
- * - Interactivity (tabs, search UX, modals, timeline, projects, gallery, saved searches, command palette)
- * - AI Search (POST /api/search) — NO local-search fallback
+ * Description: Interactivity for the retro-futuristic portfolio.
+ * Handles AI search, tabs, image lightbox, premium project cards,
+ * verified certificate image preview modal, timeline filters,
+ * saved searches, command palette, and contact form.
+ * Version: 3.1.0
  */
 
 /* =========================
-   Data (replace with yours)
+   Constants
+========================= */
+const TOAST_DURATION_MS = 1600;
+const PROJECT_TECH_LIMIT = 4;
+const GALLERY_TECH_LIMIT = 3;
+const STARTUP_SCROLL_RESET_ATTEMPTS = 6;
+const STARTUP_SCROLL_RESET_DELAY_MS = 120;
+
+const STORAGE_KEYS = {
+  TAB: "retro_portfolio_tab",
+  SAVED: "retro_portfolio_saved_searches",
+};
+
+const AI = {
+  SEARCH_ENDPOINT: "/api/search",
+  HEALTH_ENDPOINT: "/api/health",
+  TIMEOUT_MS: 14000,
+  HEALTH_TIMEOUT_MS: 2500,
+};
+
+/* =========================
+   DOM helpers
+========================= */
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+/* =========================
+   Demo content
 ========================= */
 const IMAGE_ITEMS = [
   {
     title: "ICITE2025: International Conference on Information Technology Education",
     src: "images/events/icite.jpg",
     alt: "conference stage with speakers and audience",
-    tag: "International Conference",
+    tag: "conference",
   },
   {
-    title: "DICT - Hack for Gov 3",
+    title: "DICT — Hack for Gov 3",
     src: "images/events/hag2.jpg",
-    alt: "Hack for Gov event with participants collaborating and presenting projects",
-    tag: "Hackathon",
+    alt: "hackathon with participants collaborating",
+    tag: "hackathon",
   },
   {
-    title: "DICT - Hack for Gov 4",
+    title: "DICT — Hack for Gov 4",
     src: "images/events/hag.jpg",
-    alt: "Hack for Gov event with participants collaborating and presenting projects",
-    tag: "Hackathon",
+    alt: "hackathon with participants collaborating",
+    tag: "hackathon",
   },
   {
-    title: "CICS - Internship Onboarding",
+    title: "CICS — Internship Onboarding",
     src: "images/events/event1.jpg",
-    alt: "Conference audience",
-    tag: "Event",
+    alt: "internship onboarding event",
+    tag: "event",
   },
   {
-    title: "Infocus Publication and Broadcasting Team - Recognition",
+    title: "Infocus Publication and Broadcasting Team — Recognition",
     src: "images/events/recog.jpg",
-    alt: "Recognition event with team members receiving awards on stage",
-    tag: "Recognition",
+    alt: "recognition event with team members on stage",
+    tag: "recognition",
   },
   {
-    title: "Infocus Publication and Broadcasting Team - Accreditation",
+    title: "Infocus Publication and Broadcasting Team — Accreditation",
     src: "images/events/infocus 1.jpg",
-    alt: "Accreditation event with team members receiving awards on stage",
-    tag: "Accreditation",
+    alt: "accreditation event",
+    tag: "accreditation",
   },
 ];
 
@@ -56,15 +83,21 @@ const PROJECTS = [
     year: 2026,
     category: "Speech to Text AI Assistant",
     role: "Developer + Designer",
-    impact: "AI takes the notes, letting the team focus completely on the meeting.",
+    impact: "AI takes the notes so the whole team can focus on the actual meeting.",
+    outcome: "Task ownership and deadlines are extracted automatically from meeting content.",
     description:
-      "The tool can automatically extract and highlight who was assigned a specific task and what the deadlines are. This ensures accountability and guarantees that no deliverables fall through the cracks.",
-    image:
-      "images/projects/salitai.jpg",
+      "salitAI.orbit captures spoken discussion, transforms it into structured notes, and highlights assigned action items with due dates so that teams leave every meeting with clarity.",
+    image: "images/projects/salitai.jpg",
     tech: ["React", "TypeScript", "Tailwind", "Gemini API"],
     demo: "https://salit-ai-orbit.space/",
     repo: "https://github.com",
     score: 95,
+    highlights: [
+      "Designed a cleaner meeting-to-action workflow instead of raw transcript dumping.",
+      "Focused on usability so non-technical users can immediately understand outputs.",
+      "Structured result cards for owners, tasks, and deadlines for stronger accountability.",
+    ],
+    status: "live",
   },
   {
     id: "p2",
@@ -72,31 +105,43 @@ const PROJECTS = [
     year: 2026,
     category: "AI Model",
     role: "AI Model Developer",
-    impact: "Incentivizes proper waste disposal by swapping plastic for internet access, bridging the digital divide while cleaning up the community.",
+    impact: "Turns plastic waste into connectivity value for communities.",
+    outcome: "Recycling becomes directly useful through incentive-based digital access.",
     description:
-      "PlasTech transforms recycled plastic sheets into innovative WiFi solutions, turning waste into connectivity. By combining sustainability and technology, we give plastic a second life while creating smarter, eco-friendly digital access for communities.",
-    image:
-      "images/projects/plastech.jpg",
-    tech: ["Python", "TensorFlow"],
+      "PlasTech transforms recycled plastic into innovative WiFi-linked community solutions, combining sustainability and applied AI to connect environmental action with practical digital benefit.",
+    image: "images/projects/plastech.jpg",
+    tech: ["Python", "TensorFlow", "Computer Vision"],
     demo: "#",
     repo: "https://github.com",
     score: 88,
+    highlights: [
+      "Connects sustainability, behavior change, and digital inclusion in one concept.",
+      "Designed for social impact, not just technical novelty.",
+      "Strong storytelling potential for competitions and presentations.",
+    ],
+    status: "concept",
   },
   {
     id: "p3",
-    title: "Speech, Hearing, Autism: Personalized Education",
+    title: "SHAPE: Speech, Hearing, Autism Personalized Education",
     year: 2025,
     category: "Mobile Application",
     role: "Project Manager + Frontend Developer + Game Developer",
-    impact: "Increases educational accessibility for students with special needs by delivering a tailored curriculum through interactive game mechanics.",
+    impact: "Makes learning more accessible for students with special needs.",
+    outcome: "Interactive education delivery becomes more adaptive and engaging.",
     description:
-      "Breaks down communication barriers for children with autism and hearing impairments by providing a custom-fit educational tool that adapts to their pace, significantly improving classroom engagement and social-emotional growth.",
-    image:
-      "images/projects/shape.jpg",
+      "SHAPE is a mobile learning application designed for learners with autism and hearing challenges, using tailored content and game-like interactions to improve classroom support and communication.",
+    image: "images/projects/shape.jpg",
     tech: ["Flutter", "Dart", "Firebase"],
     demo: "#",
     repo: "https://github.com",
     score: 84,
+    highlights: [
+      "Focused on accessible interaction design for real learner needs.",
+      "Used game elements to support engagement and retention.",
+      "Balanced product planning, implementation, and presentation quality.",
+    ],
+    status: "prototype",
   },
   {
     id: "p4",
@@ -104,123 +149,134 @@ const PROJECTS = [
     year: 2026,
     category: "Web Application",
     role: "Frontend Developer + UX Designer + Project Manager",
-    impact: "Delivers a seamless travel planning experience.",
+    impact: "Delivers a smoother ticketing and planning experience.",
+    outcome: "Users can compare, plan, and book with less friction and better clarity.",
     description:
-      "Online ticketing platform that simplifies travel planning by aggregating options and providing personalized recommendations, making travel more accessible and efficient for everyone",
-    image:
-      "images/projects/travel.jpg",
+      "Travel Orbit is an online ticketing platform that simplifies travel planning by organizing trip options, surfacing helpful recommendations, and reducing the cognitive load of multi-step booking flows.",
+    image: "images/projects/travel.jpg",
     tech: ["React", "TypeScript", "Node.js", "Express", "MongoDB"],
     demo: "#",
     repo: "https://github.com",
     score: 90,
+    highlights: [
+      "Prioritized user flow and visual clarity across booking screens.",
+      "Designed around simplification of decision-heavy user journeys.",
+      "Great candidate for a polished case-study presentation.",
+    ],
+    status: "in progress",
   },
-  
 ];
 
 const TIMELINE_ITEMS = [
-    {
+  {
     id: "t1",
     year: "2026",
     date: "Jan - Present",
     title: "Founder and Lead Developer, DotOrbit Development Team",
-    tags: ["backend", "leadership", "design", "publication","frontend"],
+    tags: ["backend", "leadership", "design", "publication", "frontend"],
     bullets: [
-      "Took charge of the team's task board, keeping a close eye on progress to make sure everyone was hitting their deadlines and staying unblocked.     ",
-      "Built and managed microservices to keep the app modular, making sure each service could run and scale without breaking the rest of the system.",
+      "Managed team delivery rhythm and kept the task board aligned with actual priorities.",
+      "Built and coordinated modular services so the system could scale more safely.",
     ],
-    metrics: ["Balanced coding with product strategy", "Team focused on building features that actually mattered for the project’s success"],
-    stack: ["PostreSQL", "Tailwind", "Podman", "Postman"],
+    metrics: [
+      "Balanced coding with product direction",
+      "Focused the team on features that mattered most",
+    ],
+    stack: ["PostgreSQL", "Tailwind", "Podman", "Postman"],
   },
   {
     id: "t2",
-    year: "2025",
+    year: "2026",
     date: "Jan - Apr 2026",
-    title: "Backend Developer | Product Owner, Department of Science and Technology, League of Developers Initiative x Region",
+    title: "Backend Developer | Product Owner, DOST League of Developers Initiative",
     tags: ["backend", "leadership"],
     bullets: [
-      "Took charge of the team's task board, keeping a close eye on progress to make sure everyone was hitting their deadlines and staying unblocked.     ",
-      "Built and managed microservices to keep the app modular, making sure each service could run and scale without breaking the rest of the system.",
+      "Handled product-side planning while still contributing technical implementation.",
+      "Kept backend work aligned with team structure and expected delivery flow.",
     ],
-    metrics: ["Balanced coding with product strategy", "Team focused on building features that actually mattered for the project’s success"],
-    stack: ["PostreSQL", "Tailwind", "Podman", "Postman"],
+    metrics: [
+      "Product + engineering alignment",
+      "Improved team coordination under sprint work",
+    ],
+    stack: ["PostgreSQL", "REST API", "Podman", "Postman"],
   },
   {
     id: "t3",
-    year: "2023",
-    date: "Jul - Jul 2026",
-    title: "Organization Canva Admin, MARSU - College of Information and Computing Sciences",
+    year: "2025",
+    date: "Jul 2025 - Jul 2026",
+    title: "Organization Canva Admin, MarSU - College of Information and Computing Sciences",
     tags: ["publication", "design", "leadership"],
     bullets: [
-      "Tasked to add student orgs to the Canva for Education account and manage licenses, ensuring everyone had access to the design tools they needed.",
-      "Led workshops to help students learn how to use Canva effectively for their projects and events, boosting overall design quality across the board.",
+      "Managed Canva for Education organization access and student onboarding.",
+      "Helped student organizations use creative tools better for events and publication work.",
     ],
     metrics: ["Onboarded 200+ student orgs", "Led workshops with 100+ attendees"],
     stack: ["Canva for Education"],
   },
-    {
+  {
     id: "t4",
     year: "2025",
-    date: "Jul - Jan 2026 ",
+    date: "Jul 2025 - Jan 2026",
     title: "Correspondent, Sentro Publication",
     tags: ["design", "leadership", "publication"],
     bullets: [
-      "Talk: ‘Design Systems That Don’t Fight Engineers’.",
-      "Shared practical a11y + performance patterns for product teams.",
+      "Produced publication-related outputs and supported coverage-related execution.",
+      "Improved content handling through better creative and editorial coordination.",
     ],
-    metrics: ["Audience 1,200+", "Q&A 30 mins"],
-    stack: ["Design systems", "A11y", "Perf"],
+    metrics: ["Consistent content delivery", "Stronger publication contribution"],
+    stack: ["Writing", "Layout", "Coverage"],
   },
   {
     id: "t5",
     year: "2025",
-    date: "Jul - Jul 2026 ",
+    date: "Jul 2025 - Jul 2026",
     title: "Associate Editor-in-Chief, Infocus Publication and Broadcasting Team",
-    tags: [ "design", "leadership", "publication", "frontend", "video"],
+    tags: ["design", "leadership", "publication", "frontend", "video"],
     bullets: [
-      "Talk: ‘Design Systems That Don’t Fight Engineers’.",
-      "Shared practical a11y + performance patterns for product teams.",
+      "Supported direction, creative quality, and execution across publication and broadcast outputs.",
+      "Helped maintain stronger coordination between content and design responsibilities.",
     ],
-    metrics: ["Audience 1,200+", "Q&A 30 mins"],
-    stack: ["Design systems", "A11y", "Perf"],
+    metrics: ["Higher publication quality", "Broader team coordination"],
+    stack: ["Editorial", "Layout", "Broadcast"],
   },
-    {
+  {
     id: "t6",
     year: "2024",
-    date: "Jul - Jul 2025",
+    date: "Jul 2024 - Jul 2025",
     title: "Editor-in-Chief, Infocus Publication and Broadcasting Team",
-    tags: [ "design", "leadership", "publication", "frontend", "video"],
+    tags: ["design", "leadership", "publication", "frontend", "video"],
     bullets: [
-      "Talk: ‘Design Systems That Don’t Fight Engineers’.",
-      "Shared practical a11y + performance patterns for product teams.",
+      "Led the publication team and shaped output quality across multiple deliverables.",
+      "Oversaw direction, approvals, and presentation quality for content releases.",
     ],
-    metrics: ["Audience 1,200+", "Q&A 30 mins"],
-    stack: ["Design systems", "A11y", "Perf"],
+    metrics: ["Leadership in publication", "Clearer editorial direction"],
+    stack: ["Editorial", "Management", "Creative direction"],
   },
   {
     id: "t7",
-    year: "2022",
-    date: "Jul -Jul 2023",
+    year: "2023",
+    date: "Jul 2023 - Jul 2024",
     title: "Chief Layout Artist, Infocus Publication and Broadcasting Team",
-    tags: ["frontend","publication","leadership","video","design"],
+    tags: ["frontend", "publication", "leadership", "video", "design"],
     bullets: [
-      "Built responsive interfaces and improved UX consistency across pages.",
-      "Collaborated with designers to implement pixel-perfect components.",
+      "Improved visual presentation consistency and layout quality.",
+      "Worked closely with content and creative contributors for polished outputs.",
     ],
-    metrics: ["Conversion +8%", "Bug reports -25%"],
-    stack: ["Tailwind", "JS", "Node"],
+    metrics: ["Better visual consistency", "Faster output turnaround"],
+    stack: ["Canva", "Layout", "Design"],
   },
-    {
+  {
     id: "t8",
-    year: "2021",
-    date: "Aug - Sep 2022",
+    year: "2022",
+    date: "Aug 2022 - Sep 2022",
     title: "Head Layout Artist, The Heart Publication",
     tags: ["publication", "design"],
     bullets: [
-      "Built responsive interfaces and improved UX consistency across pages.",
-      "Collaborated with designers to implement pixel-perfect components.",
+      "Led layout direction for publication materials.",
+      "Established stronger visual output quality through layout decisions.",
     ],
-    metrics: ["Conversion +8%", "Bug reports -25%"],
-    stack: ["Tailwind", "JS", "Node"],
+    metrics: ["Cleaner layouts", "Improved readability"],
+    stack: ["Publication design", "Layout"],
   },
 ];
 
@@ -232,6 +288,7 @@ const CERTS = [
     credential_id: "AWS-ABC-12345",
     link: "https://example.com/verify/aws",
     notes: "Architecture best practices, cost optimization, and secure cloud design.",
+    image: "images/certificates/aws.jpg",
   },
   {
     title: "Meta Front-End Developer",
@@ -240,6 +297,7 @@ const CERTS = [
     credential_id: "META-FE-77821",
     link: "https://example.com/verify/meta",
     notes: "Advanced React patterns, testing, accessibility, and UX fundamentals.",
+    image: "images/certificates/meta-frontend.jpg",
   },
   {
     title: "Google UX Design",
@@ -248,6 +306,7 @@ const CERTS = [
     credential_id: "G-UX-55019",
     link: "https://example.com/verify/google-ux",
     notes: "User research, prototyping, and design handoff workflows.",
+    image: "images/certificates/google-ux.jpg",
   },
   {
     title: "Professional Scrum Master I",
@@ -256,11 +315,12 @@ const CERTS = [
     credential_id: "PSM-I-00912",
     link: "https://example.com/verify/psm",
     notes: "Agile facilitation, sprint planning, and team delivery excellence.",
+    image: "images/certificates/psm.jpg",
   },
 ];
 
 const ACHIEVEMENTS = [
-     {
+  {
     badge: "Champion",
     badgeColor: "gYellow",
     title: "Marinduque State University Official Logo",
@@ -271,49 +331,49 @@ const ACHIEVEMENTS = [
     badge: "1st Place",
     badgeColor: "gBlue",
     title: "Base PH Hackathon 2025",
-    desc: "Built games of the generals-inspired strategy game using ohara.",
+    desc: "Built a Games of the Generals-inspired strategy experience using Ohara.",
     meta: "Tech: Ohara, WebSockets, React",
   },
   {
     badge: "5th Place",
     badgeColor: "gRed",
-    title: "DICT - MIMAROPA Hack for Gov 3",
-    desc: "Focused in web exploitation and reverse engineering challenges.",
+    title: "DICT — MIMAROPA Hack for Gov 3",
+    desc: "Focused on web exploitation and reverse engineering challenges.",
     meta: "Tech: Linux, Metasploit",
   },
   {
     badge: "6th Place",
     badgeColor: "gGreen",
-    title: "DICT - MIMAROPA Hack for Gov 4",
-    desc: "Focused in web exploitation and reverse engineering challenges.",
+    title: "DICT — MIMAROPA Hack for Gov 4",
+    desc: "Focused on web exploitation and reverse engineering challenges.",
     meta: "Tech: Linux, Metasploit",
   },
   {
     badge: "Presenter",
     badgeColor: "gBlue",
     title: "ICITE2025: International Conference on Information Technology Education",
-    desc: "SHAPE: A Speech, Hearing, Autism Personalized Education Mobile Application.",
+    desc: "Presented SHAPE, a personalized education mobile application.",
     meta: "Tech: Flutter, Dart, Firebase",
   },
-   {
+  {
     badge: "Presenter",
     badgeColor: "gRed",
     title: "Y4IT Research Summit 2024",
-    desc: " Presented Carabao Cart a smart inventory management system for small businesses using computer vision to track stock levels and predict demand.",
+    desc: "Presented Carabao Cart, a smart inventory management concept for small businesses.",
     meta: "Tech: Figma",
   },
   {
     badge: "Presenter",
     badgeColor: "gYellow",
     title: "NPK Deficiency Detection using Leaf Color Scanning Technology",
-    desc: "Developed a system to detect nitrogen, phosphorus, and potassium deficiencies in crops using leaf color analysis.",
+    desc: "Developed a system to detect nutrient deficiencies in crops using leaf color analysis.",
     meta: "Tech: Arduino",
   },
   {
     badge: "Presenter",
     badgeColor: "gGreen",
     title: "DOST: Regional Innovation Contest and Exhibition (RICE)",
-    desc: "Presented a system for detecting nitrogen, phosphorus, and potassium deficiencies in crops using leaf color analysis.",
+    desc: "Presented a crop deficiency detection concept using leaf color analysis.",
     meta: "Tech: Arduino",
   },
 ];
@@ -321,8 +381,10 @@ const ACHIEVEMENTS = [
 const GALLERY_ITEMS = [
   {
     title: "Neural Network Visualization",
-    description: "Interactive WebGL visualization of neural network training with real-time particle effects",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=70",
+    description:
+      "Interactive WebGL visualization of neural network training with real-time particle effects.",
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=70",
     category: "webgl",
     demo: "#",
     tech: ["WebGL", "Three.js", "Shaders"],
@@ -330,8 +392,10 @@ const GALLERY_ITEMS = [
   },
   {
     title: "Fluid Dynamics Simulation",
-    description: "Real-time fluid simulation using GPU compute shaders and interactive mouse controls",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=70",
+    description:
+      "Real-time fluid simulation using GPU compute shaders and interactive controls.",
+    image:
+      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=70",
     category: "webgl",
     demo: "#",
     tech: ["WebGL", "GLSL", "Compute Shaders"],
@@ -339,8 +403,10 @@ const GALLERY_ITEMS = [
   },
   {
     title: "Generative Art Engine",
-    description: "Algorithmic art generator creating unique patterns based on mathematical functions",
-    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=70",
+    description:
+      "Algorithmic art generator creating unique patterns through math-based systems.",
+    image:
+      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=70",
     category: "art",
     demo: "#",
     tech: ["Canvas API", "Math", "Algorithms"],
@@ -348,8 +414,10 @@ const GALLERY_ITEMS = [
   },
   {
     title: "Interactive Particle System",
-    description: "GPU-accelerated particle system with physics simulation and user interaction",
-    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=70",
+    description:
+      "GPU-accelerated particle system with physics simulation and responsive interaction.",
+    image:
+      "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=70",
     category: "animation",
     demo: "#",
     tech: ["WebGL", "Particles", "Physics"],
@@ -357,8 +425,10 @@ const GALLERY_ITEMS = [
   },
   {
     title: "3D Portfolio Environment",
-    description: "Immersive 3D space with floating geometric shapes and interactive navigation",
-    image: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=800&q=70",
+    description:
+      "Immersive 3D space with floating shapes and interactive navigation.",
+    image:
+      "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=800&q=70",
     category: "webgl",
     demo: "#",
     tech: ["Three.js", "3D", "Shaders"],
@@ -366,8 +436,10 @@ const GALLERY_ITEMS = [
   },
   {
     title: "Audio Reactive Visualizer",
-    description: "Real-time audio visualization that responds to microphone input or music playback",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=70",
+    description:
+      "Real-time audio visualization that responds to microphone input or music playback.",
+    image:
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=70",
     category: "interactive",
     demo: "#",
     tech: ["Web Audio API", "Canvas", "FFT"],
@@ -376,95 +448,49 @@ const GALLERY_ITEMS = [
 ];
 
 /* =========================
-   Helpers
+   App state
 ========================= */
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-const STORAGE_KEYS = {
-  tab: "retro_portfolio_tab",
-  saved: "retro_portfolio_saved_searches",
+const STATE = {
+  currentImages: [],
+  lightboxIndex: 0,
+  lightboxItems: [],
+  projectQuery: "",
+  projectSort: "impact",
+  certQuery: "",
+  certSort: "newest",
+  galleryFilter: "all",
+  activeTimelineFilter: "all",
+  timelineExpandedAll: false,
 };
 
-const AI = {
-  searchEndpoint: "/api/search",
-  healthEndpoint: "/api/health",
-  timeoutMs: 14000,
-  healthTimeoutMs: 2500,
-};
+const DEFAULT_QUERY = "querying portfolio: Gene Elpie Landoy.";
 
-function clamp(n, min, max) {
-  return Math.max(min, Math.min(max, n));
+/* =========================
+   Generic helpers
+========================= */
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+function shuffle(items) {
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
   }
-  return a;
+  return copy;
 }
 
-function toast(msg) {
-  const t = $("#toast");
-  const tt = $("#toastText");
-  if (!t || !tt) return;
-  tt.textContent = msg;
-  t.classList.remove("hidden");
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(() => t.classList.add("hidden"), 1600);
-}
-
-function scrollToEl(selector) {
-  const el = $(selector);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function setResultsMeta(query) {
-  const resultsCount = $("#resultsCount");
-  const resultsTime = $("#resultsTime");
-  const titleBase = "Gene Elpie Landoy - Retro-Google Futuristic Portfolio";
-
-  const base = 700000 + Math.floor(Math.random() * 900000);
-  const ms = (Math.random() * 0.09 + 0.01).toFixed(3);
-
-  if (resultsCount) resultsCount.textContent = `About ${base.toLocaleString()} results`;
-  if (resultsTime) resultsTime.textContent = `(${ms} seconds)`;
-
-  document.title = query ? `${query} - Retro Search` : titleBase;
-}
-
-function safeJsonParse(str, fallback) {
+function safeJsonParse(value, fallback) {
   try {
-    return JSON.parse(str);
+    return JSON.parse(value);
   } catch {
     return fallback;
   }
 }
 
-function openFlexModal(modalSel) {
-  const modal = $(modalSel);
-  if (!modal) return;
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-  document.body.style.overflow = "hidden";
-}
-
-function closeFlexModal(modalSel) {
-  const modal = $(modalSel);
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-  document.body.style.overflow = "";
-}
-
-/* =========================
-   Local Search Helpers (kept for optional filtering only)
-========================= */
-function escapeHtml(str) {
-  return String(str)
+function escapeHtml(value) {
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -472,140 +498,282 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
-function localFilterSearch(query) {
-  const q = String(query || "").trim().toLowerCase();
-  const sections = $$("[data-section]");
-  if (!sections.length) return 0;
+function promiseTimeout(milliseconds) {
+  return new Promise((_, reject) => {
+    setTimeout(() => reject(new Error("Request timed out.")), milliseconds);
+  });
+}
 
-  if (!q) {
-    sections.forEach((s) => s.classList.remove("hidden"));
-    return sections.length;
+function disableBrowserScrollRestoration() {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
   }
+}
 
-  let visible = 0;
-  sections.forEach((s) => {
-    const text = (s.innerText || "").toLowerCase();
-    const show = text.includes(q);
-    s.classList.toggle("hidden", !show);
-    if (show) visible++;
+function forceScrollTop() {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
   });
 
-  return visible;
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function clearStartupHash() {
+  if (!window.location.hash) {
+    return;
+  }
+
+  if (window.location.hash === "#top") {
+    return;
+  }
+
+  const cleanUrl = `${window.location.pathname}${window.location.search}`;
+  window.history.replaceState(null, "", cleanUrl);
+}
+
+function stabilizeStartupScroll() {
+  disableBrowserScrollRestoration();
+  clearStartupHash();
+  forceScrollTop();
+
+  let attemptCount = 0;
+  const intervalId = window.setInterval(() => {
+    forceScrollTop();
+    attemptCount += 1;
+
+    if (attemptCount >= STARTUP_SCROLL_RESET_ATTEMPTS) {
+      window.clearInterval(intervalId);
+    }
+  }, STARTUP_SCROLL_RESET_DELAY_MS);
+
+  window.addEventListener(
+    "load",
+    () => {
+      disableBrowserScrollRestoration();
+      forceScrollTop();
+    },
+    { once: true }
+  );
+
+  window.addEventListener(
+    "pageshow",
+    () => {
+      disableBrowserScrollRestoration();
+      forceScrollTop();
+    },
+    { once: true }
+  );
+}
+
+function toast(message) {
+  const toastRoot = $("#toast");
+  const toastText = $("#toastText");
+  if (!toastRoot || !toastText) return;
+
+  toastText.textContent = message;
+  toastRoot.classList.remove("hidden");
+
+  clearTimeout(window.__toast_timer__);
+  window.__toast_timer__ = setTimeout(() => {
+    toastRoot.classList.add("hidden");
+  }, TOAST_DURATION_MS);
+}
+
+function scrollToEl(selector) {
+  const element = $(selector);
+  if (!element) return;
+  element.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function openFlexModal(selector) {
+  const modal = $(selector);
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  document.body.style.overflow = "hidden";
+}
+
+function closeFlexModal(selector) {
+  const modal = $(selector);
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  document.body.style.overflow = "";
+}
+
+function setResultsMeta(query) {
+  const countEl = $("#resultsCount");
+  const timeEl = $("#resultsTime");
+  const titleBase = "Gene Elpie Landoy | Retro Search Portfolio";
+
+  const base = 700000 + Math.floor(Math.random() * 900000);
+  const seconds = (Math.random() * 0.09 + 0.01).toFixed(3);
+
+  if (countEl) countEl.textContent = `About ${base.toLocaleString()} results`;
+  if (timeEl) timeEl.textContent = `(${seconds} seconds)`;
+
+  document.title = query ? `${query} | Retro Search` : titleBase;
+}
+
+function copyToClipboard(text, successMessage = "Copied") {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => toast(successMessage))
+    .catch(() => toast("Copy failed"));
 }
 
 /* =========================
-   AI Search (NO local fallback)
+   Knowledge panel
 ========================= */
-function promiseTimeout(ms) {
-  return new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out.")), ms));
+function mountKnowledgePanels() {
+  const template = $("#kpTemplate");
+  const desktopMount = $("#kpDesktopMount");
+  const mobileMount = $("#kpMobileMount");
+
+  if (!template || !desktopMount || !mobileMount) return;
+
+  desktopMount.innerHTML = "";
+  mobileMount.innerHTML = "";
+
+  desktopMount.appendChild(template.content.cloneNode(true));
+  mobileMount.appendChild(template.content.cloneNode(true));
 }
 
+/* =========================
+   Scroll UX
+========================= */
+function setupScrollUx() {
+  const scrollBar = $("#scrollProgress");
+  const buttonTop = $("#btnTop");
+
+  function handleScroll() {
+    const doc = document.documentElement;
+    const max = Math.max(1, doc.scrollHeight - doc.clientHeight);
+    const progress = (doc.scrollTop / max) * 100;
+
+    if (scrollBar) {
+      scrollBar.style.width = `${progress}%`;
+    }
+
+    if (buttonTop) {
+      buttonTop.classList.toggle("hidden", doc.scrollTop < 600);
+    }
+  }
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
+
+  buttonTop?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+/* =========================
+   AI Search
+========================= */
 async function aiHealthCheck() {
   try {
-    const res = await Promise.race([
-      fetch(AI.healthEndpoint, { method: "GET", cache: "no-store" }),
-      promiseTimeout(AI.healthTimeoutMs),
+    const response = await Promise.race([
+      fetch(AI.HEALTH_ENDPOINT, { method: "GET", cache: "no-store" }),
+      promiseTimeout(AI.HEALTH_TIMEOUT_MS),
     ]);
-    return !!res.ok;
+    return Boolean(response.ok);
   } catch {
     return false;
   }
 }
 
 async function aiSearch(query) {
-  const res = await Promise.race([
-    fetch(AI.searchEndpoint, {
+  const response = await Promise.race([
+    fetch(AI.SEARCH_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query }),
     }),
-    promiseTimeout(AI.timeoutMs),
+    promiseTimeout(AI.TIMEOUT_MS),
   ]);
 
-  const data = await res.json().catch(() => ({}));
+  const data = await response.json().catch(() => ({}));
 
-  if (!res.ok) {
-    const msg = data?.error || "AI request failed.";
-    throw new Error(msg);
+  if (!response.ok) {
+    throw new Error(data?.error || "AI request failed.");
   }
 
   const answer = data?.answer;
-  if (typeof answer !== "string" || !answer.trim()) return "No answer generated.";
+  if (typeof answer !== "string" || !answer.trim()) {
+    return "No answer generated.";
+  }
+
   return answer.trim();
 }
 
 function clearAiResultBoxes() {
-  const results = $("#resultsArea");
-  if (!results) return;
-  $$('[data-ai-results="true"]', results).forEach((n) => n.remove());
+  const resultsArea = $("#resultsArea");
+  if (!resultsArea) return;
+  $$('[data-ai-results="true"]', resultsArea).forEach((node) => node.remove());
 }
 
 function renderAiResultBox(query, state) {
-  const results = $("#resultsArea");
-  if (!results) return null;
+  const resultsArea = $("#resultsArea");
+  if (!resultsArea) return null;
 
   clearAiResultBoxes();
 
-  const box = document.createElement("div");
-  box.dataset.aiResults = "true";
-  box.className = "border border-borderDim bg-bgPanel rounded-xl p-5";
+  const wrapper = document.createElement("div");
+  wrapper.dataset.aiResults = "true";
+  wrapper.className = "rounded-2xl border border-borderDim bg-bgPanel p-5";
 
   const header = `
-    <div class="text-gBlue text-lg mb-2">Search Results</div>
-    <div class="text-gray-300 text-sm">
+    <div class="text-lg text-gBlue">Search Results</div>
+    <div class="mt-1 text-sm text-gray-300">
       Results for "<span class="text-white">${escapeHtml(query)}</span>"
     </div>
   `;
 
   if (state.type === "loading") {
-    box.innerHTML = `
+    wrapper.innerHTML = `
       ${header}
       <div class="mt-2 text-xs text-gray-500">AI search is running…</div>
-      <div class="mt-4 border border-borderDim bg-bgDark rounded-xl p-4">
-        <div class="h-3 w-2/3 bg-white/10 rounded"></div>
-        <div class="mt-2 h-3 w-5/6 bg-white/10 rounded"></div>
-        <div class="mt-2 h-3 w-1/2 bg-white/10 rounded"></div>
+      <div class="mt-4 rounded-xl border border-borderDim bg-bgDark p-4">
+        <div class="h-3 w-2/3 rounded bg-white/10"></div>
+        <div class="mt-2 h-3 w-5/6 rounded bg-white/10"></div>
+        <div class="mt-2 h-3 w-1/2 rounded bg-white/10"></div>
       </div>
     `;
   } else if (state.type === "error") {
-    box.innerHTML = `
+    wrapper.innerHTML = `
       ${header}
       <div class="mt-2 text-xs text-gray-500">AI search is unavailable.</div>
-      <div class="mt-4 border border-red-500/30 bg-red-500/10 rounded-xl p-4">
-        <div class="text-sm text-white font-bold">AI request failed</div>
+      <div class="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4">
+        <div class="text-sm font-bold text-white">AI request failed</div>
         <div class="mt-2 text-xs text-gray-300">${escapeHtml(state.message || "Unknown error")}</div>
         <div class="mt-3 text-xs text-gray-400">
-          Open this site using <span class="text-gray-200 font-bold">http://localhost:3000</span> (not file://) and ensure the server is running.
+          Open this site with <span class="font-bold text-gray-200">http://localhost:3000</span>
+          and make sure your server is running.
         </div>
       </div>
     `;
   } else {
-    const answerHtml = escapeHtml(state.answer || "No answer generated.");
-    box.innerHTML = `
+    wrapper.innerHTML = `
       ${header}
       <div class="mt-2 text-xs text-gray-500">AI search is active.</div>
-      <div class="mt-4 border border-borderDim bg-bgDark rounded-xl p-4">
-        <pre class="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed m-0">${answerHtml}</pre>
+      <div class="mt-4 rounded-xl border border-borderDim bg-bgDark p-4">
+        <pre class="m-0 whitespace-pre-wrap text-sm leading-relaxed text-gray-200">${escapeHtml(state.answer || "No answer generated.")}</pre>
       </div>
       <div class="mt-3 flex flex-wrap gap-2">
-        <button type="button"
-          class="px-3 py-2 rounded-xl border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs f-ring"
-          data-ai-open="projects">Projects</button>
-        <button type="button"
-          class="px-3 py-2 rounded-xl border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs f-ring"
-          data-ai-open="timeline">Timeline</button>
-        <button type="button"
-          class="px-3 py-2 rounded-xl border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs f-ring"
-          data-ai-open="certificates">Certificates</button>
-        <button type="button"
-          class="px-3 py-2 rounded-xl border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs f-ring"
-          data-ai-open="gallery">Gallery</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="projects">Projects</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="timeline">Timeline</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="certificates">Certificates</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="gallery">Gallery</button>
       </div>
     `;
 
-    $$("[data-ai-open]", box).forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-ai-open");
+    $$("[data-ai-open]", wrapper).forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.getAttribute("data-ai-open");
         if (!key) return;
         setTab(key);
         setTimeout(() => scrollToEl(`#section-${key}`), 120);
@@ -613,99 +781,149 @@ function renderAiResultBox(query, state) {
     });
   }
 
-  results.prepend(box);
-  return box;
+  resultsArea.prepend(wrapper);
+  return wrapper;
 }
 
-/* =========================
-   Mount Knowledge Panel
-========================= */
-function mountKnowledgePanels() {
-  const tpl = $("#kpTemplate");
-  const desktop = $("#kpDesktopMount");
-  const mobile = $("#kpMobileMount");
-  if (!tpl || !desktop || !mobile) return;
+async function runQuery() {
+  const query = ($("#searchInput")?.value || "").trim();
+  if (!query) return;
 
-  desktop.innerHTML = "";
-  mobile.innerHTML = "";
+  setResultsMeta(query);
+  renderAiResultBox(query, { type: "loading" });
+  toast("Searching with AI...");
 
-  desktop.appendChild(tpl.content.cloneNode(true));
-  mobile.appendChild(tpl.content.cloneNode(true));
-}
-
-/* =========================
-   Scroll progress + Back to top
-========================= */
-function setupScrollUx() {
-  const bar = $("#scrollProgress");
-  const btnTop = $("#btnTop");
-
-  function onScroll() {
-    const doc = document.documentElement;
-    const max = Math.max(1, doc.scrollHeight - doc.clientHeight);
-    const p = (doc.scrollTop / max) * 100;
-    if (bar) bar.style.width = `${p}%`;
-    if (btnTop) btnTop.classList.toggle("hidden", doc.scrollTop < 600);
+  const healthy = await aiHealthCheck();
+  if (!healthy) {
+    renderAiResultBox(query, {
+      type: "error",
+      message:
+        "Server not reachable. Open http://localhost:3000 and ensure your dev server is running.",
+    });
+    toast("AI server offline");
+    return;
   }
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  try {
+    const answer = await aiSearch(query);
+    renderAiResultBox(query, { type: "success", answer });
+    $("#searchShell")?.classList.add("is-hot");
+    setTimeout(() => $("#searchShell")?.classList.remove("is-hot"), 650);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    toast("AI result ready");
+  } catch (error) {
+    renderAiResultBox(query, {
+      type: "error",
+      message: error?.message || "AI request failed.",
+    });
+    toast("AI request failed");
+  }
+}
 
-  btnTop?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+function feelingFuturistic() {
+  const picks = [
+    { tab: "images", query: "visual portfolio highlights" },
+    { tab: "projects", query: "best projects and case studies" },
+    { tab: "timeline", query: "career timeline and milestones" },
+    { tab: "certificates", query: "verified certificates and credentials" },
+    { tab: "achievements", query: "awards and competition history" },
+    { tab: "gallery", query: "creative coding and visual experiments" },
+    { tab: "about", query: "about gene elpie landoy" },
+  ];
+
+  const picked = picks[Math.floor(Math.random() * picks.length)];
+  const input = $("#searchInput");
+
+  if (input) {
+    input.value = picked.query;
+  }
+
+  $("#btnClear")?.classList.remove("hidden");
+  setResultsMeta(picked.query);
+  setTab(picked.tab);
+
+  setTimeout(() => {
+    scrollToEl(`#section-${picked.tab}`);
+  }, 220);
+
+  toast(`Warping to ${picked.tab}...`);
+}
+
+function typeIntoInput(text, speedMin = 25, speedMax = 55) {
+  const input = $("#searchInput");
+  const clearButton = $("#btnClear");
+  const shell = $("#searchShell");
+  if (!input) return;
+
+  input.value = "";
+  clearButton?.classList.add("hidden");
+
+  let index = 0;
+
+  function step() {
+    if (index < text.length) {
+      input.value += text.charAt(index);
+      index += 1;
+      clearButton?.classList.remove("hidden");
+      setTimeout(step, Math.random() * (speedMax - speedMin) + speedMin);
+      return;
+    }
+
+    shell?.classList.add("is-hot");
+    setTimeout(() => shell?.classList.remove("is-hot"), 700);
+    setResultsMeta(input.value);
+  }
+
+  setTimeout(step, 350);
 }
 
 /* =========================
-   Image Pack + Lightbox (with swipe)
+   Tabs
 ========================= */
-let currentImages = [];
-let lightboxIndex = 0;
-let __touchStartX = 0;
+function setTab(tab) {
+  localStorage.setItem(STORAGE_KEYS.TAB, tab);
 
-function renderImages(items) {
-  currentImages = items;
-  const grid = $("#imageGrid");
-  if (!grid) return;
-
-  grid.innerHTML = "";
-
-  items.forEach((img, idx) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className =
-      "group relative overflow-hidden rounded-xl border border-borderDim bg-bgDark hover:border-gBlue transition-colors f-ring";
-    card.setAttribute("aria-label", `Open image: ${img.title}`);
-    card.dataset.idx = String(idx);
-
-    card.innerHTML = `
-      <div class="absolute top-2 left-2 z-10 text-[10px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gray-400">
-        ${String(img.tag || "").toUpperCase()}
-      </div>
-      <img
-        src="${img.src}"
-        alt="${img.alt}"
-        loading="lazy"
-        class="h-28 sm:h-32 w-full object-cover opacity-90 group-hover:opacity-100 transition duration-300"
-      />
-      <div class="p-2">
-        <div class="text-xs text-gray-300 clamp-2">${img.title}</div>
-      </div>
-    `;
-
-    card.addEventListener("click", () => openLightbox(idx));
-    grid.appendChild(card);
+  $$(".tab-btn").forEach((button) => {
+    const isActive = button.dataset.tab === tab;
+    button.classList.toggle("border-gBlue", isActive);
+    button.classList.toggle("text-white", isActive);
+    button.classList.toggle("shadow-glow", isActive);
   });
+
+  $$("[data-section]").forEach((section) => {
+    const key = section.getAttribute("data-section");
+    const visible = tab === "all" || tab === key;
+    section.classList.toggle("hidden", !visible);
+  });
+
+  const query = $("#searchInput")?.value || "";
+  setResultsMeta(tab === "all" ? query : `${tab} results`);
 }
 
-function openLightbox(idx) {
-  lightboxIndex = clamp(idx, 0, currentImages.length - 1);
-  const item = currentImages[lightboxIndex];
+/* =========================
+   Lightbox
+========================= */
+let touchStartX = 0;
+
+function setLightboxItems(items) {
+  STATE.lightboxItems = items;
+}
+
+function openLightbox(index) {
+  if (!STATE.lightboxItems.length) return;
+
+  STATE.lightboxIndex = clamp(index, 0, STATE.lightboxItems.length - 1);
+  const item = STATE.lightboxItems[STATE.lightboxIndex];
+
   const title = $("#lightboxTitle");
-  const img = $("#lightboxImg");
+  const image = $("#lightboxImg");
+
   if (title) title.textContent = item.title;
-  if (img) {
-    img.src = item.src;
-    img.alt = item.alt;
+  if (image) {
+    image.src = item.src;
+    image.alt = item.alt || item.title;
   }
+
   openFlexModal("#lightbox");
 }
 
@@ -713,53 +931,93 @@ function closeLightbox() {
   closeFlexModal("#lightbox");
 }
 
-function nextImg(delta) {
-  if (!currentImages.length) return;
-  lightboxIndex = (lightboxIndex + delta + currentImages.length) % currentImages.length;
-  const item = currentImages[lightboxIndex];
+function nextLightboxImage(delta) {
+  if (!STATE.lightboxItems.length) return;
+
+  STATE.lightboxIndex =
+    (STATE.lightboxIndex + delta + STATE.lightboxItems.length) % STATE.lightboxItems.length;
+
+  const item = STATE.lightboxItems[STATE.lightboxIndex];
   const title = $("#lightboxTitle");
-  const img = $("#lightboxImg");
+  const image = $("#lightboxImg");
+
   if (title) title.textContent = item.title;
-  if (img) {
-    img.src = item.src;
-    img.alt = item.alt;
+  if (image) {
+    image.src = item.src;
+    image.alt = item.alt || item.title;
   }
 }
 
 function setupLightboxSwipe() {
-  const img = $("#lightboxImg");
-  if (!img) return;
+  const image = $("#lightboxImg");
+  if (!image) return;
 
-  img.addEventListener(
+  image.addEventListener(
     "touchstart",
-    (e) => {
-      if (!e.touches || !e.touches.length) return;
-      __touchStartX = e.touches[0].clientX;
+    (event) => {
+      if (!event.touches?.length) return;
+      touchStartX = event.touches[0].clientX;
     },
     { passive: true }
   );
 
-  img.addEventListener(
+  image.addEventListener(
     "touchend",
-    (e) => {
-      if (!e.changedTouches || !e.changedTouches.length) return;
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - __touchStartX;
-      if (Math.abs(dx) < 40) return;
-      nextImg(dx > 0 ? -1 : 1);
+    (event) => {
+      if (!event.changedTouches?.length) return;
+      const endX = event.changedTouches[0].clientX;
+      const delta = endX - touchStartX;
+      if (Math.abs(delta) < 40) return;
+      nextLightboxImage(delta > 0 ? -1 : 1);
     },
     { passive: true }
   );
 }
 
 /* =========================
+   Images
+========================= */
+function renderImages(items) {
+  const grid = $("#imageGrid");
+  if (!grid) return;
+
+  STATE.currentImages = items;
+  setLightboxItems(
+    items.map((item) => ({
+      title: item.title,
+      src: item.src,
+      alt: item.alt,
+    }))
+  );
+
+  grid.innerHTML = "";
+
+  items.forEach((item, index) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "image-card f-ring";
+    card.setAttribute("aria-label", `Open image: ${item.title}`);
+
+    card.innerHTML = `
+      <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gray-300">
+        ${escapeHtml(String(item.tag || "").toUpperCase())}
+      </div>
+      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" class="h-28 w-full object-cover opacity-90 sm:h-32" />
+      <div class="p-2">
+        <div class="clamp-2 text-xs text-gray-300">${escapeHtml(item.title)}</div>
+      </div>
+    `;
+
+    card.addEventListener("click", () => openLightbox(index));
+    grid.appendChild(card);
+  });
+}
+
+/* =========================
    Timeline
 ========================= */
-let activeTimelineFilter = "all";
-let timelineExpandedAll = false;
-
-function timelineTagPill(tag) {
-  const map = {
+function getTimelineTagPill(tag) {
+  const classMap = {
     backend: "text-gBlue",
     frontend: "text-gYellow",
     design: "text-gYellow",
@@ -767,62 +1025,82 @@ function timelineTagPill(tag) {
     publication: "text-gRed",
     video: "text-gBlue",
   };
-  const c = map[tag] || "text-gray-300";
-  return `<span class="text-[11px] px-2 py-0.5 rounded-full border border-borderDim bg-bgPanel ${c}">${tag}</span>`;
+
+  return `
+    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] ${classMap[tag] || "text-gray-300"}">
+      ${escapeHtml(tag)}
+    </span>
+  `;
 }
 
 function renderTimeline() {
   const list = $("#timelineList");
   if (!list) return;
+
   list.innerHTML = "";
 
-  const items = TIMELINE_ITEMS.filter((it) => {
-    if (activeTimelineFilter === "all") return true;
-    return (it.tags || []).includes(activeTimelineFilter);
+  const items = TIMELINE_ITEMS.filter((item) => {
+    if (STATE.activeTimelineFilter === "all") return true;
+    return (item.tags || []).includes(STATE.activeTimelineFilter);
   });
 
-  items.forEach((it) => {
-    const wrap = document.createElement("div");
-    wrap.className = "timeline-item";
-    wrap.dataset.tags = (it.tags || []).join(",");
+  if (!items.length) {
+    list.innerHTML = `
+      <div class="rounded-xl border border-borderDim bg-bgDark p-4 text-sm text-gray-400">
+        No timeline entries match that filter.
+      </div>
+    `;
+    return;
+  }
 
-    const tags = (it.tags || []).map(timelineTagPill).join(" ");
-    const metrics = (it.metrics || [])
-      .map((m) => `<span class="text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gray-300">${m}</span>`)
-      .join(" ");
+  items.forEach((item) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "timeline-item";
 
-    const stack = (it.stack || [])
-      .map((s) => `<span class="text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gray-400">${s}</span>`)
-      .join(" ");
+    const tags = (item.tags || []).map(getTimelineTagPill).join(" ");
+    const metrics = (item.metrics || [])
+      .map(
+        (metric) => `
+          <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-gray-300">
+            ${escapeHtml(metric)}
+          </span>
+        `
+      )
+      .join("");
 
-    wrap.innerHTML = `
+    const stack = (item.stack || [])
+      .map(
+        (stackItem) => `
+          <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-gray-400">
+            ${escapeHtml(stackItem)}
+          </span>
+        `
+      )
+      .join("");
+
+    wrapper.innerHTML = `
       <div class="timeline-dot" aria-hidden="true"></div>
       <div class="timeline-card">
-        <button
-          class="timeline-head w-full text-left hover:bg-[#141b24] transition-colors f-ring"
-          type="button"
-          aria-expanded="false"
-          data-acc-btn="true"
-        >
+        <button class="timeline-head f-ring w-full text-left" type="button" aria-expanded="false" data-acc-btn="true">
           <div class="min-w-0">
-            <div class="text-xs text-gray-500">${it.year} · ${it.date || ""} · ${tags}</div>
-            <div class="text-sm text-white mt-1">${it.title}</div>
+            <div class="text-xs text-gray-500">${escapeHtml(item.year)} · ${escapeHtml(item.date || "")} · ${tags}</div>
+            <div class="mt-1 text-sm text-white">${escapeHtml(item.title)}</div>
           </div>
-          <div class="text-xs text-gray-500 shrink-0">toggle</div>
+          <div class="shrink-0 text-xs text-gray-500">toggle</div>
         </button>
 
         <div class="timeline-body hidden" data-acc-panel="true">
           <div class="text-xs text-gray-500">Highlights</div>
           <ul class="mt-2 space-y-2 text-sm text-gray-300">
-            ${(it.bullets || []).map((b) => `<li>• ${b}</li>`).join("")}
+            ${(item.bullets || []).map((bullet) => `<li>• ${escapeHtml(bullet)}</li>`).join("")}
           </ul>
 
-          <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="border border-borderDim bg-bgPanel rounded-xl p-3">
+          <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div class="rounded-xl border border-borderDim bg-bgPanel p-3">
               <div class="text-xs text-gray-500">Impact</div>
               <div class="mt-2 flex flex-wrap gap-2">${metrics}</div>
             </div>
-            <div class="border border-borderDim bg-bgPanel rounded-xl p-3">
+            <div class="rounded-xl border border-borderDim bg-bgPanel p-3">
               <div class="text-xs text-gray-500">Stack</div>
               <div class="mt-2 flex flex-wrap gap-2">${stack}</div>
             </div>
@@ -831,133 +1109,200 @@ function renderTimeline() {
       </div>
     `;
 
-    const btn = wrap.querySelector('[data-acc-btn="true"]');
-    const panel = wrap.querySelector('[data-acc-panel="true"]');
+    const button = $('[data-acc-btn="true"]', wrapper);
+    const panel = $('[data-acc-panel="true"]', wrapper);
 
-    btn?.addEventListener("click", () => {
-      const expanded = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", expanded ? "false" : "true");
+    button?.addEventListener("click", () => {
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", expanded ? "false" : "true");
       panel?.classList.toggle("hidden", expanded);
     });
 
-    if (timelineExpandedAll) {
-      btn?.setAttribute("aria-expanded", "true");
+    if (STATE.timelineExpandedAll) {
+      button?.setAttribute("aria-expanded", "true");
       panel?.classList.remove("hidden");
     }
 
-    list.appendChild(wrap);
+    list.appendChild(wrapper);
   });
-
-  if (!items.length) {
-    list.innerHTML = `
-      <div class="border border-borderDim bg-bgDark rounded-xl p-4 text-sm text-gray-400">
-        No timeline entries match that filter.
-      </div>
-    `;
-  }
 }
 
 /* =========================
    Projects
 ========================= */
-let projectQuery = "";
-let projectSort = "impact";
-
 function getSortedProjects(items) {
-  const a = [...items];
-  if (projectSort === "newest") a.sort((x, y) => (y.year || 0) - (x.year || 0));
-  else if (projectSort === "oldest") a.sort((x, y) => (x.year || 0) - (y.year || 0));
-  else if (projectSort === "title") a.sort((x, y) => String(x.title).localeCompare(String(y.title)));
-  else a.sort((x, y) => (y.score || 0) - (x.score || 0));
-  return a;
+  const copy = [...items];
+
+  if (STATE.projectSort === "newest") {
+    copy.sort((left, right) => (right.year || 0) - (left.year || 0));
+  } else if (STATE.projectSort === "oldest") {
+    copy.sort((left, right) => (left.year || 0) - (right.year || 0));
+  } else if (STATE.projectSort === "title") {
+    copy.sort((left, right) => String(left.title).localeCompare(String(right.title)));
+  } else {
+    copy.sort((left, right) => (right.score || 0) - (left.score || 0));
+  }
+
+  return copy;
+}
+
+function filterProjects() {
+  const query = STATE.projectQuery.trim().toLowerCase();
+
+  return PROJECTS.filter((project) => {
+    if (!query) return true;
+
+    const haystack = [
+      project.title,
+      project.category,
+      project.role,
+      project.description,
+      project.impact,
+      project.outcome,
+      ...(project.tech || []),
+      ...(project.highlights || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return haystack.includes(query);
+  });
+}
+
+function buildProjectCard(project) {
+  const techHtml = (project.tech || [])
+    .slice(0, PROJECT_TECH_LIMIT)
+    .map((item) => `<span class="card-chip">${escapeHtml(item)}</span>`)
+    .join("");
+
+  const article = document.createElement("article");
+  article.className = "project-card";
+
+  article.innerHTML = `
+    <div class="project-thumb">
+      <img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" loading="lazy" />
+      <div class="project-badge-row">
+        <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
+        <span class="project-badge text-gYellow">score ${escapeHtml(String(project.score || 0))}</span>
+      </div>
+      <div class="project-thumb-footer">
+        <div class="project-score">${escapeHtml(String(project.year))} · ${escapeHtml(project.status || "build")}</div>
+      </div>
+    </div>
+
+    <div class="project-card-body">
+      <div class="project-card-title">${escapeHtml(project.title)}</div>
+      <div class="project-card-subtitle">${escapeHtml(project.role)} · ${escapeHtml(project.impact)}</div>
+      <div class="project-card-desc clamp-3">${escapeHtml(project.description)}</div>
+
+      <div class="card-chip-row">${techHtml}</div>
+
+      <div class="card-action-row">
+        <button type="button" class="card-action f-ring" data-project-open="${escapeHtml(project.id)}">Open details</button>
+        <a href="${escapeHtml(project.demo || "#")}" target="_blank" rel="noreferrer" class="card-link f-ring">Live demo</a>
+        <a href="${escapeHtml(project.repo || "#")}" target="_blank" rel="noreferrer" class="card-link f-ring">GitHub</a>
+      </div>
+    </div>
+  `;
+
+  return article;
 }
 
 function renderProjects() {
   const grid = $("#projectsGrid");
   if (!grid) return;
+
   grid.innerHTML = "";
 
-  const q = projectQuery.trim().toLowerCase();
-  const filtered = PROJECTS.filter((p) => {
-    if (!q) return true;
-    const hay = `${p.title} ${p.category} ${p.role} ${p.description} ${(p.tech || []).join(" ")}`.toLowerCase();
-    return hay.includes(q);
-  });
-
-  const items = getSortedProjects(filtered);
-
-  items.forEach((p) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "text-left border border-borderDim bg-bgDark rounded-xl p-4 hover:border-gBlue transition-colors f-ring";
-    card.innerHTML = `
-      <div class="flex items-start justify-between gap-3">
-        <div class="min-w-0">
-          <div class="text-sm text-white font-bold clamp-2">${p.title}</div>
-          <div class="text-xs text-gray-500 mt-1">${p.category} · ${p.year} · ${p.role}</div>
-        </div>
-        <span class="text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gYellow">project</span>
-      </div>
-      <div class="mt-3 text-xs text-gray-400 clamp-2">${p.description}</div>
-      <div class="mt-3 flex flex-wrap gap-2">
-        ${(p.tech || []).slice(0, 3)
-          .map((t) => `<span class="text-[10px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gray-400">${t}</span>`)
-          .join("")}
-      </div>
-    `;
-    card.addEventListener("click", () => openProjectModal(p));
-    grid.appendChild(card);
-  });
+  const items = getSortedProjects(filterProjects());
 
   if (!items.length) {
     grid.innerHTML = `
-      <div class="border border-borderDim bg-bgDark rounded-xl p-4 text-sm text-gray-400">
+      <div class="rounded-xl border border-borderDim bg-bgDark p-4 text-sm text-gray-400">
         No projects found. Try a different filter.
       </div>
     `;
+    return;
   }
+
+  items.forEach((project) => {
+    const card = buildProjectCard(project);
+    grid.appendChild(card);
+  });
+
+  $$("[data-project-open]", grid).forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-project-open");
+      const project = PROJECTS.find((item) => item.id === id);
+      if (!project) return;
+      openProjectModal(project);
+    });
+  });
 }
 
-function openProjectModal(p) {
-  $("#projectModalTitle") && ($("#projectModalTitle").textContent = p.title);
-  const img = $("#projectModalImg");
-  if (img) {
-    img.src = p.image || "";
-    img.alt = p.title;
-  }
-  $("#projectModalDesc") && ($("#projectModalDesc").textContent = p.description);
-  $("#projectModalMeta") && ($("#projectModalMeta").textContent = `${p.category} · ${p.year}`);
-  $("#projectModalRole") && ($("#projectModalRole").textContent = p.role || "");
-  $("#projectModalImpact") && ($("#projectModalImpact").textContent = p.impact || "");
-
+function openProjectModal(project) {
+  const title = $("#projectModalTitle");
+  const image = $("#projectModalImg");
+  const meta = $("#projectModalMeta");
+  const impact = $("#projectModalImpact");
+  const desc = $("#projectModalDesc");
+  const role = $("#projectModalRole");
+  const outcome = $("#projectModalOutcome");
+  const techRoot = $("#projectModalTech");
+  const highlightRoot = $("#projectModalHighlights");
   const demo = $("#projectModalDemo");
   const repo = $("#projectModalRepo");
-  if (demo) demo.href = p.demo || "#";
-  if (repo) repo.href = p.repo || "#";
 
-  const tech = $("#projectModalTech");
-  if (tech) {
-    tech.innerHTML = "";
-    (p.tech || []).forEach((t) => {
-      const pill = document.createElement("span");
-      pill.className = "text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgDark text-gray-300";
-      pill.textContent = t;
-      tech.appendChild(pill);
+  if (title) title.textContent = project.title;
+  if (image) {
+    image.src = project.image || "";
+    image.alt = project.title;
+  }
+  if (meta) meta.textContent = `${project.category} · ${project.year} · ${project.status || "build"}`;
+  if (impact) impact.textContent = project.impact || "";
+  if (desc) desc.textContent = project.description || "";
+  if (role) role.textContent = project.role || "";
+  if (outcome) outcome.textContent = project.outcome || "";
+
+  if (techRoot) {
+    techRoot.innerHTML = "";
+    (project.tech || []).forEach((item) => {
+      const chip = document.createElement("span");
+      chip.className =
+        "rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-gray-300";
+      chip.textContent = item;
+      techRoot.appendChild(chip);
     });
   }
 
-  const btnCopy = $("#btnCopyProject");
-  if (btnCopy) {
-    btnCopy.onclick = async () => {
-      const text = `${p.title}\nCategory: ${p.category}\nYear: ${p.year}\nRole: ${p.role}\nImpact: ${p.impact}\nTech: ${(p.tech || []).join(
-        ", "
-      )}\nDemo: ${p.demo}\nRepo: ${p.repo}`;
-      try {
-        await navigator.clipboard.writeText(text);
-        toast("Project summary copied");
-      } catch {
-        toast("Copy failed (browser permission)");
-      }
+  if (highlightRoot) {
+    highlightRoot.innerHTML = "";
+    (project.highlights || []).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = `• ${item}`;
+      highlightRoot.appendChild(li);
+    });
+  }
+
+  if (demo) demo.href = project.demo || "#";
+  if (repo) repo.href = project.repo || "#";
+
+  const copyButton = $("#btnCopyProject");
+  if (copyButton) {
+    copyButton.onclick = () => {
+      const summary = [
+        project.title,
+        `Category: ${project.category}`,
+        `Year: ${project.year}`,
+        `Role: ${project.role}`,
+        `Impact: ${project.impact}`,
+        `Outcome: ${project.outcome}`,
+        `Tech: ${(project.tech || []).join(", ")}`,
+        `Demo: ${project.demo || ""}`,
+        `Repo: ${project.repo || ""}`,
+      ].join("\n");
+
+      copyToClipboard(summary, "Project summary copied");
     };
   }
 
@@ -971,101 +1316,180 @@ function closeProjectModal() {
 /* =========================
    Certificates
 ========================= */
-let certQuery = "";
-let certSort = "newest";
-
-function parseIssued(issuedStr) {
-  const parts = String(issuedStr || "").split(" ");
+function parseIssued(value) {
+  const parts = String(value || "").split(" ");
   if (parts.length !== 2) return new Date(2000, 0, 1);
-  const monthMap = {
-    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
-    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
-  };
-  const m = monthMap[parts[0]] ?? 0;
-  const y = Number(parts[1]) || 2000;
-  return new Date(y, m, 1);
+
+  const monthIndex =
+    {
+      Jan: 0,
+      Feb: 1,
+      Mar: 2,
+      Apr: 3,
+      May: 4,
+      Jun: 5,
+      Jul: 6,
+      Aug: 7,
+      Sep: 8,
+      Oct: 9,
+      Nov: 10,
+      Dec: 11,
+    }[parts[0]] ?? 0;
+
+  const year = Number(parts[1]) || 2000;
+  return new Date(year, monthIndex, 1);
 }
 
-function getSortedCerts(items) {
-  const a = [...items];
-  if (certSort === "newest") a.sort((x, y) => parseIssued(y.issued) - parseIssued(x.issued));
-  else if (certSort === "oldest") a.sort((x, y) => parseIssued(x.issued) - parseIssued(y.issued));
-  else if (certSort === "issuer") a.sort((x, y) => x.issuer.localeCompare(y.issuer));
-  else if (certSort === "title") a.sort((x, y) => x.title.localeCompare(y.title));
-  return a;
+function getSortedCertificates(items) {
+  const copy = [...items];
+
+  if (STATE.certSort === "newest") {
+    copy.sort((left, right) => parseIssued(right.issued) - parseIssued(left.issued));
+  } else if (STATE.certSort === "oldest") {
+    copy.sort((left, right) => parseIssued(left.issued) - parseIssued(right.issued));
+  } else if (STATE.certSort === "issuer") {
+    copy.sort((left, right) => left.issuer.localeCompare(right.issuer));
+  } else if (STATE.certSort === "title") {
+    copy.sort((left, right) => left.title.localeCompare(right.title));
+  }
+
+  return copy;
 }
 
-function renderCerts() {
+function filterCertificates() {
+  const query = STATE.certQuery.trim().toLowerCase();
+
+  return CERTS.filter((cert) => {
+    if (!query) return true;
+
+    const haystack = [cert.title, cert.issuer, cert.issued, cert.credential_id, cert.notes]
+      .join(" ")
+      .toLowerCase();
+
+    return haystack.includes(query);
+  });
+}
+
+function buildCertificateCard(cert) {
+  const article = document.createElement("article");
+  article.className = "cert-card";
+
+  article.innerHTML = `
+    <div class="cert-thumb">
+      <img src="${escapeHtml(cert.image)}" alt="${escapeHtml(cert.title)}" loading="lazy" />
+      <div class="project-badge-row">
+        <span class="cert-badge text-gGreen">verified</span>
+        <span class="cert-badge text-gBlue">${escapeHtml(cert.issuer)}</span>
+      </div>
+      <div class="cert-thumb-footer">
+        <div class="text-xs text-white">${escapeHtml(cert.issued)}</div>
+      </div>
+    </div>
+
+    <div class="cert-card-body">
+      <div class="project-card-title">${escapeHtml(cert.title)}</div>
+      <div class="project-card-subtitle">${escapeHtml(cert.issuer)} · ${escapeHtml(cert.credential_id)}</div>
+      <div class="project-card-desc clamp-3">${escapeHtml(cert.notes)}</div>
+
+      <div class="card-action-row">
+        <button type="button" class="card-action f-ring" data-cert-open="${escapeHtml(cert.credential_id)}">View certificate</button>
+        <a href="${escapeHtml(cert.link || "#")}" target="_blank" rel="noreferrer" class="card-link f-ring">Verify</a>
+      </div>
+    </div>
+  `;
+
+  return article;
+}
+
+function renderCertificates() {
   const grid = $("#certGrid");
   if (!grid) return;
+
   grid.innerHTML = "";
 
-  const q = certQuery.trim().toLowerCase();
-  const filtered = CERTS.filter((c) => {
-    if (!q) return true;
-    return (
-      c.title.toLowerCase().includes(q) ||
-      c.issuer.toLowerCase().includes(q) ||
-      c.issued.toLowerCase().includes(q) ||
-      c.credential_id.toLowerCase().includes(q)
-    );
-  });
-
-  const items = getSortedCerts(filtered);
-
-  items.forEach((c) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "text-left border border-borderDim bg-bgDark rounded-xl p-4 hover:border-gBlue transition-colors f-ring";
-    card.innerHTML = `
-      <div class="flex items-start justify-between gap-3">
-        <div>
-          <div class="text-sm text-white font-bold">${c.title}</div>
-          <div class="text-xs text-gray-500 mt-1">${c.issuer} · Issued ${c.issued}</div>
-        </div>
-        <span class="text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gGreen">verified</span>
-      </div>
-      <div class="mt-3 text-xs text-gray-400 clamp-2">${c.notes}</div>
-    `;
-    card.addEventListener("click", () => openCertModal(c));
-    grid.appendChild(card);
-  });
+  const items = getSortedCertificates(filterCertificates());
 
   if (!items.length) {
     grid.innerHTML = `
-      <div class="border border-borderDim bg-bgDark rounded-xl p-4 text-sm text-gray-400">
+      <div class="rounded-xl border border-borderDim bg-bgDark p-4 text-sm text-gray-400">
         No certificates found. Try a different filter.
       </div>
     `;
+    return;
   }
+
+  items.forEach((cert) => {
+    grid.appendChild(buildCertificateCard(cert));
+  });
+
+  $$("[data-cert-open]", grid).forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-cert-open");
+      const cert = CERTS.find((item) => item.credential_id === id);
+      if (!cert) return;
+      openCertificateModal(cert);
+    });
+  });
 }
 
-function openCertModal(c) {
-  $("#certModalTitle") && ($("#certModalTitle").textContent = c.title);
-  $("#certModalIssuer") && ($("#certModalIssuer").textContent = c.issuer);
-  $("#certModalIssued") && ($("#certModalIssued").textContent = c.issued);
-  $("#certModalId") && ($("#certModalId").textContent = c.credential_id);
-  $("#certModalNotes") && ($("#certModalNotes").textContent = c.notes);
+function openCertificateModal(cert) {
+  const title = $("#certModalTitle");
+  const issuer = $("#certModalIssuer");
+  const issued = $("#certModalIssued");
+  const credentialId = $("#certModalId");
+  const notes = $("#certModalNotes");
   const link = $("#certModalLink");
-  if (link) link.href = c.link;
+  const image = $("#certModalImage");
+  const imageButton = $("#btnCertImage");
+  const fullViewButton = $("#btnOpenCertImage");
 
-  openFlexModal("#certModal");
+  if (title) title.textContent = cert.title;
+  if (issuer) issuer.textContent = cert.issuer;
+  if (issued) issued.textContent = cert.issued;
+  if (credentialId) credentialId.textContent = cert.credential_id;
+  if (notes) notes.textContent = cert.notes;
+  if (link) link.href = cert.link || "#";
+  if (image) {
+    image.src = cert.image || "";
+    image.alt = cert.title;
+  }
 
-  const btnCopy = $("#btnCopyCert");
-  if (btnCopy) {
-    btnCopy.onclick = async () => {
-      const text = `${c.title}\nIssuer: ${c.issuer}\nIssued: ${c.issued}\nCredential ID: ${c.credential_id}\nVerify: ${c.link}\nNotes: ${c.notes}`;
-      try {
-        await navigator.clipboard.writeText(text);
-        toast("Certificate details copied");
-      } catch {
-        toast("Copy failed (browser permission)");
-      }
+  const lightboxItems = [
+    {
+      title: cert.title,
+      src: cert.image,
+      alt: cert.title,
+    },
+  ];
+  setLightboxItems(lightboxItems);
+
+  const openFullView = () => {
+    openLightbox(0);
+  };
+
+  if (imageButton) imageButton.onclick = openFullView;
+  if (fullViewButton) fullViewButton.onclick = openFullView;
+
+  const copyButton = $("#btnCopyCert");
+  if (copyButton) {
+    copyButton.onclick = () => {
+      const details = [
+        cert.title,
+        `Issuer: ${cert.issuer}`,
+        `Issued: ${cert.issued}`,
+        `Credential ID: ${cert.credential_id}`,
+        `Verify: ${cert.link}`,
+        `Notes: ${cert.notes}`,
+      ].join("\n");
+
+      copyToClipboard(details, "Certificate details copied");
     };
   }
+
+  openFlexModal("#certModal");
 }
 
-function closeCertModal() {
+function closeCertificateModal() {
   closeFlexModal("#certModal");
 }
 
@@ -1075,18 +1499,20 @@ function closeCertModal() {
 function renderAchievements() {
   const grid = $("#achGrid");
   if (!grid) return;
+
   grid.innerHTML = "";
 
-  ACHIEVEMENTS.forEach((a) => {
+  ACHIEVEMENTS.forEach((item) => {
     const card = document.createElement("div");
-    card.className = "border border-borderDim bg-bgDark rounded-xl p-4 hover:border-white/30 transition-colors";
+    card.className =
+      "rounded-xl border border-borderDim bg-bgDark p-4 transition-colors hover:border-white/30";
     card.innerHTML = `
       <div class="flex items-center justify-between gap-3">
-        <span class="text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-${a.badgeColor}">${a.badge}</span>
-        <span class="text-xs text-gray-500">${a.meta}</span>
+        <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-${escapeHtml(item.badgeColor)}">${escapeHtml(item.badge)}</span>
+        <span class="text-xs text-gray-500">${escapeHtml(item.meta)}</span>
       </div>
-      <div class="mt-3 text-sm text-white font-bold">${a.title}</div>
-      <div class="mt-2 text-xs text-gray-400">${a.desc}</div>
+      <div class="mt-3 text-sm font-bold text-white">${escapeHtml(item.title)}</div>
+      <div class="mt-2 text-xs text-gray-400">${escapeHtml(item.desc)}</div>
     `;
     grid.appendChild(card);
   });
@@ -1096,123 +1522,141 @@ function animateCounters() {
   const counters = $$(".counter");
   if (!counters.length) return;
 
-  const io = new IntersectionObserver(
+  const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        const el = e.target;
-        io.unobserve(el);
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-        const target = Number(el.dataset.target || "0");
-        const duration = 900 + Math.random() * 600;
+        const element = entry.target;
+        const target = Number(element.dataset.target || "0");
+        const duration = 950 + Math.random() * 550;
         const start = performance.now();
 
-        function tick(t) {
-          const p = clamp((t - start) / duration, 0, 1);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = String(Math.floor(target * eased));
-          if (p < 1) requestAnimationFrame(tick);
-          else el.textContent = String(target);
+        observer.unobserve(element);
+
+        function tick(timestamp) {
+          const progress = clamp((timestamp - start) / duration, 0, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          element.textContent = String(Math.floor(target * eased));
+
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            element.textContent = String(target);
+          }
         }
+
         requestAnimationFrame(tick);
       });
     },
     { threshold: 0.35 }
   );
 
-  counters.forEach((c) => io.observe(c));
+  counters.forEach((counter) => observer.observe(counter));
 }
 
 /* =========================
    Gallery
 ========================= */
-let galleryFilter = "all";
+function filterGalleryItems() {
+  return GALLERY_ITEMS.filter((item) => {
+    if (STATE.galleryFilter === "all") return true;
+    if (STATE.galleryFilter === "featured") return Boolean(item.featured);
+    return item.category === STATE.galleryFilter;
+  });
+}
 
 function renderGallery() {
   const grid = $("#galleryGrid");
   if (!grid) return;
+
   grid.innerHTML = "";
 
-  const items = GALLERY_ITEMS.filter((it) => {
-    if (galleryFilter === "all") return true;
-    if (galleryFilter === "featured") return !!it.featured;
-    return it.category === galleryFilter;
-  });
+  const items = filterGalleryItems();
 
-  items.forEach((it) => {
+  if (!items.length) {
+    grid.innerHTML = `
+      <div class="rounded-xl border border-borderDim bg-bgDark p-4 text-sm text-gray-400">
+        No gallery items match that filter.
+      </div>
+    `;
+    return;
+  }
+
+  items.forEach((item) => {
     const card = document.createElement("button");
     card.type = "button";
-    card.className = "text-left border border-borderDim bg-bgDark rounded-xl overflow-hidden hover:border-gBlue transition-colors f-ring";
+    card.className = "gallery-card f-ring text-left";
 
-    const badge = it.featured
-      ? `<span class="text-[10px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gYellow">featured</span>`
-      : `<span class="text-[10px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gray-400">${it.category}</span>`;
+    const badge = item.featured
+      ? `<span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gYellow">featured</span>`
+      : `<span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gray-400">${escapeHtml(item.category)}</span>`;
 
     card.innerHTML = `
       <div class="relative">
-        <img src="${it.image}" alt="${it.title}" loading="lazy" class="h-40 w-full object-cover opacity-90 hover:opacity-100 transition" />
-        <div class="absolute top-2 left-2">${badge}</div>
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="h-40 w-full object-cover opacity-90" />
+        <div class="absolute left-2 top-2">${badge}</div>
       </div>
       <div class="p-4">
-        <div class="text-sm text-white font-bold clamp-2">${it.title}</div>
-        <div class="mt-2 text-xs text-gray-400 clamp-2">${it.description}</div>
+        <div class="clamp-2 text-sm font-bold text-white">${escapeHtml(item.title)}</div>
+        <div class="clamp-2 mt-2 text-xs text-gray-400">${escapeHtml(item.description)}</div>
         <div class="mt-3 flex flex-wrap gap-2">
-          ${(it.tech || [])
-            .slice(0, 3)
-            .map((t) => `<span class="text-[10px] px-2 py-1 rounded-full border border-borderDim bg-bgPanel text-gray-400">${t}</span>`)
-            .join("")}
+          ${(item.tech || [])
+        .slice(0, GALLERY_TECH_LIMIT)
+        .map(
+          (tech) => `<span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gray-400">${escapeHtml(tech)}</span>`
+        )
+        .join("")}
         </div>
       </div>
     `;
 
-    card.addEventListener("click", () => openGalleryModal(it));
+    card.addEventListener("click", () => openGalleryModal(item));
     grid.appendChild(card);
   });
-
-  if (!items.length) {
-    grid.innerHTML = `
-      <div class="border border-borderDim bg-bgDark rounded-xl p-4 text-sm text-gray-400">
-        No gallery items match that filter.
-      </div>
-    `;
-  }
 }
 
-function openGalleryModal(it) {
-  $("#galleryModalTitle") && ($("#galleryModalTitle").textContent = it.title);
-  const img = $("#galleryModalImg");
-  if (img) {
-    img.src = it.image;
-    img.alt = it.title;
-  }
-  $("#galleryModalDesc") && ($("#galleryModalDesc").textContent = it.description);
-  $("#galleryModalMeta") &&
-    ($("#galleryModalMeta").textContent = `Category: ${it.category}${it.featured ? " · Featured" : ""}`);
-
+function openGalleryModal(item) {
+  const title = $("#galleryModalTitle");
+  const image = $("#galleryModalImg");
+  const meta = $("#galleryModalMeta");
+  const desc = $("#galleryModalDesc");
+  const techRoot = $("#galleryModalTech");
   const demo = $("#galleryModalDemo");
-  if (demo) demo.href = it.demo || "#";
+  const copyButton = $("#btnCopyGalleryItem");
 
-  const tech = $("#galleryModalTech");
-  if (tech) {
-    tech.innerHTML = "";
-    (it.tech || []).forEach((t) => {
-      const pill = document.createElement("span");
-      pill.className = "text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgDark text-gray-300";
-      pill.textContent = t;
-      tech.appendChild(pill);
+  if (title) title.textContent = item.title;
+  if (image) {
+    image.src = item.image;
+    image.alt = item.title;
+  }
+  if (meta) {
+    meta.textContent = `Category: ${item.category}${item.featured ? " · Featured" : ""}`;
+  }
+  if (desc) desc.textContent = item.description;
+  if (demo) demo.href = item.demo || "#";
+
+  if (techRoot) {
+    techRoot.innerHTML = "";
+    (item.tech || []).forEach((tech) => {
+      const chip = document.createElement("span");
+      chip.className =
+        "rounded-full border border-borderDim bg-bgDark px-2 py-1 text-[11px] text-gray-300";
+      chip.textContent = tech;
+      techRoot.appendChild(chip);
     });
   }
 
-  const btnCopy = $("#btnCopyGalleryItem");
-  if (btnCopy) {
-    btnCopy.onclick = async () => {
-      const text = `${it.title}\n${it.description}\nTech: ${(it.tech || []).join(", ")}\nDemo: ${it.demo || ""}`;
-      try {
-        await navigator.clipboard.writeText(text);
-        toast("Gallery item copied");
-      } catch {
-        toast("Copy failed (browser permission)");
-      }
+  if (copyButton) {
+    copyButton.onclick = () => {
+      const summary = [
+        item.title,
+        item.description,
+        `Tech: ${(item.tech || []).join(", ")}`,
+        `Demo: ${item.demo || ""}`,
+      ].join("\n");
+
+      copyToClipboard(summary, "Gallery item copied");
     };
   }
 
@@ -1224,171 +1668,28 @@ function closeGalleryModal() {
 }
 
 /* =========================
-   Tabs
-========================= */
-function setTab(tab) {
-  localStorage.setItem(STORAGE_KEYS.tab, tab);
-
-  $$(".tab-btn").forEach((b) => {
-    const on = b.dataset.tab === tab;
-    b.classList.toggle("border-gBlue", on);
-    b.classList.toggle("text-white", on);
-    b.classList.toggle("shadow-glow", on);
-  });
-
-  const sections = $$("[data-section]");
-  sections.forEach((s) => {
-    const key = s.getAttribute("data-section");
-    const show = tab === "all" || tab === key;
-    s.classList.toggle("hidden", !show);
-  });
-
-  const q = $("#searchInput")?.value || "";
-  setResultsMeta(tab === "all" ? q : `${tab} results`);
-}
-
-/* =========================
-   Search interactions
-========================= */
-const DEFAULT_QUERY =
-  "querying portfolio: Gene Elpie Landoy.";
-
-function typeIntoInput(text, speedMin = 25, speedMax = 55) {
-  const input = $("#searchInput");
-  if (!input) return;
-  input.value = "";
-  $("#btnClear")?.classList.add("hidden");
-
-  let i = 0;
-  const shell = $("#searchShell");
-
-  function step() {
-    if (i < text.length) {
-      input.value += text.charAt(i);
-      i++;
-      $("#btnClear")?.classList.remove("hidden");
-      setTimeout(step, Math.random() * (speedMax - speedMin) + speedMin);
-    } else {
-      shell?.classList.add("is-hot");
-      setTimeout(() => shell?.classList.remove("is-hot"), 700);
-      setResultsMeta(input.value);
-    }
-  }
-
-  setTimeout(step, 350);
-}
-
-
-async function runQuery() {
-  const q = ($("#searchInput")?.value || "").trim();
-  if (!q) return;
-
-  setResultsMeta(q);
-
-  // show loading UI (AI-only)
-  renderAiResultBox(q, { type: "loading" });
-  toast("Searching with AI...");
-
-  // Optional: quick health check (nice error message)
-  const healthy = await aiHealthCheck();
-  if (!healthy) {
-    renderAiResultBox(q, {
-      type: "error",
-      message: "Server not reachable. Open http://localhost:3000 and ensure `npm run dev` is running.",
-    });
-    toast("AI server offline");
-    return;
-  }
-
-  try {
-    const answer = await aiSearch(q);
-
-    renderAiResultBox(q, {
-      type: "success",
-      answer,
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    toast("AI result ready");
-
-    $("#searchShell")?.classList.add("is-hot");
-    setTimeout(() => $("#searchShell")?.classList.remove("is-hot"), 650);
-  } catch (e) {
-    renderAiResultBox(q, {
-      type: "error",
-      message: e?.message || "AI request failed.",
-    });
-    toast("AI request failed");
-  }
-}
-
-function feelingFuturistic() {
-  const picks = [
-    { tab: "images", msg: "Warping to images…" },
-    { tab: "projects", msg: "Warping to projects…" },
-    { tab: "timeline", msg: "Warping to timeline…" },
-    { tab: "certificates", msg: "Warping to certificates…" },
-    { tab: "achievements", msg: "Warping to achievements…" },
-    { tab: "gallery", msg: "Warping to gallery…" },
-    { tab: "about", msg: "Warping to about…" },
-  ];
-
-  const pick = picks[Math.floor(Math.random() * picks.length)];
-  setTab(pick.tab);
-  toast(pick.msg);
-
-  const sectionId = `#section-${pick.tab}`;
-  setTimeout(() => scrollToEl(sectionId), 250);
-
-  const variants = [
-    "best frontend engineer portfolio retro google",
-    "gene elpie landoy projects timeline webgl",
-    "projects orbit ui kit telemetry dashboard",
-    "timeline work history milestones impact",
-    "certificates aws meta frontend verify",
-    "achievements open source speaker performance",
-    "creative coding gallery webgl shaders",
-    "about gene elpie landoy ui architect a11y performance",
-  ];
-
-  const input = $("#searchInput");
-  if (input) {
-    input.value = variants[Math.floor(Math.random() * variants.length)];
-    $("#btnClear")?.classList.remove("hidden");
-    setResultsMeta(input.value);
-  }
-}
-
-/* =========================
    Saved searches
 ========================= */
 function getSavedSearches() {
-  return safeJsonParse(localStorage.getItem(STORAGE_KEYS.saved) || "[]", []);
+  return safeJsonParse(localStorage.getItem(STORAGE_KEYS.SAVED) || "[]", []);
 }
 
 function setSavedSearches(list) {
-  localStorage.setItem(STORAGE_KEYS.saved, JSON.stringify(list.slice(0, 20)));
+  localStorage.setItem(STORAGE_KEYS.SAVED, JSON.stringify(list.slice(0, 20)));
 }
 
 function saveCurrentSearch() {
-  const input = $("#searchInput");
-  const q = input ? input.value.trim() : "";
-  if (!q) return toast("Type a query first");
+  const query = ($("#searchInput")?.value || "").trim();
+  if (!query) {
+    toast("Type a query first");
+    return;
+  }
+
   const list = getSavedSearches();
-  const now = new Date().toISOString();
-  const entry = { q, at: now };
-  const next = [entry, ...list.filter((x) => x.q !== q)];
+  const next = [{ q: query, at: new Date().toISOString() }, ...list.filter((entry) => entry.q !== query)];
+
   setSavedSearches(next);
   toast("Search saved");
-}
-
-function openSavedModal() {
-  renderSavedList();
-  openFlexModal("#savedModal");
-}
-
-function closeSavedModal() {
-  closeFlexModal("#savedModal");
 }
 
 function renderSavedList() {
@@ -1400,50 +1701,51 @@ function renderSavedList() {
 
   if (!list.length) {
     root.innerHTML = `
-      <div class="border border-borderDim bg-bgDark rounded-xl p-4 text-sm text-gray-400">
+      <div class="rounded-xl border border-borderDim bg-bgDark p-4 text-sm text-gray-400">
         No saved searches yet.
       </div>
     `;
     return;
   }
 
-  list.forEach((item, idx) => {
+  list.forEach((entry, index) => {
     const row = document.createElement("div");
-    row.className = "border border-borderDim bg-bgDark rounded-xl p-4 flex items-start justify-between gap-3";
-    const when = new Date(item.at);
+    row.className = "flex items-start justify-between gap-3 rounded-xl border border-borderDim bg-bgDark p-4";
+
     row.innerHTML = `
       <div class="min-w-0">
-        <div class="text-sm text-white font-bold clamp-2">${escapeHtml(item.q)}</div>
-        <div class="mt-1 text-xs text-gray-500">Saved: ${when.toLocaleString()}</div>
+        <div class="clamp-2 text-sm font-bold text-white">${escapeHtml(entry.q)}</div>
+        <div class="mt-1 text-xs text-gray-500">Saved: ${new Date(entry.at).toLocaleString()}</div>
       </div>
       <div class="flex gap-2">
-        <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs f-ring" type="button" data-load="${idx}">Load</button>
-        <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs f-ring" type="button" data-del="${idx}">Del</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-load="${index}">Load</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-del="${index}">Del</button>
       </div>
     `;
+
     root.appendChild(row);
   });
 
-  $$("[data-load]", root).forEach((b) => {
-    b.addEventListener("click", () => {
-      const i = Number(b.dataset.load);
-      const list = getSavedSearches();
-      const picked = list[i];
-      if (!picked) return;
+  $$("[data-load]", root).forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.load);
+      const item = getSavedSearches()[index];
       const input = $("#searchInput");
-      if (input) input.value = picked.q;
+      if (!item || !input) return;
+
+      input.value = item.q;
       $("#btnClear")?.classList.remove("hidden");
-      setResultsMeta(picked.q);
+      setResultsMeta(item.q);
       closeSavedModal();
       toast("Loaded");
     });
   });
 
-  $$("[data-del]", root).forEach((b) => {
-    b.addEventListener("click", () => {
-      const i = Number(b.dataset.del);
+  $$("[data-del]", root).forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.del);
       const list = getSavedSearches();
-      list.splice(i, 1);
+      list.splice(index, 1);
       setSavedSearches(list);
       renderSavedList();
       toast("Deleted");
@@ -1451,8 +1753,17 @@ function renderSavedList() {
   });
 }
 
+function openSavedModal() {
+  renderSavedList();
+  openFlexModal("#savedModal");
+}
+
+function closeSavedModal() {
+  closeFlexModal("#savedModal");
+}
+
 /* =========================
-   Command Palette
+   Command palette
 ========================= */
 const COMMANDS = [
   { label: "Go: Top", run: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
@@ -1465,14 +1776,50 @@ const COMMANDS = [
   { label: "Tab: Gallery", run: () => setTab("gallery") },
   { label: "Tab: About", run: () => setTab("about") },
   { label: "Open: Saved searches", run: () => openSavedModal() },
-  { label: "Open: Profile panel", run: () => openKpDrawer() },
+  { label: "Open: Profile panel", run: () => openProfileDrawer() },
   { label: "Action: Run query", run: () => runQuery() },
   { label: "Action: Feeling Futuristic", run: () => feelingFuturistic() },
 ];
 
-function openCmdPalette() {
-  renderCmdList("");
+function renderCommandList(query = "") {
+  const list = $("#cmdList");
+  if (!list) return;
+
+  const normalized = String(query).trim().toLowerCase();
+  const items = COMMANDS.filter((command) => {
+    if (!normalized) return true;
+    return command.label.toLowerCase().includes(normalized);
+  }).slice(0, 12);
+
+  list.innerHTML = "";
+
+  if (!items.length) {
+    list.innerHTML = `
+      <div class="rounded-xl border border-borderDim bg-bgDark p-4 text-sm text-gray-400">
+        No commands found.
+      </div>
+    `;
+    return;
+  }
+
+  items.forEach((command) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className =
+      "f-ring w-full rounded-xl border border-borderDim bg-bgDark p-3 text-left transition-colors hover:border-gBlue";
+    button.textContent = command.label;
+    button.addEventListener("click", () => {
+      closeCommandPalette();
+      command.run();
+    });
+    list.appendChild(button);
+  });
+}
+
+function openCommandPalette() {
   openFlexModal("#cmdPalette");
+  renderCommandList("");
+
   const input = $("#cmdInput");
   if (input) {
     input.value = "";
@@ -1480,51 +1827,21 @@ function openCmdPalette() {
   }
 }
 
-function closeCmdPalette() {
+function closeCommandPalette() {
   closeFlexModal("#cmdPalette");
 }
 
-function renderCmdList(q) {
-  const root = $("#cmdList");
-  if (!root) return;
-
-  root.innerHTML = "";
-  const s = (q || "").trim().toLowerCase();
-  const items = COMMANDS.filter((c) => !s || c.label.toLowerCase().includes(s)).slice(0, 12);
-
-  if (!items.length) {
-    root.innerHTML = `
-      <div class="border border-borderDim bg-bgDark rounded-xl p-4 text-sm text-gray-400">
-        No commands found.
-      </div>
-    `;
-    return;
-  }
-
-  items.forEach((c) => {
-    const row = document.createElement("button");
-    row.type = "button";
-    row.className = "w-full text-left border border-borderDim bg-bgDark rounded-xl p-3 hover:border-gBlue transition-colors f-ring";
-    row.textContent = c.label;
-    row.addEventListener("click", () => {
-      closeCmdPalette();
-      c.run();
-    });
-    root.appendChild(row);
-  });
-}
-
 /* =========================
-   Mobile Profile Drawer
+   Profile drawer
 ========================= */
-function openKpDrawer() {
+function openProfileDrawer() {
   const drawer = $("#kpDrawer");
   if (!drawer) return;
   drawer.classList.remove("hidden");
   document.body.style.overflow = "hidden";
 }
 
-function closeKpDrawer() {
+function closeProfileDrawer() {
   const drawer = $("#kpDrawer");
   if (!drawer) return;
   drawer.classList.add("hidden");
@@ -1532,289 +1849,275 @@ function closeKpDrawer() {
 }
 
 /* =========================
-   Wire up UI
+   Contact form
+========================= */
+async function submitContactForm(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const status = $("#contactStatus");
+  const formData = new FormData(form);
+
+  const payload = {
+    name: String(formData.get("name") || ""),
+    email: String(formData.get("email") || ""),
+    message: String(formData.get("message") || ""),
+  };
+
+  if (status) status.textContent = "Sending...";
+
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok || !data?.ok) {
+      const message = data?.error || "Send failed.";
+      if (status) status.textContent = message;
+      toast(message);
+      return;
+    }
+
+    if (status) status.textContent = "Sent! Saved on server.";
+    form.reset();
+    toast("Message sent");
+  } catch {
+    if (status) status.textContent = "Network error.";
+    toast("Network error");
+  }
+}
+
+/* =========================
+   Event wiring
 ========================= */
 function setupEventHandlers() {
-  // Tabs
-  $$(".tab-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tab = btn.dataset.tab;
+  $$(".tab-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const tab = button.dataset.tab;
       if (!tab) return;
+
       setTab(tab);
-      const sectionId = tab === "all" ? "#top" : `#section-${tab}`;
-      setTimeout(() => scrollToEl(sectionId), 120);
     });
   });
 
-  // Scroll-to links
-  document.addEventListener("click", (e) => {
-    const t = e.target;
-    const el = t && t.closest ? t.closest("[data-scrollto]") : null;
-    if (!el) return;
-    const dest = el.getAttribute("data-scrollto");
-    if (!dest) return;
-    scrollToEl(dest);
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    const trigger = target?.closest?.("[data-scrollto]");
+    if (!trigger) return;
+
+    const destination = trigger.getAttribute("data-scrollto");
+    if (!destination) return;
+
+    scrollToEl(destination);
   });
 
-  // Run / Lucky
+  $("#searchShell")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    runQuery();
+  });
+
   $("#btnRun")?.addEventListener("click", runQuery);
   $("#btnLucky")?.addEventListener("click", feelingFuturistic);
 
-  // Enter key should run query
-  $("#searchInput")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
+  $("#searchInput")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
       runQuery();
     }
   });
 
-  // Search input meta
-  $("#searchInput")?.addEventListener("input", (e) => {
-    const val = e.target.value;
-    $("#btnClear")?.classList.toggle("hidden", !val);
-    setResultsMeta(val);
+  $("#searchInput")?.addEventListener("input", (event) => {
+    const value = event.target.value;
+    $("#btnClear")?.classList.toggle("hidden", !value);
+    setResultsMeta(value);
   });
 
-  // “/” focus search
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
-      const active = document.activeElement;
-      const tag = active && active.tagName ? active.tagName.toLowerCase() : "";
-      const typing = tag === "input" || tag === "textarea";
-      if (typing) return;
-      e.preventDefault();
-      $("#searchInput")?.focus();
-    }
-  });
-
-  // Clear
   $("#btnClear")?.addEventListener("click", () => {
     const input = $("#searchInput");
     if (input) input.value = "";
     $("#btnClear")?.classList.add("hidden");
-    setResultsMeta("");
-    localFilterSearch("");
     clearAiResultBoxes();
+    setResultsMeta("");
     toast("Cleared");
   });
 
-  // Voice demo
   $("#btnVoice")?.addEventListener("click", () => {
-    toast("Voice search is a demo here 😄");
     $("#searchShell")?.classList.add("is-hot");
     setTimeout(() => $("#searchShell")?.classList.remove("is-hot"), 600);
+    toast("Voice search is a demo here");
   });
 
-  // Images
   $("#btnShuffleImages")?.addEventListener("click", () => {
     renderImages(shuffle(IMAGE_ITEMS));
     toast("Images shuffled");
   });
 
-  $("#viewAllImages")?.addEventListener("click", (e) => {
-    e.preventDefault();
+  $("#viewAllImages")?.addEventListener("click", () => {
     setTab("images");
     scrollToEl("#section-images");
   });
 
-  // Lightbox
   $("#btnCloseLightbox")?.addEventListener("click", closeLightbox);
-  $("#btnPrevImg")?.addEventListener("click", () => nextImg(-1));
-  $("#btnNextImg")?.addEventListener("click", () => nextImg(1));
-  $("#lightbox")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeLightbox();
+  $("#btnPrevImg")?.addEventListener("click", () => nextLightboxImage(-1));
+  $("#btnNextImg")?.addEventListener("click", () => nextLightboxImage(1));
+  $("#lightbox")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeLightbox();
   });
 
-  // Cert modal
-  $("#btnCloseCertModal")?.addEventListener("click", closeCertModal);
-  $("#certModal")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeCertModal();
-  });
-
-  // Project modal
   $("#btnCloseProjectModal")?.addEventListener("click", closeProjectModal);
-  $("#projectModal")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeProjectModal();
+  $("#projectModal")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeProjectModal();
   });
 
-  // Gallery modal
+  $("#btnCloseCertModal")?.addEventListener("click", closeCertificateModal);
+  $("#certModal")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeCertificateModal();
+  });
+
   $("#btnCloseGalleryModal")?.addEventListener("click", closeGalleryModal);
-  $("#galleryModal")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeGalleryModal();
+  $("#galleryModal")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeGalleryModal();
   });
 
-  // Timeline filter chips
-  $$("[data-timeline-filter]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      activeTimelineFilter = btn.dataset.timelineFilter || "all";
-      $$("[data-timeline-filter]").forEach((b) => {
-        const on = b.dataset.timelineFilter === activeTimelineFilter;
-        b.classList.toggle("border-gBlue", on);
-        b.classList.toggle("text-white", on);
-        b.classList.toggle("shadow-glow", on);
+  $$("[data-timeline-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      STATE.activeTimelineFilter = button.dataset.timelineFilter || "all";
+
+      $$("[data-timeline-filter]").forEach((item) => {
+        const active = item.dataset.timelineFilter === STATE.activeTimelineFilter;
+        item.classList.toggle("border-gBlue", active);
+        item.classList.toggle("text-white", active);
+        item.classList.toggle("shadow-glow", active);
       });
+
       renderTimeline();
-      toast(`Timeline filter: ${activeTimelineFilter}`);
+      toast(`Timeline filter: ${STATE.activeTimelineFilter}`);
     });
   });
 
-  // Expand all timeline
   $("#btnExpandAllTimeline")?.addEventListener("click", () => {
-    timelineExpandedAll = !timelineExpandedAll;
-    const btn = $("#btnExpandAllTimeline");
-    if (btn) btn.textContent = timelineExpandedAll ? "Collapse all" : "Expand all";
+    STATE.timelineExpandedAll = !STATE.timelineExpandedAll;
+    const button = $("#btnExpandAllTimeline");
+    if (button) {
+      button.textContent = STATE.timelineExpandedAll ? "Collapse all" : "Expand all";
+    }
     renderTimeline();
   });
 
-  // Certificates search + sort
-  $("#certSearch")?.addEventListener("input", (e) => {
-    certQuery = e.target.value;
-    renderCerts();
-  });
-  $("#certSort")?.addEventListener("change", (e) => {
-    certSort = e.target.value;
-    renderCerts();
-  });
-
-  // Projects search + sort
-  $("#projectSearch")?.addEventListener("input", (e) => {
-    projectQuery = e.target.value;
-    renderProjects();
-  });
-  $("#projectSort")?.addEventListener("change", (e) => {
-    projectSort = e.target.value;
+  $("#projectSearch")?.addEventListener("input", (event) => {
+    STATE.projectQuery = event.target.value;
     renderProjects();
   });
 
-  // Gallery filter + shuffle
-  $("#galleryFilter")?.addEventListener("change", (e) => {
-    galleryFilter = e.target.value;
+  $("#projectSort")?.addEventListener("change", (event) => {
+    STATE.projectSort = event.target.value;
+    renderProjects();
+  });
+
+  $("#certSearch")?.addEventListener("input", (event) => {
+    STATE.certQuery = event.target.value;
+    renderCertificates();
+  });
+
+  $("#certSort")?.addEventListener("change", (event) => {
+    STATE.certSort = event.target.value;
+    renderCertificates();
+  });
+
+  $("#galleryFilter")?.addEventListener("change", (event) => {
+    STATE.galleryFilter = event.target.value;
     renderGallery();
   });
 
   $("#btnShuffleGallery")?.addEventListener("click", () => {
     const shuffled = shuffle(GALLERY_ITEMS);
     GALLERY_ITEMS.length = 0;
-    shuffled.forEach((x) => GALLERY_ITEMS.push(x));
+    shuffled.forEach((item) => GALLERY_ITEMS.push(item));
     renderGallery();
     toast("Gallery shuffled");
   });
 
-  // Copy bio
-  $("#btnCopyBio")?.addEventListener("click", async () => {
+  $("#btnCopyBio")?.addEventListener("click", () => {
     const text = ($("#bioText")?.textContent || "").trim();
-    try {
-      await navigator.clipboard.writeText(text);
-      toast("Bio copied");
-    } catch {
-      toast("Copy failed (browser permission)");
-    }
+    copyToClipboard(text, "Bio copied");
   });
 
-  // Download resume (demo)
-  $("#btnDownloadResume")?.addEventListener("click", () => toast("Demo: connect a real PDF/Doc link here"));
-
-  // Contact form
-  $("#contactForm")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const fd = new FormData(form);
-
-    const payload = {
-      name: String(fd.get("name") || ""),
-      email: String(fd.get("email") || ""),
-      message: String(fd.get("message") || ""),
-    };
-
-    const status = $("#contactStatus");
-    if (status) status.textContent = "Sending...";
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (!res.ok || !data?.ok) {
-        const msg = data?.error || "Send failed.";
-        if (status) status.textContent = msg;
-        toast(msg);
-        return;
-      }
-
-      if (status) status.textContent = "Sent! Saved on server.";
-      toast("Message sent");
-      form.reset();
-    } catch {
-      if (status) status.textContent = "Network error.";
-      toast("Network error");
-    }
+  $("#btnDownloadResume")?.addEventListener("click", () => {
+    toast("Demo: connect a real PDF or document link here");
   });
 
-  // Mobile drawer open/close
-  $("#btnOpenKp")?.addEventListener("click", openKpDrawer);
-  $("#btnCloseKp")?.addEventListener("click", closeKpDrawer);
-  $("#kpDrawer")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeKpDrawer();
+  $("#contactForm")?.addEventListener("submit", submitContactForm);
+
+  $("#btnOpenKp")?.addEventListener("click", openProfileDrawer);
+  $("#btnCloseKp")?.addEventListener("click", closeProfileDrawer);
+  $("#kpDrawer")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeProfileDrawer();
   });
 
-  // Saved searches
   $("#btnSaveSearch")?.addEventListener("click", saveCurrentSearch);
   $("#btnOpenSaved")?.addEventListener("click", openSavedModal);
   $("#btnCloseSaved")?.addEventListener("click", closeSavedModal);
-  $("#savedModal")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeSavedModal();
+  $("#savedModal")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeSavedModal();
   });
 
-  // Command palette
-  $("#btnCmd")?.addEventListener("click", openCmdPalette);
-  $("#cmdPalette")?.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close === "true") closeCmdPalette();
+  $("#btnCmd")?.addEventListener("click", openCommandPalette);
+  $("#cmdPalette")?.addEventListener("click", (event) => {
+    if (event.target?.dataset?.close === "true") closeCommandPalette();
   });
 
-  $("#cmdInput")?.addEventListener("input", (e) => renderCmdList(e.target.value));
-  $("#cmdInput")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      const q = $("#cmdInput")?.value.trim().toLowerCase() || "";
-      const hit = COMMANDS.find((c) => c.label.toLowerCase().includes(q)) || COMMANDS[0];
-      closeCmdPalette();
+  $("#cmdInput")?.addEventListener("input", (event) => {
+    renderCommandList(event.target.value);
+  });
+
+  $("#cmdInput")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      const query = ($("#cmdInput")?.value || "").trim().toLowerCase();
+      const hit =
+        COMMANDS.find((command) => command.label.toLowerCase().includes(query)) || COMMANDS[0];
+      closeCommandPalette();
       hit.run();
     }
   });
 
-  // Global keyboard (Escape, arrows, Cmd+K)
-  document.addEventListener("keydown", (e) => {
-    const lbOpen = !$("#lightbox")?.classList.contains("hidden");
-    const cmOpen = !$("#certModal")?.classList.contains("hidden");
-    const pmOpen = !$("#projectModal")?.classList.contains("hidden");
-    const gmOpen = !$("#galleryModal")?.classList.contains("hidden");
-    const kpOpen = !$("#kpDrawer")?.classList.contains("hidden");
-    const cmdOpen = !$("#cmdPalette")?.classList.contains("hidden");
-    const savedOpen = !$("#savedModal")?.classList.contains("hidden");
+  document.addEventListener("keydown", (event) => {
+    const isTyping = ["input", "textarea"].includes(
+      document.activeElement?.tagName?.toLowerCase?.() || ""
+    );
 
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
-      e.preventDefault();
-      if (cmdOpen) closeCmdPalette();
-      else openCmdPalette();
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      if ($("#cmdPalette")?.classList.contains("hidden")) {
+        openCommandPalette();
+      } else {
+        closeCommandPalette();
+      }
       return;
     }
 
-    if (e.key === "Escape") {
-      if (lbOpen) closeLightbox();
-      if (cmOpen) closeCertModal();
-      if (pmOpen) closeProjectModal();
-      if (gmOpen) closeGalleryModal();
-      if (kpOpen) closeKpDrawer();
-      if (cmdOpen) closeCmdPalette();
-      if (savedOpen) closeSavedModal();
+    if (event.key === "/" && !event.ctrlKey && !event.metaKey && !event.altKey && !isTyping) {
+      event.preventDefault();
+      $("#searchInput")?.focus();
+      return;
     }
 
-    if (lbOpen && (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
-      nextImg(e.key === "ArrowLeft" ? -1 : 1);
+    if (event.key === "Escape") {
+      if (!$("#lightbox")?.classList.contains("hidden")) closeLightbox();
+      if (!$("#projectModal")?.classList.contains("hidden")) closeProjectModal();
+      if (!$("#certModal")?.classList.contains("hidden")) closeCertificateModal();
+      if (!$("#galleryModal")?.classList.contains("hidden")) closeGalleryModal();
+      if (!$("#kpDrawer")?.classList.contains("hidden")) closeProfileDrawer();
+      if (!$("#cmdPalette")?.classList.contains("hidden")) closeCommandPalette();
+      if (!$("#savedModal")?.classList.contains("hidden")) closeSavedModal();
+    }
+
+    if (!$("#lightbox")?.classList.contains("hidden")) {
+      if (event.key === "ArrowLeft") nextLightboxImage(-1);
+      if (event.key === "ArrowRight") nextLightboxImage(1);
     }
   });
 }
@@ -1823,12 +2126,13 @@ function setupEventHandlers() {
    Init
 ========================= */
 function init() {
-  mountKnowledgePanels();
+  stabilizeStartupScroll();
 
+  mountKnowledgePanels();
   renderImages(IMAGE_ITEMS);
   renderProjects();
   renderTimeline();
-  renderCerts();
+  renderCertificates();
   renderAchievements();
   renderGallery();
   animateCounters();
@@ -1837,17 +2141,24 @@ function init() {
   setupEventHandlers();
   setupScrollUx();
 
-  const savedTab = localStorage.getItem(STORAGE_KEYS.tab) || "all";
+  const savedTab = localStorage.getItem(STORAGE_KEYS.TAB) || "all";
   setTab(savedTab);
 
-  $$("[data-timeline-filter]").forEach((b) => {
-    const on = b.dataset.timelineFilter === "all";
-    b.classList.toggle("border-gBlue", on);
-    b.classList.toggle("text-white", on);
-    b.classList.toggle("shadow-glow", on);
+  $$("[data-timeline-filter]").forEach((button) => {
+    const active = button.dataset.timelineFilter === "all";
+    button.classList.toggle("border-gBlue", active);
+    button.classList.toggle("text-white", active);
+    button.classList.toggle("shadow-glow", active);
   });
 
-  setTimeout(() => typeIntoInput(DEFAULT_QUERY), 700);
+  setTimeout(() => {
+    typeIntoInput(DEFAULT_QUERY);
+    forceScrollTop();
+  }, 700);
+
+  setTimeout(() => {
+    forceScrollTop();
+  }, 1200);
 }
 
 init();

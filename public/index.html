@@ -1,1126 +1,1090 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <!--
-      RETRO-GOOGLE FUTURISTIC PORTFOLIO
+<html lang="en">
+
+<head>
+  <!--
       File: index.html
-      Version: 2.4.0
-      Purpose: Retro Google-style “search results” portfolio with modern interactions.
-      Notes:
-      - Tailwind via CDN for layout/utility.
-      - Custom CSS in style.css for scanlines/glow/glitch and subtle retro effects.
-      - All interactivity in app.js
+      Description: Retro-futuristic search-style portfolio with improved layout balance,
+      responsive header actions, cleaner tab alignment, and fixed detail modal proportions.
+      Version: 3.1.0
     -->
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gene Elpie Landoy - Retro-Google Futuristic Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gene Elpie Landoy | Retro Search Portfolio</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              bgDark: "#0d1117",
-              bgPanel: "#161b22",
-              borderDim: "#2b313a",
-              gBlue: "#4285F4",
-              gRed: "#EA4335",
-              gYellow: "#FBBC05",
-              gGreen: "#34A853",
-              urlGreen: "#00ff88",
-              glowBlue: "rgba(66, 133, 244, 0.45)",
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgDark: "#0b1017",
+            bgPanel: "#121923",
+            bgSoft: "#0f1722",
+            borderDim: "#263041",
+            gBlue: "#4285F4",
+            gRed: "#EA4335",
+            gYellow: "#FBBC05",
+            gGreen: "#34A853",
+            urlGreen: "#00ff88",
+          },
+          fontFamily: {
+            mono: ['"Space Mono"', "monospace"],
+          },
+          boxShadow: {
+            soft: "0 20px 60px rgba(0,0,0,0.38)",
+            glow: "0 0 0 1px rgba(66,133,244,0.18), 0 0 24px rgba(66,133,244,0.16)",
+          },
+          keyframes: {
+            floaty: {
+              "0%,100%": { transform: "translateY(0px)" },
+              "50%": { transform: "translateY(-6px)" },
             },
-            fontFamily: {
-              mono: ['"Space Mono"', "monospace"],
+            flicker: {
+              "0%,100%": { opacity: "0.98" },
+              "8%": { opacity: "0.9" },
+              "10%": { opacity: "0.82" },
+              "12%": { opacity: "0.96" },
+              "72%": { opacity: "0.85" },
+              "75%": { opacity: "0.98" },
             },
-            boxShadow: {
-              soft: "0 12px 40px rgba(0,0,0,0.45)",
-              glow: "0 0 18px rgba(66,133,244,0.35)",
+            scan: {
+              "0%": { transform: "translateY(-45%)" },
+              "100%": { transform: "translateY(150%)" },
             },
-            keyframes: {
-              floaty: {
-                "0%,100%": { transform: "translateY(0px)" },
-                "50%": { transform: "translateY(-6px)" },
-              },
-              flicker: {
-                "0%, 100%": { opacity: "0.95" },
-                "8%": { opacity: "0.86" },
-                "9%": { opacity: "0.98" },
-                "10%": { opacity: "0.88" },
-                "11%": { opacity: "0.98" },
-                "12%": { opacity: "0.92" },
-                "70%": { opacity: "0.97" },
-                "71%": { opacity: "0.88" },
-                "72%": { opacity: "0.97" },
-              },
-              scan: {
-                "0%": { transform: "translateY(-40%)" },
-                "100%": { transform: "translateY(140%)" },
-              },
-              pop: {
-                "0%": { transform: "scale(0.985)", opacity: "0.0" },
-                "100%": { transform: "scale(1)", opacity: "1" },
-              },
-              pulseRing: {
-                "0%": { transform: "scale(0.98)", opacity: "0.7" },
-                "100%": { transform: "scale(1.12)", opacity: "0" },
-              },
-            },
-            animation: {
-              floaty: "floaty 4.5s ease-in-out infinite",
-              flicker: "flicker 6s infinite",
-              scan: "scan 8s linear infinite",
-              pop: "pop 240ms ease-out",
-              pulseRing: "pulseRing 900ms ease-out",
+            pop: {
+              "0%": { transform: "translateY(8px) scale(0.985)", opacity: "0" },
+              "100%": { transform: "translateY(0px) scale(1)", opacity: "1" },
             },
           },
+          animation: {
+            floaty: "floaty 4.8s ease-in-out infinite",
+            flicker: "flicker 6s infinite",
+            scan: "scan 8s linear infinite",
+            pop: "pop 220ms ease-out",
+          },
         },
-      };
-    </script>
+      },
+    };
+  </script>
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-  <body class="text-gray-300 font-mono antialiased min-h-screen relative">
-    <!-- Retro overlays -->
-    <div class="scroll-progress" id="scrollProgress"></div>
-    <div class="scanlines"></div>
-    <div class="scanbeam animate-scan"></div>
-    <div class="bg-noise"></div>
+<body class="min-h-screen font-mono text-gray-300 antialiased">
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="scanlines"></div>
+  <div class="scanbeam animate-scan"></div>
+  <div class="bg-noise"></div>
 
-    <!-- TOP -->
-    <header
-      class="sticky top-0 z-50 bg-bgDark/85 backdrop-blur-md border-b border-borderDim"
-      id="topHeader"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-5">
-        <!-- Row: logo + actions -->
-        <div class="flex items-center gap-3">
-          <!-- Logo -->
-          <a
-            href="#top"
-            class="select-none flex items-center gap-1 text-2xl sm:text-3xl font-bold tracking-tighter f-ring rounded"
-            aria-label="Home"
-          >
-            <span class="text-gBlue drop-shadow-[0_0_10px_rgba(66,133,244,0.55)]">E</span>
-            <span class="text-gRed drop-shadow-[0_0_10px_rgba(234,67,53,0.55)]">L</span>
-            <span class="text-gYellow drop-shadow-[0_0_10px_rgba(251,188,5,0.55)]">P</span>
-            <span class="text-gBlue drop-shadow-[0_0_10px_rgba(66,133,244,0.55)]">I</span>
-            <span class="text-gGreen drop-shadow-[0_0_10px_rgba(52,168,83,0.55)]">E</span>
-            <span class="text-gRed drop-shadow-[0_0_10px_rgba(234,67,53,0.55)]">E</span>
+  <header id="topHeader" class="sticky top-0 z-50 border-b border-borderDim bg-bgDark/85 backdrop-blur-md">
+    <div class="mx-auto max-w-[1500px] px-4 py-4 sm:px-6 xl:px-10">
+      <div class="flex items-center gap-3">
+        <a href="#top" aria-label="Home"
+          class="f-ring select-none rounded flex items-center gap-1 text-2xl font-bold tracking-tighter sm:text-3xl">
+          <span class="text-gBlue">E</span>
+          <span class="text-gRed">L</span>
+          <span class="text-gYellow">P</span>
+          <span class="text-gBlue">I</span>
+          <span class="text-gGreen">E</span>
+          <span class="text-gRed">E</span>
+          <span class="ml-2 hidden text-xs text-gray-500 md:inline-block">portfolio</span>
+        </a>
 
-            <span class="ml-2 text-xs sm:text-sm text-gray-500 hidden md:inline-block">
-              portfolio
-            </span>
-          </a>
+        <div class="flex-1"></div>
 
-          <div class="flex-1"></div>
+        <button id="btnOpenKp" type="button"
+          class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#192233] sm:text-sm xl:hidden">
+          Profile
+        </button>
 
-          <!-- Mobile actions -->
-          <button
-            id="btnOpenKp"
-            class="lg:hidden px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs sm:text-sm f-ring"
-            type="button"
-            aria-label="Open profile panel"
-            title="Profile"
-          >
-            Profile
-          </button>
+        <button id="btnCmd" type="button"
+          class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#192233] sm:text-sm"
+          aria-label="Open command palette" title="Command palette (Ctrl/Cmd+K)">
+          ⌘K
+        </button>
+      </div>
 
-          <button
-            id="btnCmd"
-            class="px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-xs sm:text-sm f-ring"
-            type="button"
-            aria-label="Open command palette"
-            title="Command palette (Ctrl/Cmd+K)"
-          >
-            ⌘K
-          </button>
-        </div>
+      <div class="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start">
+        <div class="min-w-0">
+          <form id="searchShell"
+            class="search-glow rounded-full border border-borderDim bg-bgPanel px-4 py-3 transition-all duration-300">
+            <div class="flex min-w-0 items-center gap-3">
+              <svg class="h-5 w-5 shrink-0 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
 
-        <!-- Row: search -->
-        <div class="mt-3 grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
-          <div class="lg:col-span-9">
- <!-- Palitan mo yung search shell div mo ng form na to -->
-<form
-  id="searchShell"
-  class="search-glow bg-bgPanel border border-borderDim rounded-full flex items-center gap-3 px-4 py-3 transition-all duration-300"
->
-  <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-    ></path>
-  </svg>
+              <input id="searchInput" type="text" autocomplete="off" spellcheck="false"
+                placeholder="Search this portfolio..."
+                class="min-w-0 flex-1 bg-transparent text-white placeholder:text-gray-600 focus:outline-none" />
 
-  <input
-    type="text"
-    id="searchInput"
-    class="w-full bg-transparent text-white placeholder:text-gray-600 focus:outline-none"
-    placeholder="Search this portfolio..."
-    autocomplete="off"
-    spellcheck="false"
-  />
+              <button id="btnVoice" type="button"
+                class="f-ring shrink-0 rounded text-gBlue transition-colors hover:text-white" aria-label="Voice search"
+                title="Voice search">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                  </path>
+                </svg>
+              </button>
 
-  <button
-    id="btnVoice"
-    class="text-gBlue hover:text-white transition-colors f-ring rounded"
-    title="Voice (demo)"
-    aria-label="Voice search"
-    type="button"
-  >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-      ></path>
-    </svg>
-  </button>
+              <button id="btnClear" type="button"
+                class="f-ring hidden shrink-0 rounded text-gray-500 transition-colors hover:text-white"
+                aria-label="Clear search" title="Clear">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
 
-  <button
-    id="btnClear"
-    class="text-gray-500 hover:text-white transition-colors f-ring rounded hidden"
-    title="Clear"
-    aria-label="Clear search"
-    type="button"
-  >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-    </svg>
-  </button>
-
-  <!-- hidden submit: para Enter mag-run -->
-  <button type="submit" class="hidden" aria-hidden="true" tabindex="-1">Search</button>
-</form>
-           
-
-            <div class="mt-2 text-xs text-gray-500 flex flex-wrap items-center gap-2" id="metaLine">
-              <span id="resultsCount">About 1,024,000 results</span>
-              <span class="text-gray-700">·</span>
-              <span id="resultsTime">(0.013 seconds)</span>
-              <span class="text-gray-700 hidden sm:inline">·</span>
-              <span class="hidden sm:inline">
-                Shortcuts: <span class="text-gray-300">/</span> focus ·
-                <span class="text-gray-300">Ctrl/Cmd+K</span> palette
-              </span>
+              <button type="submit" class="hidden" aria-hidden="true" tabindex="-1">
+                Search
+              </button>
             </div>
-          </div>
+          </form>
 
-          <!-- Run + Lucky -->
-          <div class="lg:col-span-10 flex gap-2 lg:justify-start">
-            <button
-              id="btnRun"
-              class="flex-1 lg:flex-none px-4 py-3 rounded-full border border-borderDim bg-[#21262d] hover:bg-[#30363d] hover:border-gBlue transition-colors text-sm text-gray-200 f-ring"
-              type="button"
-            >
-              Run Query
-            </button>
-            <button
-              id="btnLucky"
-              class="flex-1 lg:flex-none px-4 py-3 rounded-full border border-borderDim bg-[#21262d] hover:bg-[#30363d] hover:border-gRed transition-colors text-sm text-gray-200 f-ring"
-              type="button"
-            >
-              I’m Feeling Futuristic
-            </button>
+          <div id="metaLine" class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
+            <span id="resultsCount">About 1,024,000 results</span>
+            <span class="text-gray-700">·</span>
+            <span id="resultsTime">(0.013 seconds)</span>
+            <span class="hidden text-gray-700 sm:inline">·</span>
+            <span class="hidden sm:inline">
+              Shortcuts:
+              <span class="text-gray-300">/</span> focus ·
+              <span class="text-gray-300">Ctrl/Cmd+K</span> palette
+            </span>
           </div>
         </div>
 
-        <!-- Tabs -->
-        <nav class="mt-4 tabs-row">
-          <div class="flex gap-2 min-w-max pb-1">
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="all" type="button">
+        <div class="flex flex-wrap items-center gap-2 xl:justify-end">
+          <button id="btnRun" type="button"
+            class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors hover:border-gBlue hover:bg-[#293447]">
+            Run Query
+          </button>
+          <button id="btnLucky" type="button"
+            class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors hover:border-gRed hover:bg-[#293447]">
+            I’m Feeling Futuristic
+          </button>
+        </div>
+      </div>
+
+      <nav class="mt-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+        <div class="tabs-row min-w-0 overflow-x-auto">
+          <div class="flex min-w-max gap-2 pb-1">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="all" type="button">
               All
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="images" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="images" type="button">
               Images
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="projects" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="projects" type="button">
               Projects
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="timeline" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="timeline" type="button">
               Timeline
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="certificates" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="certificates" type="button">
               Certificates
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="achievements" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="achievements" type="button">
               Achievements
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="gallery" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="gallery" type="button">
               Gallery
             </button>
-            <button class="tab-btn px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring" data-tab="about" type="button">
+            <button
+              class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+              data-tab="about" type="button">
               About me
             </button>
-
-            <div class="flex-1"></div>
-
-            <button
-              id="btnSaveSearch"
-              class="px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring"
-              type="button"
-              title="Save this search"
-            >
-              Save
-            </button>
-            <button
-              id="btnOpenSaved"
-              class="px-3 py-2 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring"
-              type="button"
-              title="Saved searches"
-            >
-              Saved
-            </button>
           </div>
-        </nav>
-      </div>
-    </header>
+        </div>
 
-    <!-- MAIN -->
-    <main
-      id="top"
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
-    >
-      <!-- RESULTS -->
-      <section class="lg:col-span-8 space-y-8" aria-label="Search results">
-        <div id="resultsArea" class="space-y-10">
-          <!-- IMAGE PACK -->
-          <section id="section-images" data-section="images" class="border border-borderDim bg-bgPanel rounded-xl p-5 shadow-soft">
-            <div class="flex items-center justify-between gap-4 mb-4 flex-wrap">
-              <div class="flex items-center gap-2 flex-wrap">
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs border border-borderDim bg-bgDark text-gray-400">Image pack</span>
-                <h2 class="text-lg text-white">Visuals: projects · UI · events · certificates</h2>
+        <div class="flex flex-wrap items-center gap-2 xl:shrink-0">
+          <button id="btnSaveSearch" type="button"
+            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]">
+            Save
+          </button>
+          <button id="btnOpenSaved" type="button"
+            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]">
+            Saved
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top"
+    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-4 py-8 sm:px-6 sm:py-10 xl:grid-cols-[minmax(0,1fr)_360px] xl:gap-8 xl:px-10">
+    <section class="min-w-0 space-y-8" aria-label="Search results">
+      <div id="resultsArea" class="space-y-8">
+        <section id="section-images" data-section="images"
+          class="rounded-2xl border border-borderDim bg-bgPanel p-5 shadow-soft">
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span
+                class="inline-flex items-center rounded-full border border-borderDim bg-bgDark px-2 py-1 text-xs text-gray-400">
+                Image pack
+              </span>
+              <h2 class="text-lg text-white">
+                Visuals: projects · events · recognition · field work
+              </h2>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="btnShuffleImages" type="button"
+                class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                Shuffle
+              </button>
+              <button id="viewAllImages" type="button"
+                class="f-ring rounded text-xs text-gBlue transition-colors hover:text-white">
+                View all
+              </button>
+            </div>
+          </div>
+
+          <div id="imageGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
+
+          <div class="mt-4 text-xs text-gray-500">
+            Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
+          </div>
+        </section>
+
+        <article id="section-projects" data-section="projects" class="group">
+          <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+            <span class="text-urlGreen">https://sys.elpie.dev</span>
+            <span class="text-gray-600">›</span>
+            <span>projects</span>
+            <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+              Pinned
+            </span>
+          </div>
+
+          <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            data-scrollto="#projectsPanel" tabindex="0" role="link" aria-label="Open projects panel">
+            Project Index — Premium Showcase
+          </h3>
+
+          <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
+            God-mode project cards with visual hero images, stronger info hierarchy, quick
+            actions, and a full detail modal for impact, role, stack, and delivery notes.
+          </p>
+
+          <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gBlue">
+            <div id="projectsPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div class="mb-5 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_auto]">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gBlue">
+                    visual cards
+                  </span>
+                  <span
+                    class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gGreen">
+                    quick actions
+                  </span>
+                  <span
+                    class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gYellow">
+                    detail modal
+                  </span>
+                </div>
+
+                <div class="flex w-full flex-col gap-2 sm:flex-row xl:w-auto">
+                  <input id="projectSearch" type="text" autocomplete="off" placeholder="Filter projects..."
+                    class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-64" />
+                  <select id="projectSort"
+                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200"
+                    aria-label="Sort projects">
+                    <option value="impact">Impact</option>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="title">Title</option>
+                  </select>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <button
-                  class="px-3 py-2 text-xs rounded-full border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors f-ring"
-                  type="button"
-                  id="btnShuffleImages"
-                >
-                  Shuffle
-                </button>
-                <button class="text-xs text-gBlue hover:text-white transition-colors f-ring rounded" id="viewAllImages" type="button">
-                  View all
-                </button>
+
+              <div id="projectsGrid" class="grid grid-cols-1 gap-4 2xl:grid-cols-2"></div>
+
+              <div class="mt-4 text-xs text-gray-500">
+                Tip: replace demo and repo links with your real URLs.
               </div>
             </div>
+          </div>
+        </article>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="imageGrid"></div>
+        <article id="section-timeline" data-section="timeline" class="group">
+          <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+            <span class="text-urlGreen">https://sys.elpie.dev</span>
+            <span class="text-gray-600">›</span>
+            <span>timeline</span>
+            <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+              Updated Feb 2026
+            </span>
+          </div>
 
-            <div class="mt-4 text-xs text-gray-500">
-              Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
+          <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            data-scrollto="#timelinePanel" tabindex="0" role="link" aria-label="Open timeline panel">
+            Gene Elpie Landoy — Real Timeline
+          </h3>
+
+          <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
+            A vertical milestone rail with role tags, highlights, impact notes, and stack chips.
+          </p>
+
+          <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gBlue">
+            <div class="mb-3 flex flex-wrap items-center gap-2">
+              <span class="text-xs text-gray-500">Filter:</span>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="all" type="button">
+                All
+              </button>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="frontend" type="button">
+                Frontend
+              </button>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="publication" type="button">
+                Publication
+              </button>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="backend" type="button">
+                Backend
+              </button>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="design" type="button">
+                UI/UX
+              </button>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="video" type="button">
+                Video
+              </button>
+              <button
+                class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                data-timeline-filter="leadership" type="button">
+                Leadership
+              </button>
+
+              <div class="flex-1"></div>
+
+              <button id="btnExpandAllTimeline" type="button"
+                class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                Expand all
+              </button>
             </div>
-          </section>
 
-          <!-- PROJECTS RESULT -->
-          <article id="section-projects" data-section="projects" class="group">
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1 flex-wrap">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>projects</span>
-              <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full border border-borderDim text-gray-500 bg-bgPanel">Pinned</span>
+            <div id="timelinePanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div class="timeline-rail">
+                <div id="timelineList" class="space-y-4"></div>
+              </div>
+
+              <div class="mt-4 text-xs text-gray-500">
+                Keyboard: Tab into an item, then press Enter or Space to toggle.
+              </div>
             </div>
+          </div>
+        </article>
 
-            <h3
-              class="text-2xl text-gBlue mb-2 search-link cursor-pointer transition-all inline-block"
-              data-scrollto="#projectsPanel"
-              tabindex="0"
-              role="link"
-              aria-label="Open projects panel"
-            >
-              Project Index — Click to open details
-            </h3>
+        <article id="section-certificates" data-section="certificates" class="group">
+          <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+            <span class="text-urlGreen">https://sys.elpie.dev</span>
+            <span class="text-gray-600">›</span>
+            <span>certificates</span>
+            <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+              Verified
+            </span>
+          </div>
 
-            <p class="text-gray-400 text-sm leading-relaxed clamp-3">
-              Projects with scope, role, tech stack, and links. Click a card to open the project modal.
-            </p>
+          <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            data-scrollto="#certPanel" tabindex="0" role="link" aria-label="Open certificates panel">
+            Verified Certificates.exe — with Image Preview
+          </h3>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 group-hover:border-gBlue transition-colors">
-              <div id="projectsPanel" class="rounded-xl border border-borderDim bg-bgPanel p-4">
-                <div class="flex items-center justify-between gap-4 mb-4 flex-wrap">
-                  <div class="flex items-center gap-2">
-                    <h4 class="text-white text-base">Projects</h4>
-                    <span class="text-xs text-gray-500">Click a card to view</span>
+          <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
+            Each certificate card now supports image preview. Open a card to view the
+            certificate image, metadata, notes, and verification link in one clean modal.
+          </p>
+
+          <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gYellow">
+            <div id="certPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div class="mb-5 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_auto]">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gGreen">
+                    image viewer
+                  </span>
+                  <span
+                    class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gBlue">
+                    verification link
+                  </span>
+                  <span
+                    class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gYellow">
+                    credential meta
+                  </span>
+                </div>
+
+                <div class="flex w-full flex-col gap-2 sm:flex-row xl:w-auto">
+                  <input id="certSearch" type="text" autocomplete="off" placeholder="Filter certificates..."
+                    class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-64" />
+                  <select id="certSort"
+                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200"
+                    aria-label="Sort certificates">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="issuer">Issuer</option>
+                    <option value="title">Title</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="certGrid" class="grid grid-cols-1 gap-4 2xl:grid-cols-2"></div>
+
+              <div class="mt-4 text-xs text-gray-500">
+                Tip: replace placeholder certificate image paths with your real certificate
+                screenshots.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="section-achievements" data-section="achievements" class="group">
+          <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+            <span class="text-urlGreen">https://sys.elpie.dev</span>
+            <span class="text-gray-600">›</span>
+            <span>achievements</span>
+            <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+              Highlights
+            </span>
+          </div>
+
+          <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            data-scrollto="#achPanel" tabindex="0" role="link" aria-label="Open achievements panel">
+            Notable Achievements & Awards
+          </h3>
+
+          <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
+            Key milestones, research presentations, competitions, and impact stats.
+          </p>
+
+          <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gRed">
+            <div id="achPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div class="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="text-xs text-gray-500">Lines Written</div>
+                  <div class="text-2xl font-bold text-white">
+                    <span class="counter" data-target="127000">0</span>+
                   </div>
+                </div>
+                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="text-xs text-gray-500">Talks</div>
+                  <div class="text-2xl font-bold text-white">
+                    <span class="counter" data-target="18">0</span>
+                  </div>
+                </div>
+                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="text-xs text-gray-500">Projects shipped</div>
+                  <div class="text-2xl font-bold text-white">
+                    <span class="counter" data-target="42">0</span>
+                  </div>
+                </div>
+                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="text-xs text-gray-500">Perf gains</div>
+                  <div class="text-2xl font-bold text-white">
+                    <span class="counter" data-target="40">0</span>%
+                  </div>
+                </div>
+              </div>
 
-                  <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <input
-                      id="projectSearch"
-                      type="text"
-                      class="w-full sm:w-64 bg-bgDark border border-borderDim rounded-full px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 focus:outline-none f-ring"
-                      placeholder="Filter projects..."
-                      autocomplete="off"
-                    />
-                    <select
-                      id="projectSort"
-                      class="bg-bgDark border border-borderDim rounded-full px-3 py-2 text-xs text-gray-200 focus:outline-none f-ring"
-                      aria-label="Sort projects"
-                    >
-                      <option value="impact">Impact</option>
-                      <option value="newest">Newest</option>
-                      <option value="oldest">Oldest</option>
-                      <option value="title">Title</option>
-                    </select>
+              <div id="achGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
+
+              <div class="mt-4 text-xs text-gray-500">
+                Replace these with your real awards and numbers.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="section-gallery" data-section="gallery" class="group">
+          <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+            <span class="text-urlGreen">https://gene-landoy.dev</span>
+            <span class="text-gray-600">›</span>
+            <span>gallery</span>
+            <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+              Portfolio
+            </span>
+          </div>
+
+          <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            data-scrollto="#galleryPanel" tabindex="0" role="link" aria-label="Open gallery panel">
+            Creative Gallery & Projects
+          </h3>
+
+          <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
+            Interactive experiments, digital art, immersive interfaces, and creative coding
+            work.
+          </p>
+
+          <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gYellow">
+            <div id="galleryPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                  <h4 class="text-base text-white">Interactive Gallery</h4>
+                  <span class="text-xs text-gray-500">Click to view details</span>
+                </div>
+
+                <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+                  <button id="btnShuffleGallery" type="button"
+                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                    Shuffle
+                  </button>
+                  <select id="galleryFilter"
+                    class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 sm:w-auto"
+                    aria-label="Filter gallery">
+                    <option value="all">All Projects</option>
+                    <option value="featured">Featured</option>
+                    <option value="webgl">WebGL</option>
+                    <option value="animation">Animation</option>
+                    <option value="interactive">Interactive</option>
+                    <option value="art">Digital Art</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="galleryGrid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3"></div>
+
+              <div class="mt-4 text-xs text-gray-500">
+                Tip: add your real demos and GitHub links here too.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="section-about" data-section="about" class="group">
+          <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+            <span class="text-urlGreen">https://sys.elpie.dev</span>
+            <span class="text-gray-600">›</span>
+            <span>about</span>
+            <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+              Profile
+            </span>
+          </div>
+
+          <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            data-scrollto="#aboutPanel" tabindex="0" role="link" aria-label="Open about panel">
+            About Gene Elpie Landoy (System Profile)
+          </h3>
+
+          <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
+            Practical, systems-oriented, visual-first, and focused on building polished
+            experiences that still ship fast.
+          </p>
+
+          <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gGreen">
+            <div id="aboutPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h4 class="text-base text-white">Quick intro</h4>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button id="btnCopyBio" type="button"
+                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                    Copy bio
+                  </button>
+                  <button id="btnDownloadResume" type="button"
+                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                    Download resume (demo)
+                  </button>
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_280px]">
+                <div class="min-w-0">
+                  <p id="bioText" class="text-sm leading-relaxed text-gray-300">
+                    I'm Gene Elpie Landoy, a creative technologist, UI/UX designer, frontend and
+                    mobile developer, graphic designer, public speaker, and video editor. I love
+                    building clean interfaces, strong visual systems, and products that feel
+                    premium from first click to final polish.
+                  </p>
+
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      React
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      TypeScript
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      Flutter
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      Dart
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      Tailwind
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      Figma
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      Canva
+                    </span>
+                    <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                      OBS
+                    </span>
                   </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="projectsGrid"></div>
-
-                <div class="mt-4 text-xs text-gray-500">
-                  Tip: replace demo/github links with your real URLs.
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- TIMELINE RESULT -->
-          <article id="section-timeline" data-section="timeline" class="group">
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1 flex-wrap">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>timeline</span>
-              <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full border border-borderDim text-gray-500 bg-bgPanel">Updated Feb 2026</span>
-            </div>
-
-            <h3
-              class="text-2xl text-gBlue mb-2 search-link cursor-pointer transition-all inline-block"
-              data-scrollto="#timelinePanel"
-              tabindex="0"
-              role="link"
-              aria-label="Open timeline panel"
-            >
-              Gene Elpie Landoy — Real Timeline (Work + Milestones)
-            </h3>
-
-            <p class="text-gray-400 text-sm leading-relaxed clamp-3">
-              A proper vertical timeline: year → role/milestone → expandable details, metrics, and stack.
-            </p>
-
-            <div class="mt-4 border-l-2 border-borderDim pl-4 group-hover:border-gBlue transition-colors">
-              <div class="flex flex-wrap gap-2 items-center mb-3">
-                <span class="text-xs text-gray-500">Filter:</span>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="all" type="button">
-                  All
-                </button>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="frontend" type="button">
-                  Frontend
-                </button>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="publication" type="button">
-                  Publication 
-                </button>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="backend" type="button">
-                  Backend
-                </button>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="design" type="button">
-                  UI/UX
-                </button>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="video" type="button">
-                  Video
-                </button>
-                <button class="chip-btn px-3 py-1.5 text-xs rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors f-ring" data-timeline-filter="leadership" type="button">
-                  Leadership
-                </button>
-
-                <div class="flex-1"></div>
-
-                <button
-                  id="btnExpandAllTimeline"
-                  class="text-xs px-3 py-2 rounded-full border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors f-ring"
-                  type="button"
-                >
-                  Expand all
-                </button>
-              </div>
-
-              <div class="rounded-xl border border-borderDim bg-bgPanel p-4" id="timelinePanel">
-                <div class="timeline-rail" id="timelineRail">
-                  <div class="space-y-4" id="timelineList"></div>
-                </div>
-
-                <div class="mt-4 text-xs text-gray-500">
-                  Keyboard: Tab into an item, press Enter/Space to toggle.
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- CERTIFICATES RESULT -->
-          <article id="section-certificates" data-section="certificates" class="group">
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1 flex-wrap">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>certificates</span>
-              <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full border border-borderDim text-gray-500 bg-bgPanel">Verified</span>
-            </div>
-
-            <h3
-              class="text-2xl text-gBlue mb-2 search-link cursor-pointer transition-all inline-block"
-              data-scrollto="#certPanel"
-              tabindex="0"
-              role="link"
-              aria-label="Open certificates panel"
-            >
-              Verified Certificates.exe
-            </h3>
-
-            <p class="text-gray-400 text-sm leading-relaxed clamp-3">
-              Industry certifications and learning tracks. Click to open details in a modal (issuer, issue date, credential ID, verification link).
-            </p>
-
-            <div class="mt-4 border-l-2 border-borderDim pl-4 group-hover:border-gYellow transition-colors">
-              <div id="certPanel" class="rounded-xl border border-borderDim bg-bgPanel p-4">
-                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-                  <div class="flex items-center gap-2">
-                    <h4 class="text-white text-base">Certificates</h4>
-                    <span class="text-xs text-gray-500">Click a card to view</span>
+                <div class="rounded-xl border border-borderDim bg-bgDark p-4">
+                  <div class="mb-2 text-xs text-gray-500">“Search result snippet”</div>
+                  <div class="text-sm text-gray-300">
+                    <span class="text-gray-500">Primary:</span> UI + frontend systems
                   </div>
-
-                  <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <input
-                      id="certSearch"
-                      type="text"
-                      class="w-full sm:w-64 bg-bgDark border border-borderDim rounded-full px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 focus:outline-none f-ring"
-                      placeholder="Filter certificates..."
-                      autocomplete="off"
-                    />
-                    <select
-                      id="certSort"
-                      class="bg-bgDark border border-borderDim rounded-full px-3 py-2 text-xs text-gray-200 focus:outline-none f-ring"
-                      aria-label="Sort certificates"
-                    >
-                      <option value="newest">Newest</option>
-                      <option value="oldest">Oldest</option>
-                      <option value="issuer">Issuer</option>
-                      <option value="title">Title</option>
-                    </select>
+                  <div class="mt-2 text-sm text-gray-300">
+                    <span class="text-gray-500">Secondary:</span> design + leadership
+                  </div>
+                  <div class="mt-2 text-sm text-gray-300">
+                    <span class="text-gray-500">Mode:</span>
+                    <span class="text-gGreen">shipping</span> +
+                    <span class="text-gBlue">polish</span>
                   </div>
                 </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="certGrid"></div>
-
-                <div class="mt-4 text-xs text-gray-500">Pro tip: add your real verification URLs for credibility.</div>
               </div>
-            </div>
-          </article>
 
-          <!-- ACHIEVEMENTS RESULT -->
-          <article id="section-achievements" data-section="achievements" class="group">
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1 flex-wrap">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>achievements</span>
-              <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full border border-borderDim text-gray-500 bg-bgPanel">Highlights</span>
-            </div>
-
-            <h3
-              class="text-2xl text-gBlue mb-2 search-link cursor-pointer transition-all inline-block"
-              data-scrollto="#achPanel"
-              tabindex="0"
-              role="link"
-              aria-label="Open achievements panel"
-            >
-              Notable Achievements & Awards
-            </h3>
-
-            <p class="text-gray-400 text-sm leading-relaxed clamp-3">
-              Milestones, talks, open-source contributions, and measurable wins. Includes counters that animate when visible.
-            </p>
-            <div class="mt-4 border-l-2 border-borderDim pl-4 group-hover:border-gRed transition-colors">
-              <div id="achPanel" class="rounded-xl border border-borderDim bg-bgPanel p-4">
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                  <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-                    <div class="text-xs text-gray-500">Lines Written</div>
-                    <div class="text-2xl text-white font-bold"><span class="counter" data-target="127000">0</span>+</div>
-                  </div>
-                  <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-                    <div class="text-xs text-gray-500">Talks</div>
-                    <div class="text-2xl text-white font-bold"><span class="counter" data-target="18">0</span></div>
-                  </div>
-                  <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-                    <div class="text-xs text-gray-500">Projects shipped</div>
-                    <div class="text-2xl text-white font-bold"><span class="counter" data-target="42">0</span></div>
-                  </div>
-                  <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-                    <div class="text-xs text-gray-500">Perf gains</div>
-                    <div class="text-2xl text-white font-bold"><span class="counter" data-target="40">0</span>%</div>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="achGrid"></div>
-
-                <div class="mt-4 text-xs text-gray-500">Replace these with your real awards and metrics.</div>
-              </div>
-            </div>
-          </article>
-
-          <!-- GALLERY RESULT -->
-          <article id="section-gallery" data-section="gallery" class="group">
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1 flex-wrap">
-              <span class="text-urlGreen">https://gene-landoy.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>gallery</span>
-              <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full border border-borderDim text-gray-500 bg-bgPanel">Portfolio</span>
-            </div>
-
-            <h3
-              class="text-2xl text-gBlue mb-2 search-link cursor-pointer transition-all inline-block"
-              data-scrollto="#galleryPanel"
-              tabindex="0"
-              role="link"
-              aria-label="Open gallery panel"
-            >
-              Creative Gallery & Projects
-            </h3>
-
-            <p class="text-gray-400 text-sm leading-relaxed clamp-3">
-              A curated collection of my creative work, interactive experiments, and digital art. Explore the intersection of code and creativity.
-            </p>
-
-            <div class="mt-4 border-l-2 border-borderDim pl-4 group-hover:border-gYellow transition-colors">
-              <div id="galleryPanel" class="rounded-xl border border-borderDim bg-bgPanel p-4">
-                <div class="flex items-center justify-between gap-4 mb-4 flex-wrap">
-                  <div class="flex items-center gap-2">
-                    <h4 class="text-white text-base">Interactive Gallery</h4>
-                    <span class="text-xs text-gray-500">Click to view details</span>
-                  </div>
-                  <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button
-                      class="px-3 py-2 text-xs rounded-full border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors f-ring"
-                      type="button"
-                      id="btnShuffleGallery"
-                    >
-                      Shuffle
-                    </button>
-                    <select
-                      id="galleryFilter"
-                      class="w-full sm:w-auto bg-bgDark border border-borderDim rounded-full px-3 py-2 text-xs text-gray-200 focus:outline-none f-ring"
-                      aria-label="Filter gallery"
-                    >
-                      <option value="all">All Projects</option>
-                      <option value="featured">Featured</option>
-                      <option value="webgl">WebGL</option>
-                      <option value="animation">Animation</option>
-                      <option value="interactive">Interactive</option>
-                      <option value="art">Digital Art</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="galleryGrid"></div>
-
-                <div class="mt-4 text-xs text-gray-500">Tip: add real demo URLs. You can also pin featured projects.</div>
-              </div>
-            </div>
-          </article>
-
-          <!-- ABOUT RESULT -->
-          <article id="section-about" data-section="about" class="group">
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1 flex-wrap">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>about</span>
-              <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full border border-borderDim text-gray-500 bg-bgPanel">Profile</span>
-            </div>
-
-            <h3
-              class="text-2xl text-gBlue mb-2 search-link cursor-pointer transition-all inline-block"
-              data-scrollto="#aboutPanel"
-              tabindex="0"
-              role="link"
-              aria-label="Open about panel"
-            >
-              About Gene Elpie Landoy (System Profile)
-            </h3>
-
-            <p class="text-gray-400 text-sm leading-relaxed clamp-3">
-              A practical, systems-oriented developer who loves fast UI, clean architecture, and shipping. Focus areas: React, TypeScript, Node, design systems, performance and accessibility.
-            </p>
-
-            <div class="mt-4 border-l-2 border-borderDim pl-4 group-hover:border-gGreen transition-colors">
-              <div id="aboutPanel" class="rounded-xl border border-borderDim bg-bgPanel p-4">
+              <div class="mt-6 border-t border-borderDim pt-4">
                 <div class="flex flex-wrap items-center justify-between gap-3">
-                  <h4 class="text-white text-base">Quick intro</h4>
-                  <div class="flex items-center gap-2">
-                    <button
-                      id="btnCopyBio"
-                      class="text-xs px-3 py-2 rounded-full border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors f-ring"
-                      type="button"
-                    >
-                      Copy bio
+                  <h5 class="text-sm text-white">Send a message</h5>
+                  <span class="text-xs text-gray-500">Sends to backend if wired</span>
+                </div>
+
+                <form id="contactForm" class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
+                  <input type="text" name="name" required placeholder="Your name"
+                    class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                  <input type="email" name="email" required placeholder="Email"
+                    class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                  <textarea name="message" rows="4" required placeholder="Message"
+                    class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 lg:col-span-2"></textarea>
+
+                  <div class="flex items-center gap-2 lg:col-span-2">
+                    <button type="submit"
+                      class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+                      Send
                     </button>
-                    <button
-                      id="btnDownloadResume"
-                      class="text-xs px-3 py-2 rounded-full border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors f-ring"
-                      type="button"
-                    >
-                      Download resume (demo)
-                    </button>
+                    <span id="contactStatus" class="text-xs text-gray-500"></span>
                   </div>
-                </div>
-
-                <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div class="sm:col-span-2">
-                    <p class="text-sm text-gray-300 leading-relaxed" id="bioText">
-                      I'm Gene Elpie Landoy, a passionate full-stack developer and creative technologist. I specialize in crafting immersive digital experiences that blend cutting-edge technology with intuitive design. My expertise spans modern web frameworks, interactive animations, and performance optimization. I love turning complex ideas into elegant solutions that users actually enjoy using.
-                    </p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">React</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">Three.js</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">WebGL</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">TypeScript</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">Node.js</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">Creative Coding</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">UI/UX</span>
-                      <span class="text-xs px-3 py-1.5 rounded-full border border-borderDim bg-bgDark text-gray-300">Animation</span>
-                    </div>
-                  </div>
-
-                  <div class="border border-borderDim bg-bgDark rounded-xl p-4">
-                    <div class="text-xs text-gray-500 mb-2">“Search result snippet”</div>
-                    <div class="text-sm text-gray-300"><span class="text-gray-500">Primary:</span> UI + systems engineering</div>
-                    <div class="text-sm text-gray-300 mt-2"><span class="text-gray-500">Secondary:</span> product thinking</div>
-                    <div class="text-sm text-gray-300 mt-2">
-                      <span class="text-gray-500">Mode:</span> <span class="text-gGreen">shipping</span> + <span class="text-gBlue">polish</span>
-                    </div>
-                    <div class="mt-4 text-xs text-gray-500">This panel can become your “services / specialties”.</div>
-                  </div>
-                </div>
-
-                <!-- Contact mini-form -->
-                <div class="mt-6 border-t border-borderDim pt-4">
-                  <div class="flex items-center justify-between gap-3">
-                    <h5 class="text-white text-sm">Send a message</h5>
-                    <span class="text-xs text-gray-500">Sends to backend (saved locally)</span>
-                  </div>
-
-                  <form id="contactForm" class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input
-                      class="bg-bgDark border border-borderDim rounded-xl px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 focus:outline-none f-ring"
-                      type="text"
-                      name="name"
-                      placeholder="Your name"
-                      required
-                    />
-                    <input
-                      class="bg-bgDark border border-borderDim rounded-xl px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 focus:outline-none f-ring"
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      required
-                    />
-                    <textarea
-                      class="sm:col-span-2 bg-bgDark border border-borderDim rounded-xl px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 focus:outline-none f-ring"
-                      name="message"
-                      rows="4"
-                      placeholder="Message"
-                      required
-                    ></textarea>
-                    <div class="sm:col-span-2 flex items-center gap-2">
-                      <button
-                        class="px-4 py-3 rounded-xl border border-borderDim bg-[#21262d] hover:bg-[#30363d] hover:border-gBlue transition-colors text-sm text-gray-200 f-ring"
-                        type="submit"
-                      >
-                        Send
-                      </button>
-                      <span id="contactStatus" class="text-xs text-gray-500"></span>
-                    </div>
-                  </form>
-                </div>
+                </form>
               </div>
             </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- KNOWLEDGE PANEL (DESKTOP) -->
-      <aside class="lg:col-span-4 hidden lg:block self-start">
-        <div
-          id="kpDesktopMount"
-          class="kp-shell border border-borderDim bg-bgPanel rounded-xl p-5 sticky top-28 shadow-soft"
-          aria-label="Knowledge panel"
-        ></div>
-      </aside>
-    </main>
-
-    <!-- BACK TO TOP -->
-    <button
-      id="btnTop"
-      class="fixed bottom-6 right-6 hidden z-[95] px-4 py-3 rounded-full border border-borderDim bg-bgPanel hover:bg-[#1c2430] transition-colors text-sm f-ring shadow-soft"
-      type="button"
-      aria-label="Back to top"
-      title="Back to top"
-    >
-      ↑ Top
-    </button>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-borderDim py-6 mt-8">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 text-sm text-gray-600 flex flex-col sm:flex-row justify-between items-center gap-3">
-        <p>Retro UI inspired by classic search. Built with Tailwind + custom effects.</p>
-        <div class="flex gap-4 flex-wrap justify-center">
-          <a href="#" class="hover:text-gray-300 f-ring rounded">Help</a>
-          <a href="#" class="hover:text-gray-300 f-ring rounded">Send feedback</a>
-          <a href="#" class="hover:text-gray-300 f-ring rounded">Privacy</a>
-          <a href="#" class="hover:text-gray-300 f-ring rounded">Terms</a>
-        </div>
+          </div>
+        </article>
       </div>
-    </footer>
+    </section>
 
-    <!-- TEMPLATE: KNOWLEDGE PANEL CONTENT -->
-    <template id="kpTemplate">
-      <div class="flex gap-2 mb-4 h-32">
-        <img
-          src="images/bg.jpg"
-          alt="Retro-futuristic workspace"
-          class="w-1/2 object-cover rounded-l-xl border border-borderDim grayscale hover:grayscale-0 transition duration-500"
-          loading="lazy"
-        />
-        <img
-          src="images/icon.jpg"
-          alt="Avatar"
-          class="w-1/2 object-cover rounded-r-xl border border-borderDim bg-bgDark"
-          loading="lazy"
-        />
+    <aside class="hidden min-w-0 self-start xl:block">
+      <div id="kpDesktopMount"
+        class="kp-shell sticky top-28 rounded-2xl border border-borderDim bg-bgPanel p-5 shadow-soft"
+        aria-label="Knowledge panel"></div>
+    </aside>
+  </main>
+
+  <button id="btnTop" type="button"
+    class="f-ring fixed bottom-6 right-6 z-[95] hidden rounded-full border border-borderDim bg-bgPanel px-4 py-3 text-sm shadow-soft transition-colors hover:bg-[#1c2430]"
+    aria-label="Back to top" title="Back to top">
+    ↑ Top
+  </button>
+
+  <footer class="mt-8 border-t border-borderDim py-6">
+    <div
+      class="mx-auto flex max-w-[1500px] flex-col items-center justify-between gap-3 px-4 text-sm text-gray-600 sm:flex-row sm:px-6 xl:px-10">
+      <p>Retro UI inspired by classic search. Built with Tailwind + custom effects.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#" class="f-ring rounded hover:text-gray-300">Help</a>
+        <a href="#" class="f-ring rounded hover:text-gray-300">Send feedback</a>
+        <a href="#" class="f-ring rounded hover:text-gray-300">Privacy</a>
+        <a href="#" class="f-ring rounded hover:text-gray-300">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <template id="kpTemplate">
+    <div class="mb-4 flex h-36 gap-2">
+      <img src="images/bg.jpg" alt="Retro-futuristic workspace"
+        class="w-1/2 rounded-l-xl border border-borderDim object-cover grayscale transition duration-500 hover:grayscale-0"
+        loading="lazy" />
+      <img src="images/icon.jpg" alt="Avatar" class="w-1/2 rounded-r-xl border border-borderDim bg-bgDark object-cover"
+        loading="lazy" />
+    </div>
+
+    <div class="flex items-start justify-between gap-2">
+      <div>
+        <h2 class="text-2xl font-bold leading-tight text-white">Gene Elpie Landoy</h2>
+        <p class="mt-1 text-sm text-gray-400">
+          UI/UX · Graphic Design · Frontend · Mobile · Social Media · Public Speaking · Video
+          Editing
+        </p>
       </div>
 
-      <div class="flex items-start justify-between gap-2">
-        <div>
-          <h2 class="text-2xl font-bold text-white leading-tight">Gene Elpie Landoy</h2>
-          <p class="text-sm text-gray-400 mt-1">UI/UX | Graphic Designer | Frontend Developer | Mobile Developer | Social Media Manager | Public Speaker | Video Editor | Live Director</p>
-        </div>
-        <span class="text-[11px] px-2 py-1 rounded-full border border-borderDim bg-bgDark text-gray-400 animate-flicker" title="Retro status indicator">
-          online
+      <span class="animate-flicker rounded-full border border-borderDim bg-bgDark px-2 py-1 text-[11px] text-gray-400">
+        online
+      </span>
+    </div>
+
+    <div class="mt-4 text-sm leading-relaxed text-gray-300">
+      UI/UX designer and frontend/mobile developer creating modern, responsive, user-centered
+      digital products with strong visual quality and practical delivery.
+    </div>
+
+    <div class="mt-5 space-y-2 border-t border-borderDim pt-4 text-sm">
+      <div class="grid grid-cols-3 gap-2">
+        <span class="font-bold text-gray-500">Born:</span>
+        <span class="col-span-2 text-gBlue">02/24</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2">
+        <span class="font-bold text-gray-500">Location:</span>
+        <span class="col-span-2 text-gBlue">Boac, Marinduque</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2">
+        <span class="font-bold text-gray-500">Stack:</span>
+        <span class="col-span-2 text-gBlue">
+          HTML · CSS · JavaScript · TypeScript · Tailwind · React · Dart · Figma · Canva ·
+          Photoshop · InDesign · OBS
         </span>
       </div>
-
-      <div class="mt-4 text-sm text-gray-300 leading-relaxed">
-        UI/UX Designer and Frontend & Mobile Developer creating modern, responsive, and user-centered digital products. Passionate about designing seamless experiences and building scalable web and mobile applications.
-      </div>
-
-      <div class="mt-5 space-y-2 text-sm border-t border-borderDim pt-4">
-        <div class="grid grid-cols-3 gap-2">
-          <span class="text-gray-500 font-bold">Born:</span>
-          <span class="col-span-2 text-gBlue">02/24</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2">
-          <span class="text-gray-500 font-bold">Location:</span>
-          <span class="col-span-2 text-gBlue">Boac, Marinduque</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2">
-          <span class="text-gray-500 font-bold">Tools & TechStack:</span>
-          <span class="col-span-2 text-gBlue">HTML • CSS • JavaScript • TypeScript • Tailwind CSS • React • Dart • Figma • Canva • Adobe Photoshop • Adobe Indesign • OBS • Git • Github • Business Suite • Capcut</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2">
-          <span class="text-gray-500 font-bold">Mode:</span>
-          <span class="col-span-2 text-gGreen">Ship → Measure → Polish</span>
-        </div>
-      </div>
-
-      <div class="mt-5 flex gap-3">
-        <a
-          href="https://github.com/PrimeSalad"
-          target="_blank"
-          rel="noreferrer"
-          class="flex-1 text-center bg-[#21262d] border border-borderDim hover:border-white hover:bg-[#30363d] text-white text-sm py-2.5 px-4 rounded-xl transition-all f-ring"
-        >
-          GitHub
-        </a>
-        <a
-          href="g.landoyelpie@gmail.com"
-          class="flex-1 text-center bg-gBlue hover:bg-blue-600 text-white text-sm py-2.5 px-4 rounded-xl transition-all f-ring"
-        >
-          Contact
-        </a>
-      </div>
-
-      <div class="mt-5 border-t border-borderDim pt-4">
-        <div class="text-xs text-gray-500 mb-2">Quick links</div>
-        <div class="grid grid-cols-2 gap-2">
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" data-scrollto="#projectsPanel">
-            Projects
-          </button>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" data-scrollto="#timelinePanel">
-            Timeline
-          </button>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" data-scrollto="#certPanel">
-            Certs
-          </button>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" data-scrollto="#aboutPanel">
-            About me
-          </button>
-        </div>
-      </div>
-
-      <div class="mt-4 text-[11px] text-gray-600">Location based on IP — <span class="text-gBlue">Update location</span></div>
-    </template>
-
-    <!-- MOBILE KNOWLEDGE PANEL DRAWER -->
-    <div id="kpDrawer" class="fixed inset-0 hidden z-[96]" role="dialog" aria-modal="true" aria-label="Profile panel">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="absolute right-0 top-0 h-full w-[92vw] max-w-md border-l border-borderDim bg-bgPanel shadow-soft animate-pop flex flex-col">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-borderDim">
-          <div class="text-sm text-gray-300">Profile</div>
-          <button
-            id="btnCloseKp"
-            class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring"
-            type="button"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-        <div class="kp-drawer-body p-4" id="kpMobileMount"></div>
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Tip: close with Esc.</div>
+      <div class="grid grid-cols-3 gap-2">
+        <span class="font-bold text-gray-500">Mode:</span>
+        <span class="col-span-2 text-gGreen">Ship → Measure → Polish</span>
       </div>
     </div>
 
-    <!-- LIGHTBOX MODAL -->
-    <div id="lightbox" class="fixed inset-0 hidden items-center justify-center z-[80]" role="dialog" aria-modal="true" aria-label="Image lightbox">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="relative w-[92vw] max-w-4xl border border-borderDim bg-bgPanel rounded-2xl shadow-soft overflow-hidden animate-pop">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-borderDim">
-          <div class="text-sm text-gray-300 clamp-2" id="lightboxTitle">Image title</div>
-          <div class="flex items-center gap-2">
-            <button id="btnPrevImg" class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" aria-label="Previous image">
-              ←
-            </button>
-            <button id="btnNextImg" class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" aria-label="Next image">
-              →
-            </button>
-            <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" id="btnCloseLightbox" aria-label="Close">
-              ✕
-            </button>
+    <div class="mt-5 flex gap-3">
+      <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer"
+        class="f-ring flex-1 rounded-xl border border-borderDim bg-[#21262d] px-4 py-2.5 text-center text-sm text-white transition-all hover:border-white hover:bg-[#30363d]">
+        GitHub
+      </a>
+      <a href="mailto:g.landoyelpie@gmail.com"
+        class="f-ring flex-1 rounded-xl bg-gBlue px-4 py-2.5 text-center text-sm text-white transition-all hover:bg-blue-600">
+        Contact
+      </a>
+    </div>
+
+    <div class="mt-5 border-t border-borderDim pt-4">
+      <div class="mb-2 text-xs text-gray-500">Quick links</div>
+      <div class="grid grid-cols-2 gap-2">
+        <button
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          type="button" data-scrollto="#projectsPanel">
+          Projects
+        </button>
+        <button
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          type="button" data-scrollto="#timelinePanel">
+          Timeline
+        </button>
+        <button
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          type="button" data-scrollto="#certPanel">
+          Certs
+        </button>
+        <button
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          type="button" data-scrollto="#aboutPanel">
+          About me
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <div id="kpDrawer" class="fixed inset-0 z-[96] hidden" role="dialog" aria-modal="true" aria-label="Profile panel">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="absolute right-0 top-0 flex h-full w-[92vw] max-w-md animate-pop flex-col border-l border-borderDim bg-bgPanel shadow-soft">
+      <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+        <div class="text-sm text-gray-300">Profile</div>
+        <button id="btnCloseKp" type="button"
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+          ✕
+        </button>
+      </div>
+      <div id="kpMobileMount" class="kp-drawer-body overflow-y-auto p-4"></div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center" role="dialog" aria-modal="true"
+    aria-label="Image lightbox">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderDim px-4 py-3">
+        <div id="lightboxTitle" class="clamp-2 text-sm text-gray-300">Image title</div>
+        <div class="flex items-center gap-2">
+          <button id="btnPrevImg" type="button"
+            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            ←
+          </button>
+          <button id="btnNextImg" type="button"
+            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            →
+          </button>
+          <button id="btnCloseLightbox" type="button"
+            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-bgDark">
+        <img id="lightboxImg" src="" alt="" class="max-h-[76vh] w-full object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <div id="certModal" class="fixed inset-0 z-[90] hidden items-center justify-center" role="dialog" aria-modal="true"
+    aria-label="Certificate details">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+      <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+        <div id="certModalTitle" class="text-sm text-gray-300">Certificate</div>
+        <button id="btnCloseCertModal" type="button"
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+          ✕
+        </button>
+      </div>
+
+      <div class="max-h-[88vh] overflow-hidden">
+        <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_420px]">
+          <div class="border-b border-borderDim bg-bgDark xl:border-b-0 xl:border-r">
+            <div class="cert-preview-shell h-full">
+              <div class="cert-preview-topbar">
+                <span class="text-xs text-gray-500">Certificate image</span>
+                <div class="flex items-center gap-2">
+                  <button id="btnOpenCertImage" type="button"
+                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-[11px] transition-colors hover:bg-[#1b2430]">
+                    Full view
+                  </button>
+                </div>
+              </div>
+              <button id="btnCertImage" type="button" class="cert-preview-frame h-full w-full">
+                <img id="certModalImage" src="" alt="Certificate preview" class="cert-preview-image" />
+              </button>
+            </div>
+          </div>
+
+          <div class="max-h-[calc(88vh-56px)] overflow-y-auto p-4">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="text-xs text-gray-500">Issuer</div>
+                <div id="certModalIssuer" class="mt-1 text-sm text-white"></div>
+              </div>
+              <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="text-xs text-gray-500">Issued</div>
+                <div id="certModalIssued" class="mt-1 text-sm text-white"></div>
+              </div>
+              <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="text-xs text-gray-500">Credential ID</div>
+                <div id="certModalId" class="mt-1 text-sm text-white"></div>
+              </div>
+              <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="text-xs text-gray-500">Status</div>
+                <div class="mt-1 text-sm">
+                  <span
+                    class="inline-flex items-center rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-xs text-gGreen">
+                    Verified
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 rounded-xl border border-borderDim bg-bgDark p-3">
+              <div class="text-xs text-gray-500">Notes</div>
+              <div id="certModalNotes" class="mt-1 text-sm leading-7 text-gray-300"></div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a id="certModalLink" href="#" target="_blank" rel="noreferrer"
+                class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+                Verify link
+              </a>
+              <button id="btnCopyCert" type="button"
+                class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+                Copy details
+              </button>
+            </div>
           </div>
         </div>
-        <div class="bg-bgDark">
-          <img id="lightboxImg" src="" alt="" class="w-full max-h-[70vh] object-contain" />
-        </div>
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Use Esc to close. Arrow keys to navigate. Swipe on mobile.</div>
       </div>
     </div>
+  </div>
 
-    <!-- CERT MODAL -->
-    <div id="certModal" class="fixed inset-0 hidden items-center justify-center z-[90]" role="dialog" aria-modal="true" aria-label="Certificate details">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="relative w-[92vw] max-w-2xl border border-borderDim bg-bgPanel rounded-2xl shadow-soft overflow-hidden animate-pop">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-borderDim">
-          <div class="text-sm text-gray-300" id="certModalTitle">Certificate</div>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" id="btnCloseCertModal" aria-label="Close">
-            ✕
-          </button>
-        </div>
+  <div id="projectModal" class="fixed inset-0 z-[91] hidden items-center justify-center" role="dialog" aria-modal="true"
+    aria-label="Project details">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="relative w-[92vw] max-w-6xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+      <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+        <div id="projectModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
+        <button id="btnCloseProjectModal" type="button"
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+          ✕
+        </button>
+      </div>
 
-        <div class="p-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-              <div class="text-xs text-gray-500">Issuer</div>
-              <div class="text-sm text-white mt-1" id="certModalIssuer"></div>
+      <div class="max-h-[90vh] overflow-hidden">
+        <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_430px]">
+          <div
+            class="project-modal-visual relative min-h-[340px] border-b border-borderDim bg-bgDark xl:min-h-[680px] xl:border-b-0 xl:border-r">
+            <img id="projectModalImg" src="" alt="" class="project-modal-image h-full w-full object-cover object-top" />
+            <div
+              class="project-modal-overlay absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#08101a] via-[#08101acc] to-transparent p-5">
+              <div id="projectModalMeta" class="text-xs text-gray-300"></div>
+              <div id="projectModalImpact" class="mt-2 max-w-2xl text-sm text-white sm:text-base"></div>
             </div>
-            <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-              <div class="text-xs text-gray-500">Issued</div>
-              <div class="text-sm text-white mt-1" id="certModalIssued"></div>
-            </div>
-            <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-              <div class="text-xs text-gray-500">Credential ID</div>
-              <div class="text-sm text-white mt-1" id="certModalId"></div>
-            </div>
-            <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-              <div class="text-xs text-gray-500">Status</div>
-              <div class="text-sm mt-1">
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs border border-borderDim bg-bgPanel text-gGreen">Verified</span>
+          </div>
+
+          <div class="max-h-[calc(90vh-56px)] overflow-y-auto p-5">
+            <div class="space-y-4">
+              <div class="rounded-2xl border border-borderDim bg-bgDark p-4">
+                <div class="text-xs text-gray-500">Project summary</div>
+                <div id="projectModalDesc" class="mt-2 text-sm leading-7 text-gray-300"></div>
+              </div>
+
+              <div class="rounded-2xl border border-borderDim bg-bgDark p-4">
+                <div class="text-xs text-gray-500">Highlights</div>
+                <ul id="projectModalHighlights" class="mt-3 space-y-2 text-sm leading-7 text-gray-300"></ul>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="text-xs text-gray-500">Role</div>
+                  <div id="projectModalRole" class="mt-1 text-sm leading-7 text-white"></div>
+                </div>
+                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="text-xs text-gray-500">Outcome</div>
+                  <div id="projectModalOutcome" class="mt-1 text-sm leading-7 text-white"></div>
+                </div>
+              </div>
+
+              <div class="rounded-2xl border border-borderDim bg-bgDark p-4">
+                <div class="text-xs text-gray-500">Tech stack</div>
+                <div id="projectModalTech" class="mt-3 flex flex-wrap gap-2"></div>
+              </div>
+
+              <div class="flex flex-wrap gap-2 pt-1">
+                <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
+                  class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+                  Open demo
+                </a>
+                <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
+                  class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+                  GitHub
+                </a>
+                <button id="btnCopyProject" type="button"
+                  class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+                  Copy summary
+                </button>
               </div>
             </div>
           </div>
-
-          <div class="mt-4 border border-borderDim bg-bgDark rounded-xl p-3">
-            <div class="text-xs text-gray-500">Notes</div>
-            <div class="text-sm text-gray-300 mt-1" id="certModalNotes"></div>
-          </div>
-
-          <div class="mt-4 flex flex-wrap gap-2">
-            <a
-              id="certModalLink"
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-[#21262d] hover:bg-[#30363d] hover:border-gBlue transition-colors text-sm text-gray-200 f-ring"
-            >
-              Verify (link)
-            </a>
-            <button
-              id="btnCopyCert"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-sm text-gray-200 f-ring"
-              type="button"
-            >
-              Copy details
-            </button>
-          </div>
         </div>
-
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Replace modal content with your real credential data.</div>
       </div>
     </div>
+  </div>
 
-    <!-- PROJECT MODAL -->
-    <div id="projectModal" class="fixed inset-0 hidden items-center justify-center z-[91]" role="dialog" aria-modal="true" aria-label="Project details">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="relative w-[92vw] max-w-3xl border border-borderDim bg-bgPanel rounded-2xl shadow-soft overflow-hidden animate-pop">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-borderDim">
-          <div class="text-sm text-gray-300 clamp-2" id="projectModalTitle">Project</div>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" id="btnCloseProjectModal" aria-label="Close">
-            ✕
+  <div id="galleryModal" class="fixed inset-0 z-[92] hidden items-center justify-center" role="dialog" aria-modal="true"
+    aria-label="Gallery details">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="relative w-[92vw] max-w-3xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+      <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+        <div id="galleryModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
+        <button id="btnCloseGalleryModal" type="button"
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+          ✕
+        </button>
+      </div>
+
+      <div class="bg-bgDark">
+        <img id="galleryModalImg" src="" alt="" class="max-h-[55vh] w-full object-cover" />
+      </div>
+
+      <div class="space-y-3 p-4">
+        <div id="galleryModalMeta" class="text-xs text-gray-500"></div>
+        <div id="galleryModalDesc" class="text-sm leading-7 text-gray-300"></div>
+        <div id="galleryModalTech" class="flex flex-wrap gap-2"></div>
+        <div class="flex flex-wrap gap-2 pt-2">
+          <a id="galleryModalDemo" href="#" target="_blank" rel="noreferrer"
+            class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+            Open demo
+          </a>
+          <button id="btnCopyGalleryItem" type="button"
+            class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+            Copy summary
           </button>
         </div>
-
-        <div class="bg-bgDark">
-          <img id="projectModalImg" src="" alt="" class="w-full max-h-[45vh] object-cover" />
-        </div>
-
-        <div class="p-4 space-y-3">
-          <div class="text-xs text-gray-500" id="projectModalMeta"></div>
-          <div class="text-sm text-gray-300" id="projectModalDesc"></div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-              <div class="text-xs text-gray-500">Role</div>
-              <div class="text-sm text-white mt-1" id="projectModalRole"></div>
-            </div>
-            <div class="border border-borderDim bg-bgDark rounded-xl p-3">
-              <div class="text-xs text-gray-500">Impact</div>
-              <div class="text-sm text-white mt-1" id="projectModalImpact"></div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-2" id="projectModalTech"></div>
-
-          <div class="flex flex-wrap gap-2 pt-2">
-            <a
-              id="projectModalDemo"
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-[#21262d] hover:bg-[#30363d] hover:border-gBlue transition-colors text-sm text-gray-200 f-ring"
-            >
-              Open demo
-            </a>
-            <a
-              id="projectModalRepo"
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-sm text-gray-200 f-ring"
-            >
-              GitHub
-            </a>
-            <button
-              id="btnCopyProject"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-sm text-gray-200 f-ring"
-              type="button"
-            >
-              Copy summary
-            </button>
-          </div>
-        </div>
-
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Tip: wire real demo/repo links per project.</div>
       </div>
     </div>
+  </div>
 
-    <!-- GALLERY MODAL -->
-    <div id="galleryModal" class="fixed inset-0 hidden items-center justify-center z-[92]" role="dialog" aria-modal="true" aria-label="Gallery details">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="relative w-[92vw] max-w-3xl border border-borderDim bg-bgPanel rounded-2xl shadow-soft overflow-hidden animate-pop">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-borderDim">
-          <div class="text-sm text-gray-300 clamp-2" id="galleryModalTitle">Project</div>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" id="btnCloseGalleryModal" aria-label="Close">
-            ✕
-          </button>
-        </div>
-
-        <div class="bg-bgDark">
-          <img id="galleryModalImg" src="" alt="" class="w-full max-h-[55vh] object-cover" />
-        </div>
-
-        <div class="p-4 space-y-3">
-          <div class="text-xs text-gray-500" id="galleryModalMeta"></div>
-          <div class="text-sm text-gray-300" id="galleryModalDesc"></div>
-          <div class="flex flex-wrap gap-2" id="galleryModalTech"></div>
-          <div class="flex flex-wrap gap-2 pt-2">
-            <a
-              id="galleryModalDemo"
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-[#21262d] hover:bg-[#30363d] hover:border-gBlue transition-colors text-sm text-gray-200 f-ring"
-            >
-              Open demo
-            </a>
-            <button
-              id="btnCopyGalleryItem"
-              class="px-4 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-sm text-gray-200 f-ring"
-              type="button"
-            >
-              Copy summary
-            </button>
-          </div>
-        </div>
-
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Tip: add real demos + GitHub links for each project.</div>
+  <div id="cmdPalette" class="fixed inset-0 z-[97] hidden items-center justify-center" role="dialog" aria-modal="true"
+    aria-label="Command palette">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+      <div class="border-b border-borderDim px-4 py-3">
+        <div class="text-xs text-gray-500">Command palette</div>
+        <input id="cmdInput" autocomplete="off"
+          placeholder="Type: images, projects, timeline, certs, achievements, gallery, about, top..."
+          class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
       </div>
+      <div id="cmdList" class="max-h-[55vh] overflow-y-auto p-2"></div>
     </div>
+  </div>
 
-    <!-- COMMAND PALETTE -->
-    <div id="cmdPalette" class="fixed inset-0 hidden items-center justify-center z-[97]" role="dialog" aria-modal="true" aria-label="Command palette">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="relative w-[92vw] max-w-xl border border-borderDim bg-bgPanel rounded-2xl shadow-soft overflow-hidden animate-pop">
-        <div class="px-4 py-3 border-b border-borderDim">
-          <div class="text-xs text-gray-500">Command palette</div>
-          <input
-            id="cmdInput"
-            class="mt-2 w-full bg-bgDark border border-borderDim rounded-xl px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 focus:outline-none f-ring"
-            placeholder="Type: images, projects, timeline, certs, achievements, gallery, about, top..."
-            autocomplete="off"
-          />
-        </div>
-        <div class="p-2 max-h-[55vh] overflow-y-auto" id="cmdList"></div>
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Enter to run · Esc to close</div>
+  <div id="savedModal" class="fixed inset-0 z-[98] hidden items-center justify-center" role="dialog" aria-modal="true"
+    aria-label="Saved searches">
+    <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+    <div
+      class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+      <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+        <div class="text-sm text-gray-300">Saved searches</div>
+        <button id="btnCloseSaved" type="button"
+          class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+          ✕
+        </button>
       </div>
+      <div id="savedList" class="space-y-3 p-4"></div>
     </div>
+  </div>
 
-    <!-- SAVED SEARCHES -->
-    <div id="savedModal" class="fixed inset-0 hidden items-center justify-center z-[98]" role="dialog" aria-modal="true" aria-label="Saved searches">
-      <div class="absolute inset-0 modal-backdrop" data-close="true"></div>
-      <div class="relative w-[92vw] max-w-xl border border-borderDim bg-bgPanel rounded-2xl shadow-soft overflow-hidden animate-pop">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-borderDim">
-          <div class="text-sm text-gray-300">Saved searches</div>
-          <button class="px-3 py-2 rounded-xl border border-borderDim bg-bgDark hover:bg-[#1b2430] transition-colors text-xs f-ring" type="button" id="btnCloseSaved" aria-label="Close">
-            ✕
-          </button>
-        </div>
-        <div class="p-4 space-y-3" id="savedList"></div>
-        <div class="px-4 py-3 text-xs text-gray-500 border-t border-borderDim">Stored locally in your browser.</div>
-      </div>
+  <div id="toast" class="fixed bottom-5 left-1/2 z-[100] hidden -translate-x-1/2" role="status" aria-live="polite">
+    <div id="toastText"
+      class="rounded-full border border-borderDim bg-bgPanel px-4 py-2 text-xs text-gray-200 shadow-glow">
+      Copied!
     </div>
+  </div>
 
-    <!-- TOAST -->
-    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 hidden z-[100]" role="status" aria-live="polite">
-      <div class="border border-borderDim bg-bgPanel rounded-full px-4 py-2 text-xs text-gray-200 shadow-glow" id="toastText">Copied!</div>
-    </div>
+  <script src="app.js"></script>
+</body>
 
-    <script src="app.js"></script>
-  </body>
 </html>
