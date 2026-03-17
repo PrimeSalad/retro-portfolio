@@ -4,10 +4,10 @@
 <head>
   <!--
     File: index.html
-    Description: Retro-futuristic search-style portfolio with 80% zoom-out layout scaling,
+    Description: Retro-futuristic search-style portfolio with preserved structure,
     improved viewport density, responsive header actions, cleaner tab alignment,
-    and fixed detail modal proportions.
-    Version: 3.2.0
+    Google-like typography, one-image profile card, and polished light/dark theme support.
+    Version: 3.4.0
   -->
 
   <meta charset="UTF-8" />
@@ -16,7 +16,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -24,22 +24,22 @@
       theme: {
         extend: {
           colors: {
-            bgDark: "#0b1017",
-            bgPanel: "#121923",
-            bgSoft: "#0f1722",
-            borderDim: "#263041",
-            gBlue: "#4285F4",
-            gRed: "#EA4335",
-            gYellow: "#FBBC05",
-            gGreen: "#34A853",
-            urlGreen: "#00ff88",
+            bgDark: "rgb(var(--bg-dark) / <alpha-value>)",
+            bgPanel: "rgb(var(--bg-panel) / <alpha-value>)",
+            bgSoft: "rgb(var(--bg-soft) / <alpha-value>)",
+            borderDim: "rgb(var(--border-dim) / <alpha-value>)",
+            gBlue: "rgb(var(--g-blue) / <alpha-value>)",
+            gRed: "rgb(var(--g-red) / <alpha-value>)",
+            gYellow: "rgb(var(--g-yellow) / <alpha-value>)",
+            gGreen: "rgb(var(--g-green) / <alpha-value>)",
+            urlGreen: "rgb(var(--url-green) / <alpha-value>)",
           },
           fontFamily: {
-            mono: ['"Space Mono"', "monospace"],
+            mono: ['"Roboto"', "Arial", "sans-serif"],
           },
           boxShadow: {
-            soft: "0 20px 60px rgba(0,0,0,0.38)",
-            glow: "0 0 0 1px rgba(66,133,244,0.18), 0 0 24px rgba(66,133,244,0.16)",
+            soft: "var(--shadow-soft)",
+            glow: "var(--shadow-glow)",
           },
           keyframes: {
             floaty: {
@@ -79,25 +79,71 @@
   <style>
     /*
       File: index.html
-      Section: inline zoom tuning
-      Purpose: simulate 80% browser zoom-out for the entire UI while keeping
-      the layout stable on desktop and mobile.
-      Version: 3.2.0
+      Section: inline zoom tuning + theme tokens
+      Purpose: preserve layout while allowing clean light and dark mode switching.
+      Version: 3.4.0
     */
 
     :root {
       --page-zoom: 0.8;
       --page-width-compensation: 125%;
+
+      --bg-dark: 246 248 251;
+      --bg-panel: 250 251 253;
+      --bg-soft: 244 246 248;
+      --border-dim: 223 227 232;
+
+      --text-main: 27 30 34;
+      --text-soft: 60 64 67;
+      --text-muted: 104 111 118;
+      --text-faint: 130 137 145;
+
+      --g-blue: 26 115 232;
+      --g-red: 234 67 53;
+      --g-yellow: 251 188 4;
+      --g-green: 52 168 83;
+      --url-green: 24 128 56;
+
+      --shadow-soft: 0 10px 30px rgba(30, 41, 59, 0.06);
+      --shadow-glow: 0 0 0 1px rgba(26, 115, 232, 0.14), 0 8px 24px rgba(26, 115, 232, 0.08);
+    }
+
+    body[data-theme="dark"] {
+      --bg-dark: 11 16 23;
+      --bg-panel: 17 24 34;
+      --bg-soft: 13 19 29;
+      --border-dim: 34 45 61;
+
+      --text-main: 241 245 249;
+      --text-soft: 209 213 219;
+      --text-muted: 128 138 150;
+      --text-faint: 95 104 116;
+
+      --g-blue: 66 133 244;
+      --g-red: 234 67 53;
+      --g-yellow: 251 188 5;
+      --g-green: 52 168 83;
+      --url-green: 0 255 136;
+
+      --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.36);
+      --shadow-glow: 0 0 0 1px rgba(66, 133, 244, 0.18), 0 0 26px rgba(66, 133, 244, 0.14);
     }
 
     html {
-      background: #0b1017;
+      background: rgb(var(--bg-dark));
       scroll-behavior: smooth;
     }
 
     body {
       min-height: 100vh;
-      background: #0b1017;
+      background: rgb(var(--bg-dark));
+      color: rgb(var(--text-main));
+      font-family: "Roboto", Arial, sans-serif;
+      color-scheme: light;
+    }
+
+    body[data-theme="dark"] {
+      color-scheme: dark;
     }
 
     .page-zoom {
@@ -147,7 +193,7 @@
   </style>
 </head>
 
-<body class="min-h-screen font-mono text-gray-300 antialiased">
+<body data-theme="light" class="min-h-screen font-mono text-gray-300 antialiased">
   <div class="page-zoom">
     <div class="scroll-progress" id="scrollProgress"></div>
     <div class="scanlines"></div>
@@ -171,12 +217,21 @@
           <div class="flex-1"></div>
 
           <button id="btnOpenKp" type="button"
-            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#192233] sm:text-sm xl:hidden">
+            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:text-sm xl:hidden">
             Profile
           </button>
 
+          <button id="btnTheme" type="button"
+            class="theme-toggle f-ring rounded-full border border-borderDim bg-bgPanel px-2 py-2 text-xs transition-colors sm:px-3 sm:text-sm"
+            aria-label="Toggle light and dark mode" aria-pressed="false" title="Toggle light and dark mode">
+            <span class="theme-switch-track" aria-hidden="true">
+              <span class="theme-switch-knob"></span>
+            </span>
+            <span id="themeLabel" class="hidden sm:inline">Dark mode</span>
+          </button>
+
           <button id="btnCmd" type="button"
-            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#192233] sm:text-sm"
+            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:text-sm"
             aria-label="Open command palette" title="Command palette (Ctrl/Cmd+K)">
             ⌘K
           </button>
@@ -197,8 +252,7 @@
                   placeholder="Search this portfolio..."
                   class="min-w-0 flex-1 bg-transparent text-white placeholder:text-gray-600 focus:outline-none" />
 
-                <button id="btnVoice" type="button"
-                  class="f-ring shrink-0 rounded text-gBlue transition-colors hover:text-white"
+                <button id="btnVoice" type="button" class="f-ring shrink-0 rounded text-gBlue transition-colors"
                   aria-label="Voice search" title="Voice search">
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -208,8 +262,8 @@
                 </button>
 
                 <button id="btnClear" type="button"
-                  class="f-ring hidden shrink-0 rounded text-gray-500 transition-colors hover:text-white"
-                  aria-label="Clear search" title="Clear">
+                  class="f-ring hidden shrink-0 rounded text-gray-500 transition-colors" aria-label="Clear search"
+                  title="Clear">
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                     </path>
@@ -237,11 +291,11 @@
 
           <div class="flex flex-wrap items-center gap-2 xl:justify-end">
             <button id="btnRun" type="button"
-              class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors hover:border-gBlue hover:bg-[#293447]">
+              class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors">
               Run Query
             </button>
             <button id="btnLucky" type="button"
-              class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors hover:border-gRed hover:bg-[#293447]">
+              class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors">
               I’m Feeling Futuristic
             </button>
           </div>
@@ -251,42 +305,42 @@
           <div class="tabs-row min-w-0 overflow-x-auto">
             <div class="flex min-w-max gap-2 pb-1">
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="all" type="button">
                 All
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="images" type="button">
                 Images
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="projects" type="button">
                 Projects
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="timeline" type="button">
                 Timeline
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="certificates" type="button">
                 Certificates
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="achievements" type="button">
                 Achievements
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="gallery" type="button">
                 Gallery
               </button>
               <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]"
+                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
                 data-tab="about" type="button">
                 About me
               </button>
@@ -295,11 +349,11 @@
 
           <div class="flex flex-wrap items-center gap-2 xl:shrink-0">
             <button id="btnSaveSearch" type="button"
-              class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]">
+              class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors">
               Save
             </button>
             <button id="btnOpenSaved" type="button"
-              class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors hover:bg-[#1c2430]">
+              class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors">
               Saved
             </button>
           </div>
@@ -326,11 +380,10 @@
 
               <div class="flex items-center gap-2">
                 <button id="btnShuffleImages" type="button"
-                  class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                  class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                   Shuffle
                 </button>
-                <button id="viewAllImages" type="button"
-                  class="f-ring rounded text-xs text-gBlue transition-colors hover:text-white">
+                <button id="viewAllImages" type="button" class="f-ring rounded text-xs text-gBlue transition-colors">
                   View all
                 </button>
               </div>
@@ -427,37 +480,37 @@
               <div class="mb-3 flex flex-wrap items-center gap-2">
                 <span class="text-xs text-gray-500">Filter:</span>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="all" type="button">
                   All
                 </button>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="frontend" type="button">
                   Frontend
                 </button>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="publication" type="button">
                   Publication
                 </button>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="backend" type="button">
                   Backend
                 </button>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="design" type="button">
                   UI/UX
                 </button>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="video" type="button">
                   Video
                 </button>
                 <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors hover:bg-[#1c2430]"
+                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
                   data-timeline-filter="leadership" type="button">
                   Leadership
                 </button>
@@ -465,7 +518,7 @@
                 <div class="flex-1"></div>
 
                 <button id="btnExpandAllTimeline" type="button"
-                  class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                  class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                   Expand all
                 </button>
               </div>
@@ -631,7 +684,7 @@
 
                   <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
                     <button id="btnShuffleGallery" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                       Shuffle
                     </button>
                     <select id="galleryFilter"
@@ -682,11 +735,11 @@
                   <h4 class="text-base text-white">Quick intro</h4>
                   <div class="flex flex-wrap items-center gap-2">
                     <button id="btnCopyBio" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                       Copy bio
                     </button>
                     <button id="btnDownloadResume" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                       Download resume (demo)
                     </button>
                   </div>
@@ -761,7 +814,7 @@
 
                     <div class="flex items-center gap-2 lg:col-span-2">
                       <button type="submit"
-                        class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+                        class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors">
                         Send
                       </button>
                       <span id="contactStatus" class="text-xs text-gray-500"></span>
@@ -782,7 +835,7 @@
     </main>
 
     <button id="btnTop" type="button"
-      class="f-ring fixed bottom-6 right-6 z-[95] hidden rounded-full border border-borderDim bg-bgPanel px-4 py-3 text-sm shadow-soft transition-colors hover:bg-[#1c2430]"
+      class="f-ring fixed bottom-6 right-6 z-[95] hidden rounded-full border border-borderDim bg-bgPanel px-4 py-3 text-sm shadow-soft transition-colors"
       aria-label="Back to top" title="Back to top">
       ↑ Top
     </button>
@@ -792,24 +845,20 @@
         class="mx-auto flex max-w-[1500px] flex-col items-center justify-between gap-3 px-4 text-sm text-gray-600 sm:flex-row sm:px-6 xl:px-10">
         <p>Retro UI inspired by classic search. Built with Tailwind + custom effects.</p>
         <div class="flex flex-wrap justify-center gap-4">
-          <a href="#" class="f-ring rounded hover:text-gray-300">Help</a>
-          <a href="#" class="f-ring rounded hover:text-gray-300">Send feedback</a>
-          <a href="#" class="f-ring rounded hover:text-gray-300">Privacy</a>
-          <a href="#" class="f-ring rounded hover:text-gray-300">Terms</a>
+          <a href="#" class="f-ring rounded">Help</a>
+          <a href="#" class="f-ring rounded">Send feedback</a>
+          <a href="#" class="f-ring rounded">Privacy</a>
+          <a href="#" class="f-ring rounded">Terms</a>
         </div>
       </div>
     </footer>
 
     <template id="kpTemplate">
-      <div class="mb-4 flex h-36 gap-2">
-        <img src="images/bg.jpg" alt="Retro-futuristic workspace"
-          class="w-1/2 rounded-l-xl border border-borderDim object-cover grayscale transition duration-500 hover:grayscale-0"
-          loading="lazy" />
-        <img src="images/icon.jpg" alt="Avatar"
-          class="w-1/2 rounded-r-xl border border-borderDim bg-bgDark object-cover" loading="lazy" />
+      <div class="kp-avatar-wrap">
+        <img src="images/icon.jpg" alt="Gene Elpie Landoy avatar" class="kp-avatar" loading="lazy" />
       </div>
 
-      <div class="flex items-start justify-between gap-2">
+      <div class="mt-4 flex items-start justify-between gap-2">
         <div>
           <h2 class="text-2xl font-bold leading-tight text-white">Gene Elpie Landoy</h2>
           <p class="mt-1 text-sm text-gray-400">
@@ -819,7 +868,7 @@
         </div>
 
         <span
-          class="animate-flicker rounded-full border border-borderDim bg-bgDark px-2 py-1 text-[11px] text-gray-400">
+          class="animate-flicker rounded-full border border-borderDim bg-bgSoft px-2 py-1 text-[11px] text-gray-400">
           online
         </span>
       </div>
@@ -829,35 +878,32 @@
         digital products with strong visual quality and practical delivery.
       </div>
 
-      <div class="mt-5 space-y-2 border-t border-borderDim pt-4 text-sm">
-        <div class="grid grid-cols-3 gap-2">
-          <span class="font-bold text-gray-500">Born:</span>
-          <span class="col-span-2 text-gBlue">02/24</span>
+      <div class="kp-mini-grid mt-5">
+        <div class="kp-mini-card">
+          <span class="kp-mini-label">Location</span>
+          <span class="kp-mini-value">Boac, Marinduque</span>
         </div>
-        <div class="grid grid-cols-3 gap-2">
-          <span class="font-bold text-gray-500">Location:</span>
-          <span class="col-span-2 text-gBlue">Boac, Marinduque</span>
+        <div class="kp-mini-card">
+          <span class="kp-mini-label">Focus</span>
+          <span class="kp-mini-value">Frontend + UI systems</span>
         </div>
-        <div class="grid grid-cols-3 gap-2">
-          <span class="font-bold text-gray-500">Stack:</span>
-          <span class="col-span-2 text-gBlue">
-            HTML · CSS · JavaScript · TypeScript · Tailwind · React · Dart · Figma · Canva ·
-            Photoshop · InDesign · OBS
-          </span>
+        <div class="kp-mini-card">
+          <span class="kp-mini-label">Mode</span>
+          <span class="kp-mini-value text-gGreen">Ship → Measure → Polish</span>
         </div>
-        <div class="grid grid-cols-3 gap-2">
-          <span class="font-bold text-gray-500">Mode:</span>
-          <span class="col-span-2 text-gGreen">Ship → Measure → Polish</span>
+        <div class="kp-mini-card">
+          <span class="kp-mini-label">Stack</span>
+          <span class="kp-mini-value">React · TS · Flutter · Figma</span>
         </div>
       </div>
 
       <div class="mt-5 flex gap-3">
         <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer"
-          class="f-ring flex-1 rounded-xl border border-borderDim bg-[#21262d] px-4 py-2.5 text-center text-sm text-white transition-all hover:border-white hover:bg-[#30363d]">
+          class="kp-btn-ghost f-ring flex-1 rounded-xl border border-borderDim px-4 py-2.5 text-center text-sm transition-all">
           GitHub
         </a>
         <a href="mailto:g.landoyelpie@gmail.com"
-          class="f-ring flex-1 rounded-xl bg-gBlue px-4 py-2.5 text-center text-sm text-white transition-all hover:bg-blue-600">
+          class="kp-btn-primary f-ring flex-1 rounded-xl px-4 py-2.5 text-center text-sm text-white transition-all">
           Contact
         </a>
       </div>
@@ -865,23 +911,19 @@
       <div class="mt-5 border-t border-borderDim pt-4">
         <div class="mb-2 text-xs text-gray-500">Quick links</div>
         <div class="grid grid-cols-2 gap-2">
-          <button
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
             type="button" data-scrollto="#projectsPanel">
             Projects
           </button>
-          <button
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
             type="button" data-scrollto="#timelinePanel">
             Timeline
           </button>
-          <button
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
             type="button" data-scrollto="#certPanel">
             Certs
           </button>
-          <button
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]"
+          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
             type="button" data-scrollto="#aboutPanel">
             About me
           </button>
@@ -896,7 +938,7 @@
         <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
           <div class="text-sm text-gray-300">Profile</div>
           <button id="btnCloseKp" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
             ✕
           </button>
         </div>
@@ -913,15 +955,15 @@
           <div id="lightboxTitle" class="clamp-2 text-sm text-gray-300">Image title</div>
           <div class="flex items-center gap-2">
             <button id="btnPrevImg" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
               ←
             </button>
             <button id="btnNextImg" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
               →
             </button>
             <button id="btnCloseLightbox" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
               ✕
             </button>
           </div>
@@ -941,7 +983,7 @@
         <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
           <div id="certModalTitle" class="text-sm text-gray-300">Certificate</div>
           <button id="btnCloseCertModal" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
             ✕
           </button>
         </div>
@@ -954,7 +996,7 @@
                   <span class="text-xs text-gray-500">Certificate image</span>
                   <div class="flex items-center gap-2">
                     <button id="btnOpenCertImage" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-[11px] transition-colors hover:bg-[#1b2430]">
+                      class="f-ring rounded-full border border-borderDim bg-bgSoft px-3 py-1.5 text-[11px] transition-colors">
                       Full view
                     </button>
                   </div>
@@ -967,19 +1009,19 @@
 
             <div class="max-h-[calc(88vh-56px)] overflow-y-auto p-4">
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
                   <div class="text-xs text-gray-500">Issuer</div>
                   <div id="certModalIssuer" class="mt-1 text-sm text-white"></div>
                 </div>
-                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
                   <div class="text-xs text-gray-500">Issued</div>
                   <div id="certModalIssued" class="mt-1 text-sm text-white"></div>
                 </div>
-                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
                   <div class="text-xs text-gray-500">Credential ID</div>
                   <div id="certModalId" class="mt-1 text-sm text-white"></div>
                 </div>
-                <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
                   <div class="text-xs text-gray-500">Status</div>
                   <div class="mt-1 text-sm">
                     <span
@@ -990,18 +1032,18 @@
                 </div>
               </div>
 
-              <div class="mt-4 rounded-xl border border-borderDim bg-bgDark p-3">
+              <div class="mt-4 rounded-xl border border-borderDim bg-bgSoft p-3">
                 <div class="text-xs text-gray-500">Notes</div>
                 <div id="certModalNotes" class="mt-1 text-sm leading-7 text-gray-300"></div>
               </div>
 
               <div class="mt-4 flex flex-wrap gap-2">
                 <a id="certModalLink" href="#" target="_blank" rel="noreferrer"
-                  class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+                  class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
                   Verify link
                 </a>
                 <button id="btnCopyCert" type="button"
-                  class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+                  class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
                   Copy details
                 </button>
               </div>
@@ -1019,7 +1061,7 @@
         <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
           <div id="projectModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
           <button id="btnCloseProjectModal" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
             ✕
           </button>
         </div>
@@ -1039,43 +1081,43 @@
 
             <div class="max-h-[calc(90vh-56px)] overflow-y-auto p-5">
               <div class="space-y-4">
-                <div class="rounded-2xl border border-borderDim bg-bgDark p-4">
+                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
                   <div class="text-xs text-gray-500">Project summary</div>
                   <div id="projectModalDesc" class="mt-2 text-sm leading-7 text-gray-300"></div>
                 </div>
 
-                <div class="rounded-2xl border border-borderDim bg-bgDark p-4">
+                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
                   <div class="text-xs text-gray-500">Highlights</div>
                   <ul id="projectModalHighlights" class="mt-3 space-y-2 text-sm leading-7 text-gray-300"></ul>
                 </div>
 
                 <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
                     <div class="text-xs text-gray-500">Role</div>
                     <div id="projectModalRole" class="mt-1 text-sm leading-7 text-white"></div>
                   </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
                     <div class="text-xs text-gray-500">Outcome</div>
                     <div id="projectModalOutcome" class="mt-1 text-sm leading-7 text-white"></div>
                   </div>
                 </div>
 
-                <div class="rounded-2xl border border-borderDim bg-bgDark p-4">
+                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
                   <div class="text-xs text-gray-500">Tech stack</div>
                   <div id="projectModalTech" class="mt-3 flex flex-wrap gap-2"></div>
                 </div>
 
                 <div class="flex flex-wrap gap-2 pt-1">
                   <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
-                    class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+                    class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
                     Open demo
                   </a>
                   <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
-                    class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
                     GitHub
                   </a>
                   <button id="btnCopyProject" type="button"
-                    class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
                     Copy summary
                   </button>
                 </div>
@@ -1094,7 +1136,7 @@
         <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
           <div id="galleryModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
           <button id="btnCloseGalleryModal" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
             ✕
           </button>
         </div>
@@ -1109,11 +1151,11 @@
           <div id="galleryModalTech" class="flex flex-wrap gap-2"></div>
           <div class="flex flex-wrap gap-2 pt-2">
             <a id="galleryModalDemo" href="#" target="_blank" rel="noreferrer"
-              class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors hover:border-gBlue hover:bg-[#30363d]">
+              class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
               Open demo
             </a>
             <button id="btnCopyGalleryItem" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgDark px-4 py-2 text-sm text-gray-200 transition-colors hover:bg-[#1b2430]">
+              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
               Copy summary
             </button>
           </div>
@@ -1130,7 +1172,7 @@
           <div class="text-xs text-gray-500">Command palette</div>
           <input id="cmdInput" autocomplete="off"
             placeholder="Type: images, projects, timeline, certs, achievements, gallery, about, top..."
-            class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+            class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgSoft px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
         </div>
         <div id="cmdList" class="max-h-[55vh] overflow-y-auto p-2"></div>
       </div>
@@ -1144,7 +1186,7 @@
         <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
           <div class="text-sm text-gray-300">Saved searches</div>
           <button id="btnCloseSaved" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors hover:bg-[#1b2430]">
+            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
             ✕
           </button>
         </div>
