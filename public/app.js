@@ -6,6 +6,103 @@
  * saved searches, command palette, and contact form.
  * Version: 3.1.0
  */
+
+
+/*
+ * File: app.js
+ * Description: Theme toggle extension for preserved portfolio logic.
+ * Version: 1.1.0
+ */
+
+(function initializeThemeToggle() {
+  "use strict";
+
+  const STORAGE_KEY = "portfolio_theme_mode";
+  const bodyElement = document.body;
+  const themeButtonElement = document.getElementById("btnTheme");
+  const themeLabelElement = document.getElementById("themeLabel");
+  const themeIconElement = document.getElementById("themeIcon");
+
+  if (!bodyElement || !themeButtonElement || !themeLabelElement) {
+    return;
+  }
+
+  /**
+   * Apply theme mode to document.
+   * @param {string} themeName
+   * @returns {void}
+   */
+  function applyTheme(themeName) {
+    const normalizedTheme = themeName === "dark" ? "dark" : "light";
+    const isDarkMode = normalizedTheme === "dark";
+
+    bodyElement.setAttribute("data-theme", normalizedTheme);
+    themeButtonElement.setAttribute("aria-pressed", String(isDarkMode));
+    themeLabelElement.textContent = isDarkMode ? "Light mode" : "Dark mode";
+
+    if (themeIconElement) {
+      themeIconElement.textContent = isDarkMode ? "☀️" : "🌙";
+    }
+  }
+
+  /**
+   * Get saved theme from localStorage.
+   * @returns {string}
+   */
+  function getSavedTheme() {
+    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
+
+    if (savedTheme === "dark" || savedTheme === "light") {
+      return savedTheme;
+    }
+
+    return "";
+  }
+
+  /**
+   * Get default theme from OS preference.
+   * @returns {"light" | "dark"}
+   */
+  function getSystemTheme() {
+    try {
+      return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ? "dark" : "light";
+    } catch {
+      return "light";
+    }
+  }
+
+  function getInitialTheme() {
+    const saved = getSavedTheme();
+    if (saved === "dark" || saved === "light") return saved;
+    return getSystemTheme();
+  }
+
+  /**
+   * Toggle theme mode.
+   * @returns {void}
+   */
+  function toggleTheme() {
+    const currentTheme = bodyElement.getAttribute("data-theme");
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+
+    applyTheme(nextTheme);
+    window.localStorage.setItem(STORAGE_KEY, nextTheme);
+  }
+
+  applyTheme(getInitialTheme());
+  themeButtonElement.addEventListener("click", toggleTheme);
+
+  try {
+    const media = window.matchMedia?.("(prefers-color-scheme: dark)");
+    media?.addEventListener?.("change", () => {
+      const saved = getSavedTheme();
+      if (saved === "dark" || saved === "light") return;
+      applyTheme(getSystemTheme());
+    });
+  } catch {
+    // ignore
+  }
+})();
 /* =========================
    Constants
 ========================= */

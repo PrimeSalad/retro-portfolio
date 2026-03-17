@@ -4,10 +4,9 @@
 <head>
   <!--
     File: index.html
-    Description: Retro-futuristic search-style portfolio with preserved structure,
-    improved viewport density, responsive header actions, cleaner tab alignment,
-    Google-like typography, one-image profile card, and polished light/dark theme support.
-    Version: 3.4.0
+    Description: Retro-futuristic search-style portfolio with compact Google-like result previews,
+    smaller project and certificate cards, uniform gallery image sizing, and polished dark/light theming.
+    Version: 3.5.0
   -->
 
   <meta charset="UTF-8" />
@@ -79,14 +78,14 @@
   <style>
     /*
       File: index.html
-      Section: inline zoom tuning + theme tokens
-      Purpose: preserve layout while allowing clean light and dark mode switching.
-      Version: 3.4.0
+      Section: inline zoom tuning + theme tokens + compact preview refinements
+      Purpose: preserve structure while making the page feel more like clean search results previews.
+      Version: 3.5.0
     */
 
     :root {
-      --page-zoom: 0.8;
-      --page-width-compensation: 125%;
+      --page-zoom: 0.84;
+      --page-width-compensation: 119.0476%;
 
       --bg-dark: 246 248 251;
       --bg-panel: 250 251 253;
@@ -162,15 +161,15 @@
 
     @media (max-width: 1280px) {
       .page-zoom {
-        zoom: 0.9;
+        zoom: 0.92;
       }
     }
 
     @supports not (zoom: 0.8) {
       @media (max-width: 1280px) {
         .page-zoom {
-          transform: scale(0.9);
-          width: 111.1111%;
+          transform: scale(0.92);
+          width: 108.6957%;
         }
       }
     }
@@ -190,10 +189,207 @@
         }
       }
     }
+
+    .result-snippet {
+      color: rgb(var(--text-soft));
+    }
+
+    .preview-note {
+      color: rgb(var(--text-muted));
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .preview-note-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid rgb(var(--border-dim));
+      background: rgb(var(--bg-soft));
+      color: rgb(var(--text-muted));
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .compact-panel {
+      border-radius: 18px;
+    }
+
+    .compact-stats>div {
+      padding: 0.9rem;
+    }
+
+    .preview-details {
+      border-top: 1px solid rgb(var(--border-dim));
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+    }
+
+    .preview-details summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      color: rgb(var(--text-soft));
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .preview-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .preview-details summary::after {
+      content: "+";
+      font-size: 18px;
+      color: rgb(var(--text-muted));
+      line-height: 1;
+    }
+
+    .preview-details[open] summary::after {
+      content: "−";
+    }
+
+    .preview-details[open] summary {
+      margin-bottom: 0.9rem;
+    }
+
+    #projectsGrid,
+    #certGrid,
+    #galleryGrid,
+    #achGrid,
+    #imageGrid {
+      align-items: start;
+    }
+
+    #projectsGrid>*,
+    #certGrid>*,
+    #galleryGrid>*,
+    #achGrid>*,
+    #imageGrid>* {
+      min-height: 0 !important;
+      height: auto !important;
+    }
+
+    #projectsGrid img,
+    #certGrid img,
+    #galleryGrid img,
+    #imageGrid img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    #projectsGrid img,
+    #certGrid img {
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+    }
+
+    #galleryGrid img {
+      aspect-ratio: 4 / 3;
+      border-radius: 14px;
+    }
+
+    #imageGrid img {
+      aspect-ratio: 4 / 3;
+      border-radius: 14px;
+    }
+
+    #projectsGrid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    #certGrid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    #galleryGrid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    @media (min-width: 640px) {
+      #projectsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #certGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #galleryGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1536px) {
+      #projectsGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      #certGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      #galleryGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    #projectsGrid>*,
+    #certGrid>* {
+      max-width: 100%;
+    }
+
+    .google-preview-shell {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+        rgb(var(--bg-panel));
+    }
+
+    .section-divider {
+      border-left-width: 2px;
+      padding-left: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+      .section-divider {
+        padding-left: 1.15rem;
+      }
+    }
+
+    .mini-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mini-toolbar .toolbar-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .search-result-title {
+      line-height: 1.18;
+    }
+
+    .uniform-gallery-note {
+      color: rgb(var(--text-faint));
+      font-size: 12px;
+    }
   </style>
 </head>
 
-<body data-theme="light" class="min-h-screen font-mono text-gray-300 antialiased">
+<body data-theme="dark" class="min-h-screen font-mono text-gray-300 antialiased">
   <div class="page-zoom">
     <div class="scroll-progress" id="scrollProgress"></div>
     <div class="scanlines"></div>
@@ -223,11 +419,11 @@
 
           <button id="btnTheme" type="button"
             class="theme-toggle f-ring rounded-full border border-borderDim bg-bgPanel px-2 py-2 text-xs transition-colors sm:px-3 sm:text-sm"
-            aria-label="Toggle light and dark mode" aria-pressed="false" title="Toggle light and dark mode">
+            aria-label="Toggle light and dark mode" aria-pressed="true" title="Toggle light and dark mode">
             <span class="theme-switch-track" aria-hidden="true">
               <span class="theme-switch-knob"></span>
             </span>
-            <span id="themeLabel" class="hidden sm:inline">Dark mode</span>
+            <span id="themeLabel" class="hidden sm:inline">Light mode</span>
           </button>
 
           <button id="btnCmd" type="button"
@@ -249,7 +445,7 @@
                 </svg>
 
                 <input id="searchInput" type="text" autocomplete="off" spellcheck="false"
-                  placeholder="Search this portfolio..."
+                  placeholder="Search Gene Elpie Landoy portfolio..."
                   class="min-w-0 flex-1 bg-transparent text-white placeholder:text-gray-600 focus:outline-none" />
 
                 <button id="btnVoice" type="button" class="f-ring shrink-0 rounded text-gBlue transition-colors"
@@ -277,9 +473,9 @@
             </form>
 
             <div id="metaLine" class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-              <span id="resultsCount">About 1,024,000 results</span>
+              <span id="resultsCount">About 248 results</span>
               <span class="text-gray-700">·</span>
-              <span id="resultsTime">(0.013 seconds)</span>
+              <span id="resultsTime">(0.011 seconds)</span>
               <span class="hidden text-gray-700 sm:inline">·</span>
               <span class="hidden sm:inline">
                 Shortcuts:
@@ -292,7 +488,7 @@
           <div class="flex flex-wrap items-center gap-2 xl:justify-end">
             <button id="btnRun" type="button"
               class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors">
-              Run Query
+              Search
             </button>
             <button id="btnLucky" type="button"
               class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors">
@@ -366,19 +562,14 @@
       <section class="min-w-0 space-y-8" aria-label="Search results">
         <div id="resultsArea" class="space-y-8">
           <section id="section-images" data-section="images"
-            class="rounded-2xl border border-borderDim bg-bgPanel p-5 shadow-soft">
-            <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
-              <div class="flex flex-wrap items-center gap-2">
-                <span
-                  class="inline-flex items-center rounded-full border border-borderDim bg-bgDark px-2 py-1 text-xs text-gray-400">
-                  Image pack
-                </span>
-                <h2 class="text-lg text-white">
-                  Visuals: projects · events · recognition · field work
-                </h2>
+            class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-4 shadow-soft sm:p-5">
+            <div class="mb-4 mini-toolbar">
+              <div class="toolbar-group">
+                <span class="preview-note-pill">Image pack</span>
+                <h2 class="text-lg text-white">Portfolio visuals</h2>
               </div>
 
-              <div class="flex items-center gap-2">
+              <div class="toolbar-group">
                 <button id="btnShuffleImages" type="button"
                   class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                   Shuffle
@@ -389,9 +580,14 @@
               </div>
             </div>
 
+            <p class="mb-4 text-sm leading-relaxed result-snippet">
+              Quick visual preview of projects, recognition, events, and field work. Open any image
+              for full view.
+            </p>
+
             <div id="imageGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
 
-            <div class="mt-4 text-xs text-gray-500">
+            <div class="mt-4 preview-note">
               Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
             </div>
           </section>
@@ -402,41 +598,33 @@
               <span class="text-gray-600">›</span>
               <span>projects</span>
               <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Pinned
+                Preview cards
               </span>
             </div>
 
-            <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
               data-scrollto="#projectsPanel" tabindex="0" role="link" aria-label="Open projects panel">
-              Project Index — Premium Showcase
+              Project Index — Search-style Preview
             </h3>
 
-            <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
-              God-mode project cards with visual hero images, stronger info hierarchy, quick
-              actions, and a full detail modal for impact, role, stack, and delivery notes.
+            <p class="mt-2 text-sm leading-relaxed result-snippet">
+              Compact project snippets only on the main page. Full role, stack, outcome, and links
+              stay inside the detail modal.
             </p>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gBlue">
-              <div id="projectsPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
-                <div class="mb-5 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_auto]">
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span
-                      class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gBlue">
-                      visual cards
-                    </span>
-                    <span
-                      class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gGreen">
-                      quick actions
-                    </span>
-                    <span
-                      class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gYellow">
-                      detail modal
-                    </span>
+            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gBlue">
+              <div id="projectsPanel"
+                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                <div class="mini-toolbar mb-4">
+                  <div class="toolbar-group">
+                    <span class="preview-note-pill text-gBlue">compact</span>
+                    <span class="preview-note-pill text-gGreen">modal-first</span>
+                    <span class="preview-note-pill text-gYellow">preview only</span>
                   </div>
 
-                  <div class="flex w-full flex-col gap-2 sm:flex-row xl:w-auto">
+                  <div class="toolbar-group w-full sm:w-auto">
                     <input id="projectSearch" type="text" autocomplete="off" placeholder="Filter projects..."
-                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-64" />
+                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-56" />
                     <select id="projectSort"
                       class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200"
                       aria-label="Sort projects">
@@ -448,11 +636,12 @@
                   </div>
                 </div>
 
-                <div id="projectsGrid" class="grid grid-cols-1 gap-4 2xl:grid-cols-2"></div>
+                <p class="mb-4 preview-note">
+                  Main page shows smaller cards like Google results. Open a project card for the
+                  complete case-study view.
+                </p>
 
-                <div class="mt-4 text-xs text-gray-500">
-                  Tip: replace demo and repo links with your real URLs.
-                </div>
+                <div id="projectsGrid" class="grid gap-3"></div>
               </div>
             </div>
           </article>
@@ -463,20 +652,21 @@
               <span class="text-gray-600">›</span>
               <span>timeline</span>
               <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Updated Feb 2026
+                Snapshot
               </span>
             </div>
 
-            <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
               data-scrollto="#timelinePanel" tabindex="0" role="link" aria-label="Open timeline panel">
-              Gene Elpie Landoy — Real Timeline
+              Gene Elpie Landoy — Career Timeline
             </h3>
 
-            <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
-              A vertical milestone rail with role tags, highlights, impact notes, and stack chips.
+            <p class="mt-2 text-sm leading-relaxed result-snippet">
+              Search-result style milestone preview with filters for frontend, publication, design,
+              backend, leadership, and video work.
             </p>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gBlue">
+            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gBlue">
               <div class="mb-3 flex flex-wrap items-center gap-2">
                 <span class="text-xs text-gray-500">Filter:</span>
                 <button
@@ -523,13 +713,14 @@
                 </button>
               </div>
 
-              <div id="timelinePanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+              <div id="timelinePanel"
+                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
                 <div class="timeline-rail">
                   <div id="timelineList" class="space-y-4"></div>
                 </div>
 
-                <div class="mt-4 text-xs text-gray-500">
-                  Keyboard: Tab into an item, then press Enter or Space to toggle.
+                <div class="mt-4 preview-note">
+                  Preview timeline on page, detailed context on expand.
                 </div>
               </div>
             </div>
@@ -541,41 +732,33 @@
               <span class="text-gray-600">›</span>
               <span>certificates</span>
               <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Verified
+                Compact cards
               </span>
             </div>
 
-            <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
               data-scrollto="#certPanel" tabindex="0" role="link" aria-label="Open certificates panel">
-              Verified Certificates.exe — with Image Preview
+              Certificates — Quick Verification Preview
             </h3>
 
-            <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
-              Each certificate card now supports image preview. Open a card to view the
-              certificate image, metadata, notes, and verification link in one clean modal.
+            <p class="mt-2 text-sm leading-relaxed result-snippet">
+              Smaller certificate cards with thumbnail, issuer, issue date, and a clean preview.
+              Full verification stays in the modal.
             </p>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gYellow">
-              <div id="certPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
-                <div class="mb-5 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_auto]">
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span
-                      class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gGreen">
-                      image viewer
-                    </span>
-                    <span
-                      class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gBlue">
-                      verification link
-                    </span>
-                    <span
-                      class="inline-flex rounded-full border border-borderDim bg-bgDark px-3 py-1 text-[11px] text-gYellow">
-                      credential meta
-                    </span>
+            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
+              <div id="certPanel"
+                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                <div class="mini-toolbar mb-4">
+                  <div class="toolbar-group">
+                    <span class="preview-note-pill text-gGreen">verified</span>
+                    <span class="preview-note-pill text-gBlue">preview image</span>
+                    <span class="preview-note-pill text-gYellow">small layout</span>
                   </div>
 
-                  <div class="flex w-full flex-col gap-2 sm:flex-row xl:w-auto">
+                  <div class="toolbar-group w-full sm:w-auto">
                     <input id="certSearch" type="text" autocomplete="off" placeholder="Filter certificates..."
-                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-64" />
+                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-60" />
                     <select id="certSort"
                       class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200"
                       aria-label="Sort certificates">
@@ -587,12 +770,12 @@
                   </div>
                 </div>
 
-                <div id="certGrid" class="grid grid-cols-1 gap-4 2xl:grid-cols-2"></div>
+                <p class="mb-4 preview-note">
+                  Certificates stay compact here so the page reads like search results, not full
+                  records.
+                </p>
 
-                <div class="mt-4 text-xs text-gray-500">
-                  Tip: replace placeholder certificate image paths with your real certificate
-                  screenshots.
-                </div>
+                <div id="certGrid" class="grid gap-3"></div>
               </div>
             </div>
           </article>
@@ -607,37 +790,38 @@
               </span>
             </div>
 
-            <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
               data-scrollto="#achPanel" tabindex="0" role="link" aria-label="Open achievements panel">
               Notable Achievements & Awards
             </h3>
 
-            <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
-              Key milestones, research presentations, competitions, and impact stats.
+            <p class="mt-2 text-sm leading-relaxed result-snippet">
+              Key wins, research work, competitions, and performance metrics in a compact preview.
             </p>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gRed">
-              <div id="achPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
-                <div class="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gRed">
+              <div id="achPanel"
+                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                <div class="compact-stats mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  <div class="rounded-xl border border-borderDim bg-bgDark">
                     <div class="text-xs text-gray-500">Lines Written</div>
                     <div class="text-2xl font-bold text-white">
                       <span class="counter" data-target="127000">0</span>+
                     </div>
                   </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="rounded-xl border border-borderDim bg-bgDark">
                     <div class="text-xs text-gray-500">Talks</div>
                     <div class="text-2xl font-bold text-white">
                       <span class="counter" data-target="18">0</span>
                     </div>
                   </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="rounded-xl border border-borderDim bg-bgDark">
                     <div class="text-xs text-gray-500">Projects shipped</div>
                     <div class="text-2xl font-bold text-white">
                       <span class="counter" data-target="42">0</span>
                     </div>
                   </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-3">
+                  <div class="rounded-xl border border-borderDim bg-bgDark">
                     <div class="text-xs text-gray-500">Perf gains</div>
                     <div class="text-2xl font-bold text-white">
                       <span class="counter" data-target="40">0</span>%
@@ -647,8 +831,8 @@
 
                 <div id="achGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
 
-                <div class="mt-4 text-xs text-gray-500">
-                  Replace these with your real awards and numbers.
+                <div class="mt-4 preview-note">
+                  Replace these demo metrics with your real numbers.
                 </div>
               </div>
             </div>
@@ -660,29 +844,30 @@
               <span class="text-gray-600">›</span>
               <span>gallery</span>
               <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Portfolio
+                Uniform thumbnails
               </span>
             </div>
 
-            <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
               data-scrollto="#galleryPanel" tabindex="0" role="link" aria-label="Open gallery panel">
               Creative Gallery & Projects
             </h3>
 
-            <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
-              Interactive experiments, digital art, immersive interfaces, and creative coding
-              work.
+            <p class="mt-2 text-sm leading-relaxed result-snippet">
+              Creative work preview with equal image sizes for a cleaner grid and more polished
+              search-style presentation.
             </p>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gYellow">
-              <div id="galleryPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
-                <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
-                  <div class="flex items-center gap-2">
+            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
+              <div id="galleryPanel"
+                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                <div class="mini-toolbar mb-4">
+                  <div class="toolbar-group">
                     <h4 class="text-base text-white">Interactive Gallery</h4>
-                    <span class="text-xs text-gray-500">Click to view details</span>
+                    <span class="uniform-gallery-note">All thumbnails use the same visual ratio</span>
                   </div>
 
-                  <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+                  <div class="toolbar-group w-full sm:w-auto">
                     <button id="btnShuffleGallery" type="button"
                       class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
                       Shuffle
@@ -700,10 +885,10 @@
                   </div>
                 </div>
 
-                <div id="galleryGrid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3"></div>
+                <div id="galleryGrid" class="grid gap-3"></div>
 
-                <div class="mt-4 text-xs text-gray-500">
-                  Tip: add your real demos and GitHub links here too.
+                <div class="mt-4 preview-note">
+                  Uniform image height keeps every gallery item aligned and visually balanced.
                 </div>
               </div>
             </div>
@@ -715,22 +900,23 @@
               <span class="text-gray-600">›</span>
               <span>about</span>
               <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Profile
+                Summary
               </span>
             </div>
 
-            <h3 class="search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
+            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
               data-scrollto="#aboutPanel" tabindex="0" role="link" aria-label="Open about panel">
-              About Gene Elpie Landoy (System Profile)
+              About Gene Elpie Landoy
             </h3>
 
-            <p class="clamp-3 mt-2 text-sm leading-relaxed text-gray-400">
-              Practical, systems-oriented, visual-first, and focused on building polished
-              experiences that still ship fast.
+            <p class="mt-2 text-sm leading-relaxed result-snippet">
+              Creative technologist focused on polished interfaces, frontend systems, design, and
+              practical delivery.
             </p>
 
-            <div class="mt-4 border-l-2 border-borderDim pl-4 transition-colors group-hover:border-gGreen">
-              <div id="aboutPanel" class="rounded-2xl border border-borderDim bg-bgPanel p-4">
+            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gGreen">
+              <div id="aboutPanel"
+                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                   <h4 class="text-base text-white">Quick intro</h4>
                   <div class="flex flex-wrap items-center gap-2">
@@ -740,18 +926,17 @@
                     </button>
                     <button id="btnDownloadResume" type="button"
                       class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                      Download resume (demo)
+                      Download resume
                     </button>
                   </div>
                 </div>
 
-                <div class="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_280px]">
+                <div class="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_260px]">
                   <div class="min-w-0">
                     <p id="bioText" class="text-sm leading-relaxed text-gray-300">
                       I'm Gene Elpie Landoy, a creative technologist, UI/UX designer, frontend and
-                      mobile developer, graphic designer, public speaker, and video editor. I love
-                      building clean interfaces, strong visual systems, and products that feel
-                      premium from first click to final polish.
+                      mobile developer, graphic designer, public speaker, and video editor. I build
+                      clean interfaces, strong visual systems, and polished digital experiences.
                     </p>
 
                     <div class="mt-4 flex flex-wrap gap-2">
@@ -783,7 +968,7 @@
                   </div>
 
                   <div class="rounded-xl border border-borderDim bg-bgDark p-4">
-                    <div class="mb-2 text-xs text-gray-500">“Search result snippet”</div>
+                    <div class="mb-2 text-xs text-gray-500">Search snippet</div>
                     <div class="text-sm text-gray-300">
                       <span class="text-gray-500">Primary:</span> UI + frontend systems
                     </div>
@@ -798,29 +983,33 @@
                   </div>
                 </div>
 
-                <div class="mt-6 border-t border-borderDim pt-4">
-                  <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h5 class="text-sm text-white">Send a message</h5>
-                    <span class="text-xs text-gray-500">Sends to backend if wired</span>
-                  </div>
+                <details class="preview-details">
+                  <summary>Open quick contact form</summary>
 
-                  <form id="contactForm" class="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-                    <input type="text" name="name" required placeholder="Your name"
-                      class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                    <input type="email" name="email" required placeholder="Email"
-                      class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                    <textarea name="message" rows="4" required placeholder="Message"
-                      class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 lg:col-span-2"></textarea>
-
-                    <div class="flex items-center gap-2 lg:col-span-2">
-                      <button type="submit"
-                        class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors">
-                        Send
-                      </button>
-                      <span id="contactStatus" class="text-xs text-gray-500"></span>
+                  <div class="pt-1">
+                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+                      <h5 class="text-sm text-white">Send a message</h5>
+                      <span class="text-xs text-gray-500">Sends to backend if wired</span>
                     </div>
-                  </form>
-                </div>
+
+                    <form id="contactForm" class="grid grid-cols-1 gap-3 lg:grid-cols-2">
+                      <input type="text" name="name" required placeholder="Your name"
+                        class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                      <input type="email" name="email" required placeholder="Email"
+                        class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                      <textarea name="message" rows="4" required placeholder="Message"
+                        class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 lg:col-span-2"></textarea>
+
+                      <div class="flex items-center gap-2 lg:col-span-2">
+                        <button type="submit"
+                          class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors">
+                          Send
+                        </button>
+                        <span id="contactStatus" class="text-xs text-gray-500"></span>
+                      </div>
+                    </form>
+                  </div>
+                </details>
               </div>
             </div>
           </article>
