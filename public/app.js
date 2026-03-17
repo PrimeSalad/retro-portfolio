@@ -6,7 +6,6 @@
  * saved searches, command palette, and contact form.
  * Version: 3.1.0
  */
-
 /* =========================
    Constants
 ========================= */
