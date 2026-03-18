@@ -435,12 +435,14 @@ body[data-theme="dark"] .bg-noise {
 #projectsGrid,
 #certGrid,
 #galleryGrid {
-  align-items: start;
+  align-items: stretch;
 }
 
 .project-card,
 .cert-card,
 .gallery-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: 1.15rem;
   border: 1px solid rgb(var(--border-dim));
@@ -465,14 +467,7 @@ body[data-theme="dark"] .bg-noise {
   position: relative;
   overflow: hidden;
   background: rgb(var(--bg-soft));
-}
-
-.project-thumb {
-  aspect-ratio: 16 / 7.6;
-}
-
-.cert-thumb {
-  aspect-ratio: 16 / 8.4;
+  height: 200px;
 }
 
 .project-thumb img,
@@ -493,6 +488,71 @@ body[data-theme="dark"] .bg-noise {
 .gallery-card:hover img {
   transform: scale(1.03);
   opacity: 1;
+}
+
+/* Creative Gallery: compact cards + uniform thumbnails */
+.gallery-thumb {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--bg-soft));
+  height: 200px;
+}
+
+.gallery-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.94;
+  transition:
+    transform 240ms ease,
+    opacity 240ms ease,
+    filter 240ms ease;
+}
+
+.gallery-card:hover .gallery-thumb-img {
+  transform: scale(1.03);
+  opacity: 1;
+}
+
+.gallery-badge {
+  position: absolute;
+  left: 0.6rem;
+  top: 0.6rem;
+}
+
+.gallery-card-body {
+  padding: 0.55rem 0.65rem 0.6rem;
+}
+
+.gallery-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.gallery-desc {
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  margin-bottom: 0.45rem;
+}
+
+.gallery-tech-row {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.gallery-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--border-dim));
+  background: rgb(var(--bg-panel));
+  padding: 0.2rem 0.45rem;
+  font-size: 0.6rem;
+  color: rgb(var(--text-muted));
 }
 
 .project-thumb::after,
@@ -550,35 +610,45 @@ body[data-theme="dark"] .cert-thumb::after {
 
 .project-card-body,
 .cert-card-body {
-  padding: 0.85rem 0.95rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 0.6rem 0.7rem 0.6rem;
 }
 
 .project-card-title {
   color: rgb(var(--text-main));
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
 .project-card-subtitle {
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   color: rgb(var(--text-muted));
-  font-size: 0.69rem;
+  font-size: 0.65rem;
 }
 
 .project-card-desc {
-  margin-top: 0.55rem;
+  margin-top: 0.4rem;
   color: rgb(var(--text-soft));
-  font-size: 0.76rem;
-  line-height: 1.55;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  margin-bottom: 0.4rem;
 }
 
-.card-chip-row,
+.card-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
 .card-action-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.42rem;
-  margin-top: 0.72rem;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
 }
 
 .card-action,
@@ -586,10 +656,10 @@ body[data-theme="dark"] .cert-thumb::after {
   flex: 1 1 0;
   min-width: 0;
   text-align: center;
-  border-radius: 0.85rem;
+  border-radius: 0.6rem;
   border: 1px solid rgb(var(--border-dim));
-  padding: 0.62rem 0.78rem;
-  font-size: 0.71rem;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.65rem;
   transition:
     transform 180ms ease,
     border-color 180ms ease,
@@ -610,6 +680,74 @@ body[data-theme="dark"] .cert-thumb::after {
 .card-link:hover {
   transform: translateY(-1px);
   border-color: rgb(var(--g-blue) / 0.42);
+}
+
+/* Project Index: extra-compact card body when in main grid */
+#projectsGrid .project-card-body {
+  padding: 0.55rem 0.65rem 0.55rem;
+  height: 100%;
+}
+
+#projectsGrid .project-card-title {
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+
+#projectsGrid .project-card-subtitle {
+  font-size: 0.65rem;
+}
+
+#projectsGrid .project-card-desc {
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  margin-bottom: 0.35rem;
+}
+
+#projectsGrid .card-action,
+#projectsGrid .card-link {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.62rem;
+}
+
+/* Verified Certificates: compact like Project Index */
+#certGrid .cert-card-body {
+  padding: 0.55rem 0.65rem 0.55rem;
+  height: 100%;
+}
+
+/* Make cards in 4-column grids truly equal height */
+#projectsGrid > .project-card,
+#certGrid > .cert-card,
+#galleryGrid > .gallery-card {
+  height: 100%;
+}
+
+#projectsGrid .card-action-row,
+#certGrid .card-action-row {
+  margin-top: auto;
+}
+
+#certGrid .project-card-title {
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+
+#certGrid .project-card-subtitle {
+  font-size: 0.65rem;
+}
+
+#certGrid .project-card-desc {
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  margin-bottom: 0.35rem;
+}
+
+#certGrid .card-action,
+#certGrid .card-link {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.62rem;
 }
 
 /* Project modal */
@@ -752,5 +890,63 @@ body[data-theme="dark"] .cert-thumb::after {
 
   #themeLabel {
     display: none;
+  }
+
+  /* Hide futuristic button on mobile */
+  #btnLucky {
+    display: none !important;
+  }
+
+  /* Smaller button padding on mobile */
+  button,
+  .f-ring {
+    font-size: 0.75rem !important;
+  }
+
+  /* Reduce padding for all buttons on mobile */
+  #btnOpenKp,
+  #btnTheme,
+  #btnCmd,
+  .tab-btn,
+  #btnSaveSearch,
+  #btnOpenSaved {
+    padding: 0.35rem 0.65rem !important;
+  }
+
+  /* Ensure images are same size on mobile */
+  #projectsGrid .project-thumb,
+  #certGrid .cert-thumb,
+  #galleryGrid .gallery-thumb {
+    height: 160px !important;
+  }
+
+  #imageGrid .image-card {
+    height: 140px !important;
+  }
+}
+
+/* Tablet responsive improvements */
+@media (min-width: 640px) and (max-width: 1023px) {
+  #projectsGrid .project-thumb,
+  #certGrid .cert-thumb,
+  #galleryGrid .gallery-thumb {
+    height: 180px;
+  }
+
+  #imageGrid .image-card {
+    height: 160px;
+  }
+}
+
+/* Desktop consistent sizing */
+@media (min-width: 1024px) {
+  #projectsGrid .project-thumb,
+  #certGrid .cert-thumb,
+  #galleryGrid .gallery-thumb {
+    height: 200px;
+  }
+
+  #imageGrid .image-card {
+    height: 180px;
   }
 }

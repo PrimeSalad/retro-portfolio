@@ -2,1396 +2,1597 @@
 <html lang="en">
 
 <head>
-  <!--
+    <!--
     File: index.html
-    Description: Retro-futuristic search-style portfolio with compact Google-like result previews,
-    smaller project and certificate cards, uniform gallery image sizing, and polished dark/light theming.
-    Version: 3.5.0
+    Description: Retro-futuristic search-style portfolio with improved mobile responsiveness,
+    cleaner toolbar spacing, and better compact Google-like result previews.
+    Version: 3.6.0
   -->
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gene Elpie Landoy | Retro Search Portfolio</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gene Elpie Landoy | Retro Search Portfolio</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bgDark: "rgb(var(--bg-dark) / <alpha-value>)",
-            bgPanel: "rgb(var(--bg-panel) / <alpha-value>)",
-            bgSoft: "rgb(var(--bg-soft) / <alpha-value>)",
-            borderDim: "rgb(var(--border-dim) / <alpha-value>)",
-            gBlue: "rgb(var(--g-blue) / <alpha-value>)",
-            gRed: "rgb(var(--g-red) / <alpha-value>)",
-            gYellow: "rgb(var(--g-yellow) / <alpha-value>)",
-            gGreen: "rgb(var(--g-green) / <alpha-value>)",
-            urlGreen: "rgb(var(--url-green) / <alpha-value>)",
-          },
-          fontFamily: {
-            mono: ['"Roboto"', "Arial", "sans-serif"],
-          },
-          boxShadow: {
-            soft: "var(--shadow-soft)",
-            glow: "var(--shadow-glow)",
-          },
-          keyframes: {
-            floaty: {
-              "0%,100%": { transform: "translateY(0px)" },
-              "50%": { transform: "translateY(-6px)" },
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: "rgb(var(--bg-dark) / <alpha-value>)",
+                        bgPanel: "rgb(var(--bg-panel) / <alpha-value>)",
+                        bgSoft: "rgb(var(--bg-soft) / <alpha-value>)",
+                        borderDim: "rgb(var(--border-dim) / <alpha-value>)",
+                        gBlue: "rgb(var(--g-blue) / <alpha-value>)",
+                        gRed: "rgb(var(--g-red) / <alpha-value>)",
+                        gYellow: "rgb(var(--g-yellow) / <alpha-value>)",
+                        gGreen: "rgb(var(--g-green) / <alpha-value>)",
+                        urlGreen: "rgb(var(--url-green) / <alpha-value>)",
+                    },
+                    fontFamily: {
+                        mono: ['"Roboto"', "Arial", "sans-serif"],
+                    },
+                    boxShadow: {
+                        soft: "var(--shadow-soft)",
+                        glow: "var(--shadow-glow)",
+                    },
+                    keyframes: {
+                        floaty: {
+                            "0%,100%": { transform: "translateY(0px)" },
+                            "50%": { transform: "translateY(-6px)" },
+                        },
+                        flicker: {
+                            "0%,100%": { opacity: "0.98" },
+                            "8%": { opacity: "0.9" },
+                            "10%": { opacity: "0.82" },
+                            "12%": { opacity: "0.96" },
+                            "72%": { opacity: "0.85" },
+                            "75%": { opacity: "0.98" },
+                        },
+                        scan: {
+                            "0%": { transform: "translateY(-45%)" },
+                            "100%": { transform: "translateY(150%)" },
+                        },
+                        pop: {
+                            "0%": { transform: "translateY(8px) scale(0.985)", opacity: "0" },
+                            "100%": { transform: "translateY(0px) scale(1)", opacity: "1" },
+                        },
+                    },
+                    animation: {
+                        floaty: "floaty 4.8s ease-in-out infinite",
+                        flicker: "flicker 6s infinite",
+                        scan: "scan 8s linear infinite",
+                        pop: "pop 220ms ease-out",
+                    },
+                },
             },
-            flicker: {
-              "0%,100%": { opacity: "0.98" },
-              "8%": { opacity: "0.9" },
-              "10%": { opacity: "0.82" },
-              "12%": { opacity: "0.96" },
-              "72%": { opacity: "0.85" },
-              "75%": { opacity: "0.98" },
-            },
-            scan: {
-              "0%": { transform: "translateY(-45%)" },
-              "100%": { transform: "translateY(150%)" },
-            },
-            pop: {
-              "0%": { transform: "translateY(8px) scale(0.985)", opacity: "0" },
-              "100%": { transform: "translateY(0px) scale(1)", opacity: "1" },
-            },
-          },
-          animation: {
-            floaty: "floaty 4.8s ease-in-out infinite",
-            flicker: "flicker 6s infinite",
-            scan: "scan 8s linear infinite",
-            pop: "pop 220ms ease-out",
-          },
-        },
-      },
-    };
-  </script>
+        };
+    </script>
 
-  <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
 
-  <style>
-    /*
-      File: index.html
-      Section: inline zoom tuning + theme tokens + compact preview refinements
-      Purpose: preserve structure while making the page feel more like clean search results previews.
-      Version: 3.5.0
-    */
+    <style>
+        /*
+          File: index.html
+          Section: inline responsive tuning + theme tokens + compact preview refinements
+          Purpose: preserve structure while improving mobile layout, action spacing, and toolbar clarity.
+          Version: 3.6.0
+        */
 
-    :root {
-      --page-zoom: 0.84;
-      --page-width-compensation: 119.0476%;
+        :root {
+            --page-zoom: 0.84;
+            --page-width-compensation: 119.0476%;
 
-      --bg-dark: 246 248 251;
-      --bg-panel: 250 251 253;
-      --bg-soft: 244 246 248;
-      --border-dim: 223 227 232;
+            --bg-dark: 246 248 251;
+            --bg-panel: 250 251 253;
+            --bg-soft: 244 246 248;
+            --border-dim: 223 227 232;
 
-      --text-main: 27 30 34;
-      --text-soft: 60 64 67;
-      --text-muted: 104 111 118;
-      --text-faint: 130 137 145;
+            --text-main: 27 30 34;
+            --text-soft: 60 64 67;
+            --text-muted: 104 111 118;
+            --text-faint: 130 137 145;
 
-      --g-blue: 26 115 232;
-      --g-red: 234 67 53;
-      --g-yellow: 251 188 4;
-      --g-green: 52 168 83;
-      --url-green: 24 128 56;
+            --g-blue: 26 115 232;
+            --g-red: 234 67 53;
+            --g-yellow: 251 188 4;
+            --g-green: 52 168 83;
+            --url-green: 24 128 56;
 
-      --shadow-soft: 0 10px 30px rgba(30, 41, 59, 0.06);
-      --shadow-glow: 0 0 0 1px rgba(26, 115, 232, 0.14), 0 8px 24px rgba(26, 115, 232, 0.08);
-    }
-
-    body[data-theme="dark"] {
-      --bg-dark: 11 16 23;
-      --bg-panel: 17 24 34;
-      --bg-soft: 13 19 29;
-      --border-dim: 34 45 61;
-
-      --text-main: 241 245 249;
-      --text-soft: 209 213 219;
-      --text-muted: 128 138 150;
-      --text-faint: 95 104 116;
-
-      --g-blue: 66 133 244;
-      --g-red: 234 67 53;
-      --g-yellow: 251 188 5;
-      --g-green: 52 168 83;
-      --url-green: 0 255 136;
-
-      --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.36);
-      --shadow-glow: 0 0 0 1px rgba(66, 133, 244, 0.18), 0 0 26px rgba(66, 133, 244, 0.14);
-    }
-
-    html {
-      background: rgb(var(--bg-dark));
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      background: rgb(var(--bg-dark));
-      color: rgb(var(--text-main));
-      font-family: "Roboto", Arial, sans-serif;
-      color-scheme: light;
-    }
-
-    body[data-theme="dark"] {
-      color-scheme: dark;
-    }
-
-    .page-zoom {
-      zoom: var(--page-zoom);
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    @supports not (zoom: 0.8) {
-      .page-zoom {
-        transform: scale(var(--page-zoom));
-        transform-origin: top center;
-        width: var(--page-width-compensation);
-      }
-    }
-
-    @media (max-width: 1280px) {
-      .page-zoom {
-        zoom: 0.92;
-      }
-    }
-
-    @supports not (zoom: 0.8) {
-      @media (max-width: 1280px) {
-        .page-zoom {
-          transform: scale(0.92);
-          width: 108.6957%;
+            --shadow-soft: 0 10px 30px rgba(30, 41, 59, 0.06);
+            --shadow-glow: 0 0 0 1px rgba(26, 115, 232, 0.14), 0 8px 24px rgba(26, 115, 232, 0.08);
         }
-      }
-    }
 
-    @media (max-width: 768px) {
-      .page-zoom {
-        zoom: 1;
-        width: 100%;
-      }
-    }
+        body[data-theme="dark"] {
+            --bg-dark: 11 16 23;
+            --bg-panel: 17 24 34;
+            --bg-soft: 13 19 29;
+            --border-dim: 34 45 61;
 
-    @supports not (zoom: 0.8) {
-      @media (max-width: 768px) {
-        .page-zoom {
-          transform: none;
-          width: 100%;
+            --text-main: 241 245 249;
+            --text-soft: 209 213 219;
+            --text-muted: 128 138 150;
+            --text-faint: 95 104 116;
+
+            --g-blue: 66 133 244;
+            --g-red: 234 67 53;
+            --g-yellow: 251 188 5;
+            --g-green: 52 168 83;
+            --url-green: 0 255 136;
+
+            --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.36);
+            --shadow-glow: 0 0 0 1px rgba(66, 133, 244, 0.18), 0 0 26px rgba(66, 133, 244, 0.14);
         }
-      }
-    }
 
-    .result-snippet {
-      color: rgb(var(--text-soft));
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    .preview-note {
-      color: rgb(var(--text-muted));
-      font-size: 12px;
-      line-height: 1.5;
-    }
+        html {
+            background: rgb(var(--bg-dark));
+            scroll-behavior: smooth;
+        }
 
-    .preview-note-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: 1px solid rgb(var(--border-dim));
-      background: rgb(var(--bg-soft));
-      color: rgb(var(--text-muted));
-      border-radius: 999px;
-      padding: 0.35rem 0.75rem;
-      font-size: 11px;
-      line-height: 1;
-    }
+        body {
+            min-height: 100vh;
+            background: rgb(var(--bg-dark));
+            color: rgb(var(--text-main));
+            font-family: "Roboto", Arial, sans-serif;
+            color-scheme: light;
+            overflow-x: hidden;
+        }
 
-    .compact-panel {
-      border-radius: 18px;
-    }
+        body[data-theme="dark"] {
+            color-scheme: dark;
+        }
 
-    .compact-stats>div {
-      padding: 0.9rem;
-    }
+        img,
+        svg,
+        video,
+        canvas {
+            max-width: 100%;
+        }
 
-    .preview-details {
-      border-top: 1px solid rgb(var(--border-dim));
-      margin-top: 1.25rem;
-      padding-top: 1rem;
-    }
+        button,
+        input,
+        select,
+        textarea {
+            min-width: 0;
+        }
 
-    .preview-details summary {
-      list-style: none;
-      cursor: pointer;
-      user-select: none;
-      color: rgb(var(--text-soft));
-      font-size: 13px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
+        .page-zoom {
+            zoom: var(--page-zoom);
+            width: 100%;
+            margin: 0 auto;
+        }
 
-    .preview-details summary::-webkit-details-marker {
-      display: none;
-    }
+        @supports not (zoom: 0.8) {
+            .page-zoom {
+                transform: scale(var(--page-zoom));
+                transform-origin: top center;
+                width: var(--page-width-compensation);
+            }
+        }
 
-    .preview-details summary::after {
-      content: "+";
-      font-size: 18px;
-      color: rgb(var(--text-muted));
-      line-height: 1;
-    }
+        @media (max-width: 1280px) {
+            .page-zoom {
+                zoom: 0.92;
+            }
+        }
 
-    .preview-details[open] summary::after {
-      content: "−";
-    }
+        @supports not (zoom: 0.8) {
+            @media (max-width: 1280px) {
+                .page-zoom {
+                    transform: scale(0.92);
+                    width: 108.6957%;
+                }
+            }
+        }
 
-    .preview-details[open] summary {
-      margin-bottom: 0.9rem;
-    }
+        @media (max-width: 768px) {
+            .page-zoom {
+                zoom: 1;
+                width: 100%;
+            }
+        }
 
-    #projectsGrid,
-    #certGrid,
-    #galleryGrid,
-    #achGrid,
-    #imageGrid {
-      align-items: start;
-    }
+        @supports not (zoom: 0.8) {
+            @media (max-width: 768px) {
+                .page-zoom {
+                    transform: none;
+                    width: 100%;
+                }
+            }
+        }
 
-    #projectsGrid>*,
-    #certGrid>*,
-    #galleryGrid>*,
-    #achGrid>*,
-    #imageGrid>* {
-      min-height: 0 !important;
-      height: auto !important;
-    }
+        .result-snippet {
+            color: rgb(var(--text-soft));
+        }
 
-    #projectsGrid img,
-    #certGrid img,
-    #galleryGrid img,
-    #imageGrid img {
-      display: block;
-      width: 100%;
-      object-fit: cover;
-    }
+        .preview-note {
+            color: rgb(var(--text-muted));
+            font-size: 12px;
+            line-height: 1.55;
+        }
 
-    #projectsGrid img,
-    #certGrid img {
-      aspect-ratio: 16 / 9;
-      border-radius: 14px;
-    }
+        .preview-note-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            border: 1px solid rgb(var(--border-dim));
+            background: rgb(var(--bg-soft));
+            color: rgb(var(--text-muted));
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            font-size: 11px;
+            line-height: 1;
+            white-space: nowrap;
+        }
 
-    #galleryGrid img {
-      aspect-ratio: 4 / 3;
-      border-radius: 14px;
-    }
+        .compact-panel {
+            border-radius: 18px;
+        }
 
-    #imageGrid img {
-      aspect-ratio: 4 / 3;
-      border-radius: 14px;
-    }
+        .compact-stats>div {
+            padding: 0.9rem;
+        }
 
-    #projectsGrid {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+        .preview-details {
+            border-top: 1px solid rgb(var(--border-dim));
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+        }
 
-    #certGrid {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+        .preview-details summary {
+            list-style: none;
+            cursor: pointer;
+            user-select: none;
+            color: rgb(var(--text-soft));
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
 
-    #galleryGrid {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+        .preview-details summary::-webkit-details-marker {
+            display: none;
+        }
 
-    @media (min-width: 640px) {
-      #projectsGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+        .preview-details summary::after {
+            content: "+";
+            font-size: 18px;
+            color: rgb(var(--text-muted));
+            line-height: 1;
+        }
 
-      #certGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+        .preview-details[open] summary::after {
+            content: "−";
+        }
 
-      #galleryGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
+        .preview-details[open] summary {
+            margin-bottom: 0.9rem;
+        }
 
-    @media (min-width: 1536px) {
-      #projectsGrid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+        #projectsGrid,
+        #certGrid,
+        #galleryGrid,
+        #achGrid,
+        #imageGrid {
+            align-items: start;
+        }
 
-      #certGrid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+        #projectsGrid>*,
+        #certGrid>*,
+        #galleryGrid>*,
+        #achGrid>*,
+        #imageGrid>* {
+            min-height: 0 !important;
+            height: auto !important;
+        }
 
-      #galleryGrid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
+        #projectsGrid img,
+        #certGrid img,
+        #galleryGrid img,
+        #imageGrid img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    #projectsGrid>*,
-    #certGrid>* {
-      max-width: 100%;
-    }
+        #projectsGrid img,
+        #certGrid img {
+            aspect-ratio: 16 / 9;
+            border-radius: 14px;
+        }
 
-    .google-preview-shell {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
-        rgb(var(--bg-panel));
-    }
+        #galleryGrid img,
+        #imageGrid img {
+            aspect-ratio: 16 / 9;
+            border-radius: 14px;
+        }
 
-    .section-divider {
-      border-left-width: 2px;
-      padding-left: 1rem;
-    }
+        /* Ensure consistent image container heights */
+        #projectsGrid .project-thumb,
+        #certGrid .cert-thumb,
+        #galleryGrid .gallery-thumb {
+            height: 200px;
+        }
 
-    @media (min-width: 1024px) {
-      .section-divider {
-        padding-left: 1.15rem;
-      }
-    }
+        #imageGrid .image-card {
+            height: 180px;
+        }
 
-    .mini-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-      justify-content: space-between;
-    }
+        #imageGrid .image-card img {
+            height: 100%;
+        }
 
-    .mini-toolbar .toolbar-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
+        #projectsGrid {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 0.85rem;
+        }
 
-    .search-result-title {
-      line-height: 1.18;
-    }
+        #certGrid {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
 
-    .uniform-gallery-note {
-      color: rgb(var(--text-faint));
-      font-size: 12px;
-    }
-  </style>
+        #galleryGrid {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 640px) {
+            #projectsGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            #certGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            #galleryGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1536px) {
+            #projectsGrid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            #certGrid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            #galleryGrid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        #projectsGrid>*,
+        #certGrid>* {
+            max-width: 100%;
+        }
+
+        .google-preview-shell {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+                rgb(var(--bg-panel));
+        }
+
+        .section-divider {
+            border-top: 1px solid rgb(var(--border-dim));
+            padding-top: 1rem;
+            padding-left: 0;
+            border-left-width: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .section-divider {
+                border-top: 0;
+                border-left-width: 2px;
+                padding-top: 0;
+                padding-left: 1.15rem;
+            }
+        }
+
+        .mini-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .mini-toolbar .toolbar-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .stack-toolbar-controls,
+        .project-toolbar-controls {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.7rem;
+            width: 100%;
+        }
+
+        .stack-toolbar-controls>*,
+        .project-toolbar-controls>* {
+            width: 100%;
+            min-width: 0;
+        }
+
+        @media (min-width: 640px) {
+
+            .stack-toolbar-controls,
+            .project-toolbar-controls {
+                grid-template-columns: minmax(0, 1fr) auto;
+                width: auto;
+                align-items: center;
+            }
+        }
+
+        .project-toolbar-controls {
+            gap: 0.75rem;
+        }
+
+        .search-result-title {
+            line-height: 1.18;
+            word-break: break-word;
+        }
+
+        .uniform-gallery-note {
+            color: rgb(var(--text-faint));
+            font-size: 12px;
+        }
+
+        .tabs-row {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tabs-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        #resultsArea {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Reorder sections: About → Images → Timeline → Projects → Certificates → Achievements → Gallery */
+        #section-about {
+            order: 1;
+        }
+
+        #section-images {
+            order: 2;
+        }
+
+        #section-timeline {
+            order: 3;
+        }
+
+        #section-projects {
+            order: 4;
+        }
+
+        #section-certificates {
+            order: 5;
+        }
+
+        #section-achievements {
+            order: 6;
+        }
+
+        #section-gallery {
+            order: 7;
+        }
+
+        @media (max-width: 639px) {
+            .compact-panel {
+                border-radius: 16px;
+            }
+
+            .mini-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .mini-toolbar .toolbar-group {
+                width: 100%;
+            }
+
+            .preview-note-pill {
+                min-height: 34px;
+            }
+
+            #imageGrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            /* Hide futuristic button on mobile */
+            #btnLucky {
+                display: none !important;
+            }
+
+            /* Smaller button padding on mobile */
+            .f-ring {
+                padding: 0.25rem 0.75rem !important;
+            }
+
+            button[type="button"],
+            button[type="submit"] {
+                padding: 0.25rem 0.75rem !important;
+            }
+
+            .tab-btn {
+                padding: 0.25rem 0.65rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #imageGrid {
+                gap: 0.65rem;
+            }
+
+            #projectsGrid,
+            #certGrid,
+            #galleryGrid,
+            #achGrid {
+                gap: 0.75rem;
+            }
+        }
+    </style>
 </head>
 
-<body data-theme="dark" class="min-h-screen font-mono text-gray-300 antialiased">
-  <div class="page-zoom">
-    <div class="scroll-progress" id="scrollProgress"></div>
-    <div class="scanlines"></div>
-    <div class="scanbeam animate-scan"></div>
-    <div class="bg-noise"></div>
-
-    <header id="topHeader" class="sticky top-0 z-50 border-b border-borderDim bg-bgDark/85 backdrop-blur-md">
-      <div class="mx-auto max-w-[1500px] px-4 py-4 sm:px-6 xl:px-10">
-        <div class="flex items-center gap-3">
-          <a href="#top" aria-label="Home"
-            class="f-ring select-none rounded flex items-center gap-1 text-2xl font-bold tracking-tighter sm:text-3xl">
-            <span class="text-gBlue">E</span>
-            <span class="text-gRed">L</span>
-            <span class="text-gYellow">P</span>
-            <span class="text-gBlue">I</span>
-            <span class="text-gGreen">E</span>
-            <span class="text-gRed">E</span>
-            <span class="ml-2 hidden text-xs text-gray-500 md:inline-block">portfolio</span>
-          </a>
-
-          <div class="flex-1"></div>
-
-          <button id="btnOpenKp" type="button"
-            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:text-sm xl:hidden">
-            Profile
-          </button>
-
-          <button id="btnTheme" type="button"
-            class="theme-toggle f-ring rounded-full border border-borderDim bg-bgPanel px-2 py-2 text-xs transition-colors sm:px-3 sm:text-sm"
-            aria-label="Toggle light and dark mode" aria-pressed="true" title="Toggle light and dark mode">
-            <span class="theme-switch-track" aria-hidden="true">
-              <span class="theme-switch-knob"></span>
-            </span>
-            <span id="themeLabel" class="hidden sm:inline">Light mode</span>
-          </button>
-
-          <button id="btnCmd" type="button"
-            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:text-sm"
-            aria-label="Open command palette" title="Command palette (Ctrl/Cmd+K)">
-            ⌘K
-          </button>
-        </div>
-
-        <div class="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start">
-          <div class="min-w-0">
-            <form id="searchShell"
-              class="search-glow rounded-full border border-borderDim bg-bgPanel px-4 py-3 transition-all duration-300">
-              <div class="flex min-w-0 items-center gap-3">
-                <svg class="h-5 w-5 shrink-0 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-
-                <input id="searchInput" type="text" autocomplete="off" spellcheck="false"
-                  placeholder="Search Gene Elpie Landoy portfolio..."
-                  class="min-w-0 flex-1 bg-transparent text-white placeholder:text-gray-600 focus:outline-none" />
-
-                <button id="btnVoice" type="button" class="f-ring shrink-0 rounded text-gBlue transition-colors"
-                  aria-label="Voice search" title="Voice search">
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
-                    </path>
-                  </svg>
-                </button>
-
-                <button id="btnClear" type="button"
-                  class="f-ring hidden shrink-0 rounded text-gray-500 transition-colors" aria-label="Clear search"
-                  title="Clear">
-                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                  </svg>
-                </button>
-
-                <button type="submit" class="hidden" aria-hidden="true" tabindex="-1">
-                  Search
-                </button>
-              </div>
-            </form>
-
-            <div id="metaLine" class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-              <span id="resultsCount">About 248 results</span>
-              <span class="text-gray-700">·</span>
-              <span id="resultsTime">(0.011 seconds)</span>
-              <span class="hidden text-gray-700 sm:inline">·</span>
-              <span class="hidden sm:inline">
-                Shortcuts:
-                <span class="text-gray-300">/</span> focus ·
-                <span class="text-gray-300">Ctrl/Cmd+K</span> palette
-              </span>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-2 xl:justify-end">
-            <button id="btnRun" type="button"
-              class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors">
-              Search
-            </button>
-            <button id="btnLucky" type="button"
-              class="f-ring whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-4 py-3 text-sm text-gray-100 transition-colors">
-              I’m Feeling Futuristic
-            </button>
-          </div>
-        </div>
-
-        <nav class="mt-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-          <div class="tabs-row min-w-0 overflow-x-auto">
-            <div class="flex min-w-max gap-2 pb-1">
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="all" type="button">
-                All
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="images" type="button">
-                Images
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="projects" type="button">
-                Projects
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="timeline" type="button">
-                Timeline
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="certificates" type="button">
-                Certificates
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="achievements" type="button">
-                Achievements
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="gallery" type="button">
-                Gallery
-              </button>
-              <button
-                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors"
-                data-tab="about" type="button">
-                About me
-              </button>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-2 xl:shrink-0">
-            <button id="btnSaveSearch" type="button"
-              class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors">
-              Save
-            </button>
-            <button id="btnOpenSaved" type="button"
-              class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors">
-              Saved
-            </button>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <main id="top"
-      class="mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-4 py-8 sm:px-6 sm:py-10 xl:grid-cols-[minmax(0,1fr)_360px] xl:gap-8 xl:px-10">
-      <section class="min-w-0 space-y-8" aria-label="Search results">
-        <div id="resultsArea" class="space-y-8">
-          <section id="section-images" data-section="images"
-            class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-4 shadow-soft sm:p-5">
-            <div class="mb-4 mini-toolbar">
-              <div class="toolbar-group">
-                <span class="preview-note-pill">Image pack</span>
-                <h2 class="text-lg text-white">Portfolio visuals</h2>
-              </div>
-
-              <div class="toolbar-group">
-                <button id="btnShuffleImages" type="button"
-                  class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                  Shuffle
-                </button>
-                <button id="viewAllImages" type="button" class="f-ring rounded text-xs text-gBlue transition-colors">
-                  View all
-                </button>
-              </div>
-            </div>
-
-            <p class="mb-4 text-sm leading-relaxed result-snippet">
-              Quick visual preview of projects, recognition, events, and field work. Open any image
-              for full view.
-            </p>
-
-            <div id="imageGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
-
-            <div class="mt-4 preview-note">
-              Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
-            </div>
-          </section>
-
-          <article id="section-projects" data-section="projects" class="group">
-            <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>projects</span>
-              <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Preview cards
-              </span>
-            </div>
-
-            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
-              data-scrollto="#projectsPanel" tabindex="0" role="link" aria-label="Open projects panel">
-              Project Index — Search-style Preview
-            </h3>
-
-            <p class="mt-2 text-sm leading-relaxed result-snippet">
-              Compact project snippets only on the main page. Full role, stack, outcome, and links
-              stay inside the detail modal.
-            </p>
-
-            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gBlue">
-              <div id="projectsPanel"
-                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                <div class="mini-toolbar mb-4">
-                  <div class="toolbar-group">
-                    <span class="preview-note-pill text-gBlue">compact</span>
-                    <span class="preview-note-pill text-gGreen">modal-first</span>
-                    <span class="preview-note-pill text-gYellow">preview only</span>
-                  </div>
-
-                  <div class="toolbar-group w-full sm:w-auto">
-                    <input id="projectSearch" type="text" autocomplete="off" placeholder="Filter projects..."
-                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-56" />
-                    <select id="projectSort"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200"
-                      aria-label="Sort projects">
-                      <option value="impact">Impact</option>
-                      <option value="newest">Newest</option>
-                      <option value="oldest">Oldest</option>
-                      <option value="title">Title</option>
-                    </select>
-                  </div>
-                </div>
-
-                <p class="mb-4 preview-note">
-                  Main page shows smaller cards like Google results. Open a project card for the
-                  complete case-study view.
-                </p>
-
-                <div id="projectsGrid" class="grid gap-3"></div>
-              </div>
-            </div>
-          </article>
-
-          <article id="section-timeline" data-section="timeline" class="group">
-            <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>timeline</span>
-              <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Snapshot
-              </span>
-            </div>
-
-            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
-              data-scrollto="#timelinePanel" tabindex="0" role="link" aria-label="Open timeline panel">
-              Gene Elpie Landoy — Career Timeline
-            </h3>
-
-            <p class="mt-2 text-sm leading-relaxed result-snippet">
-              Search-result style milestone preview with filters for frontend, publication, design,
-              backend, leadership, and video work.
-            </p>
-
-            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gBlue">
-              <div class="mb-3 flex flex-wrap items-center gap-2">
-                <span class="text-xs text-gray-500">Filter:</span>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="all" type="button">
-                  All
-                </button>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="frontend" type="button">
-                  Frontend
-                </button>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="publication" type="button">
-                  Publication
-                </button>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="backend" type="button">
-                  Backend
-                </button>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="design" type="button">
-                  UI/UX
-                </button>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="video" type="button">
-                  Video
-                </button>
-                <button
-                  class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                  data-timeline-filter="leadership" type="button">
-                  Leadership
-                </button>
-
-                <div class="flex-1"></div>
-
-                <button id="btnExpandAllTimeline" type="button"
-                  class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                  Expand all
-                </button>
-              </div>
-
-              <div id="timelinePanel"
-                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                <div class="timeline-rail">
-                  <div id="timelineList" class="space-y-4"></div>
-                </div>
-
-                <div class="mt-4 preview-note">
-                  Preview timeline on page, detailed context on expand.
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article id="section-certificates" data-section="certificates" class="group">
-            <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>certificates</span>
-              <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Compact cards
-              </span>
-            </div>
-
-            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
-              data-scrollto="#certPanel" tabindex="0" role="link" aria-label="Open certificates panel">
-              Certificates — Quick Verification Preview
-            </h3>
-
-            <p class="mt-2 text-sm leading-relaxed result-snippet">
-              Smaller certificate cards with thumbnail, issuer, issue date, and a clean preview.
-              Full verification stays in the modal.
-            </p>
-
-            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
-              <div id="certPanel"
-                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                <div class="mini-toolbar mb-4">
-                  <div class="toolbar-group">
-                    <span class="preview-note-pill text-gGreen">verified</span>
-                    <span class="preview-note-pill text-gBlue">preview image</span>
-                    <span class="preview-note-pill text-gYellow">small layout</span>
-                  </div>
-
-                  <div class="toolbar-group w-full sm:w-auto">
-                    <input id="certSearch" type="text" autocomplete="off" placeholder="Filter certificates..."
-                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 placeholder:text-gray-600 sm:w-60" />
-                    <select id="certSort"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200"
-                      aria-label="Sort certificates">
-                      <option value="newest">Newest</option>
-                      <option value="oldest">Oldest</option>
-                      <option value="issuer">Issuer</option>
-                      <option value="title">Title</option>
-                    </select>
-                  </div>
-                </div>
-
-                <p class="mb-4 preview-note">
-                  Certificates stay compact here so the page reads like search results, not full
-                  records.
-                </p>
-
-                <div id="certGrid" class="grid gap-3"></div>
-              </div>
-            </div>
-          </article>
-
-          <article id="section-achievements" data-section="achievements" class="group">
-            <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>achievements</span>
-              <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Highlights
-              </span>
-            </div>
-
-            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
-              data-scrollto="#achPanel" tabindex="0" role="link" aria-label="Open achievements panel">
-              Notable Achievements & Awards
-            </h3>
-
-            <p class="mt-2 text-sm leading-relaxed result-snippet">
-              Key wins, research work, competitions, and performance metrics in a compact preview.
-            </p>
-
-            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gRed">
-              <div id="achPanel"
-                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                <div class="compact-stats mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <div class="rounded-xl border border-borderDim bg-bgDark">
-                    <div class="text-xs text-gray-500">Lines Written</div>
-                    <div class="text-2xl font-bold text-white">
-                      <span class="counter" data-target="127000">0</span>+
-                    </div>
-                  </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark">
-                    <div class="text-xs text-gray-500">Talks</div>
-                    <div class="text-2xl font-bold text-white">
-                      <span class="counter" data-target="18">0</span>
-                    </div>
-                  </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark">
-                    <div class="text-xs text-gray-500">Projects shipped</div>
-                    <div class="text-2xl font-bold text-white">
-                      <span class="counter" data-target="42">0</span>
-                    </div>
-                  </div>
-                  <div class="rounded-xl border border-borderDim bg-bgDark">
-                    <div class="text-xs text-gray-500">Perf gains</div>
-                    <div class="text-2xl font-bold text-white">
-                      <span class="counter" data-target="40">0</span>%
-                    </div>
-                  </div>
-                </div>
-
-                <div id="achGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
-
-                <div class="mt-4 preview-note">
-                  Replace these demo metrics with your real numbers.
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article id="section-gallery" data-section="gallery" class="group">
-            <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <span class="text-urlGreen">https://gene-landoy.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>gallery</span>
-              <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Uniform thumbnails
-              </span>
-            </div>
-
-            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
-              data-scrollto="#galleryPanel" tabindex="0" role="link" aria-label="Open gallery panel">
-              Creative Gallery & Projects
-            </h3>
-
-            <p class="mt-2 text-sm leading-relaxed result-snippet">
-              Creative work preview with equal image sizes for a cleaner grid and more polished
-              search-style presentation.
-            </p>
-
-            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
-              <div id="galleryPanel"
-                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                <div class="mini-toolbar mb-4">
-                  <div class="toolbar-group">
-                    <h4 class="text-base text-white">Interactive Gallery</h4>
-                    <span class="uniform-gallery-note">All thumbnails use the same visual ratio</span>
-                  </div>
-
-                  <div class="toolbar-group w-full sm:w-auto">
-                    <button id="btnShuffleGallery" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                      Shuffle
-                    </button>
-                    <select id="galleryFilter"
-                      class="f-ring w-full rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs text-gray-200 sm:w-auto"
-                      aria-label="Filter gallery">
-                      <option value="all">All Projects</option>
-                      <option value="featured">Featured</option>
-                      <option value="webgl">WebGL</option>
-                      <option value="animation">Animation</option>
-                      <option value="interactive">Interactive</option>
-                      <option value="art">Digital Art</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div id="galleryGrid" class="grid gap-3"></div>
-
-                <div class="mt-4 preview-note">
-                  Uniform image height keeps every gallery item aligned and visually balanced.
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article id="section-about" data-section="about" class="group">
-            <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <span class="text-urlGreen">https://sys.elpie.dev</span>
-              <span class="text-gray-600">›</span>
-              <span>about</span>
-              <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                Summary
-              </span>
-            </div>
-
-            <h3 class="search-result-title search-link inline-block cursor-pointer text-2xl text-gBlue transition-all"
-              data-scrollto="#aboutPanel" tabindex="0" role="link" aria-label="Open about panel">
-              About Gene Elpie Landoy
-            </h3>
-
-            <p class="mt-2 text-sm leading-relaxed result-snippet">
-              Creative technologist focused on polished interfaces, frontend systems, design, and
-              practical delivery.
-            </p>
-
-            <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gGreen">
-              <div id="aboutPanel"
-                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                  <h4 class="text-base text-white">Quick intro</h4>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <button id="btnCopyBio" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                      Copy bio
-                    </button>
-                    <button id="btnDownloadResume" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                      Download resume
-                    </button>
-                  </div>
-                </div>
-
-                <div class="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_260px]">
-                  <div class="min-w-0">
-                    <p id="bioText" class="text-sm leading-relaxed text-gray-300">
-                      I'm Gene Elpie Landoy, a creative technologist, UI/UX designer, frontend and
-                      mobile developer, graphic designer, public speaker, and video editor. I build
-                      clean interfaces, strong visual systems, and polished digital experiences.
-                    </p>
-
-                    <div class="mt-4 flex flex-wrap gap-2">
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        React
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        TypeScript
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        Flutter
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        Dart
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        Tailwind
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        Figma
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        Canva
-                      </span>
-                      <span class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
-                        OBS
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="rounded-xl border border-borderDim bg-bgDark p-4">
-                    <div class="mb-2 text-xs text-gray-500">Search snippet</div>
-                    <div class="text-sm text-gray-300">
-                      <span class="text-gray-500">Primary:</span> UI + frontend systems
-                    </div>
-                    <div class="mt-2 text-sm text-gray-300">
-                      <span class="text-gray-500">Secondary:</span> design + leadership
-                    </div>
-                    <div class="mt-2 text-sm text-gray-300">
-                      <span class="text-gray-500">Mode:</span>
-                      <span class="text-gGreen">shipping</span> +
-                      <span class="text-gBlue">polish</span>
-                    </div>
-                  </div>
-                </div>
-
-                <details class="preview-details">
-                  <summary>Open quick contact form</summary>
-
-                  <div class="pt-1">
-                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-                      <h5 class="text-sm text-white">Send a message</h5>
-                      <span class="text-xs text-gray-500">Sends to backend if wired</span>
-                    </div>
-
-                    <form id="contactForm" class="grid grid-cols-1 gap-3 lg:grid-cols-2">
-                      <input type="text" name="name" required placeholder="Your name"
-                        class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                      <input type="email" name="email" required placeholder="Email"
-                        class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                      <textarea name="message" rows="4" required placeholder="Message"
-                        class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 lg:col-span-2"></textarea>
-
-                      <div class="flex items-center gap-2 lg:col-span-2">
-                        <button type="submit"
-                          class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors">
-                          Send
+<body data-theme="dark" class="min-h-screen overflow-x-hidden font-mono text-gray-300 antialiased">
+    <div class="page-zoom">
+        <div class="scroll-progress" id="scrollProgress"></div>
+        <div class="scanlines"></div>
+        <div class="scanbeam animate-scan"></div>
+        <div class="bg-noise"></div>
+
+        <header id="topHeader" class="sticky top-0 z-50 border-b border-borderDim bg-bgDark/85 backdrop-blur-md">
+            <div class="mx-auto max-w-[1500px] px-4 py-4 sm:px-6 xl:px-10">
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <a href="#top" aria-label="Home"
+                        class="f-ring select-none rounded flex items-center gap-1 text-2xl font-bold tracking-tighter leading-none sm:text-3xl">
+                        <span class="text-gBlue leading-none">E</span>
+                        <span class="text-gRed leading-none">L</span>
+                        <span class="text-gYellow leading-none">P</span>
+                        <span class="text-gBlue leading-none">I</span>
+                        <span class="text-gGreen leading-none">E</span>
+                        <span class="text-gRed leading-none">E</span>
+                        <span class="ml-2 hidden text-xs text-gray-500 md:inline-block self-center">portfolio</span>
+                    </a>
+
+                    <div class="ml-auto flex flex-wrap items-center justify-end gap-2 sm:gap-2.5">
+                        <button id="btnOpenKp" type="button"
+                            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:px-4 sm:py-2.5 sm:text-sm xl:hidden">
+                            Profile
                         </button>
-                        <span id="contactStatus" class="text-xs text-gray-500"></span>
-                      </div>
-                    </form>
-                  </div>
-                </details>
-              </div>
+
+                        <button id="btnTheme" type="button"
+                            class="theme-toggle f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:px-4 sm:py-2.5 sm:text-sm"
+                            aria-label="Toggle light and dark mode" aria-pressed="true"
+                            title="Toggle light and dark mode">
+                            <span class="theme-switch-track" aria-hidden="true">
+                                <span class="theme-switch-knob"></span>
+                            </span>
+                            <span id="themeLabel" class="hidden sm:inline">Light mode</span>
+                        </button>
+
+                        <button id="btnCmd" type="button"
+                            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:px-4 sm:py-2.5 sm:text-sm"
+                            aria-label="Open command palette" title="Command palette (Ctrl/Cmd+K)">
+                            ⌘K
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-4">
+                    <div class="min-w-0">
+                        <form id="searchShell"
+                            class="search-glow rounded-full border border-borderDim bg-bgPanel px-4 py-3 transition-all duration-300">
+                            <div class="flex min-w-0 items-center gap-3">
+                                <svg class="h-5 w-5 shrink-0 text-gray-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+
+                                <input id="searchInput" type="text" autocomplete="off" spellcheck="false"
+                                    placeholder="Search Gene Elpie Landoy portfolio..."
+                                    class="min-w-0 flex-1 bg-transparent text-white placeholder:text-gray-600 focus:outline-none" />
+
+                                <button id="btnVoice" type="button"
+                                    class="f-ring shrink-0 rounded text-gBlue transition-colors"
+                                    aria-label="Voice search" title="Voice search">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                                        </path>
+                                    </svg>
+                                </button>
+
+                                <button id="btnClear" type="button"
+                                    class="f-ring hidden shrink-0 rounded text-gray-500 transition-colors"
+                                    aria-label="Clear search" title="Clear">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12">
+                                        </path>
+                                    </svg>
+                                </button>
+
+                                <button type="submit" class="hidden" aria-hidden="true" tabindex="-1">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="metaLine"
+                            class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+                            <span id="resultsCount">About 248 results</span>
+                            <span class="hidden text-gray-700 sm:inline">·</span>
+                            <span id="resultsTime">(0.011 seconds)</span>
+                            <span class="hidden text-gray-700 md:inline">·</span>
+                            <span class="hidden md:inline">
+                                Shortcuts:
+                                <span class="text-gray-300">/</span> focus ·
+                                <span class="text-gray-300">Ctrl/Cmd+K</span> palette
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-end">
+                        <button id="btnRun" type="button"
+                            class="f-ring w-full whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-3 py-2 text-sm text-gray-100 transition-colors sm:px-4 sm:py-2.5 lg:w-auto">
+                            Search
+                        </button>
+                        <button id="btnLucky" type="button"
+                            class="f-ring w-full whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-3 py-2 text-sm text-gray-100 transition-colors sm:px-4 sm:py-2.5 lg:w-auto">
+                            I’m Feeling Futuristic
+                        </button>
+                    </div>
+                </div>
+
+                <nav class="mt-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+                    <div class="tabs-row min-w-0 overflow-x-auto">
+                        <div class="flex min-w-max gap-2 pb-1">
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="all" type="button">
+                                All
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="about" type="button">
+                                About me
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="images" type="button">
+                                Images
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="timeline" type="button">
+                                Timeline
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="projects" type="button">
+                                Projects
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="certificates" type="button">
+                                Certificates
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="achievements" type="button">
+                                Achievements
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="gallery" type="button">
+                                Gallery
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hidden grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center xl:shrink-0">
+                        <button id="btnSaveSearch" type="button"
+                            class="f-ring w-full rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors sm:w-auto sm:px-4">
+                            Save
+                        </button>
+                        <button id="btnOpenSaved" type="button"
+                            class="f-ring w-full rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors sm:w-auto sm:px-4">
+                            Saved
+                        </button>
+                    </div>
+                </nav>
             </div>
-          </article>
-        </div>
-      </section>
+        </header>
 
-      <aside class="hidden min-w-0 self-start xl:block">
-        <div id="kpDesktopMount"
-          class="kp-shell sticky top-28 rounded-2xl border border-borderDim bg-bgPanel p-5 shadow-soft"
-          aria-label="Knowledge panel"></div>
-      </aside>
-    </main>
+        <main id="top"
+            class="mx-auto grid max-w-[1500px] grid-cols-1 gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-8 xl:grid-cols-[minmax(0,1fr)_360px] xl:px-10">
+            <section class="min-w-0 space-y-6 sm:space-y-8" aria-label="Search results">
+                <div id="resultsArea" class="flex flex-col space-y-6 sm:space-y-8">
+                    <section id="section-images" data-section="images"
+                        class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-4 shadow-soft sm:p-5">
+                        <div class="mb-4 mini-toolbar">
+                            <div class="toolbar-group">
+                                <span class="preview-note-pill">Image pack</span>
+                                <h2 class="text-lg text-white">Portfolio visuals</h2>
+                            </div>
 
-    <button id="btnTop" type="button"
-      class="f-ring fixed bottom-6 right-6 z-[95] hidden rounded-full border border-borderDim bg-bgPanel px-4 py-3 text-sm shadow-soft transition-colors"
-      aria-label="Back to top" title="Back to top">
-      ↑ Top
-    </button>
+                            <div class="toolbar-group">
+                                <button id="btnShuffleImages" type="button"
+                                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
+                                    Shuffle
+                                </button>
+                                <button id="viewAllImages" type="button"
+                                    class="f-ring rounded px-1 py-2 text-xs text-gBlue transition-colors">
+                                    View all
+                                </button>
+                            </div>
+                        </div>
 
-    <footer class="mt-8 border-t border-borderDim py-6">
-      <div
-        class="mx-auto flex max-w-[1500px] flex-col items-center justify-between gap-3 px-4 text-sm text-gray-600 sm:flex-row sm:px-6 xl:px-10">
-        <p>Retro UI inspired by classic search. Built with Tailwind + custom effects.</p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a href="#" class="f-ring rounded">Help</a>
-          <a href="#" class="f-ring rounded">Send feedback</a>
-          <a href="#" class="f-ring rounded">Privacy</a>
-          <a href="#" class="f-ring rounded">Terms</a>
-        </div>
-      </div>
-    </footer>
+                        <p class="mb-4 text-sm leading-relaxed result-snippet">
+                            Quick visual preview of projects, recognition, events, and field work. Open any image
+                            for full view.
+                        </p>
 
-    <template id="kpTemplate">
-      <div class="kp-avatar-wrap">
-        <img src="images/icon.jpg" alt="Gene Elpie Landoy avatar" class="kp-avatar" loading="lazy" />
-      </div>
+                        <div id="imageGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
 
-      <div class="mt-4 flex items-start justify-between gap-2">
-        <div>
-          <h2 class="text-2xl font-bold leading-tight text-white">Gene Elpie Landoy</h2>
-          <p class="mt-1 text-sm text-gray-400">
-            UI/UX · Graphic Design · Frontend · Mobile · Social Media · Public Speaking · Video
-            Editing
-          </p>
-        </div>
+                        <div class="mt-4 preview-note">
+                            Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
+                        </div>
+                    </section>
 
-        <span
-          class="animate-flicker rounded-full border border-borderDim bg-bgSoft px-2 py-1 text-[11px] text-gray-400">
-          online
-        </span>
-      </div>
+                    <article id="section-projects" data-section="projects" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://sys.elpie.dev</span>
+                            <span class="text-gray-600">›</span>
+                            <span>projects</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Preview cards
+                            </span>
+                        </div>
 
-      <div class="mt-4 text-sm leading-relaxed text-gray-300">
-        UI/UX designer and frontend/mobile developer creating modern, responsive, user-centered
-        digital products with strong visual quality and practical delivery.
-      </div>
+                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.2rem,2.1vw,1.55rem)] font-semibold text-gBlue transition-all"
+                            data-scrollto="#projectsPanel" tabindex="0" role="link" aria-label="Open projects panel">
+                            Project index – featured case studies
+                        </h3>
 
-      <div class="kp-mini-grid mt-5">
-        <div class="kp-mini-card">
-          <span class="kp-mini-label">Location</span>
-          <span class="kp-mini-value">Boac, Marinduque</span>
-        </div>
-        <div class="kp-mini-card">
-          <span class="kp-mini-label">Focus</span>
-          <span class="kp-mini-value">Frontend + UI systems</span>
-        </div>
-        <div class="kp-mini-card">
-          <span class="kp-mini-label">Mode</span>
-          <span class="kp-mini-value text-gGreen">Ship → Measure → Polish</span>
-        </div>
-        <div class="kp-mini-card">
-          <span class="kp-mini-label">Stack</span>
-          <span class="kp-mini-value">React · TS · Flutter · Figma</span>
-        </div>
-      </div>
+                        <p class="mt-1.5 text-sm leading-relaxed result-snippet">
+                            Clean Google-style cards showing just enough about each project. Open a card to see the full
+                            story, stack, and impact.
+                        </p>
 
-      <div class="mt-5 flex gap-3">
-        <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer"
-          class="kp-btn-ghost f-ring flex-1 rounded-xl border border-borderDim px-4 py-2.5 text-center text-sm transition-all">
-          GitHub
-        </a>
-        <a href="mailto:g.landoyelpie@gmail.com"
-          class="kp-btn-primary f-ring flex-1 rounded-xl px-4 py-2.5 text-center text-sm text-white transition-all">
-          Contact
-        </a>
-      </div>
+                        <div class="section-divider mt-6 border-borderDim transition-colors group-hover:border-gBlue">
+                            <div id="projectsPanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel pt-4 px-3 pb-3 sm:pt-5 sm:px-4 sm:pb-4 lg:pt-6">
+                                <div class="mini-toolbar mb-4">
+                                    <div class="toolbar-group">
+                                        <span class="preview-note-pill text-gBlue">compact</span>
+                                        <span class="preview-note-pill text-gGreen">modal-first</span>
+                                        <span class="preview-note-pill text-gYellow">preview only</span>
+                                    </div>
 
-      <div class="mt-5 border-t border-borderDim pt-4">
-        <div class="mb-2 text-xs text-gray-500">Quick links</div>
-        <div class="grid grid-cols-2 gap-2">
-          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-            type="button" data-scrollto="#projectsPanel">
-            Projects
-          </button>
-          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-            type="button" data-scrollto="#timelinePanel">
-            Timeline
-          </button>
-          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-            type="button" data-scrollto="#certPanel">
-            Certs
-          </button>
-          <button class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-            type="button" data-scrollto="#aboutPanel">
-            About me
-          </button>
-        </div>
-      </div>
-    </template>
+                                    <div class="project-toolbar-controls">
+                                        <input id="projectSearch" type="text" autocomplete="off"
+                                            placeholder="Filter projects..."
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 placeholder:text-gray-600 sm:min-w-[230px]" />
+                                        <select id="projectSort"
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 sm:min-w-[128px]"
+                                            aria-label="Sort projects">
+                                            <option value="impact">Impact</option>
+                                            <option value="newest">Newest</option>
+                                            <option value="oldest">Oldest</option>
+                                            <option value="title">Title</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-    <div id="kpDrawer" class="fixed inset-0 z-[96] hidden" role="dialog" aria-modal="true" aria-label="Profile panel">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="absolute right-0 top-0 flex h-full w-[92vw] max-w-md animate-pop flex-col border-l border-borderDim bg-bgPanel shadow-soft">
-        <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-          <div class="text-sm text-gray-300">Profile</div>
-          <button id="btnCloseKp" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-            ✕
-          </button>
-        </div>
-        <div id="kpMobileMount" class="kp-drawer-body overflow-y-auto p-4"></div>
-      </div>
-    </div>
+                                <p class="mb-4 preview-note">
+                                    Main page shows smaller cards like Google results. Open a project card for the
+                                    complete case-study view.
+                                </p>
 
-    <div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center" role="dialog" aria-modal="true"
-      aria-label="Image lightbox">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderDim px-4 py-3">
-          <div id="lightboxTitle" class="clamp-2 text-sm text-gray-300">Image title</div>
-          <div class="flex items-center gap-2">
-            <button id="btnPrevImg" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-              ←
-            </button>
-            <button id="btnNextImg" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-              →
-            </button>
-            <button id="btnCloseLightbox" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-              ✕
-            </button>
-          </div>
-        </div>
+                                <div id="projectsGrid" class="grid"></div>
+                            </div>
+                        </div>
+                    </article>
 
-        <div class="bg-bgDark">
-          <img id="lightboxImg" src="" alt="" class="max-h-[76vh] w-full object-contain" />
-        </div>
-      </div>
-    </div>
+                    <article id="section-timeline" data-section="timeline" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://sys.elpie.dev</span>
+                            <span class="text-gray-600">›</span>
+                            <span>timeline</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Snapshot
+                            </span>
+                        </div>
 
-    <div id="certModal" class="fixed inset-0 z-[90] hidden items-center justify-center" role="dialog" aria-modal="true"
-      aria-label="Certificate details">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-        <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-          <div id="certModalTitle" class="text-sm text-gray-300">Certificate</div>
-          <button id="btnCloseCertModal" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-            ✕
-          </button>
-        </div>
+                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all"
+                            data-scrollto="#timelinePanel" tabindex="0" role="link" aria-label="Open timeline panel">
+                            Gene Elpie Landoy — Career Timeline
+                        </h3>
 
-        <div class="max-h-[88vh] overflow-hidden">
-          <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_420px]">
-            <div class="border-b border-borderDim bg-bgDark xl:border-b-0 xl:border-r">
-              <div class="cert-preview-shell h-full">
-                <div class="cert-preview-topbar">
-                  <span class="text-xs text-gray-500">Certificate image</span>
-                  <div class="flex items-center gap-2">
-                    <button id="btnOpenCertImage" type="button"
-                      class="f-ring rounded-full border border-borderDim bg-bgSoft px-3 py-1.5 text-[11px] transition-colors">
-                      Full view
-                    </button>
-                  </div>
+                        <p class="mt-2 text-sm leading-relaxed result-snippet">
+                            Search-result style milestone preview with filters for frontend, publication, design,
+                            backend, leadership, and video work.
+                        </p>
+
+                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gBlue">
+                            <div class="mb-3 flex flex-wrap items-center gap-2">
+                                <span class="text-xs text-gray-500">Filter:</span>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="all" type="button">
+                                    All
+                                </button>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="frontend" type="button">
+                                    Frontend
+                                </button>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="publication" type="button">
+                                    Publication
+                                </button>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="backend" type="button">
+                                    Backend
+                                </button>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="design" type="button">
+                                    UI/UX
+                                </button>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="video" type="button">
+                                    Video
+                                </button>
+                                <button
+                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
+                                    data-timeline-filter="leadership" type="button">
+                                    Leadership
+                                </button>
+
+                                <div class="flex-1"></div>
+
+                                <button id="btnExpandAllTimeline" type="button"
+                                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
+                                    Expand all
+                                </button>
+                            </div>
+
+                            <div id="timelinePanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                                <div class="timeline-rail">
+                                    <div id="timelineList" class="space-y-4"></div>
+                                </div>
+
+                                <div class="mt-4 preview-note">
+                                    Preview timeline on page, detailed context on expand.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="section-certificates" data-section="certificates" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://sys.elpie.dev</span>
+                            <span class="text-gray-600">›</span>
+                            <span>certificates</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Compact cards
+                            </span>
+                        </div>
+
+                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all"
+                            data-scrollto="#certPanel" tabindex="0" role="link" aria-label="Open certificates panel">
+                            Certificates — Quick Verification Preview
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-relaxed result-snippet">
+                            Smaller certificate cards with thumbnail, issuer, issue date, and a clean preview.
+                            Full verification stays in the modal.
+                        </p>
+
+                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
+                            <div id="certPanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                                <div class="mini-toolbar mb-4">
+                                    <div class="toolbar-group">
+                                        <span class="preview-note-pill text-gGreen">verified</span>
+                                        <span class="preview-note-pill text-gBlue">preview image</span>
+                                        <span class="preview-note-pill text-gYellow">small layout</span>
+                                    </div>
+
+                                    <div class="stack-toolbar-controls">
+                                        <input id="certSearch" type="text" autocomplete="off"
+                                            placeholder="Filter certificates..."
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 placeholder:text-gray-600 sm:min-w-[240px]" />
+                                        <select id="certSort"
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 sm:min-w-[128px]"
+                                            aria-label="Sort certificates">
+                                            <option value="newest">Newest</option>
+                                            <option value="oldest">Oldest</option>
+                                            <option value="issuer">Issuer</option>
+                                            <option value="title">Title</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <p class="mb-4 preview-note">
+                                    Certificates stay compact here so the page reads like search results, not full
+                                    records.
+                                </p>
+
+                                <div id="certGrid" class="grid gap-3"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="section-achievements" data-section="achievements" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://sys.elpie.dev</span>
+                            <span class="text-gray-600">›</span>
+                            <span>achievements</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Highlights
+                            </span>
+                        </div>
+
+                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all"
+                            data-scrollto="#achPanel" tabindex="0" role="link" aria-label="Open achievements panel">
+                            Notable Achievements & Awards
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-relaxed result-snippet">
+                            Key wins, research work, competitions, and performance metrics in a compact preview.
+                        </p>
+
+                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gRed">
+                            <div id="achPanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                                <div class="compact-stats mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                                    <div class="rounded-xl border border-borderDim bg-bgDark">
+                                        <div class="text-xs text-gray-500">Lines Written</div>
+                                        <div class="text-2xl font-bold text-white">
+                                            <span class="counter" data-target="127000">0</span>+
+                                        </div>
+                                    </div>
+                                    <div class="rounded-xl border border-borderDim bg-bgDark">
+                                        <div class="text-xs text-gray-500">Talks</div>
+                                        <div class="text-2xl font-bold text-white">
+                                            <span class="counter" data-target="18">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-xl border border-borderDim bg-bgDark">
+                                        <div class="text-xs text-gray-500">Projects shipped</div>
+                                        <div class="text-2xl font-bold text-white">
+                                            <span class="counter" data-target="42">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-xl border border-borderDim bg-bgDark">
+                                        <div class="text-xs text-gray-500">Perf gains</div>
+                                        <div class="text-2xl font-bold text-white">
+                                            <span class="counter" data-target="40">0</span>%
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="achGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
+
+                                <div class="mt-4 preview-note">
+                                    Replace these demo metrics with your real numbers.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="section-gallery" data-section="gallery" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://gene-landoy.dev</span>
+                            <span class="text-gray-600">›</span>
+                            <span>gallery</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Uniform thumbnails
+                            </span>
+                        </div>
+
+                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all"
+                            data-scrollto="#galleryPanel" tabindex="0" role="link" aria-label="Open gallery panel">
+                            Creative Gallery & Projects
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-relaxed result-snippet">
+                            Creative work preview with equal image sizes for a cleaner grid and more polished
+                            search-style presentation.
+                        </p>
+
+                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
+                            <div id="galleryPanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                                <div class="mini-toolbar mb-4">
+                                    <div class="toolbar-group">
+                                        <h4 class="text-base text-white">Interactive Gallery</h4>
+                                        <span class="uniform-gallery-note">All thumbnails use the same visual
+                                            ratio</span>
+                                    </div>
+
+                                    <div class="stack-toolbar-controls">
+                                        <button id="btnShuffleGallery" type="button"
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2.5 text-xs transition-colors">
+                                            Shuffle
+                                        </button>
+                                        <select id="galleryFilter"
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200"
+                                            aria-label="Filter gallery">
+                                            <option value="all">All Projects</option>
+                                            <option value="featured">Featured</option>
+                                            <option value="webgl">WebGL</option>
+                                            <option value="animation">Animation</option>
+                                            <option value="interactive">Interactive</option>
+                                            <option value="art">Digital Art</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="galleryGrid" class="grid gap-3"></div>
+
+                                <div class="mt-4 preview-note">
+                                    Uniform image height keeps every gallery item aligned and visually balanced.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="section-about" data-section="about" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://sys.elpie.dev</span>
+                            <span class="text-gray-600">›</span>
+                            <span>about</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Summary
+                            </span>
+                        </div>
+
+                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all"
+                            data-scrollto="#aboutPanel" tabindex="0" role="link" aria-label="Open about panel">
+                            About Gene Elpie Landoy
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-relaxed result-snippet">
+                            Creative technologist focused on polished interfaces, frontend systems, design, and
+                            practical delivery.
+                        </p>
+
+                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gGreen">
+                            <div id="aboutPanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                                <div class="flex flex-wrap items-center justify-between gap-3">
+                                    <h4 class="text-base text-white">Quick intro</h4>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <button id="btnCopyBio" type="button"
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
+                                            Copy bio
+                                        </button>
+                                        <button id="btnDownloadResume" type="button"
+                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
+                                            Download resume
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_260px]">
+                                    <div class="min-w-0">
+                                        <p id="bioText" class="text-sm leading-relaxed text-gray-300">
+                                            I'm Gene Elpie Landoy, a creative technologist, UI/UX designer, frontend and
+                                            mobile developer, graphic designer, public speaker, and video editor. I
+                                            build
+                                            clean interfaces, strong visual systems, and polished digital experiences.
+                                        </p>
+
+                                        <div class="mt-4 flex flex-wrap gap-2">
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                React
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                TypeScript
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                Flutter
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                Dart
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                Tailwind
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                Figma
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                Canva
+                                            </span>
+                                            <span
+                                                class="rounded-full border border-borderDim bg-bgDark px-3 py-1.5 text-xs text-gray-300">
+                                                OBS
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded-xl border border-borderDim bg-bgDark p-4">
+                                        <div class="mb-2 text-xs text-gray-500">Search snippet</div>
+                                        <div class="text-sm text-gray-300">
+                                            <span class="text-gray-500">Primary:</span> UI + frontend systems
+                                        </div>
+                                        <div class="mt-2 text-sm text-gray-300">
+                                            <span class="text-gray-500">Secondary:</span> design + leadership
+                                        </div>
+                                        <div class="mt-2 text-sm text-gray-300">
+                                            <span class="text-gray-500">Mode:</span>
+                                            <span class="text-gGreen">shipping</span> +
+                                            <span class="text-gBlue">polish</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <details class="preview-details">
+                                    <summary>Open quick contact form</summary>
+
+                                    <div class="pt-1">
+                                        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+                                            <h5 class="text-sm text-white">Send a message</h5>
+                                            <span class="text-xs text-gray-500">Sends to backend if wired</span>
+                                        </div>
+
+                                        <form id="contactForm" class="grid grid-cols-1 gap-3 lg:grid-cols-2">
+                                            <input type="text" name="name" required placeholder="Your name"
+                                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                                            <input type="email" name="email" required placeholder="Email"
+                                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                                            <textarea name="message" rows="4" required placeholder="Message"
+                                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 lg:col-span-2"></textarea>
+
+                                            <div class="flex items-center gap-2 lg:col-span-2">
+                                                <button type="submit"
+                                                    class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-3 text-sm text-gray-200 transition-colors">
+                                                    Send
+                                                </button>
+                                                <span id="contactStatus" class="text-xs text-gray-500"></span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-                <button id="btnCertImage" type="button" class="cert-preview-frame h-full w-full">
-                  <img id="certModalImage" src="" alt="Certificate preview" class="cert-preview-image" />
-                </button>
-              </div>
-            </div>
+            </section>
 
-            <div class="max-h-[calc(88vh-56px)] overflow-y-auto p-4">
-              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                  <div class="text-xs text-gray-500">Issuer</div>
-                  <div id="certModalIssuer" class="mt-1 text-sm text-white"></div>
-                </div>
-                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                  <div class="text-xs text-gray-500">Issued</div>
-                  <div id="certModalIssued" class="mt-1 text-sm text-white"></div>
-                </div>
-                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                  <div class="text-xs text-gray-500">Credential ID</div>
-                  <div id="certModalId" class="mt-1 text-sm text-white"></div>
-                </div>
-                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                  <div class="text-xs text-gray-500">Status</div>
-                  <div class="mt-1 text-sm">
-                    <span
-                      class="inline-flex items-center rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-xs text-gGreen">
-                      Verified
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <aside class="hidden min-w-0 self-start xl:block">
+                <div id="kpDesktopMount"
+                    class="kp-shell sticky top-28 rounded-2xl border border-borderDim bg-bgPanel p-5 shadow-soft"
+                    aria-label="Knowledge panel"></div>
+            </aside>
+        </main>
 
-              <div class="mt-4 rounded-xl border border-borderDim bg-bgSoft p-3">
-                <div class="text-xs text-gray-500">Notes</div>
-                <div id="certModalNotes" class="mt-1 text-sm leading-7 text-gray-300"></div>
-              </div>
+        <button id="btnTop" type="button"
+            class="f-ring fixed bottom-5 right-5 z-[95] hidden rounded-full border border-borderDim bg-bgPanel px-4 py-3 text-sm shadow-soft transition-colors sm:bottom-6 sm:right-6"
+            aria-label="Back to top" title="Back to top">
+            ↑ Top
+        </button>
 
-              <div class="mt-4 flex flex-wrap gap-2">
-                <a id="certModalLink" href="#" target="_blank" rel="noreferrer"
-                  class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
-                  Verify link
-                </a>
-                <button id="btnCopyCert" type="button"
-                  class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-                  Copy details
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="projectModal" class="fixed inset-0 z-[91] hidden items-center justify-center" role="dialog"
-      aria-modal="true" aria-label="Project details">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="relative w-[92vw] max-w-6xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-        <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-          <div id="projectModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
-          <button id="btnCloseProjectModal" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-            ✕
-          </button>
-        </div>
-
-        <div class="max-h-[90vh] overflow-hidden">
-          <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_430px]">
+        <footer class="mt-8 border-t border-borderDim py-6">
             <div
-              class="project-modal-visual relative min-h-[340px] border-b border-borderDim bg-bgDark xl:min-h-[680px] xl:border-b-0 xl:border-r">
-              <img id="projectModalImg" src="" alt=""
-                class="project-modal-image h-full w-full object-cover object-top" />
-              <div
-                class="project-modal-overlay absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#08101a] via-[#08101acc] to-transparent p-5">
-                <div id="projectModalMeta" class="text-xs text-gray-300"></div>
-                <div id="projectModalImpact" class="mt-2 max-w-2xl text-sm text-white sm:text-base"></div>
-              </div>
+                class="mx-auto flex max-w-[1500px] flex-col items-center justify-between gap-3 px-4 text-center text-sm text-gray-600 sm:flex-row sm:px-6 sm:text-left xl:px-10">
+                <p>Retro UI inspired by classic search. Built with Tailwind + custom effects.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="f-ring rounded">Help</a>
+                    <a href="#" class="f-ring rounded">Send feedback</a>
+                    <a href="#" class="f-ring rounded">Privacy</a>
+                    <a href="#" class="f-ring rounded">Terms</a>
+                </div>
+            </div>
+        </footer>
+
+        <template id="kpTemplate">
+            <div class="kp-avatar-wrap">
+                <img src="images/icon.jpg" alt="Gene Elpie Landoy avatar" class="kp-avatar" loading="lazy" />
             </div>
 
-            <div class="max-h-[calc(90vh-56px)] overflow-y-auto p-5">
-              <div class="space-y-4">
-                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
-                  <div class="text-xs text-gray-500">Project summary</div>
-                  <div id="projectModalDesc" class="mt-2 text-sm leading-7 text-gray-300"></div>
+            <div class="mt-4 flex items-start justify-between gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold leading-tight text-white">Gene Elpie Landoy</h2>
+                    <p class="mt-1 text-sm text-gray-400">
+                        UI/UX · Graphic Design · Frontend · Mobile · Social Media · Public Speaking · Video
+                        Editing
+                    </p>
                 </div>
 
-                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
-                  <div class="text-xs text-gray-500">Highlights</div>
-                  <ul id="projectModalHighlights" class="mt-3 space-y-2 text-sm leading-7 text-gray-300"></ul>
-                </div>
+                <span
+                    class="animate-flicker rounded-full border border-borderDim bg-bgSoft px-2 py-1 text-[11px] text-gray-400">
+                    online
+                </span>
+            </div>
 
-                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                    <div class="text-xs text-gray-500">Role</div>
-                    <div id="projectModalRole" class="mt-1 text-sm leading-7 text-white"></div>
-                  </div>
-                  <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                    <div class="text-xs text-gray-500">Outcome</div>
-                    <div id="projectModalOutcome" class="mt-1 text-sm leading-7 text-white"></div>
-                  </div>
-                </div>
+            <div class="mt-4 text-sm leading-relaxed text-gray-300">
+                UI/UX designer and frontend/mobile developer creating modern, responsive, user-centered
+                digital products with strong visual quality and practical delivery.
+            </div>
 
-                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
-                  <div class="text-xs text-gray-500">Tech stack</div>
-                  <div id="projectModalTech" class="mt-3 flex flex-wrap gap-2"></div>
+            <div class="kp-mini-grid mt-5">
+                <div class="kp-mini-card">
+                    <span class="kp-mini-label">Location</span>
+                    <span class="kp-mini-value">Boac, Marinduque</span>
                 </div>
+                <div class="kp-mini-card">
+                    <span class="kp-mini-label">Focus</span>
+                    <span class="kp-mini-value">Frontend + UI systems</span>
+                </div>
+                <div class="kp-mini-card">
+                    <span class="kp-mini-label">Mode</span>
+                    <span class="kp-mini-value text-gGreen">Ship → Measure → Polish</span>
+                </div>
+                <div class="kp-mini-card">
+                    <span class="kp-mini-label">Stack</span>
+                    <span class="kp-mini-value">React · TS · Flutter · Figma</span>
+                </div>
+            </div>
 
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
-                    class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
-                    Open demo
-                  </a>
-                  <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
-                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
+            <div class="mt-5 flex gap-3">
+                <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer"
+                    class="kp-btn-ghost f-ring flex-1 rounded-xl border border-borderDim px-4 py-2.5 text-center text-sm transition-all">
                     GitHub
-                  </a>
-                  <button id="btnCopyProject" type="button"
-                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-                    Copy summary
-                  </button>
-                </div>
-              </div>
+                </a>
+                <a href="mailto:g.landoyelpie@gmail.com"
+                    class="kp-btn-primary f-ring flex-1 rounded-xl px-4 py-2.5 text-center text-sm text-white transition-all">
+                    Contact
+                </a>
             </div>
-          </div>
+
+            <div class="mt-5 border-t border-borderDim pt-4">
+                <div class="mb-2 text-xs text-gray-500">Quick links</div>
+                <div class="grid grid-cols-2 gap-2">
+                    <button
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
+                        type="button" data-scrollto="#projectsPanel">
+                        Projects
+                    </button>
+                    <button
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
+                        type="button" data-scrollto="#timelinePanel">
+                        Timeline
+                    </button>
+                    <button
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
+                        type="button" data-scrollto="#certPanel">
+                        Certs
+                    </button>
+                    <button
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
+                        type="button" data-scrollto="#aboutPanel">
+                        About me
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <div id="kpDrawer" class="fixed inset-0 z-[96] hidden" role="dialog" aria-modal="true"
+            aria-label="Profile panel">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="absolute right-0 top-0 flex h-full w-[92vw] max-w-md animate-pop flex-col border-l border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+                    <div class="text-sm text-gray-300">Profile</div>
+                    <button id="btnCloseKp" type="button"
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                        ✕
+                    </button>
+                </div>
+                <div id="kpMobileMount" class="kp-drawer-body overflow-y-auto p-4"></div>
+            </div>
         </div>
-      </div>
+
+        <div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center" role="dialog"
+            aria-modal="true" aria-label="Image lightbox">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderDim px-4 py-3">
+                    <div id="lightboxTitle" class="clamp-2 text-sm text-gray-300">Image title</div>
+                    <div class="flex items-center gap-2">
+                        <button id="btnPrevImg" type="button"
+                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                            ←
+                        </button>
+                        <button id="btnNextImg" type="button"
+                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                            →
+                        </button>
+                        <button id="btnCloseLightbox" type="button"
+                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-bgDark">
+                    <img id="lightboxImg" src="" alt="" class="max-h-[76vh] w-full object-contain" />
+                </div>
+            </div>
+        </div>
+
+        <div id="certModal" class="fixed inset-0 z-[90] hidden items-center justify-center" role="dialog"
+            aria-modal="true" aria-label="Certificate details">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+                    <div id="certModalTitle" class="text-sm text-gray-300">Certificate</div>
+                    <button id="btnCloseCertModal" type="button"
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                        ✕
+                    </button>
+                </div>
+
+                <div class="max-h-[88vh] overflow-hidden">
+                    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_420px]">
+                        <div class="border-b border-borderDim bg-bgDark xl:border-b-0 xl:border-r">
+                            <div class="cert-preview-shell h-full">
+                                <div class="cert-preview-topbar">
+                                    <span class="text-xs text-gray-500">Certificate image</span>
+                                    <div class="flex items-center gap-2">
+                                        <button id="btnOpenCertImage" type="button"
+                                            class="f-ring rounded-full border border-borderDim bg-bgSoft px-3 py-1.5 text-[11px] transition-colors">
+                                            Full view
+                                        </button>
+                                    </div>
+                                </div>
+                                <button id="btnCertImage" type="button" class="cert-preview-frame h-full w-full">
+                                    <img id="certModalImage" src="" alt="Certificate preview"
+                                        class="cert-preview-image" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="max-h-[calc(88vh-56px)] overflow-y-auto p-4">
+                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
+                                    <div class="text-xs text-gray-500">Issuer</div>
+                                    <div id="certModalIssuer" class="mt-1 text-sm text-white"></div>
+                                </div>
+                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
+                                    <div class="text-xs text-gray-500">Issued</div>
+                                    <div id="certModalIssued" class="mt-1 text-sm text-white"></div>
+                                </div>
+                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
+                                    <div class="text-xs text-gray-500">Credential ID</div>
+                                    <div id="certModalId" class="mt-1 text-sm text-white"></div>
+                                </div>
+                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
+                                    <div class="text-xs text-gray-500">Status</div>
+                                    <div class="mt-1 text-sm">
+                                        <span
+                                            class="inline-flex items-center rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-xs text-gGreen">
+                                            Verified
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 rounded-xl border border-borderDim bg-bgSoft p-3">
+                                <div class="text-xs text-gray-500">Notes</div>
+                                <div id="certModalNotes" class="mt-1 text-sm leading-7 text-gray-300"></div>
+                            </div>
+
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <a id="certModalLink" href="#" target="_blank" rel="noreferrer"
+                                    class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
+                                    Verify link
+                                </a>
+                                <button id="btnCopyCert" type="button"
+                                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
+                                    Copy details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projectModal" class="fixed inset-0 z-[91] hidden items-center justify-center" role="dialog"
+            aria-modal="true" aria-label="Project details">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="relative w-[92vw] max-w-6xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+                    <div id="projectModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
+                    <button id="btnCloseProjectModal" type="button"
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                        ✕
+                    </button>
+                </div>
+
+                <div class="max-h-[90vh] overflow-hidden">
+                    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_430px]">
+                        <div
+                            class="project-modal-visual relative min-h-[340px] border-b border-borderDim bg-bgDark xl:min-h-[680px] xl:border-b-0 xl:border-r">
+                            <img id="projectModalImg" src="" alt=""
+                                class="project-modal-image h-full w-full object-cover object-top" />
+                            <div
+                                class="project-modal-overlay absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#08101a] via-[#08101acc] to-transparent p-5">
+                                <div id="projectModalMeta" class="text-xs text-gray-300"></div>
+                                <div id="projectModalImpact" class="mt-2 max-w-2xl text-sm text-white sm:text-base">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="max-h-[calc(90vh-56px)] overflow-y-auto p-5">
+                            <div class="space-y-4">
+                                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
+                                    <div class="text-xs text-gray-500">Project summary</div>
+                                    <div id="projectModalDesc" class="mt-2 text-sm leading-7 text-gray-300"></div>
+                                </div>
+
+                                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
+                                    <div class="text-xs text-gray-500">Highlights</div>
+                                    <ul id="projectModalHighlights"
+                                        class="mt-3 space-y-2 text-sm leading-7 text-gray-300"></ul>
+                                </div>
+
+                                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                    <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
+                                        <div class="text-xs text-gray-500">Role</div>
+                                        <div id="projectModalRole" class="mt-1 text-sm leading-7 text-white"></div>
+                                    </div>
+                                    <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
+                                        <div class="text-xs text-gray-500">Outcome</div>
+                                        <div id="projectModalOutcome" class="mt-1 text-sm leading-7 text-white"></div>
+                                    </div>
+                                </div>
+
+                                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
+                                    <div class="text-xs text-gray-500">Tech stack</div>
+                                    <div id="projectModalTech" class="mt-3 flex flex-wrap gap-2"></div>
+                                </div>
+
+                                <div class="flex flex-wrap gap-2 pt-1">
+                                    <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
+                                        class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
+                                        Open demo
+                                    </a>
+                                    <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
+                                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
+                                        GitHub
+                                    </a>
+                                    <button id="btnCopyProject" type="button"
+                                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
+                                        Copy summary
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="galleryModal" class="fixed inset-0 z-[92] hidden items-center justify-center" role="dialog"
+            aria-modal="true" aria-label="Gallery details">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="relative w-[92vw] max-w-3xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+                    <div id="galleryModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
+                    <button id="btnCloseGalleryModal" type="button"
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                        ✕
+                    </button>
+                </div>
+
+                <div class="bg-bgDark">
+                    <img id="galleryModalImg" src="" alt="" class="max-h-[55vh] w-full object-cover" />
+                </div>
+
+                <div class="space-y-3 p-4">
+                    <div id="galleryModalMeta" class="text-xs text-gray-500"></div>
+                    <div id="galleryModalDesc" class="text-sm leading-7 text-gray-300"></div>
+                    <div id="galleryModalTech" class="flex flex-wrap gap-2"></div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <a id="galleryModalDemo" href="#" target="_blank" rel="noreferrer"
+                            class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
+                            Open demo
+                        </a>
+                        <button id="btnCopyGalleryItem" type="button"
+                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
+                            Copy summary
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cmdPalette" class="fixed inset-0 z-[97] hidden items-center justify-center" role="dialog"
+            aria-modal="true" aria-label="Command palette">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="border-b border-borderDim px-4 py-3">
+                    <div class="text-xs text-gray-500">Command palette</div>
+                    <input id="cmdInput" autocomplete="off"
+                        placeholder="Type: images, projects, timeline, certs, achievements, gallery, about, top..."
+                        class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgSoft px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
+                </div>
+                <div id="cmdList" class="max-h-[55vh] overflow-y-auto p-2"></div>
+            </div>
+        </div>
+
+        <div id="savedModal" class="fixed inset-0 z-[98] hidden items-center justify-center" role="dialog"
+            aria-modal="true" aria-label="Saved searches">
+            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
+            <div
+                class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
+                    <div class="text-sm text-gray-300">Saved searches</div>
+                    <button id="btnCloseSaved" type="button"
+                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
+                        ✕
+                    </button>
+                </div>
+                <div id="savedList" class="space-y-3 p-4"></div>
+            </div>
+        </div>
+
+        <div id="toast" class="fixed bottom-5 left-1/2 z-[100] hidden -translate-x-1/2" role="status"
+            aria-live="polite">
+            <div id="toastText"
+                class="rounded-full border border-borderDim bg-bgPanel px-4 py-2 text-xs text-gray-200 shadow-glow">
+                Copied!
+            </div>
+        </div>
     </div>
 
-    <div id="galleryModal" class="fixed inset-0 z-[92] hidden items-center justify-center" role="dialog"
-      aria-modal="true" aria-label="Gallery details">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="relative w-[92vw] max-w-3xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-        <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-          <div id="galleryModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
-          <button id="btnCloseGalleryModal" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-            ✕
-          </button>
-        </div>
-
-        <div class="bg-bgDark">
-          <img id="galleryModalImg" src="" alt="" class="max-h-[55vh] w-full object-cover" />
-        </div>
-
-        <div class="space-y-3 p-4">
-          <div id="galleryModalMeta" class="text-xs text-gray-500"></div>
-          <div id="galleryModalDesc" class="text-sm leading-7 text-gray-300"></div>
-          <div id="galleryModalTech" class="flex flex-wrap gap-2"></div>
-          <div class="flex flex-wrap gap-2 pt-2">
-            <a id="galleryModalDemo" href="#" target="_blank" rel="noreferrer"
-              class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
-              Open demo
-            </a>
-            <button id="btnCopyGalleryItem" type="button"
-              class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-              Copy summary
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="cmdPalette" class="fixed inset-0 z-[97] hidden items-center justify-center" role="dialog" aria-modal="true"
-      aria-label="Command palette">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-        <div class="border-b border-borderDim px-4 py-3">
-          <div class="text-xs text-gray-500">Command palette</div>
-          <input id="cmdInput" autocomplete="off"
-            placeholder="Type: images, projects, timeline, certs, achievements, gallery, about, top..."
-            class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgSoft px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-        </div>
-        <div id="cmdList" class="max-h-[55vh] overflow-y-auto p-2"></div>
-      </div>
-    </div>
-
-    <div id="savedModal" class="fixed inset-0 z-[98] hidden items-center justify-center" role="dialog" aria-modal="true"
-      aria-label="Saved searches">
-      <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-      <div
-        class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-        <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-          <div class="text-sm text-gray-300">Saved searches</div>
-          <button id="btnCloseSaved" type="button"
-            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-            ✕
-          </button>
-        </div>
-        <div id="savedList" class="space-y-3 p-4"></div>
-      </div>
-    </div>
-
-    <div id="toast" class="fixed bottom-5 left-1/2 z-[100] hidden -translate-x-1/2" role="status" aria-live="polite">
-      <div id="toastText"
-        class="rounded-full border border-borderDim bg-bgPanel px-4 py-2 text-xs text-gray-200 shadow-glow">
-        Copied!
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 
-</html>
+</html> 

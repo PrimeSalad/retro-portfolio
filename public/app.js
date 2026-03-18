@@ -860,10 +860,10 @@ function renderAiResultBox(query, state) {
         <pre class="m-0 whitespace-pre-wrap text-sm leading-relaxed text-gray-200">${escapeHtml(state.answer || "No answer generated.")}</pre>
       </div>
       <div class="mt-3 flex flex-wrap gap-2">
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="projects">Projects</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="timeline">Timeline</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="certificates">Certificates</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="gallery">Gallery</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="projects">Projects</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="timeline">Timeline</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="certificates">Certificates</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors hover:bg-[#1c2430]" data-ai-open="gallery">Gallery</button>
       </div>
     `;
 
@@ -905,7 +905,6 @@ async function runQuery() {
     renderAiResultBox(query, { type: "success", answer });
     $("#searchShell")?.classList.add("is-hot");
     setTimeout(() => $("#searchShell")?.classList.remove("is-hot"), 650);
-    window.scrollTo({ top: 0, behavior: "smooth" });
     toast("AI result ready");
   } catch (error) {
     renderAiResultBox(query, {
@@ -1095,7 +1094,7 @@ function renderImages(items) {
     card.setAttribute("aria-label", `Open image: ${item.title}`);
 
     card.innerHTML = `
-      <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gray-300">
+      <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-300">
         ${escapeHtml(String(item.tag || "").toUpperCase())}
       </div>
       <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" class="h-28 w-full object-cover opacity-90 sm:h-32" />
@@ -1123,7 +1122,7 @@ function getTimelineTagPill(tag) {
   };
 
   return `
-    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] ${classMap[tag] || "text-gray-300"}">
+    <span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] ${classMap[tag] || "text-gray-300"}">
       ${escapeHtml(tag)}
     </span>
   `;
@@ -1157,7 +1156,7 @@ function renderTimeline() {
     const metrics = (item.metrics || [])
       .map(
         (metric) => `
-          <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-gray-300">
+          <span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] text-gray-300">
             ${escapeHtml(metric)}
           </span>
         `
@@ -1167,7 +1166,7 @@ function renderTimeline() {
     const stack = (item.stack || [])
       .map(
         (stackItem) => `
-          <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-gray-400">
+          <span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] text-gray-400">
             ${escapeHtml(stackItem)}
           </span>
         `
@@ -1281,15 +1280,12 @@ function buildProjectCard(project) {
         <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
         <span class="project-badge text-gYellow">score ${escapeHtml(String(project.score || 0))}</span>
       </div>
-      <div class="project-thumb-footer">
-        <div class="project-score">${escapeHtml(String(project.year))} · ${escapeHtml(project.status || "build")}</div>
-      </div>
     </div>
 
     <div class="project-card-body">
       <div class="project-card-title">${escapeHtml(project.title)}</div>
-      <div class="project-card-subtitle">${escapeHtml(project.role)} · ${escapeHtml(project.impact)}</div>
-      <div class="project-card-desc clamp-3">${escapeHtml(project.description)}</div>
+      <div class="project-card-subtitle">${escapeHtml(project.role)}</div>
+      <div class="project-card-desc">${escapeHtml(project.description)}</div>
 
       <div class="card-chip-row">${techHtml}</div>
 
@@ -1365,7 +1361,7 @@ function openProjectModal(project) {
     (project.tech || []).forEach((item) => {
       const chip = document.createElement("span");
       chip.className =
-        "rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-gray-300";
+        "rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] text-gray-300";
       chip.textContent = item;
       techRoot.appendChild(chip);
     });
@@ -1485,7 +1481,7 @@ function buildCertificateCard(cert) {
     <div class="cert-card-body">
       <div class="project-card-title">${escapeHtml(cert.title)}</div>
       <div class="project-card-subtitle">${escapeHtml(cert.issuer)} · ${escapeHtml(cert.credential_id)}</div>
-      <div class="project-card-desc clamp-3">${escapeHtml(cert.notes)}</div>
+      <div class="project-card-desc">${escapeHtml(cert.notes)}</div>
 
       <div class="card-action-row">
         <button type="button" class="card-action f-ring" data-cert-open="${escapeHtml(cert.credential_id)}">View certificate</button>
@@ -1604,7 +1600,7 @@ function renderAchievements() {
       "rounded-xl border border-borderDim bg-bgDark p-4 transition-colors hover:border-white/30";
     card.innerHTML = `
       <div class="flex items-center justify-between gap-3">
-        <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[11px] text-${escapeHtml(item.badgeColor)}">${escapeHtml(item.badge)}</span>
+        <span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] text-${escapeHtml(item.badgeColor)}">${escapeHtml(item.badge)}</span>
         <span class="text-xs text-gray-500">${escapeHtml(item.meta)}</span>
       </div>
       <div class="mt-3 text-sm font-bold text-white">${escapeHtml(item.title)}</div>
@@ -1685,22 +1681,22 @@ function renderGallery() {
     card.className = "gallery-card f-ring text-left";
 
     const badge = item.featured
-      ? `<span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gYellow">featured</span>`
-      : `<span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gray-400">${escapeHtml(item.category)}</span>`;
+      ? `<span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gYellow">featured</span>`
+      : `<span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-400">${escapeHtml(item.category)}</span>`;
 
     card.innerHTML = `
-      <div class="relative">
-        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="h-40 w-full object-cover opacity-90" />
-        <div class="absolute left-2 top-2">${badge}</div>
+      <div class="gallery-thumb">
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="gallery-thumb-img" />
+        <div class="gallery-badge">${badge}</div>
       </div>
-      <div class="p-4">
-        <div class="clamp-2 text-sm font-bold text-white">${escapeHtml(item.title)}</div>
-        <div class="clamp-2 mt-2 text-xs text-gray-400">${escapeHtml(item.description)}</div>
-        <div class="mt-3 flex flex-wrap gap-2">
+      <div class="gallery-card-body">
+        <div class="gallery-title text-white">${escapeHtml(item.title)}</div>
+        <div class="gallery-desc text-gray-400">${escapeHtml(item.description)}</div>
+        <div class="gallery-tech-row">
           ${(item.tech || [])
         .slice(0, GALLERY_TECH_LIMIT)
         .map(
-          (tech) => `<span class="rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-[10px] text-gray-400">${escapeHtml(tech)}</span>`
+          (tech) => `<span class="gallery-chip">${escapeHtml(tech)}</span>`
         )
         .join("")}
         </div>
@@ -1737,7 +1733,7 @@ function openGalleryModal(item) {
     (item.tech || []).forEach((tech) => {
       const chip = document.createElement("span");
       chip.className =
-        "rounded-full border border-borderDim bg-bgDark px-2 py-1 text-[11px] text-gray-300";
+        "rounded-full border border-borderDim bg-bgDark px-1.5 py-0.5 text-[11px] text-gray-300";
       chip.textContent = tech;
       techRoot.appendChild(chip);
     });
@@ -1814,8 +1810,8 @@ function renderSavedList() {
         <div class="mt-1 text-xs text-gray-500">Saved: ${new Date(entry.at).toLocaleString()}</div>
       </div>
       <div class="flex gap-2">
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-load="${index}">Load</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-[#1c2430]" data-del="${index}">Del</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors hover:bg-[#1c2430]" data-load="${index}">Load</button>
+        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors hover:bg-[#1c2430]" data-del="${index}">Del</button>
       </div>
     `;
 
