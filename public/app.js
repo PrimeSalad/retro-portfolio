@@ -13,10 +13,8 @@
   const STORAGE_KEY = "portfolio_theme_mode";
   const bodyElement = document.body;
   const themeButtonElement = document.getElementById("btnTheme");
-  const themeLabelElement = document.getElementById("themeLabel");
-  const themeIconElement = document.getElementById("themeIcon");
 
-  if (!bodyElement || !themeButtonElement || !themeLabelElement) {
+  if (!bodyElement || !themeButtonElement) {
     return;
   }
 
@@ -26,11 +24,6 @@
 
     bodyElement.setAttribute("data-theme", normalizedTheme);
     themeButtonElement.setAttribute("aria-pressed", String(isDarkMode));
-    themeLabelElement.textContent = isDarkMode ? "Light mode" : "Dark mode";
-
-    if (themeIconElement) {
-      themeIconElement.textContent = isDarkMode ? "☀️" : "🌙";
-    }
   }
 
   function getSavedTheme() {
@@ -97,7 +90,7 @@ const PROJECT_TECH_LIMIT = 4;
 const GALLERY_TECH_LIMIT = 3;
 const STARTUP_SCROLL_RESET_ATTEMPTS = 2;
 const STARTUP_SCROLL_RESET_DELAY_MS = 120;
-const PREVIEW_ITEM_LIMIT = 4;
+const PREVIEW_ITEM_LIMIT = 6;
 const PROJECTS_PER_PAGE = 4;
 const ANIMATION_STAGGER_MS = 45;
 
@@ -384,7 +377,7 @@ const CERTS = [
     credential_id: "AWS-ABC-12345",
     link: "https://example.com/verify/aws",
     notes: "Architecture best practices, cost optimization, and secure cloud design.",
-    image: "images/certificates/aws.jpg",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop",
   },
   {
     title: "Meta Front-End Developer",
@@ -393,7 +386,7 @@ const CERTS = [
     credential_id: "META-FE-77821",
     link: "https://example.com/verify/meta",
     notes: "Advanced React patterns, testing, accessibility, and UX fundamentals.",
-    image: "images/certificates/meta-frontend.jpg",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop",
   },
   {
     title: "Google UX Design",
@@ -402,7 +395,7 @@ const CERTS = [
     credential_id: "G-UX-55019",
     link: "https://example.com/verify/google-ux",
     notes: "User research, prototyping, and design handoff workflows.",
-    image: "images/certificates/google-ux.jpg",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
   },
   {
     title: "Professional Scrum Master I",
@@ -411,7 +404,7 @@ const CERTS = [
     credential_id: "PSM-I-00912",
     link: "https://example.com/verify/psm",
     notes: "Agile facilitation, sprint planning, and team delivery excellence.",
-    image: "images/certificates/psm.jpg",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop",
   },
 ];
 
@@ -756,6 +749,11 @@ function isPreviewModeForSection(sectionKey) {
 function limitForSection(sectionKey, fullCount) {
   if (!isPreviewModeForSection(sectionKey)) {
     return fullCount;
+  }
+
+  // Gallery shows only 2 items in preview mode
+  if (sectionKey === SECTION_KEYS.GALLERY) {
+    return 2;
   }
 
   return PREVIEW_ITEM_LIMIT;
@@ -1685,6 +1683,9 @@ function buildProjectCard(project) {
   const article = document.createElement("article");
   article.className = "project-card js-enhanced-card";
   article.dataset.animate = "true";
+  article.style.cursor = "pointer";
+  article.setAttribute("role", "button");
+  article.setAttribute("tabindex", "0");
 
   article.innerHTML = `
     <div class="project-thumb">
@@ -1693,26 +1694,32 @@ function buildProjectCard(project) {
         <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
         <span class="project-badge text-gYellow">score ${escapeHtml(String(project.score || 0))}</span>
       </div>
-    </div>
-
-    <div class="project-card-body">
-      <div class="project-card-title">${escapeHtml(project.title)}</div>
-      <div class="project-card-subtitle">${escapeHtml(project.role)}</div>
-      <div class="project-card-desc">${escapeHtml(project.description)}</div>
-
-      <div class="mt-3 text-xs text-gray-400">
-        <span class="text-white">Impact:</span> ${escapeHtml(project.impact)}
-      </div>
-
-      <div class="card-chip-row">${techHtml}</div>
-
-      <div class="card-action-row">
-        <button type="button" class="card-action f-ring" data-project-open="${escapeHtml(project.id)}">Open details</button>
-        <a href="${escapeHtml(project.demo || "#")}" target="_blank" rel="noreferrer" class="card-link f-ring">Live demo</a>
-        <a href="${escapeHtml(project.repo || "#")}" target="_blank" rel="noreferrer" class="card-link f-ring">GitHub</a>
+      
+      <!-- Hover overlay with project details -->
+      <div class="project-hover-overlay">
+        <div class="project-hover-content">
+          <div class="text-base font-bold text-white mb-1 leading-tight">${escapeHtml(project.title)}</div>
+          <div class="text-xs text-gray-400 mb-3">${escapeHtml(project.role)}</div>
+          <div class="text-xs text-gray-300 leading-relaxed mb-3">${escapeHtml(project.description)}</div>
+          <div class="text-[10px] text-gray-500 uppercase tracking-wide mb-1.5">Tech Stack</div>
+          <div class="project-hover-tech">${techHtml}</div>
+        </div>
       </div>
     </div>
   `;
+
+  // Make the entire card clickable to open the modal
+  article.addEventListener("click", () => {
+    openProjectModal(project);
+  });
+
+  // Add keyboard support
+  article.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openProjectModal(project);
+    }
+  });
 
   return article;
 }
@@ -2015,6 +2022,7 @@ function buildCertificateCard(cert) {
   const article = document.createElement("article");
   article.className = "cert-card js-enhanced-card";
   article.dataset.animate = "true";
+  article.style.cursor = "pointer";
 
   article.innerHTML = `
     <div class="cert-thumb">
@@ -2026,19 +2034,21 @@ function buildCertificateCard(cert) {
       <div class="cert-thumb-footer">
         <div class="text-xs text-white">${escapeHtml(cert.issued)}</div>
       </div>
-    </div>
-
-    <div class="cert-card-body">
-      <div class="project-card-title">${escapeHtml(cert.title)}</div>
-      <div class="project-card-subtitle">${escapeHtml(cert.issuer)} · ${escapeHtml(cert.credential_id)}</div>
-      <div class="project-card-desc">${escapeHtml(cert.notes)}</div>
-
-      <div class="card-action-row">
-        <button type="button" class="card-action f-ring" data-cert-open="${escapeHtml(cert.credential_id)}">View certificate</button>
-        <a href="${escapeHtml(cert.link || "#")}" target="_blank" rel="noreferrer" class="card-link f-ring">Verify</a>
+      
+      <!-- Hover overlay with description -->
+      <div class="cert-hover-overlay">
+        <div class="cert-hover-content">
+          <div class="text-sm font-semibold text-white mb-2">${escapeHtml(cert.title)}</div>
+          <div class="text-xs text-gray-300">${escapeHtml(cert.notes)}</div>
+        </div>
       </div>
     </div>
   `;
+
+  // Make card clickable to open modal
+  article.addEventListener("click", () => {
+    openCertificateModal(cert);
+  });
 
   return article;
 }
@@ -2287,19 +2297,24 @@ function renderGallery() {
       ? '<span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gYellow">featured</span>'
       : `<span class="rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-400">${escapeHtml(item.category)}</span>`;
 
+    const techHtml = (item.tech || [])
+      .slice(0, GALLERY_TECH_LIMIT)
+      .map((tech) => `<span class="gallery-chip">${escapeHtml(tech)}</span>`)
+      .join("");
+
     card.innerHTML = `
       <div class="gallery-thumb">
         <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="gallery-thumb-img" />
         <div class="gallery-badge">${badge}</div>
-      </div>
-      <div class="gallery-card-body">
-        <div class="gallery-title text-white">${escapeHtml(item.title)}</div>
-        <div class="gallery-desc text-gray-400">${escapeHtml(item.description)}</div>
-        <div class="gallery-tech-row">
-          ${(item.tech || [])
-        .slice(0, GALLERY_TECH_LIMIT)
-        .map((tech) => `<span class="gallery-chip">${escapeHtml(tech)}</span>`)
-        .join("")}
+        
+        <!-- Hover overlay with gallery details -->
+        <div class="gallery-hover-overlay">
+          <div class="gallery-hover-content">
+            <div class="text-base font-bold text-white mb-1 leading-tight">${escapeHtml(item.title)}</div>
+            <div class="text-xs text-gray-300 leading-relaxed mb-3">${escapeHtml(item.description)}</div>
+            <div class="text-[10px] text-gray-500 uppercase tracking-wide mb-1.5">Tech Stack</div>
+            <div class="gallery-hover-tech">${techHtml}</div>
+          </div>
         </div>
       </div>
     `;

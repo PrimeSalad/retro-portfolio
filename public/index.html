@@ -285,7 +285,7 @@
         #galleryGrid,
         #achGrid,
         #imageGrid {
-            align-items: start;
+            align-items: stretch;
         }
 
         #projectsGrid>*,
@@ -294,7 +294,9 @@
         #achGrid>*,
         #imageGrid>* {
             min-height: 0 !important;
-            height: auto !important;
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
 
         #projectsGrid img,
@@ -323,15 +325,219 @@
         #projectsGrid .project-thumb,
         #certGrid .cert-thumb,
         #galleryGrid .gallery-thumb {
-            height: 200px;
+            height: 140px;
+        }
+
+        /* Make project cards image-only */
+        #projectsGrid .project-card {
+            height: 240px;
+        }
+
+        #projectsGrid .project-thumb {
+            height: 100%;
+        }
+
+        /* Project hover overlay */
+        .project-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 300ms ease;
+            z-index: 10;
+            padding: 1.25rem;
+            overflow-y: auto;
+        }
+
+        .project-card:hover .project-hover-overlay {
+            opacity: 1;
+        }
+
+        .project-hover-content {
+            text-align: left;
+            width: 100%;
+        }
+
+        .project-hover-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            justify-content: flex-start;
+        }
+
+        .project-hover-tech .card-chip {
+            font-size: 0.6rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+
+        /* Force white text on project hover overlay */
+        .project-hover-content .text-white {
+            color: #ffffff !important;
+        }
+
+        .project-hover-content .text-gray-300 {
+            color: #d1d5db !important;
+        }
+
+        .project-hover-content .text-gray-400 {
+            color: #9ca3af !important;
+        }
+
+        .project-hover-content .text-gray-500 {
+            color: #6b7280 !important;
+        }
+
+        /* Make certificate images fill the entire card */
+        #certGrid .cert-thumb {
+            height: 100%;
+        }
+
+        #certGrid .cert-card {
+            height: 280px;
+        }
+
+        /* Make gallery cards image-only */
+        #galleryGrid .gallery-card {
+            height: 280px;
+        }
+
+        #galleryGrid .gallery-thumb {
+            height: 100%;
+        }
+
+        /* Gallery hover overlay */
+        .gallery-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 300ms ease;
+            z-index: 10;
+            padding: 1.25rem;
+            overflow-y: auto;
+        }
+
+        .gallery-card:hover .gallery-hover-overlay {
+            opacity: 1;
+        }
+
+        .gallery-hover-content {
+            text-align: left;
+            width: 100%;
+        }
+
+        .gallery-hover-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            justify-content: flex-start;
+        }
+
+        .gallery-hover-tech .gallery-chip {
+            font-size: 0.6rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+
+        /* Force white text on gallery hover overlay */
+        .gallery-hover-content .text-white {
+            color: #ffffff !important;
+        }
+
+        .gallery-hover-content .text-gray-300 {
+            color: #d1d5db !important;
+        }
+
+        .gallery-hover-content .text-gray-500 {
+            color: #6b7280 !important;
+        }
+
+        /* Certificate hover overlay */
+        .cert-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 300ms ease;
+            z-index: 10;
+            padding: 1rem;
+        }
+
+        .cert-card:hover .cert-hover-overlay {
+            opacity: 1;
+        }
+
+        .cert-hover-content {
+            text-align: center;
+            max-width: 100%;
+        }
+
+        /* Force white text on hover overlay regardless of theme */
+        .cert-hover-content .text-white {
+            color: #ffffff !important;
+        }
+
+        .cert-hover-content .text-gray-300 {
+            color: #d1d5db !important;
         }
 
         #imageGrid .image-card {
-            height: 180px;
+            height: 140px;
         }
 
         #imageGrid .image-card img {
             height: 100%;
+        }
+
+        /* Ensure project card body fills remaining space */
+        #projectsGrid .project-card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem 0.6rem;
+        }
+
+        #projectsGrid .card-chip-row {
+            margin-top: auto;
+        }
+
+        #projectsGrid .project-card-title {
+            font-size: 0.82rem;
+        }
+
+        #projectsGrid .project-card-subtitle {
+            font-size: 0.62rem;
+        }
+
+        #projectsGrid .project-card-desc {
+            font-size: 0.68rem;
+            line-height: 1.35;
+            margin-top: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        #projectsGrid .card-chip {
+            font-size: 0.58rem;
+            padding: 0.22rem 0.48rem;
         }
 
         #projectsGrid {
@@ -370,8 +576,9 @@
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
 
+            /* Gallery stays at 2 columns max */
             #galleryGrid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
@@ -585,13 +792,26 @@
                         </button>
 
                         <button id="btnTheme" type="button"
-                            class="theme-toggle f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:px-4 sm:py-2.5 sm:text-sm"
+                            class="theme-toggle f-ring rounded-full border border-borderDim bg-bgPanel p-1 transition-colors"
                             aria-label="Toggle light and dark mode" aria-pressed="true"
                             title="Toggle light and dark mode">
                             <span class="theme-switch-track" aria-hidden="true">
+                                <svg class="theme-icon sun-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                <svg class="theme-icon moon-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
                                 <span class="theme-switch-knob"></span>
                             </span>
-                            <span id="themeLabel" class="hidden sm:inline">Light mode</span>
                         </button>
 
                         <button id="btnCmd" type="button"
@@ -1333,7 +1553,7 @@
             </div>
         </div>
 
-        <div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center" role="dialog"
+        <div id="lightbox" class="fixed inset-0 z-[95] hidden items-center justify-center" role="dialog"
             aria-modal="true" aria-label="Image lightbox">
             <div class="modal-backdrop absolute inset-0" data-close="true"></div>
             <div
@@ -1445,73 +1665,43 @@
             aria-modal="true" aria-label="Project details">
             <div class="modal-backdrop absolute inset-0" data-close="true"></div>
             <div
-                class="relative w-[92vw] max-w-6xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-                    <div id="projectModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
+                class="relative w-[92vw] max-w-3xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex items-center justify-between border-b border-borderDim px-5 py-4">
+                    <div id="projectModalTitle" class="text-lg font-bold text-white">Project</div>
                     <button id="btnCloseProjectModal" type="button"
                         class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
                         ✕
                     </button>
                 </div>
 
-                <div class="max-h-[90vh] overflow-hidden">
-                    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_430px]">
-                        <div
-                            class="project-modal-visual relative min-h-[340px] border-b border-borderDim bg-bgDark xl:min-h-[680px] xl:border-b-0 xl:border-r">
-                            <img id="projectModalImg" src="" alt=""
-                                class="project-modal-image h-full w-full object-cover object-top" />
-                            <div
-                                class="project-modal-overlay absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#08101a] via-[#08101acc] to-transparent p-5">
-                                <div id="projectModalMeta" class="text-xs text-gray-300"></div>
-                                <div id="projectModalImpact" class="mt-2 max-w-2xl text-sm text-white sm:text-base">
-                                </div>
-                            </div>
+                <div class="max-h-[80vh] overflow-y-auto p-6">
+                    <div class="space-y-5">
+                        <!-- Project Summary -->
+                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Project summary</div>
+                            <div id="projectModalDesc" class="text-sm leading-relaxed text-gray-300"></div>
                         </div>
 
-                        <div class="max-h-[calc(90vh-56px)] overflow-y-auto p-5">
-                            <div class="space-y-4">
-                                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
-                                    <div class="text-xs text-gray-500">Project summary</div>
-                                    <div id="projectModalDesc" class="mt-2 text-sm leading-7 text-gray-300"></div>
-                                </div>
+                        <!-- Role -->
+                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Role</div>
+                            <div id="projectModalRole" class="text-sm leading-relaxed text-white"></div>
+                        </div>
 
-                                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
-                                    <div class="text-xs text-gray-500">Highlights</div>
-                                    <ul id="projectModalHighlights"
-                                        class="mt-3 space-y-2 text-sm leading-7 text-gray-300"></ul>
-                                </div>
-
-                                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                    <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                                        <div class="text-xs text-gray-500">Role</div>
-                                        <div id="projectModalRole" class="mt-1 text-sm leading-7 text-white"></div>
-                                    </div>
-                                    <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                                        <div class="text-xs text-gray-500">Outcome</div>
-                                        <div id="projectModalOutcome" class="mt-1 text-sm leading-7 text-white"></div>
-                                    </div>
-                                </div>
-
-                                <div class="rounded-2xl border border-borderDim bg-bgSoft p-4">
-                                    <div class="text-xs text-gray-500">Tech stack</div>
-                                    <div id="projectModalTech" class="mt-3 flex flex-wrap gap-2"></div>
-                                </div>
-
-                                <div class="flex flex-wrap gap-2 pt-1">
-                                    <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
-                                        class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
-                                        Open demo
-                                    </a>
-                                    <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
-                                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-                                        GitHub
-                                    </a>
-                                    <button id="btnCopyProject" type="button"
-                                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-                                        Copy summary
-                                    </button>
-                                </div>
-                            </div>
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
+                                class="f-ring flex-1 min-w-[140px] text-center rounded-xl border border-borderDim bg-gBlue px-5 py-3 text-sm font-medium text-white transition-all hover:bg-opacity-90">
+                                Open demo
+                            </a>
+                            <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
+                                class="f-ring flex-1 min-w-[140px] text-center rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:bg-opacity-80">
+                                GitHub
+                            </a>
+                            <button id="btnCopyProject" type="button"
+                                class="f-ring flex-1 min-w-[140px] rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:bg-opacity-80">
+                                Copy summary
+                            </button>
                         </div>
                     </div>
                 </div>
