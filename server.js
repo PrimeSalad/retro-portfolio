@@ -175,7 +175,6 @@ app.post("/api/search", async (req, res) => {
   if (!query) return res.status(400).json({ ok: false, error: "Missing query" });
   const prompt = `
 You are an AI assistant for a portfolio.
-
 ONLY answer about:
 Gene Elpie L. Landoy
 Profile:
