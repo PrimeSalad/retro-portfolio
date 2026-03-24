@@ -235,50 +235,72 @@ export function renderAiResultBox(query, state) {
 
   const wrapper = document.createElement("div");
   wrapper.dataset.aiResults = "true";
-  wrapper.className = "rounded-2xl border border-borderDim bg-bgPanel p-5";
+  wrapper.className = "rounded-2xl border border-borderDim bg-bgPanel p-6 shadow-glow transition-all duration-300 animate-pop";
 
   const header = `
-    <div class="text-lg text-gBlue">Search Results</div>
-    <div class="mt-1 text-sm text-gray-300">
-      Results for "<span class="text-white">${escapeHtml(query)}</span>"
+    <div class="flex items-center gap-3 mb-4">
+      <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gBlue/10 text-gBlue">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+      </div>
+      <div>
+        <h2 class="font-heading text-xl text-white">AI Overview</h2>
+        <div class="text-xs text-gray-500">
+          Generated for "<span class="text-gBlue font-medium">${escapeHtml(query)}</span>"
+        </div>
+      </div>
     </div>
   `;
 
   if (state.type === "loading") {
     wrapper.innerHTML = `
       ${header}
-      <div class="mt-2 text-xs text-gray-500">AI search is running…</div>
-      <div class="mt-4 rounded-xl border border-borderDim bg-bgDark p-4">
-        <div class="h-3 w-2/3 rounded bg-gray-200"></div>
-        <div class="mt-2 h-3 w-5/6 rounded bg-gray-200"></div>
-        <div class="mt-2 h-3 w-1/2 rounded bg-gray-200"></div>
+      <div class="space-y-3">
+        <div class="h-4 w-full animate-pulse rounded bg-gray-700/50"></div>
+        <div class="h-4 w-5/6 animate-pulse rounded bg-gray-700/50"></div>
+        <div class="h-4 w-4/6 animate-pulse rounded bg-gray-700/50"></div>
+      </div>
+      <div class="mt-6 flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-600">
+        <span class="flex h-1.5 w-1.5 animate-ping rounded-full bg-gBlue"></span>
+        Gemini is thinking...
       </div>
     `;
   } else if (state.type === "error") {
     wrapper.innerHTML = `
       ${header}
-      <div class="mt-2 text-xs text-gray-500">AI search is unavailable.</div>
-      <div class="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4">
-        <div class="text-sm font-bold text-white">AI request failed</div>
-        <div class="mt-2 text-xs text-gray-300">${escapeHtml(state.message || "Unknown error")}</div>
-        <div class="mt-3 text-xs text-gray-400">
-          Open this site with <span class="font-bold text-gray-200">http://localhost:3000</span>
-          and make sure your server is running.
+      <div class="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+        <div class="flex items-center gap-2 text-red-400">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span class="text-sm font-bold">Search Unavailable</span>
+        </div>
+        <p class="mt-2 text-xs text-gray-400 leading-relaxed">${escapeHtml(state.message || "Unknown error")}</p>
+        <div class="mt-4 flex items-center gap-2 text-[10px] text-gray-600">
+          <span>Check if server is running at http://localhost:3000</span>
         </div>
       </div>
     `;
   } else {
     wrapper.innerHTML = `
       ${header}
-      <div class="mt-2 text-xs text-gray-500">AI search is active.</div>
-      <div class="mt-4 rounded-xl border border-borderDim bg-bgDark p-4">
-        <pre class="m-0 whitespace-pre-wrap text-sm leading-relaxed text-gray-200">${escapeHtml(state.answer || "No answer generated.")}</pre>
+      <div class="rounded-xl border border-borderDim bg-bgDark/40 p-5">
+        <div class="prose prose-sm prose-invert max-w-none">
+          <p class="whitespace-pre-wrap text-[15px] leading-relaxed text-gray-200">
+            ${escapeHtml(state.answer || "No answer generated.")}
+          </p>
+        </div>
       </div>
-      <div class="mt-3 flex flex-wrap gap-2">
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors" data-ai-open="projects">Projects</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors" data-ai-open="timeline">Timeline</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors" data-ai-open="certificates">Certificates</button>
-        <button type="button" class="f-ring rounded-xl border border-borderDim bg-bgPanel px-2 py-1.5 text-xs transition-colors" data-ai-open="gallery">Gallery</button>
+      
+      <div class="mt-6">
+        <div class="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Explore related</div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2 text-xs font-medium text-gray-300 transition-all hover:border-gBlue hover:text-white" data-ai-open="projects">Projects</button>
+          <button type="button" class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2 text-xs font-medium text-gray-300 transition-all hover:border-gBlue hover:text-white" data-ai-open="timeline">Timeline</button>
+          <button type="button" class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2 text-xs font-medium text-gray-300 transition-all hover:border-gBlue hover:text-white" data-ai-open="certificates">Certificates</button>
+          <button type="button" class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2 text-xs font-medium text-gray-300 transition-all hover:border-gBlue hover:text-white" data-ai-open="gallery">Gallery</button>
+        </div>
       </div>
     `;
 
@@ -783,31 +805,13 @@ export function buildProjectCard(project) {
       </div>
       
       <div class="project-hover-overlay">
-        <div class="project-hover-content flex flex-col justify-between h-full">
-          <div class="mb-2">
-            <div class="text-base font-bold text-white mb-0.5 leading-tight hover-slide-up" style="--slide-delay: 0ms;">${escapeHtml(project.title)}</div>
-            <div class="text-[10px] font-bold text-gBlue uppercase tracking-widest hover-slide-up" style="--slide-delay: 50ms;">${escapeHtml(project.role)}</div>
-          </div>
-          
-          <div class="project-hover-desc-container hover-slide-up" style="--slide-delay: 100ms;">
-            <p class="text-[11px] text-gray-300 leading-relaxed font-medium">
-              ${escapeHtml(project.description)}
-            </p>
-          </div>
-          
-          <div class="mt-auto">
-            <div class="mb-4 hover-slide-up" style="--slide-delay: 150ms;">
-              <div class="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-2 font-bold opacity-80">Tech Stack</div>
+        <div class="project-hover-content">
+          <div class="project-hover-minimal">
+            <div class="text-xl font-black text-white mb-4 leading-tight hover-slide-up" style="--slide-delay: 0ms;">${escapeHtml(project.title)}</div>
+            
+            <div class="hover-slide-up" style="--slide-delay: 60ms;">
+              <div class="text-[9px] text-gray-500 uppercase tracking-[0.3em] mb-3 font-black opacity-60">Tech Stack</div>
               <div class="project-hover-tech">${techHtml}</div>
-            </div>
-
-            <div class="pt-2.5 border-t border-white/10 flex items-center justify-between hover-slide-up" style="--slide-delay: 200ms;">
-              <span class="text-[10px] font-black text-white tracking-[0.15em] uppercase">Open Case Study</span>
-              <div class="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-transform group-hover:bg-gBlue group-hover:border-gBlue group-hover:scale-110">
-                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </div>
             </div>
           </div>
         </div>
