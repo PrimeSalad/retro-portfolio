@@ -1,0 +1,520 @@
+{
+  "images": [
+    {
+      "title": "ICITE2025: International Conference on Information Technology Education",
+      "src": "images/events/icite.jpg",
+      "alt": "conference stage with speakers and audience",
+      "tag": "conference"
+    },
+    {
+      "title": "DICT — Hack for Gov 3",
+      "src": "images/events/hag2.jpg",
+      "alt": "hackathon with participants collaborating",
+      "tag": "hackathon"
+    },
+    {
+      "title": "DICT — Hack for Gov 4",
+      "src": "images/events/hag.jpg",
+      "alt": "hackathon with participants collaborating",
+      "tag": "hackathon"
+    },
+    {
+      "title": "CICS — Internship Onboarding",
+      "src": "images/events/event1.jpg",
+      "alt": "internship onboarding event",
+      "tag": "event"
+    },
+    {
+      "title": "Infocus Publication and Broadcasting Team — Recognition",
+      "src": "images/events/recog.jpg",
+      "alt": "recognition event with team members on stage",
+      "tag": "recognition"
+    },
+    {
+      "title": "Infocus Publication and Broadcasting Team — Accreditation",
+      "src": "images/events/infocus 1.jpg",
+      "alt": "accreditation event",
+      "tag": "accreditation"
+    }
+  ],
+  "projects": [
+    {
+      "id": "p1",
+      "title": "salitAI.orbit",
+      "year": 2026,
+      "category": "Speech to Text AI Assistant",
+      "role": "Developer + Designer",
+      "impact": "AI takes the notes so the whole team can focus on the actual meeting.",
+      "outcome": "Task ownership and deadlines are extracted automatically from meeting content.",
+      "description": "salitAI.orbit captures spoken discussion, transforms it into structured notes, and highlights assigned action items with due dates so that teams leave every meeting with clarity.",
+      "image": "images/projects/salitai.jpg",
+      "tech": [
+        "React",
+        "TypeScript",
+        "Tailwind",
+        "Gemini API"
+      ],
+      "demo": "https://salit-ai-orbit.space/",
+      "repo": "https://github.com",
+      "score": 95,
+      "highlights": [
+        "Designed a cleaner meeting-to-action workflow instead of raw transcript dumping.",
+        "Focused on usability so non-technical users can immediately understand outputs.",
+        "Structured result cards for owners, tasks, and deadlines for stronger accountability."
+      ],
+      "status": "live"
+    },
+    {
+      "id": "p2",
+      "title": "Plastech",
+      "year": 2026,
+      "category": "AI Model",
+      "role": "AI Model Developer",
+      "impact": "Turns plastic waste into connectivity value for communities.",
+      "outcome": "Recycling becomes directly useful through incentive-based digital access.",
+      "description": "PlasTech transforms recycled plastic into innovative WiFi-linked community solutions, combining sustainability and applied AI to connect environmental action with practical digital benefit.",
+      "image": "images/projects/plastech.jpg",
+      "tech": [
+        "Python",
+        "TensorFlow",
+        "Computer Vision"
+      ],
+      "demo": "#",
+      "repo": "https://github.com",
+      "score": 88,
+      "highlights": [
+        "Connects sustainability, behavior change, and digital inclusion in one concept.",
+        "Designed for social impact, not just technical novelty.",
+        "Strong storytelling potential for competitions and presentations."
+      ],
+      "status": "concept"
+    },
+    {
+      "id": "p3",
+      "title": "SHAPE: Speech, Hearing, Autism Personalized Education",
+      "year": 2025,
+      "category": "Mobile Application",
+      "role": "Project Manager + Frontend Developer + Game Developer",
+      "impact": "Makes learning more accessible for students with special needs.",
+      "outcome": "Interactive education delivery becomes more adaptive and engaging.",
+      "description": "SHAPE is a mobile learning application designed for learners with autism and hearing challenges, using tailored content and game-like interactions to improve classroom support and communication.",
+      "image": "images/projects/shape.jpg",
+      "tech": [
+        "Flutter",
+        "Dart",
+        "Firebase"
+      ],
+      "demo": "#",
+      "repo": "https://github.com",
+      "score": 84,
+      "highlights": [
+        "Focused on accessible interaction design for real learner needs.",
+        "Used game elements to support engagement and retention.",
+        "Balanced product planning, implementation, and presentation quality."
+      ],
+      "status": "prototype"
+    },
+    {
+      "id": "p4",
+      "title": "Travel Orbit",
+      "year": 2026,
+      "category": "Web Application",
+      "role": "Frontend Developer + UX Designer + Project Manager",
+      "impact": "Delivers a smoother ticketing and planning experience.",
+      "outcome": "Users can compare, plan, and book with less friction and better clarity.",
+      "description": "Travel Orbit is an online ticketing platform that simplifies travel planning by organizing trip options, surfacing helpful recommendations, and reducing the cognitive load of multi-step booking flows.",
+      "image": "images/projects/travel.jpg",
+      "tech": [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Express",
+        "MongoDB"
+      ],
+      "demo": "#",
+      "repo": "https://github.com",
+      "score": 90,
+      "highlights": [
+        "Prioritized user flow and visual clarity across booking screens.",
+        "Designed around simplification of decision-heavy user journeys.",
+        "Great candidate for a polished case-study presentation."
+      ],
+      "status": "in progress"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "t1",
+      "year": "2026",
+      "date": "Jan - Present",
+      "title": "Founder and Lead Developer, DotOrbit Development Team",
+      "tags": [
+        "backend",
+        "leadership",
+        "design",
+        "publication",
+        "frontend"
+      ],
+      "bullets": [
+        "Managed team delivery rhythm and kept the task board aligned with actual priorities.",
+        "Built and coordinated modular services so the system could scale more safely."
+      ],
+      "metrics": [
+        "Balanced coding with product direction",
+        "Focused the team on features that mattered most"
+      ],
+      "stack": [
+        "PostgreSQL",
+        "Tailwind",
+        "Podman",
+        "Postman"
+      ]
+    },
+    {
+      "id": "t2",
+      "year": "2026",
+      "date": "Jan - Apr 2026",
+      "title": "Backend Developer | Product Owner, DOST League of Developers Initiative",
+      "tags": [
+        "backend",
+        "leadership"
+      ],
+      "bullets": [
+        "Handled product-side planning while still contributing technical implementation.",
+        "Kept backend work aligned with team structure and expected delivery flow."
+      ],
+      "metrics": [
+        "Product + engineering alignment",
+        "Improved team coordination under sprint work"
+      ],
+      "stack": [
+        "PostgreSQL",
+        "REST API",
+        "Podman",
+        "Postman"
+      ]
+    },
+    {
+      "id": "t3",
+      "year": "2025",
+      "date": "Jul 2025 - Jul 2026",
+      "title": "Organization Canva Admin, MarSU - College of Information and Computing Sciences",
+      "tags": [
+        "publication",
+        "design",
+        "leadership"
+      ],
+      "bullets": [
+        "Managed Canva for Education organization access and student onboarding.",
+        "Helped student organizations use creative tools better for events and publication work."
+      ],
+      "metrics": [
+        "Onboarded 200+ student orgs",
+        "Led workshops with 100+ attendees"
+      ],
+      "stack": [
+        "Canva for Education"
+      ]
+    },
+    {
+      "id": "t4",
+      "year": "2025",
+      "date": "Jul 2025 - Jan 2026",
+      "title": "Correspondent, Sentro Publication",
+      "tags": [
+        "design",
+        "leadership",
+        "publication"
+      ],
+      "bullets": [
+        "Produced publication-related outputs and supported coverage-related execution.",
+        "Improved content handling through better creative and editorial coordination."
+      ],
+      "metrics": [
+        "Consistent content delivery",
+        "Stronger publication contribution"
+      ],
+      "stack": [
+        "Writing",
+        "Layout",
+        "Coverage"
+      ]
+    },
+    {
+      "id": "t5",
+      "year": "2025",
+      "date": "Jul 2025 - Jul 2026",
+      "title": "Associate Editor-in-Chief, Infocus Publication and Broadcasting Team",
+      "tags": [
+        "design",
+        "leadership",
+        "publication",
+        "frontend",
+        "video"
+      ],
+      "bullets": [
+        "Supported direction, creative quality, and execution across publication and broadcast outputs.",
+        "Helped maintain stronger coordination between content and design responsibilities."
+      ],
+      "metrics": [
+        "Higher publication quality",
+        "Broader team coordination"
+      ],
+      "stack": [
+        "Editorial",
+        "Layout",
+        "Broadcast"
+      ]
+    },
+    {
+      "id": "t6",
+      "year": "2024",
+      "date": "Jul 2024 - Jul 2025",
+      "title": "Editor-in-Chief, Infocus Publication and Broadcasting Team",
+      "tags": [
+        "design",
+        "leadership",
+        "publication",
+        "frontend",
+        "video"
+      ],
+      "bullets": [
+        "Led the publication team and shaped output quality across multiple deliverables.",
+        "Oversaw direction, approvals, and presentation quality for content releases."
+      ],
+      "metrics": [
+        "Leadership in publication",
+        "Clearer editorial direction"
+      ],
+      "stack": [
+        "Editorial",
+        "Management",
+        "Creative direction"
+      ]
+    },
+    {
+      "id": "t7",
+      "year": "2023",
+      "date": "Jul 2023 - Jul 2024",
+      "title": "Chief Layout Artist, Infocus Publication and Broadcasting Team",
+      "tags": [
+        "frontend",
+        "publication",
+        "leadership",
+        "video",
+        "design"
+      ],
+      "bullets": [
+        "Improved visual presentation consistency and layout quality.",
+        "Worked closely with content and creative contributors for polished outputs."
+      ],
+      "metrics": [
+        "Better visual consistency",
+        "Faster output turnaround"
+      ],
+      "stack": [
+        "Canva",
+        "Layout",
+        "Design"
+      ]
+    },
+    {
+      "id": "t8",
+      "year": "2022",
+      "date": "Aug 2022 - Sep 2022",
+      "title": "Head Layout Artist, The Heart Publication",
+      "tags": [
+        "publication",
+        "design"
+      ],
+      "bullets": [
+        "Led layout direction for publication materials.",
+        "Established stronger visual output quality through layout decisions."
+      ],
+      "metrics": [
+        "Cleaner layouts",
+        "Improved readability"
+      ],
+      "stack": [
+        "Publication design",
+        "Layout"
+      ]
+    }
+  ],
+  "certs": [
+    {
+      "title": "AWS Solutions Architect",
+      "issuer": "Amazon Web Services",
+      "issued": "Jan 2024",
+      "credential_id": "AWS-ABC-12345",
+      "link": "https://example.com/verify/aws",
+      "notes": "Architecture best practices, cost optimization, and secure cloud design.",
+      "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop"
+    },
+    {
+      "title": "Meta Front-End Developer",
+      "issuer": "Coursera / Meta",
+      "issued": "Nov 2023",
+      "credential_id": "META-FE-77821",
+      "link": "https://example.com/verify/meta",
+      "notes": "Advanced React patterns, testing, accessibility, and UX fundamentals.",
+      "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop"
+    },
+    {
+      "title": "Google UX Design",
+      "issuer": "Coursera / Google",
+      "issued": "Aug 2023",
+      "credential_id": "G-UX-55019",
+      "link": "https://example.com/verify/google-ux",
+      "notes": "User research, prototyping, and design handoff workflows.",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+    },
+    {
+      "title": "Professional Scrum Master I",
+      "issuer": "Scrum.org",
+      "issued": "May 2022",
+      "credential_id": "PSM-I-00912",
+      "link": "https://example.com/verify/psm",
+      "notes": "Agile facilitation, sprint planning, and team delivery excellence.",
+      "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop"
+    }
+  ],
+  "achievements": [
+    {
+      "badge": "Champion",
+      "badgeColor": "gYellow",
+      "title": "Marinduque State University Official Logo",
+      "desc": "Designed and implemented the official university logo and branding system.",
+      "meta": "Tech: Figma, Adobe Illustrator, Ibis Paint"
+    },
+    {
+      "badge": "1st Place",
+      "badgeColor": "gBlue",
+      "title": "Base PH Hackathon 2025",
+      "desc": "Built a Games of the Generals-inspired strategy experience using Ohara.",
+      "meta": "Tech: Ohara, WebSockets, React"
+    },
+    {
+      "badge": "5th Place",
+      "badgeColor": "gRed",
+      "title": "DICT — MIMAROPA Hack for Gov 3",
+      "desc": "Focused on web exploitation and reverse engineering challenges.",
+      "meta": "Tech: Linux, Metasploit"
+    },
+    {
+      "badge": "6th Place",
+      "badgeColor": "gGreen",
+      "title": "DICT — MIMAROPA Hack for Gov 4",
+      "desc": "Focused on web exploitation and reverse engineering challenges.",
+      "meta": "Tech: Linux, Metasploit"
+    },
+    {
+      "badge": "Presenter",
+      "badgeColor": "gBlue",
+      "title": "ICITE2025: International Conference on Information Technology Education",
+      "desc": "Presented SHAPE, a personalized education mobile application.",
+      "meta": "Tech: Flutter, Dart, Firebase"
+    },
+    {
+      "badge": "Presenter",
+      "badgeColor": "gRed",
+      "title": "Y4IT Research Summit 2024",
+      "desc": "Presented Carabao Cart, a smart inventory management concept for small businesses.",
+      "meta": "Tech: Figma"
+    },
+    {
+      "badge": "Presenter",
+      "badgeColor": "gYellow",
+      "title": "NPK Deficiency Detection using Leaf Color Scanning Technology",
+      "desc": "Developed a system to detect nutrient deficiencies in crops using leaf color analysis.",
+      "meta": "Tech: Arduino"
+    },
+    {
+      "badge": "Presenter",
+      "badgeColor": "gGreen",
+      "title": "DOST: Regional Innovation Contest and Exhibition (RICE)",
+      "desc": "Presented a crop deficiency detection concept using leaf color analysis.",
+      "meta": "Tech: Arduino"
+    }
+  ],
+  "gallery": [
+    {
+      "title": "Neural Network Visualization",
+      "description": "Interactive WebGL visualization of neural network training with real-time particle effects.",
+      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=70",
+      "category": "webgl",
+      "demo": "#",
+      "tech": [
+        "WebGL",
+        "Three.js",
+        "Shaders"
+      ],
+      "featured": true
+    },
+    {
+      "title": "Fluid Dynamics Simulation",
+      "description": "Real-time fluid simulation using GPU compute shaders and interactive controls.",
+      "image": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=70",
+      "category": "webgl",
+      "demo": "#",
+      "tech": [
+        "WebGL",
+        "GLSL",
+        "Compute Shaders"
+      ],
+      "featured": true
+    },
+    {
+      "title": "Generative Art Engine",
+      "description": "Algorithmic art generator creating unique patterns through math-based systems.",
+      "image": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=70",
+      "category": "art",
+      "demo": "#",
+      "tech": [
+        "Canvas API",
+        "Math",
+        "Algorithms"
+      ],
+      "featured": false
+    },
+    {
+      "title": "Interactive Particle System",
+      "description": "GPU-accelerated particle system with physics simulation and responsive interaction.",
+      "image": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=70",
+      "category": "animation",
+      "demo": "#",
+      "tech": [
+        "WebGL",
+        "Particles",
+        "Physics"
+      ],
+      "featured": true
+    },
+    {
+      "title": "3D Portfolio Environment",
+      "description": "Immersive 3D space with floating shapes and interactive navigation.",
+      "image": "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=800&q=70",
+      "category": "webgl",
+      "demo": "#",
+      "tech": [
+        "Three.js",
+        "3D",
+        "Shaders"
+      ],
+      "featured": true
+    },
+    {
+      "title": "Audio Reactive Visualizer",
+      "description": "Real-time audio visualization that responds to microphone input or music playback.",
+      "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=70",
+      "category": "interactive",
+      "demo": "#",
+      "tech": [
+        "Web Audio API",
+        "Canvas",
+        "FFT"
+      ],
+      "featured": false
+    }
+  ]
+}
