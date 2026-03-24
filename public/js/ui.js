@@ -768,7 +768,7 @@ export function buildProjectCard(project) {
     .join("");
 
   const article = document.createElement("article");
-  article.className = "project-card js-enhanced-card";
+  article.className = "project-card js-enhanced-card group";
   article.dataset.animate = "true";
   article.style.cursor = "pointer";
   article.setAttribute("role", "button");
@@ -783,12 +783,33 @@ export function buildProjectCard(project) {
       </div>
       
       <div class="project-hover-overlay">
-        <div class="project-hover-content">
-          <div class="text-base font-bold text-white mb-1 leading-tight">${escapeHtml(project.title)}</div>
-          <div class="text-xs text-gray-400 mb-3">${escapeHtml(project.role)}</div>
-          <div class="text-xs text-gray-300 leading-relaxed mb-3">${escapeHtml(project.description)}</div>
-          <div class="text-[10px] text-gray-500 uppercase tracking-wide mb-1.5">Tech Stack</div>
-          <div class="project-hover-tech">${techHtml}</div>
+        <div class="project-hover-content flex flex-col justify-between h-full">
+          <div class="mb-2">
+            <div class="text-base font-bold text-white mb-0.5 leading-tight hover-slide-up" style="--slide-delay: 0ms;">${escapeHtml(project.title)}</div>
+            <div class="text-[10px] font-bold text-gBlue uppercase tracking-widest hover-slide-up" style="--slide-delay: 50ms;">${escapeHtml(project.role)}</div>
+          </div>
+          
+          <div class="project-hover-desc-container hover-slide-up" style="--slide-delay: 100ms;">
+            <p class="text-[11px] text-gray-300 leading-relaxed font-medium">
+              ${escapeHtml(project.description)}
+            </p>
+          </div>
+          
+          <div class="mt-auto">
+            <div class="mb-4 hover-slide-up" style="--slide-delay: 150ms;">
+              <div class="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-2 font-bold opacity-80">Tech Stack</div>
+              <div class="project-hover-tech">${techHtml}</div>
+            </div>
+
+            <div class="pt-2.5 border-t border-white/10 flex items-center justify-between hover-slide-up" style="--slide-delay: 200ms;">
+              <span class="text-[10px] font-black text-white tracking-[0.15em] uppercase">Open Case Study</span>
+              <div class="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-transform group-hover:bg-gBlue group-hover:border-gBlue group-hover:scale-110">
+                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
