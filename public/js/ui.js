@@ -190,18 +190,28 @@ export function mountKnowledgePanels() {
 export function setupScrollUx() {
   const scrollBar = $("#scrollProgress");
   const buttonTop = $("#btnTop");
+  const header = $("#topHeader");
 
   function handleScroll() {
     const documentElement = document.documentElement;
+    const scrollTop = documentElement.scrollTop;
     const maxScroll = Math.max(1, documentElement.scrollHeight - documentElement.clientHeight);
-    const progress = (documentElement.scrollTop / maxScroll) * 100;
+    const progress = (scrollTop / maxScroll) * 100;
 
     if (scrollBar) {
       scrollBar.style.width = `${progress}%`;
     }
 
     if (buttonTop) {
-      buttonTop.classList.toggle("hidden", documentElement.scrollTop < 600);
+      buttonTop.classList.toggle("hidden", scrollTop < 600);
+    }
+
+    if (header) {
+      const isScrolled = scrollTop > 10;
+      header.classList.toggle("shadow-soft", isScrolled);
+      header.classList.toggle("border-b-transparent", !isScrolled);
+      header.classList.toggle("bg-bgDark/85", isScrolled);
+      header.classList.toggle("bg-bgDark/50", !isScrolled);
     }
   }
 
