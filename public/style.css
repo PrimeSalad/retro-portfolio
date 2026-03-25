@@ -326,29 +326,23 @@ body[data-theme="dark"] .bg-noise {
   opacity: 0.035;
 }
 
-.search-glow {
-  position: relative;
-  box-shadow: none;
+.search-glow:focus-within {
+  border-color: rgb(var(--g-blue) / 0.5);
+  box-shadow: 
+    0 0 0 1px rgb(var(--g-blue) / 0.2),
+    0 10px 30px -10px rgb(var(--g-blue) / 0.15),
+    0 0 20px rgb(var(--g-blue) / 0.1),
+    0 0 40px rgb(var(--g-green) / 0.05);
 }
 
-.search-glow::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 999px;
-  pointer-events: none;
-  background: linear-gradient(90deg,
-      rgb(var(--g-blue) / 0.12),
-      rgb(var(--g-green) / 0.08),
-      rgb(var(--g-yellow) / 0.08),
-      rgb(var(--g-red) / 0.08));
-  opacity: 0;
-  transition: opacity 220ms ease;
+@keyframes pulse-soft {
+  0% { box-shadow: 0 0 0 0 rgb(var(--g-green) / 0.4); }
+  70% { box-shadow: 0 0 0 6px rgb(var(--g-green) / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(var(--g-green) / 0); }
 }
 
-.search-glow:hover::after,
-.search-glow.is-hot::after {
-  opacity: 1;
+.animate-flicker {
+  animation: flicker 6s infinite, pulse-soft 2s infinite;
 }
 
 #searchShell,
