@@ -75,6 +75,10 @@ export function limitForSection(sectionKey, fullCount) {
     return 2;
   }
 
+  if (sectionKey === SECTION_KEYS.VIDEOS) {
+    return 2;
+  }
+
   return PREVIEW_ITEM_LIMIT;
 }
 
@@ -593,6 +597,12 @@ export function renderImages(items) {
   grid.innerHTML = "";
 
   visibleItems.forEach((item, index) => {
+    const shortTitle = String(item.title || "")
+      .split(":")[0]
+      .split("—")[0]
+      .split("-")[0]
+      .trim();
+
     const card = document.createElement("button");
     card.type = "button";
     card.className = "image-card js-enhanced-card f-ring";
@@ -600,12 +610,14 @@ export function renderImages(items) {
     card.dataset.animate = "true";
 
     card.innerHTML = `
-      <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-300">
-        ${escapeHtml(String(item.tag || "").toUpperCase())}
-      </div>
-      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" class="h-32 w-full object-cover opacity-95 sm:h-36" />
-      <div class="p-3">
-        <div class="clamp-2 text-xs font-medium text-gray-200">${escapeHtml(item.title)}</div>
+      <div class="image-card-media">
+        <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-300">
+          ${escapeHtml(String(item.tag || "").toUpperCase())}
+        </div>
+        <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" class="image-card-thumb" />
+        <div class="image-card-overlay">
+          <div class="clamp-2 text-xs font-medium text-white">${escapeHtml(shortTitle || item.title)}</div>
+        </div>
       </div>
     `;
 
@@ -626,7 +638,7 @@ export function renderImages(items) {
 /* =========================
    Videos
 ========================= */
-export function getYouTubeEmbedUrl(rawUrl) {
+export function getVideoEmbedUrl(rawUrl) {
   if (!rawUrl || rawUrl === "#") {
     return "";
   }
@@ -652,23 +664,79 @@ export function getYouTubeEmbedUrl(rawUrl) {
   }
 }
 
+export function getYouTubeVideoId(rawUrl) {
+  if (!rawUrl || rawUrl === "#") {
+    return "";
+  }
+
+  try {
+    const url = new URL(rawUrl);
+    const host = url.hostname.replace(/^www\./, "");
+
+    if (host === "youtu.be") {
+      return url.pathname.replace(/^\/+/, "").split("/")[0] || "";
+    }
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (url.pathname === "/watch") {
+        return url.searchParams.get("v") || "";
+      }
+
+      if (url.pathname.startsWith("/embed/") || url.pathname.startsWith("/shorts/")) {
+        return url.pathname.split("/")[2] || "";
+      }
+    }
+
+    return "";
+  } catch {
+    return "";
+  }
+}
+
+export function getVideoThumbnail(video) {
+  const youtubeId = getYouTubeVideoId(video.link);
+  if (youtubeId) {
+    return `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+  }
+
+  return video.thumbnail || "images/events/cics.jpg";
+}
+
 export function getPlayableVideos() {
   return DATA.VIDEOS.map((video) => ({
     ...video,
-    embedUrl: getYouTubeEmbedUrl(video.link),
+    embedUrl: getVideoEmbedUrl(video.link),
+    externalUrl: video.link && video.link !== "#" ? video.link : "",
+    resolvedThumbnail: getVideoThumbnail(video),
   }));
+}
+
+export function withAutoplay(url) {
+  if (!url) {
+    return "";
+  }
+
+  return url;
 }
 
 export function buildVideoCard(video, index, isActive) {
   const button = document.createElement("button");
   const hasEmbed = Boolean(video.embedUrl);
-  const activeEmbedUrl = hasEmbed ? `${video.embedUrl}&autoplay=1` : "";
+  const hasExternalUrl = Boolean(video.externalUrl);
+  const activeEmbedUrl = hasEmbed ? withAutoplay(video.embedUrl) : "";
 
   button.type = "button";
   button.className = `video-card js-enhanced-card f-ring rounded-2xl border border-borderDim bg-bgPanel text-left${isActive ? " is-active" : ""}`;
   button.dataset.animate = "true";
   button.setAttribute("aria-pressed", isActive ? "true" : "false");
-  button.setAttribute("aria-label", hasEmbed ? `Play video: ${video.title}` : `Video unavailable: ${video.title}`);
+  button.setAttribute(
+    "aria-label",
+    hasEmbed
+      ? `Play video: ${video.title}`
+      : hasExternalUrl
+        ? `Open video: ${video.title}`
+        : `Video unavailable: ${video.title}`
+  );
   button.innerHTML = `
     ${isActive && hasEmbed
       ? `
@@ -687,7 +755,7 @@ export function buildVideoCard(video, index, isActive) {
       : `
       <div class="video-thumb">
         <img
-          src="${escapeHtml(video.thumbnail || "images/events/event1.jpg")}"
+          src="${escapeHtml(video.resolvedThumbnail || "images/events/cics.jpg")}"
           alt="${escapeHtml(video.title)}"
           loading="lazy"
           class="video-thumb-img"
@@ -707,12 +775,15 @@ export function buildVideoCard(video, index, isActive) {
   `;
 
   button.addEventListener("click", () => {
-    if (!hasEmbed) {
+    if (hasEmbed) {
+      STATE.activeVideoIndex = index;
+      renderVideos();
       return;
     }
 
-    STATE.activeVideoIndex = index;
-    renderVideos();
+    if (hasExternalUrl) {
+      window.open(video.externalUrl, "_blank", "noopener,noreferrer");
+    }
   });
 
   return button;
@@ -1188,6 +1259,18 @@ export function parseIssued(value) {
 
 export function getSortedCertificates(items) {
   const copy = [...items];
+
+  if (isPreviewModeForSection(SECTION_KEYS.CERTIFICATES) || STATE.certSort === "highlights") {
+    copy.sort((left, right) => {
+      const weightDiff = Number(right.preview_weight || 0) - Number(left.preview_weight || 0);
+      if (weightDiff !== 0) {
+        return weightDiff;
+      }
+      return parseIssued(right.issued) - parseIssued(left.issued);
+    });
+    return copy;
+  }
+
   if (STATE.certSort === "newest") copy.sort((left, right) => parseIssued(right.issued) - parseIssued(left.issued));
   else if (STATE.certSort === "oldest") copy.sort((left, right) => parseIssued(left.issued) - parseIssued(right.issued));
   else if (STATE.certSort === "issuer") copy.sort((left, right) => left.issuer.localeCompare(right.issuer));
@@ -1199,7 +1282,7 @@ export function filterCertificates() {
   const query = STATE.certQuery.trim().toLowerCase();
   return DATA.CERTS.filter((cert) => {
     if (!query) return true;
-    const haystack = [cert.title, cert.issuer, cert.issued, cert.credential_id, cert.notes].join(" ").toLowerCase();
+    const haystack = [cert.title, cert.issuer, cert.issued, cert.issued_detail, cert.credential_id, cert.notes].join(" ").toLowerCase();
     return haystack.includes(query);
   });
 }
@@ -1792,11 +1875,17 @@ export function setupEventHandlers() {
 
   $("#certSearch")?.addEventListener("input", (event) => {
     STATE.certQuery = event.target.value;
+    if (STATE.activeTab === SECTION_KEYS.ALL) {
+      setTab(SECTION_KEYS.CERTIFICATES);
+    }
     renderCertificates();
   });
 
   $("#certSort")?.addEventListener("change", (event) => {
     STATE.certSort = event.target.value;
+    if (STATE.activeTab === SECTION_KEYS.ALL) {
+      setTab(SECTION_KEYS.CERTIFICATES);
+    }
     renderCertificates();
   });
 
