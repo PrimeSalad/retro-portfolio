@@ -14,7 +14,7 @@ export const STATE = {
   projectSort: "impact",
   projectPage: 1,
   certQuery: "",
-  certSort: "newest",
+  certSort: "highlights",
   galleryFilter: "all",
   activeTimelineFilter: "all",
   timelineExpandedAll: false,
