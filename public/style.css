@@ -1063,6 +1063,66 @@ body[data-theme="dark"] .cert-thumb::after {
   line-height: 1.45;
 }
 
+.profile-skill-marquee {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--border-dim));
+  background:
+    linear-gradient(90deg, rgb(var(--bg-soft)) 0%, rgb(var(--bg-dark)) 100%);
+  padding: 0.55rem 0.8rem;
+}
+
+.profile-skill-marquee::before,
+.profile-skill-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.5rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.profile-skill-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, rgb(var(--bg-panel)), transparent);
+}
+
+.profile-skill-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, rgb(var(--bg-panel)), transparent);
+}
+
+.profile-skill-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: max-content;
+  animation: profile-marquee 18s linear infinite;
+}
+
+.profile-dog {
+  display: inline-block;
+  font-size: 1rem;
+  animation: profile-dog-bounce 900ms ease-in-out infinite;
+}
+
+.profile-skill-item {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgb(var(--text-soft));
+  white-space: nowrap;
+}
+
+.profile-skill-dot {
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgb(var(--g-blue));
+  box-shadow: 0 0 10px rgb(var(--g-blue) / 0.28);
+}
+
 .tech-logo-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1089,8 +1149,44 @@ body[data-theme="dark"] .cert-thumb::after {
   flex: 0 0 auto;
 }
 
+.tech-logo-glyph {
+  display: inline-grid;
+  place-items: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 auto;
+  border-radius: 0.28rem;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.tech-logo-glyph-design {
+  background: linear-gradient(135deg, #ff7a18, #d62976);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
 .kp-drawer-body {
   overflow-y: auto;
+}
+
+@keyframes profile-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-35%);
+  }
+}
+
+@keyframes profile-dog-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 .shadow-glow {
