@@ -226,6 +226,11 @@
                             </button>
                             <button
                                 class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="videos" type="button">
+                                Videos
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
                                 data-tab="about" type="button">
                                 About me
                             </button>
@@ -307,6 +312,53 @@
                         </div>
                     </section>
 
+                    <article id="section-videos" data-section="videos" class="group">
+                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                            <span class="text-urlGreen">https://sys.elpie.dev</span>
+                            <span class="text-gray-600">â€º</span>
+                            <span>videos</span>
+                            <span
+                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
+                                Reels + edits
+                            </span>
+                        </div>
+
+                        <h3 class="search-result-title search-link search-link-projects inline-block cursor-pointer text-[clamp(1.2rem,2.1vw,1.55rem)] font-semibold text-gBlue transition-all mb-3"
+                            data-scrollto="#videosPanel" tabindex="0" role="link" aria-label="Open videos panel">
+                            Video Editing Highlights
+                        </h3>
+
+                        <p class="mt-1.5 text-sm leading-relaxed result-snippet">
+                            A compact reel section for event coverage, broadcast edits, motion-assisted recaps, and
+                            short-form storytelling work.
+                        </p>
+
+                        <div class="section-divider mt-6 border-borderDim transition-colors group-hover:border-gRed">
+                            <div id="videosPanel"
+                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
+                                <div class="mini-toolbar mb-4">
+                                    <div class="toolbar-group">
+                                        <h4 class="text-base text-white">Video edits</h4>
+                                        <span class="uniform-gallery-note">Click a card and it plays directly in place</span>
+                                    </div>
+
+                                    <div class="toolbar-group">
+                                        <button id="viewAllVideos" type="button"
+                                            class="f-ring rounded px-1 py-2 text-xs text-gBlue transition-colors">
+                                            View all
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="videoGrid" class="grid gap-3 sm:grid-cols-2"></div>
+
+                                <div class="mt-4 preview-note">
+                                    Linked videos play directly inside the clicked card.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
                     <article id="section-projects" data-section="projects" class="group">
                         <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
                             <span class="text-urlGreen">https://sys.elpie.dev</span>
@@ -374,7 +426,7 @@
                             </span>
                         </div>
 
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all mb-3"
+                        <h3 class="search-result-title search-link search-link-certs inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all mb-3"
                             data-scrollto="#timelinePanel" tabindex="0" role="link" aria-label="Open timeline panel">
                             Gene Elpie Landoy — Career Timeline
                         </h3>
@@ -1072,7 +1124,7 @@
                 <div class="border-b border-borderDim px-4 py-3">
                     <div class="text-xs text-gray-500">Command palette</div>
                     <input id="cmdInput" autocomplete="off"
-                        placeholder="Type: images, projects, timeline, certs, achievements, gallery, about, top..."
+                        placeholder="Type: images, videos, projects, timeline, certs, achievements, gallery, about, top..."
                         class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgSoft px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
                 </div>
                 <div id="cmdList" class="max-h-[55vh] overflow-y-auto p-2"></div>

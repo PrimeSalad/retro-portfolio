@@ -370,6 +370,7 @@ export async function runQuery() {
 export function feelingFuturistic() {
   const picks = [
     { tab: SECTION_KEYS.IMAGES, query: "visual portfolio highlights" },
+    { tab: SECTION_KEYS.VIDEOS, query: "video editing highlights and reels" },
     { tab: SECTION_KEYS.PROJECTS, query: "best projects and case studies" },
     { tab: SECTION_KEYS.TIMELINE, query: "career timeline and milestones" },
     { tab: SECTION_KEYS.CERTIFICATES, query: "verified certificates and credentials" },
@@ -449,6 +450,7 @@ export function updateSectionVisibility(tab) {
 
 export function rerenderContentSections() {
   renderImages(DATA.IMAGE_ITEMS);
+  renderVideos();
   renderProjects();
   renderTimeline();
   renderCertificates();
@@ -617,6 +619,138 @@ export function renderImages(items) {
     items.length,
     visibleItems.length,
     "Image highlights"
+  );
+  applyEntryAnimations(grid);
+}
+
+/* =========================
+   Videos
+========================= */
+export function getYouTubeEmbedUrl(rawUrl) {
+  if (!rawUrl || rawUrl === "#") {
+    return "";
+  }
+
+  try {
+    const url = new URL(rawUrl);
+    const host = url.hostname.replace(/^www\./, "");
+    let videoId = "";
+
+    if (host === "youtu.be") {
+      videoId = url.pathname.replace(/^\/+/, "").split("/")[0] || "";
+    } else if (host === "youtube.com" || host === "m.youtube.com") {
+      if (url.pathname === "/watch") {
+        videoId = url.searchParams.get("v") || "";
+      } else if (url.pathname.startsWith("/embed/") || url.pathname.startsWith("/shorts/")) {
+        videoId = url.pathname.split("/")[2] || "";
+      }
+    }
+
+    return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1` : "";
+  } catch {
+    return "";
+  }
+}
+
+export function getPlayableVideos() {
+  return DATA.VIDEOS.map((video) => ({
+    ...video,
+    embedUrl: getYouTubeEmbedUrl(video.link),
+  }));
+}
+
+export function buildVideoCard(video, index, isActive) {
+  const button = document.createElement("button");
+  const hasEmbed = Boolean(video.embedUrl);
+  const activeEmbedUrl = hasEmbed ? `${video.embedUrl}&autoplay=1` : "";
+
+  button.type = "button";
+  button.className = `video-card js-enhanced-card f-ring rounded-2xl border border-borderDim bg-bgPanel text-left${isActive ? " is-active" : ""}`;
+  button.dataset.animate = "true";
+  button.setAttribute("aria-pressed", isActive ? "true" : "false");
+  button.setAttribute("aria-label", hasEmbed ? `Play video: ${video.title}` : `Video unavailable: ${video.title}`);
+  button.innerHTML = `
+    ${isActive && hasEmbed
+      ? `
+      <div class="video-thumb video-player-inline">
+        <iframe
+          class="video-player-frame"
+          src="${escapeHtml(activeEmbedUrl)}"
+          title="${escapeHtml(video.title)}"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+      `
+      : `
+      <div class="video-thumb">
+        <img
+          src="${escapeHtml(video.thumbnail || "images/events/event1.jpg")}"
+          alt="${escapeHtml(video.title)}"
+          loading="lazy"
+          class="video-thumb-img"
+        />
+        <div class="video-thumb-overlay"></div>
+        <div class="video-play-core" aria-hidden="true">&#9654;</div>
+      </div>
+      `}
+    <div class="video-card-body">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="rounded-full border border-borderDim bg-bgDark px-2 py-1 text-[11px] uppercase tracking-[0.18em] text-gRed">${escapeHtml(video.tag || "video")}</span>
+        <span class="text-xs text-gray-500">${escapeHtml(video.role || "Editor")}</span>
+      </div>
+      <h4 class="mt-3 text-base font-bold text-white">${escapeHtml(video.title)}</h4>
+      <p class="mt-2 text-sm leading-relaxed text-gray-400">${escapeHtml(video.description || "")}</p>
+    </div>
+  `;
+
+  button.addEventListener("click", () => {
+    if (!hasEmbed) {
+      return;
+    }
+
+    STATE.activeVideoIndex = index;
+    renderVideos();
+  });
+
+  return button;
+}
+
+export function renderVideos() {
+  const grid = $("#videoGrid");
+  if (!grid) {
+    return;
+  }
+
+  grid.innerHTML = "";
+  const allVideos = getPlayableVideos();
+  const visibleItems = sliceForPreview(allVideos, SECTION_KEYS.VIDEOS);
+
+  if (!DATA.VIDEOS.length) {
+    renderEmptyState(grid, "No videos added yet.");
+    return;
+  }
+
+  const hasAnyPlayable = visibleItems.some((video) => video.embedUrl);
+  if (!hasAnyPlayable) {
+    STATE.activeVideoIndex = 0;
+  } else {
+    STATE.activeVideoIndex = clamp(STATE.activeVideoIndex, 0, visibleItems.length - 1);
+  }
+
+  visibleItems.forEach((video, index) => {
+    const isActive = Boolean(video.embedUrl) && hasAnyPlayable && index === STATE.activeVideoIndex;
+    grid.appendChild(buildVideoCard(video, index, isActive));
+  });
+
+  renderSectionPreviewMount(
+    "#videoGrid",
+    SECTION_KEYS.VIDEOS,
+    DATA.VIDEOS.length,
+    visibleItems.length,
+    "Video preview"
   );
   applyEntryAnimations(grid);
 }
@@ -1424,6 +1558,7 @@ export const COMMANDS = [
   { label: "Go: Top", run: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
   { label: "Tab: All", run: () => setTab(SECTION_KEYS.ALL) },
   { label: "Tab: Images", run: () => setTab(SECTION_KEYS.IMAGES) },
+  { label: "Tab: Videos", run: () => setTab(SECTION_KEYS.VIDEOS) },
   { label: "Tab: Projects", run: () => setTab(SECTION_KEYS.PROJECTS) },
   { label: "Tab: Timeline", run: () => setTab(SECTION_KEYS.TIMELINE) },
   { label: "Tab: Certificates", run: () => setTab(SECTION_KEYS.CERTIFICATES) },
@@ -1530,6 +1665,20 @@ export function setupEventHandlers() {
     const trigger = event.target?.closest?.("[data-scrollto]");
     if (trigger) {
       const destination = trigger.getAttribute("data-scrollto");
+      const parentSection = trigger.closest("[data-section]");
+      const sectionKey = parentSection?.getAttribute("data-section");
+
+      if (destination && sectionKey && STATE.activeTab === SECTION_KEYS.ALL) {
+        if (typeof trigger.blur === "function") {
+          trigger.blur();
+        }
+        if (document.activeElement && typeof document.activeElement.blur === "function") {
+          document.activeElement.blur();
+        }
+        setTab(sectionKey);
+        return;
+      }
+
       if (destination) scrollToEl(destination);
     }
   });
@@ -1579,6 +1728,11 @@ export function setupEventHandlers() {
   $("#viewAllImages")?.addEventListener("click", () => {
     setTab(SECTION_KEYS.IMAGES);
     scrollToEl("#section-images");
+  });
+
+  $("#viewAllVideos")?.addEventListener("click", () => {
+    setTab(SECTION_KEYS.VIDEOS);
+    scrollToEl("#section-videos");
   });
 
   $("#btnCloseLightbox")?.addEventListener("click", closeLightbox);

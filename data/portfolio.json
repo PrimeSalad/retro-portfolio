@@ -37,6 +37,48 @@
       "tag": "accreditation"
     }
   ],
+  "videos": [
+    {
+      "title": "Infocus Broadcast Highlight Reel",
+      "description": "Fast-cut event recap combining coverage, transitions, caption timing, and social-first pacing for student publication work.",
+      "thumbnail": "images/events/recog.jpg",
+      "tag": "broadcast",
+      "duration": "01:24",
+      "platform": "Video",
+      "role": "Video Editor",
+      "link": "#"
+    },
+    {
+      "title": "ICITE2025 Event Coverage Edit",
+      "description": "Conference recap edit focused on speaker energy, crowd shots, and clean rhythm between formal and candid moments.",
+      "thumbnail": "images/events/icite.jpg",
+      "tag": "event",
+      "duration": "02:10",
+      "platform": "Video",
+      "role": "Editor + Motion Graphics",
+      "link": "#"
+    },
+    {
+      "title": "Hack for Gov Recap",
+      "description": "Competition coverage piece built for momentum, featuring participant reactions, challenge atmosphere, and quick title cards.",
+      "thumbnail": "images/events/hag2.jpg",
+      "tag": "recap",
+      "duration": "00:58",
+      "platform": "Video",
+      "role": "Editor",
+      "link": "#"
+    },
+    {
+      "title": "Student Org Recognition Montage",
+      "description": "Recognition montage with clean sequencing, image treatment, and light motion graphics to support ceremonial storytelling.",
+      "thumbnail": "images/events/infocus 1.jpg",
+      "tag": "montage",
+      "duration": "01:36",
+      "platform": "Video",
+      "role": "Creative Lead + Editor",
+      "link": "#"
+    }
+  ],
   "projects": [
     {
       "id": "p1",

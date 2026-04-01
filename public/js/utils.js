@@ -22,6 +22,7 @@ export const STORAGE_KEYS = {
 
 export const SECTION_KEYS = {
   IMAGES: "images",
+  VIDEOS: "videos",
   PROJECTS: "projects",
   TIMELINE: "timeline",
   CERTIFICATES: "certificates",

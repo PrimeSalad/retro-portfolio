@@ -9,6 +9,7 @@ export const STATE = {
   currentImages: [],
   lightboxIndex: 0,
   lightboxItems: [],
+  activeVideoIndex: 0,
   projectQuery: "",
   projectSort: "impact",
   projectPage: 1,
@@ -22,6 +23,7 @@ export const STATE = {
 
 export const DATA = {
   IMAGE_ITEMS: [],
+  VIDEOS: [],
   PROJECTS: [],
   TIMELINE_ITEMS: [],
   CERTS: [],
@@ -31,6 +33,7 @@ export const DATA = {
 
 export function updateData(newData) {
   if (newData.images) DATA.IMAGE_ITEMS = newData.images;
+  if (newData.videos) DATA.VIDEOS = newData.videos;
   if (newData.projects) DATA.PROJECTS = newData.projects;
   if (newData.timeline) DATA.TIMELINE_ITEMS = newData.timeline;
   if (newData.certs) DATA.CERTS = newData.certs;
