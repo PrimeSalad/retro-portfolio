@@ -1011,12 +1011,20 @@ export function buildProjectCard(project) {
   article.setAttribute("role", "button");
   article.setAttribute("tabindex", "0");
 
+  // Check if project has live preview URL
+  const hasLivePreview = project.preview && project.preview !== "#" && project.preview.startsWith("http");
+  
+  const thumbnailContent = hasLivePreview 
+    ? `<div class="project-iframe-wrapper">
+         <iframe src="${escapeHtml(project.preview)}" class="project-preview-iframe" loading="lazy" title="${escapeHtml(project.title)} live preview"></iframe>
+       </div>`
+    : `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" loading="lazy" />`;
+
   article.innerHTML = `
     <div class="project-thumb">
-      <img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" loading="lazy" />
+      ${thumbnailContent}
       <div class="project-badge-row">
         <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
-        <span class="project-badge text-gYellow">score ${escapeHtml(String(project.score || 0))}</span>
       </div>
       
       <div class="project-hover-overlay">

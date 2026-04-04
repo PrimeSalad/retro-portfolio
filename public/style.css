@@ -703,6 +703,28 @@ body[data-theme="dark"] .bg-noise {
   opacity: 0.97;
 }
 
+.project-iframe-wrapper {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-preview-iframe {
+  width: 1920px;
+  height: 1080px;
+  border: none;
+  display: block;
+  background: rgb(var(--bg-soft));
+  transform: scale(0.1875);
+  transform-origin: top center;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -960px;
+}
+
 .project-card:hover .project-thumb img,
 .cert-card:hover .cert-thumb img,
 .gallery-card:hover img {

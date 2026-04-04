@@ -96,16 +96,17 @@
       "title": "salitAI.orbit",
       "year": 2026,
       "category": "Speech to Text AI Assistant",
-      "role": "Developer + Designer",
+      "role": "Developer",
       "impact": "AI takes the notes so the whole team can focus on the actual meeting.",
       "outcome": "Task ownership and deadlines are extracted automatically from meeting content.",
       "description": "salitAI.orbit captures spoken discussion, transforms it into structured notes, and highlights assigned action items with due dates so that teams leave every meeting with clarity.",
       "image": "images/projects/salitai.jpg",
+      "preview": "https://salit-ai-orbit.space/",
       "tech": [
         "React",
         "TypeScript",
-        "Tailwind",
-        "Gemini API"
+        "JavaScript",
+        "Tailwind"
       ],
       "demo": "https://salit-ai-orbit.space/",
       "repo": "https://github.com",
@@ -119,80 +120,82 @@
     },
     {
       "id": "p2",
-      "title": "Plastech",
+      "title": "MorionKnow.AI",
       "year": 2026,
-      "category": "AI Model",
-      "role": "AI Model Developer",
-      "impact": "Turns plastic waste into connectivity value for communities.",
-      "outcome": "Recycling becomes directly useful through incentive-based digital access.",
-      "description": "PlasTech transforms recycled plastic into innovative WiFi-linked community solutions, combining sustainability and applied AI to connect environmental action with practical digital benefit.",
+      "category": "Cultural Preservation AI Platform",
+      "role": "Developer",
+      "impact": "Preserves and shares cultural knowledge through AI-powered documentation.",
+      "outcome": "Communities can document, preserve, and share their cultural heritage digitally.",
+      "description": "MorionKnow.AI is a cultural preservation platform that uses AI to help communities document, organize, and share their cultural knowledge, traditions, and heritage through intelligent conversations and smart recommendations.",
       "image": "images/projects/plastech.jpg",
+      "preview": "https://morionknow-ai.space/",
       "tech": [
-        "Python",
-        "TensorFlow",
-        "Computer Vision"
+        "React",
+        "JavaScript",
+        "Tailwind",
+        "Gemini API"
       ],
-      "demo": "#",
+      "demo": "https://morionknow-ai.space/",
       "repo": "https://github.com",
-      "score": 88,
+      "score": 92,
       "highlights": [
-        "Connects sustainability, behavior change, and digital inclusion in one concept.",
-        "Designed for social impact, not just technical novelty.",
-        "Strong storytelling potential for competitions and presentations."
+        "Built intelligent conversation flow for cultural knowledge documentation.",
+        "Designed accessible interface for community-driven content creation.",
+        "Focused on preserving cultural heritage through modern technology."
       ],
-      "status": "concept"
+      "status": "live"
     },
     {
       "id": "p3",
-      "title": "SHAPE: Speech, Hearing, Autism Personalized Education",
+      "title": "Coral.orbit",
       "year": 2025,
-      "category": "Mobile Application",
-      "role": "Project Manager + Frontend Developer + Game Developer",
-      "impact": "Makes learning more accessible for students with special needs.",
-      "outcome": "Interactive education delivery becomes more adaptive and engaging.",
-      "description": "SHAPE is a mobile learning application designed for learners with autism and hearing challenges, using tailored content and game-like interactions to improve classroom support and communication.",
+      "category": "Mobile App - Marine Research",
+      "role": "Developer",
+      "impact": "Supports marine conservation efforts in Marinduque through accessible research tools.",
+      "outcome": "DOST Marinduque researchers can document and track coral health more effectively.",
+      "description": "Coral.orbit is a mobile marine research app developed for DOST Marinduque, designed for coral mapping and enabling researchers to document coral health, track changes over time, and contribute to local marine conservation efforts.",
       "image": "images/projects/shape.jpg",
+      "preview": "https://coralorbit.vercel.app/",
       "tech": [
         "Flutter",
         "Dart",
         "Firebase"
       ],
-      "demo": "#",
+      "demo": "https://coralorbit.vercel.app/",
       "repo": "https://github.com",
       "score": 84,
       "highlights": [
-        "Focused on accessible interaction design for real learner needs.",
-        "Used game elements to support engagement and retention.",
-        "Balanced product planning, implementation, and presentation quality."
+        "Developed for DOST Marinduque marine conservation initiatives.",
+        "Designed for offline-first data collection with sync capabilities.",
+        "Built with local marine research and conservation workflows in mind."
       ],
-      "status": "prototype"
+      "status": "live"
     },
     {
       "id": "p4",
-      "title": "Travel Orbit",
+      "title": "Waymark",
       "year": 2026,
-      "category": "Web Application",
-      "role": "Frontend Developer + UX Designer + Project Manager",
-      "impact": "Delivers a smoother ticketing and planning experience.",
-      "outcome": "Users can compare, plan, and book with less friction and better clarity.",
-      "description": "Travel Orbit is an online ticketing platform that simplifies travel planning by organizing trip options, surfacing helpful recommendations, and reducing the cognitive load of multi-step booking flows.",
+      "category": "Mobile App - Project Tracking",
+      "role": "Developer",
+      "impact": "Streamlines project management and tracking for DOST Marinduque initiatives.",
+      "outcome": "Teams can monitor project progress, milestones, and deliverables more effectively.",
+      "description": "Waymark is a mobile project tracking app developed for DOST Marinduque that simplifies project management by organizing tasks, tracking milestones, and providing clear visibility into project status and team progress.",
       "image": "images/projects/travel.jpg",
+      "preview": "https://waymarkorbit.vercel.app/",
       "tech": [
-        "React",
-        "TypeScript",
-        "Node.js",
-        "Express",
-        "MongoDB"
+        "Flutter",
+        "Dart",
+        "Firebase"
       ],
-      "demo": "#",
+      "demo": "https://waymarkorbit.vercel.app/",
       "repo": "https://github.com",
       "score": 90,
       "highlights": [
-        "Prioritized user flow and visual clarity across booking screens.",
-        "Designed around simplification of decision-heavy user journeys.",
-        "Great candidate for a polished case-study presentation."
+        "Developed for DOST Marinduque project management needs.",
+        "Designed around simplification of project tracking workflows.",
+        "Focused on clear visibility and team collaboration features."
       ],
-      "status": "in progress"
+      "status": "live"
     }
   ],
   "timeline": [
