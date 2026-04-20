@@ -99,3 +99,53 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
+// Modal functions
+window.openHelpModal = function() {
+  const modal = document.getElementById('helpModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.openFeedbackModal = function() {
+  const modal = document.getElementById('feedbackModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.openPrivacyModal = function() {
+  const modal = document.getElementById('privacyModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.openTermsModal = function() {
+  const modal = document.getElementById('termsModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeModal = function(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+// Close modals on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    ['helpModal', 'feedbackModal', 'privacyModal', 'termsModal'].forEach(modalId => {
+      window.closeModal(modalId);
+    });
+  }
+});

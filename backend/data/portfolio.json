@@ -637,82 +637,52 @@
   ],
   "gallery": [
     {
-      "title": "Neural Network Visualization",
-      "description": "Interactive WebGL visualization of neural network training with real-time particle effects.",
-      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=70",
-      "category": "webgl",
-      "demo": "#",
-      "tech": [
-        "WebGL",
-        "Three.js",
-        "Shaders"
-      ],
-      "featured": true
+      "title": "BASE Hackathon",
+      "description": "Hackathon experience showcasing collaborative problem-solving and technical innovation.",
+      "image": "images/gallery/base.jpg",
+      "category": "event"
     },
     {
-      "title": "Fluid Dynamics Simulation",
-      "description": "Real-time fluid simulation using GPU compute shaders and interactive controls.",
-      "image": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=70",
-      "category": "webgl",
-      "demo": "#",
-      "tech": [
-        "WebGL",
-        "GLSL",
-        "Compute Shaders"
-      ],
-      "featured": true
+      "title": "DOST Event",
+      "description": "Department of Science and Technology initiative and collaboration.",
+      "image": "images/gallery/dost.jpg",
+      "category": "event"
     },
     {
-      "title": "Generative Art Engine",
-      "description": "Algorithmic art generator creating unique patterns through math-based systems.",
-      "image": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=800&q=70",
-      "category": "art",
-      "demo": "#",
-      "tech": [
-        "Canvas API",
-        "Math",
-        "Algorithms"
-      ],
-      "featured": false
+      "title": "Flag Wars Competition",
+      "description": "Competitive cybersecurity challenge focused on capture-the-flag exercises.",
+      "image": "images/gallery/flagwars.jpg",
+      "category": "competition"
     },
     {
-      "title": "Interactive Particle System",
-      "description": "GPU-accelerated particle system with physics simulation and responsive interaction.",
-      "image": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=70",
-      "category": "animation",
-      "demo": "#",
-      "tech": [
-        "WebGL",
-        "Particles",
-        "Physics"
-      ],
-      "featured": true
+      "title": "Hack4Gov 4",
+      "description": "Government hackathon participation demonstrating technical skills and civic engagement.",
+      "image": "images/gallery/hack4.jpg",
+      "category": "hackathon"
     },
     {
-      "title": "3D Portfolio Environment",
-      "description": "Immersive 3D space with floating shapes and interactive navigation.",
-      "image": "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=800&q=70",
-      "category": "webgl",
-      "demo": "#",
-      "tech": [
-        "Three.js",
-        "3D",
-        "Shaders"
-      ],
-      "featured": true
+      "title": "Hack4Gov",
+      "description": "Hackathon for government innovation and digital transformation.",
+      "image": "images/gallery/hack4gov.jpg",
+      "category": "hackathon"
     },
     {
-      "title": "Audio Reactive Visualizer",
-      "description": "Real-time audio visualization that responds to microphone input or music playback.",
-      "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=70",
-      "category": "interactive",
-      "demo": "#",
-      "tech": [
-        "Web Audio API",
-        "Canvas",
-        "FFT"
-      ],
-      "featured": false
+      "title": "Hack for Gov",
+      "description": "Collaborative hackathon focused on public service solutions.",
+      "image": "images/gallery/hackforgov.jpg",
+      "category": "hackathon"
+    },
+    {
+      "title": "Hack for Gov 4",
+      "description": "Fourth edition of the government-focused hackathon series.",
+      "image": "images/gallery/hackforgov4.jpg",
+      "category": "hackathon"
+    },
+    {
+      "title": "Kaspersky Event",
+      "description": "Cybersecurity learning experience and industry engagement event.",
+      "image": "images/gallery/kaspersky.jpg",
+      "category": "event"
     }
   ]
 }
