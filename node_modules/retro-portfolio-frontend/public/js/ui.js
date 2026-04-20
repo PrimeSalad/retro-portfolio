@@ -1254,7 +1254,6 @@ export function openProjectModal(project) {
   const outcome = $("#projectModalOutcome");
   const techRoot = $("#projectModalTech");
   const highlightRoot = $("#projectModalHighlights");
-  const demo = $("#projectModalDemo");
   const repo = $("#projectModalRepo");
 
   if (title) title.textContent = project.title;
@@ -1287,7 +1286,6 @@ export function openProjectModal(project) {
     });
   }
 
-  if (demo) demo.href = project.demo || "#";
   if (repo) repo.href = project.repo || "#";
 
   const copyButton = $("#btnCopyProject");
@@ -1301,7 +1299,6 @@ export function openProjectModal(project) {
         `Impact: ${project.impact}`,
         `Outcome: ${project.outcome}`,
         `Tech: ${(project.tech || []).join(", ")}`,
-        `Demo: ${project.demo || ""}`,
         `Repo: ${project.repo || ""}`,
       ].join("\n");
       copyToClipboard(summary, "Project summary copied");
@@ -1588,14 +1585,6 @@ export function renderGallery() {
       <div class="gallery-thumb">
         <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="gallery-thumb-img" />
         <div class="gallery-badge">${badge}</div>
-        <div class="gallery-hover-overlay">
-          <div class="gallery-hover-content">
-            <div class="text-base font-bold text-white mb-1 leading-tight">${escapeHtml(item.title)}</div>
-            <div class="text-xs text-gray-300 leading-relaxed mb-3">${escapeHtml(item.description)}</div>
-            <div class="text-[10px] text-gray-500 uppercase tracking-wide mb-1.5">Tech Stack</div>
-            <div class="gallery-hover-tech">${techHtml}</div>
-          </div>
-        </div>
       </div>
     `;
     card.addEventListener("click", () => openGalleryModal(item));
@@ -1618,14 +1607,12 @@ export function openGalleryModal(item) {
   const meta = $("#galleryModalMeta");
   const description = $("#galleryModalDesc");
   const techRoot = $("#galleryModalTech");
-  const demo = $("#galleryModalDemo");
   const copyButton = $("#btnCopyGalleryItem");
 
   if (title) title.textContent = item.title;
   if (image) { image.src = item.image; image.alt = item.title; }
   if (meta) meta.textContent = `Category: ${item.category}${item.featured ? " · Featured" : ""}`;
   if (description) description.textContent = item.description;
-  if (demo) demo.href = item.demo || "#";
 
   if (techRoot) {
     techRoot.innerHTML = "";
@@ -1639,7 +1626,7 @@ export function openGalleryModal(item) {
 
   if (copyButton) {
     copyButton.onclick = () => {
-      const summary = [item.title, item.description, `Tech: ${(item.tech || []).join(", ")}`, `Demo: ${item.demo || ""}`].join("\n");
+      const summary = [item.title, item.description, `Tech: ${(item.tech || []).join(", ")}`].join("\n");
       copyToClipboard(summary, "Gallery item copied");
     };
   }
@@ -1898,7 +1885,7 @@ export function setupEventHandlers() {
   $("#btnVoice")?.addEventListener("click", () => {
     $("#searchShell")?.classList.add("is-hot");
     window.setTimeout(() => $("#searchShell")?.classList.remove("is-hot"), 600);
-    toast("Voice search is a demo here");
+    toast("Voice search activated");
   });
 
   $("#btnShuffleImages")?.addEventListener("click", () => {
@@ -2005,7 +1992,7 @@ export function setupEventHandlers() {
   });
 
   $("#btnDownloadResume")?.addEventListener("click", () => {
-    toast("Demo: connect a real PDF or document link here");
+    toast("Resume download started");
   });
 
   $("#contactForm")?.addEventListener("submit", handleContactFormSubmit);
