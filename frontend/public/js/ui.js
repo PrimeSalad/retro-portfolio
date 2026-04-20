@@ -71,8 +71,16 @@ export function limitForSection(sectionKey, fullCount) {
     return fullCount;
   }
 
+  if (sectionKey === SECTION_KEYS.PROJECTS) {
+    return 6;
+  }
+
+  if (sectionKey === SECTION_KEYS.CERTIFICATES) {
+    return 6;
+  }
+
   if (sectionKey === SECTION_KEYS.GALLERY) {
-    return 2;
+    return 6;
   }
 
   if (sectionKey === SECTION_KEYS.VIDEOS) {
@@ -797,10 +805,20 @@ export function renderVideos() {
 
   grid.innerHTML = "";
   const allVideos = getPlayableVideos();
-  const visibleItems = sliceForPreview(allVideos, SECTION_KEYS.VIDEOS);
+  const previewMode = isPreviewModeForSection(SECTION_KEYS.VIDEOS);
+  let visibleItems = [];
+
+  if (previewMode) {
+    visibleItems = sliceForPreview(allVideos, SECTION_KEYS.VIDEOS);
+  } else {
+    const pageData = paginateItems(allVideos, STATE.videoPage || 1, PROJECTS_PER_PAGE);
+    STATE.videoPage = pageData.page;
+    visibleItems = pageData.items;
+  }
 
   if (!DATA.VIDEOS.length) {
     renderEmptyState(grid, "No videos added yet.");
+    renderVideoPagination(0);
     return;
   }
 
@@ -819,11 +837,29 @@ export function renderVideos() {
   renderSectionPreviewMount(
     "#videoGrid",
     SECTION_KEYS.VIDEOS,
-    DATA.VIDEOS.length,
+    allVideos.length,
     visibleItems.length,
     "Video preview"
   );
+  renderVideoPagination(allVideos.length);
   applyEntryAnimations(grid);
+}
+
+export function renderVideoPagination(totalItems) {
+  renderGenericPagination({
+    gridSelector: "#videoGrid",
+    mountId: "videoPaginationMount",
+    sectionKey: SECTION_KEYS.VIDEOS,
+    totalItems,
+    currentPage: STATE.videoPage || 1,
+    itemsPerPage: PROJECTS_PER_PAGE,
+    itemLabel: "videos",
+    scrollTarget: "#section-videos",
+    onPageChange: (newPage) => {
+      STATE.videoPage = newPage;
+      renderVideos();
+    }
+  });
 }
 
 /* =========================
@@ -1057,23 +1093,52 @@ export function buildProjectCard(project) {
 }
 
 export function renderProjectPagination(totalItems) {
-  const grid = $("#projectsGrid");
+  renderGenericPagination({
+    gridSelector: "#projectsGrid",
+    mountId: "projectPaginationMount",
+    sectionKey: SECTION_KEYS.PROJECTS,
+    totalItems,
+    currentPage: STATE.projectPage,
+    itemsPerPage: PROJECTS_PER_PAGE,
+    itemLabel: "projects",
+    scrollTarget: "#section-projects",
+    onPageChange: (newPage) => {
+      STATE.projectPage = newPage;
+      renderProjects();
+    }
+  });
+}
+
+export function renderGenericPagination(config) {
+  const {
+    gridSelector,
+    mountId,
+    sectionKey,
+    totalItems,
+    currentPage,
+    itemsPerPage,
+    itemLabel,
+    scrollTarget,
+    onPageChange
+  } = config;
+
+  const grid = $(gridSelector);
   if (!grid) {
     return;
   }
 
-  const mount = ensureSiblingMount(grid, "projectPaginationMount");
+  const mount = ensureSiblingMount(grid, mountId);
   if (!mount) {
     return;
   }
 
   mount.innerHTML = "";
 
-  if (isPreviewModeForSection(SECTION_KEYS.PROJECTS)) {
+  if (isPreviewModeForSection(sectionKey)) {
     return;
   }
 
-  const totalPages = Math.max(1, Math.ceil(totalItems / PROJECTS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
   if (totalPages <= 1) {
     return;
   }
@@ -1086,30 +1151,28 @@ export function renderProjectPagination(totalItems) {
   previousButton.type = "button";
   previousButton.className = "js-page-button f-ring";
   previousButton.textContent = "Previous";
-  previousButton.disabled = STATE.projectPage <= 1;
+  previousButton.disabled = currentPage <= 1;
   previousButton.style.opacity = previousButton.disabled ? "0.45" : "1";
   previousButton.addEventListener("click", () => {
-    if (STATE.projectPage <= 1) {
+    if (currentPage <= 1) {
       return;
     }
-    STATE.projectPage -= 1;
-    renderProjects();
-    scrollToEl("#section-projects");
+    onPageChange(currentPage - 1);
+    scrollToEl(scrollTarget);
   });
 
   const nextButton = document.createElement("button");
   nextButton.type = "button";
   nextButton.className = "js-page-button f-ring";
   nextButton.textContent = "Next";
-  nextButton.disabled = STATE.projectPage >= totalPages;
+  nextButton.disabled = currentPage >= totalPages;
   nextButton.style.opacity = nextButton.disabled ? "0.45" : "1";
   nextButton.addEventListener("click", () => {
-    if (STATE.projectPage >= totalPages) {
+    if (currentPage >= totalPages) {
       return;
     }
-    STATE.projectPage += 1;
-    renderProjects();
-    scrollToEl("#section-projects");
+    onPageChange(currentPage + 1);
+    scrollToEl(scrollTarget);
   });
 
   wrapper.appendChild(previousButton);
@@ -1118,14 +1181,13 @@ export function renderProjectPagination(totalItems) {
     const pageButton = document.createElement("button");
     pageButton.type = "button";
     pageButton.className = "js-page-button f-ring";
-    if (pageNumber === STATE.projectPage) {
+    if (pageNumber === currentPage) {
       pageButton.classList.add("is-active");
     }
     pageButton.textContent = String(pageNumber);
     pageButton.addEventListener("click", () => {
-      STATE.projectPage = pageNumber;
-      renderProjects();
-      scrollToEl("#section-projects");
+      onPageChange(pageNumber);
+      scrollToEl(scrollTarget);
     });
     wrapper.appendChild(pageButton);
   }
@@ -1134,7 +1196,7 @@ export function renderProjectPagination(totalItems) {
 
   const status = document.createElement("div");
   status.className = "js-page-status";
-  status.textContent = `Showing ${Math.min(totalItems, (STATE.projectPage - 1) * PROJECTS_PER_PAGE + 1)}-${Math.min(totalItems, STATE.projectPage * PROJECTS_PER_PAGE)} of ${totalItems} projects`;
+  status.textContent = `Showing ${Math.min(totalItems, (currentPage - 1) * itemsPerPage + 1)}-${Math.min(totalItems, currentPage * itemsPerPage)} of ${totalItems} ${itemLabel}`;
   wrapper.appendChild(status);
 
   mount.appendChild(wrapper);
@@ -1331,11 +1393,22 @@ export function renderCertificates() {
   const grid = $("#certGrid");
   if (!grid) return;
   grid.innerHTML = "";
+  
   const filteredItems = getSortedCertificates(filterCertificates());
-  const visibleItems = sliceForPreview(filteredItems, SECTION_KEYS.CERTIFICATES);
+  const previewMode = isPreviewModeForSection(SECTION_KEYS.CERTIFICATES);
+  let visibleItems = [];
+
+  if (previewMode) {
+    visibleItems = sliceForPreview(filteredItems, SECTION_KEYS.CERTIFICATES);
+  } else {
+    const pageData = paginateItems(filteredItems, STATE.certPage, PROJECTS_PER_PAGE);
+    STATE.certPage = pageData.page;
+    visibleItems = pageData.items;
+  }
 
   if (!filteredItems.length) {
     renderEmptyState(grid, "No certificates found. Try a different filter.");
+    renderCertificatePagination(0);
     return;
   }
 
@@ -1350,7 +1423,25 @@ export function renderCertificates() {
     visibleItems.length,
     "Certificate preview"
   );
+  renderCertificatePagination(filteredItems.length);
   applyEntryAnimations(grid);
+}
+
+export function renderCertificatePagination(totalItems) {
+  renderGenericPagination({
+    gridSelector: "#certGrid",
+    mountId: "certPaginationMount",
+    sectionKey: SECTION_KEYS.CERTIFICATES,
+    totalItems,
+    currentPage: STATE.certPage,
+    itemsPerPage: PROJECTS_PER_PAGE,
+    itemLabel: "certificates",
+    scrollTarget: "#section-certificates",
+    onPageChange: (newPage) => {
+      STATE.certPage = newPage;
+      renderCertificates();
+    }
+  });
 }
 
 export function openCertificateModal(cert) {

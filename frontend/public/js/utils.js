@@ -12,7 +12,7 @@ export const GALLERY_TECH_LIMIT = 3;
 export const STARTUP_SCROLL_RESET_ATTEMPTS = 2;
 export const STARTUP_SCROLL_RESET_DELAY_MS = 120;
 export const PREVIEW_ITEM_LIMIT = 6;
-export const PROJECTS_PER_PAGE = 4;
+export const PROJECTS_PER_PAGE = 6;
 export const ANIMATION_STAGGER_MS = 45;
 
 export const STORAGE_KEYS = {
