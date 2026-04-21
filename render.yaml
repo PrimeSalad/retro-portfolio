@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: retro-portfolio-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20.0.0
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        value: https://your-portfolio.vercel.app # Update this after Vercel deployment
