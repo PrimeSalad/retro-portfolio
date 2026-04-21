@@ -457,6 +457,17 @@
       "image": "images/certificate/Career Service Professional  Eligibility Civil Service Commission Issued Mar 2024 Credential ID 209050.jpg"
     },
     {
+      "title": "CodeMaster Award",
+      "preview_weight": 102,
+      "issuer": "DOST",
+      "issued": "2025",
+      "issued_detail": "2025",
+      "credential_id": "N/A",
+      "link": "images/certificate/codemaster award - dost.jpg",
+      "notes": "Recognition award for coding excellence and technical achievement from DOST.",
+      "image": "images/certificate/codemaster award - dost.jpg"
+    },
+    {
       "title": "Coding Bootcamp Web Development Workshop",
       "preview_weight": 97,
       "issuer": "Zuitt Coding Bootcamp",
@@ -512,6 +523,17 @@
       "image": "images/certificate/DICT_PNPKI_Webinar.jpg"
     },
     {
+      "title": "Emerging Leader Award",
+      "preview_weight": 103,
+      "issuer": "DOST",
+      "issued": "2025",
+      "issued_detail": "2025",
+      "credential_id": "N/A",
+      "link": "images/certificate/emerging leader award -dost.jpg",
+      "notes": "Leadership recognition award from DOST for emerging talent and leadership potential.",
+      "image": "images/certificate/emerging leader award -dost.jpg"
+    },
+    {
       "title": "Graphic Design Essentials",
       "preview_weight": 8,
       "issuer": "Canva",
@@ -542,6 +564,17 @@
       "link": "images/certificate/Microsoft - Fundamentals of UIUX.jpg",
       "notes": "UI/UX fundamentals certificate covering core product experience principles, interface structure, and user-centered design thinking.",
       "image": "images/certificate/Microsoft - Fundamentals of UIUX.jpg"
+    },
+    {
+      "title": "Python and Flask Framework",
+      "preview_weight": 81,
+      "issuer": "Udemy",
+      "issued": "2024",
+      "issued_detail": "2024",
+      "credential_id": "N/A",
+      "link": "images/certificate/Python And Flask Framework Udemy.jpg",
+      "notes": "Python and Flask framework course certificate covering web development with Python and Flask.",
+      "image": "images/certificate/Python And Flask Framework Udemy.jpg"
     },
     {
       "title": "Python Workshop",
@@ -575,6 +608,28 @@
       "link": "images/certificate/QUAVE - Utilizing ChatGPT Prompts.jpg",
       "notes": "Prompting-focused certificate centered on practical use of ChatGPT, prompt design, and better AI-assisted workflow habits.",
       "image": "images/certificate/QUAVE - Utilizing ChatGPT Prompts.jpg"
+    },
+    {
+      "title": "Technical Excellence Award",
+      "preview_weight": 104,
+      "issuer": "DOST",
+      "issued": "2025",
+      "issued_detail": "2025",
+      "credential_id": "N/A",
+      "link": "images/certificate/technical execellence -dost.jpg",
+      "notes": "Recognition award for technical excellence and outstanding technical achievement from DOST.",
+      "image": "images/certificate/technical execellence -dost.jpg"
+    },
+    {
+      "title": "Top Achiever and Best Project Execution Award",
+      "preview_weight": 105,
+      "issuer": "DOST",
+      "issued": "2025",
+      "issued_detail": "2025",
+      "credential_id": "N/A",
+      "link": "images/certificate/top achiever and best project execution award - dost.jpg",
+      "notes": "Top achievement award recognizing best project execution and outstanding performance from DOST.",
+      "image": "images/certificate/top achiever and best project execution award - dost.jpg"
     }
   ],
   "achievements": [
