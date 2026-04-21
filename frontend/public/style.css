@@ -2219,8 +2219,61 @@ body[data-theme="dark"] .cert-thumb::after {
         }
 
         @media (max-width: 639px) {
+            #topHeader .mx-auto {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.4rem !important;
+            }
+
+            #topHeader a[aria-label="Home"] {
+                font-size: 1.25rem !important;
+            }
+
+            /* Shrink buttons to icon-only or very small padding */
+            #topHeader .ml-auto .f-ring span {
+                display: none; /* Hide 'Download CV' text */
+            }
+            
+            #topHeader .ml-auto a.f-ring {
+                padding: 0.4rem !important;
+            }
+
+            #searchShell {
+                padding-top: 0.4rem !important;
+                padding-bottom: 0.4rem !important;
+                margin-top: 0.35rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            #metaLine {
+                display: none !important; /* Meta line is useless on tiny screens */
+            }
+
+            #topHeader .mt-4.grid {
+                margin-top: 0.4rem !important;
+                gap: 0.25rem !important;
+            }
+
+            #topHeader nav {
+                margin-top: 0.35rem !important;
+            }
+
+            .tab-btn {
+                font-size: 11px !important;
+                padding: 0.2rem 0.5rem !important;
+            }
+
+            #resultsArea {
+                gap: 1rem !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+
+            main#top {
+                padding-top: 0.5rem !important;
+            }
+
             .compact-panel {
-                border-radius: 16px;
+                border-radius: 12px;
             }
 
             .mini-toolbar {
