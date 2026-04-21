@@ -1075,10 +1075,14 @@ export function buildProjectCard(project) {
           </div>
         </div>
       </div>
+      <!-- Hidden click surface to ensure whole card is clickable even with iframe -->
+      <div class="absolute inset-0 z-[60] cursor-pointer"></div>
     </div>
   `;
 
-  article.addEventListener("click", () => {
+  article.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     openProjectModal(project);
   });
 
