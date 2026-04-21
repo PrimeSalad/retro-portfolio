@@ -440,11 +440,7 @@ body[data-theme="dark"] .bg-noise {
   background: rgb(var(--overlay-rgb) / calc(var(--overlay-alpha) + 0.1));
 }
 
-@media (min-width: 1024px) {
-  .modal-backdrop {
-    backdrop-filter: blur(8px);
-  }
-}
+/* block-removed */
 
 .kp-shell,
 #resultsArea>section,
