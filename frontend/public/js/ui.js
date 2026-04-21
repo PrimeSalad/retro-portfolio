@@ -1179,7 +1179,6 @@ export function renderGenericPagination(config) {
 
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
     const pageButton = document.createElement("button");
-    pageNumber === currentPage ? pageButton.classList.add("is-active") : null;
     pageButton.type = "button";
     pageButton.className = "js-page-button f-ring";
     if (pageNumber === currentPage) {
