@@ -763,7 +763,7 @@ export function buildVideoCard(video, index, isActive) {
       : `
       <div class="video-thumb">
         <img
-          src="${escapeHtml(video.resolvedThumbnail || "/images/events/cics.jpg")}"
+          src="${escapeHtml(video.resolvedThumbnail || "images/events/cics.jpg")}"
           alt="${escapeHtml(video.title)}"
           loading="lazy"
           class="video-thumb-img"
