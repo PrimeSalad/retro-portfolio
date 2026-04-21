@@ -1598,6 +1598,100 @@ body[data-theme="dark"] .bg-noise {
   }
 }
 
+/* Dynamic Styles & Animations */
+[data-animate="true"] {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--enter-delay, 0ms);
+}
+
+[data-animate="true"].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.js-preview-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgb(var(--text-main) / 0.08);
+  background: rgb(var(--text-main) / 0.03);
+}
+
+.js-preview-card .title {
+  color: rgb(var(--text-main));
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.js-preview-card .meta {
+  margin-top: 0.25rem;
+  color: rgb(var(--text-muted));
+  font-size: 0.78rem;
+}
+
+.js-preview-button {
+  border: 1px solid rgb(var(--text-main) / 0.1);
+  border-radius: 999px;
+  background: rgb(var(--text-main) / 0.04);
+  color: rgb(var(--text-main));
+  padding: 0.55rem 0.95rem;
+  font-size: 0.78rem;
+  transition: all 180ms ease;
+  white-space: nowrap;
+}
+
+.js-preview-button:hover {
+  background: rgb(var(--text-main) / 0.08);
+  transform: translateY(-1px);
+}
+
+/* Compact Stats Section */
+.compact-stats > div {
+  padding: 1rem;
+  text-align: center;
+  transition: transform 200ms ease;
+}
+
+.compact-stats > div:hover {
+  transform: translateY(-3px);
+}
+
+.bg-bgDark {
+  background: rgb(var(--bg-dark)) !important;
+}
+
+/* Quick Contact Form Button */
+#btnOpenContact {
+  transition: all 200ms ease;
+}
+
+#btnOpenContact:hover {
+  background: rgb(var(--g-blue) / 0.1);
+  border-color: rgb(var(--g-blue));
+}
+
+@media (max-width: 639px) {
+  .js-preview-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .js-preview-button {
+    width: 100%;
+  }
+  
+  .compact-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Tablet responsive improvements */
 @media (min-width: 640px) and (max-width: 1023px) {
   #projectsGrid .project-thumb,
