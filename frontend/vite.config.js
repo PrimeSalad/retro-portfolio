@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'public',
+  publicDir: '.',
   server: {
     port: 5173,
     proxy: {
