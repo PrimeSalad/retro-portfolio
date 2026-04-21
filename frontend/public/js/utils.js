@@ -75,10 +75,20 @@ export function safeJsonParse(value, fallback) {
 
 export function resolveImagePath(path) {
   if (!path) return "";
-  if (path.startsWith("http") || path.startsWith("data:") || path.startsWith("/")) {
+  if (path.startsWith("http") || path.startsWith("data:")) {
     return path;
   }
-  return "/" + path;
+  
+  let cleanPath = path;
+  if (cleanPath.startsWith("/")) {
+    cleanPath = cleanPath.substring(1);
+  }
+  
+  if (!cleanPath.startsWith("images/")) {
+    cleanPath = "images/" + cleanPath;
+  }
+  
+  return "/" + cleanPath;
 }
 
 export function escapeHtml(value) {
