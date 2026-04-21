@@ -4,19 +4,11 @@
  */
 
 import { AI, promiseTimeout, toast } from "./utils.js";
+import { PORTFOLIO_DATA } from "./data.js";
 
 export async function fetchPortfolioData() {
-  try {
-    const response = await fetch("/api/data");
-    if (!response.ok) {
-      throw new Error("Failed to fetch portfolio data");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching portfolio data:", error);
-    toast("Error loading data");
-    return null;
-  }
+  // Return static data directly for faster loading
+  return PORTFOLIO_DATA;
 }
 
 export async function aiHealthCheck() {
