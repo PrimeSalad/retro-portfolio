@@ -1246,7 +1246,6 @@ export function renderProjects() {
 
 export function openProjectModal(project) {
   const title = $("#projectModalTitle");
-  const image = $("#projectModalImg");
   const meta = $("#projectModalMeta");
   const impact = $("#projectModalImpact");
   const description = $("#projectModalDesc");
@@ -1258,10 +1257,6 @@ export function openProjectModal(project) {
   const demo = $("#projectModalDemo");
 
   if (title) title.textContent = project.title;
-  if (image) {
-    image.src = resolveImagePath(project.image || "");
-    image.alt = project.title;
-  }
   if (meta) meta.textContent = `${project.category} · ${project.year} · ${project.status || "build"}`;
   if (impact) impact.textContent = project.impact || "";
   if (description) description.textContent = project.description || "";
