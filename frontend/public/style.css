@@ -1429,7 +1429,6 @@ body[data-theme="dark"] .cert-thumb::after {
 
   /* Reduce padding for all buttons on mobile */
   #btnOpenKp,
-  #btnTheme,
   #btnCmd,
   .tab-btn,
   #btnSaveSearch,
