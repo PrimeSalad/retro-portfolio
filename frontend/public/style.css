@@ -1565,7 +1565,8 @@ body[data-theme="dark"] .bg-noise {
     display: none;
   }
 
-  /* Hide futuristic button on mobile */
+  /* Hide search and futuristic buttons on mobile */
+  #btnRun,
   #btnLucky {
     display: none !important;
   }
