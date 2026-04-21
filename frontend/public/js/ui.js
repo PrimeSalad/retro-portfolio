@@ -1270,7 +1270,8 @@ export function openProjectModal(project) {
 
   if (techRoot) {
     techRoot.innerHTML = "";
-    (project.tech || []).forEach((item) => {
+    const techStack = Array.isArray(project.tech) ? project.tech : [];
+    techStack.forEach((item) => {
       const chip = document.createElement("span");
       chip.className = "rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] text-gray-300";
       chip.textContent = item;
@@ -1280,7 +1281,8 @@ export function openProjectModal(project) {
 
   if (highlightRoot) {
     highlightRoot.innerHTML = "";
-    (project.highlights || []).forEach((item) => {
+    const highlights = Array.isArray(project.highlights) ? project.highlights : [];
+    highlights.forEach((item) => {
       const listItem = document.createElement("li");
       listItem.textContent = `• ${item}`;
       highlightRoot.appendChild(listItem);
