@@ -597,7 +597,7 @@ export function renderImages(items) {
   setLightboxItems(
     visibleItems.map((item) => ({
       title: item.title,
-      src: item.src,
+      src: resolveImagePath(item.src),
       alt: item.alt,
     }))
   );
@@ -622,7 +622,7 @@ export function renderImages(items) {
         <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-300">
           ${escapeHtml(String(item.tag || "").toUpperCase())}
         </div>
-        <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" class="image-card-thumb" />
+        <img src="${escapeHtml(resolveImagePath(item.src))}" alt="${escapeHtml(item.alt)}" loading="lazy" class="image-card-thumb" />
         <div class="image-card-overlay">
           <div class="clamp-2 text-xs font-medium text-white">${escapeHtml(shortTitle || item.title)}</div>
         </div>
@@ -1583,7 +1583,7 @@ export function renderGallery() {
 
     card.innerHTML = `
       <div class="gallery-thumb">
-        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="gallery-thumb-img" />
+        <img src="${escapeHtml(resolveImagePath(item.image))}" alt="${escapeHtml(item.title)}" loading="lazy" class="gallery-thumb-img" />
         <div class="gallery-badge">${badge}</div>
       </div>
     `;
