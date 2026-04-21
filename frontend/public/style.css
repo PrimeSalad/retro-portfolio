@@ -15,29 +15,62 @@
 }
 
 :root {
+  --page-zoom: 0.84;
+  --page-width-compensation: 119.0476%;
+
+  --bg-dark: 246 248 251;
+  --bg-panel: 250 251 253;
+  --bg-soft: 244 246 248;
+  --border-dim: 223 227 232;
 
   --text-main: 27 30 34;
   --text-soft: 60 64 67;
   --text-muted: 104 111 118;
   --text-faint: 130 137 145;
+
+  --g-blue: 26 115 232;
+  --g-red: 234 67 53;
+  --g-yellow: 251 188 4;
+  --g-green: 52 168 83;
+  --url-green: 24 128 56;
+
   --surface-hover: 241 244 248;
   --surface-button: 26 115 232;
   --overlay-rgb: 7 13 21;
   --overlay-alpha: 0.42;
+
   --radius-xl: 1.25rem;
   --radius-lg: 1rem;
   --radius-md: 0.75rem;
+
+  --shadow-soft: 0 10px 30px rgba(30, 41, 59, 0.06);
+  --shadow-glow: 0 0 0 1px rgba(26, 115, 232, 0.14), 0 8px 24px rgba(26, 115, 232, 0.08);
 }
 
 body[data-theme="dark"] {
+  --bg-dark: 11 16 23;
+  --bg-panel: 17 24 34;
+  --bg-soft: 13 19 29;
+  --border-dim: 34 45 61;
+
   --text-main: 241 245 249;
   --text-soft: 209 213 219;
   --text-muted: 128 138 150;
   --text-faint: 95 104 116;
+
+  --g-blue: 66 133 244;
+  --g-red: 234 67 53;
+  --g-yellow: 251 188 5;
+  --g-green: 52 168 83;
+  --url-green: 0 255 136;
+
   --surface-hover: 18 27 39;
   --surface-button: 66 133 244;
   --overlay-rgb: 3 8 16;
   --overlay-alpha: 0.72;
+
+  --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.36);
+  --shadow-glow: 0 0 0 1px rgba(66, 133, 244, 0.18), 0 0 26px rgba(66, 133, 244, 0.14);
 }
 
 *,
@@ -701,6 +734,31 @@ body[data-theme="dark"] .bg-noise {
   align-items: stretch;
 }
 
+#projectsGrid,
+#certGrid,
+#galleryGrid,
+#videoGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  #projectsGrid,
+  #certGrid,
+  #galleryGrid,
+  #videoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  #projectsGrid,
+  #certGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .project-card,
 .cert-card {
   position: relative;
@@ -709,6 +767,8 @@ body[data-theme="dark"] .bg-noise {
   border: 1px solid rgb(var(--border-dim));
   background: rgb(var(--bg-panel));
   transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card:hover,
@@ -861,33 +921,118 @@ body[data-theme="dark"] .bg-noise {
   color: rgb(var(--text-muted));
 }
 
-.project-thumb::after,
-.cert-thumb::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgb(9 13 20 / 0.03), rgb(9 13 20 / 0.40)),
-    linear-gradient(135deg, rgb(var(--g-blue) / 0.10), transparent 32%);
-}
-
-body[data-theme="dark"] .project-thumb::after,
-body[data-theme="dark"] .cert-thumb::after {
-  background:
-    linear-gradient(180deg, rgb(9 13 20 / 0.06), rgb(9 13 20 / 0.60)),
-    linear-gradient(135deg, rgb(var(--g-blue) / 0.14), transparent 32%);
-}
-
+/* Restore Hover Overlays and Badges */
 .project-badge-row {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
   right: 0.75rem;
-  z-index: 2;
+  z-index: 20;
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.project-card:hover .project-badge-row,
+.cert-card:hover .project-badge-row {
+  opacity: 0;
+}
+
+.project-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--bg-dark) / 0.85) 0%,
+    rgb(var(--bg-dark)) 100%
+  );
+  opacity: 0;
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.project-card:hover .project-hover-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.project-hover-content {
+  text-align: center;
+  width: 100%;
+  transform: translateY(12px);
+  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover .project-hover-content {
+  transform: translateY(0);
+}
+
+.project-hover-tech {
+  display: flex;
   flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.project-hover-tech .card-chip {
+  background: rgb(var(--g-blue) / 0.1);
+  border: 1px solid rgb(var(--g-blue) / 0.3);
+  color: rgb(var(--g-blue)) !important;
+  font-weight: 600;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.hover-slide-up {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 400ms ease;
+}
+
+.project-card:hover .hover-slide-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Certificate Hover Overlay */
+.cert-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--bg-dark) / 0.85) 0%,
+    rgb(var(--bg-dark)) 100%
+  );
+  display: grid;
+  place-content: center;
+  opacity: 0;
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 30;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.cert-card:hover .cert-hover-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cert-hover-content {
+  text-align: center;
+  transform: translateY(12px);
+  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.cert-card:hover .cert-hover-content {
+  transform: translateY(0);
 }
 
 .project-badge,
@@ -898,19 +1043,16 @@ body[data-theme="dark"] .cert-thumb::after {
   gap: 0.4rem;
   border-radius: 999px;
   border: 1px solid rgb(var(--border-dim));
-  background: rgb(var(--bg-soft) / 0.96);
+  background: rgb(var(--bg-soft) / 0.95);
   padding: 0.28rem 0.58rem;
   font-size: 0.62rem;
   color: rgb(var(--text-soft));
+  font-weight: 600;
 }
 
-@media (min-width: 1024px) {
-  .project-badge,
-  .cert-badge,
-  .card-chip {
-    backdrop-filter: blur(6px);
-  }
-}
+.project-badge.text-gBlue { color: rgb(var(--g-blue)) !important; }
+.project-badge.text-gYellow { color: #f59e0b !important; }
+.cert-badge.text-gGreen { color: #10b981 !important; }
 
 .project-thumb-footer,
 .cert-thumb-footer {
