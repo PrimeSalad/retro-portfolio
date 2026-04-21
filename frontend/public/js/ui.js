@@ -1290,9 +1290,45 @@ export function openProjectModal(project) {
     });
   }
 
-  if (repo) repo.href = project.repo || "#";
+  const repo = $("#projectModalRepo");
+  const demo = $("#projectModalDemo");
 
-  const copyButton = $("#btnCopyProject");
+  if (title) title.textContent = project.title;
+  if (image) {
+    image.src = resolveImagePath(project.image || "");
+    image.alt = project.title;
+  }
+  if (meta) meta.textContent = `${project.category} · ${project.year} · ${project.status || "build"}`;
+  if (impact) impact.textContent = project.impact || "";
+  if (description) description.textContent = project.description || "";
+  if (role) role.textContent = project.role || "";
+  if (outcome) outcome.textContent = project.outcome || "";
+
+  if (techRoot) {
+    techRoot.innerHTML = "";
+    (project.tech || []).forEach((item) => {
+      const chip = document.createElement("span");
+      chip.className = "rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[11px] text-gray-300";
+      chip.textContent = item;
+      techRoot.appendChild(chip);
+    });
+  }
+
+  if (highlightRoot) {
+    highlightRoot.innerHTML = "";
+    (project.highlights || []).forEach((item) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `• ${item}`;
+      highlightRoot.appendChild(listItem);
+    });
+  }
+
+  if (repo) repo.href = project.repo || "#";
+  if (demo) {
+    const demoUrl = project.preview || project.demo || "#";
+    demo.href = demoUrl;
+    demo.classList.toggle("hidden", demoUrl === "#");
+  }
   if (copyButton) {
     copyButton.onclick = () => {
       const summary = [
