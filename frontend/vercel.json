@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://retro-portfolio-backend.onrender.com/api/:path*"
+      "destination": "https://retro-portfolio.onrender.com/api/:path*"
     }
   ]
 }
