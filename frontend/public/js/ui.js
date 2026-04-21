@@ -707,7 +707,7 @@ export function getVideoThumbnail(video) {
     return `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
   }
 
-  return video.thumbnail || "images/events/cics.jpg";
+  return video.thumbnail || "/images/events/cics.jpg";
 }
 
 export function getPlayableVideos() {
@@ -763,7 +763,7 @@ export function buildVideoCard(video, index, isActive) {
       : `
       <div class="video-thumb">
         <img
-          src="${escapeHtml(video.resolvedThumbnail || "images/events/cics.jpg")}"
+          src="${escapeHtml(resolveImagePath(video.resolvedThumbnail || "/images/events/cics.jpg"))}"
           alt="${escapeHtml(video.title)}"
           loading="lazy"
           class="video-thumb-img"
@@ -1179,6 +1179,7 @@ export function renderGenericPagination(config) {
 
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
     const pageButton = document.createElement("button");
+    pageNumber === currentPage ? pageButton.classList.add("is-active") : null;
     pageButton.type = "button";
     pageButton.className = "js-page-button f-ring";
     if (pageNumber === currentPage) {
@@ -1258,7 +1259,7 @@ export function openProjectModal(project) {
 
   if (title) title.textContent = project.title;
   if (image) {
-    image.src = project.image || "";
+    image.src = resolveImagePath(project.image || "");
     image.alt = project.title;
   }
   if (meta) meta.textContent = `${project.category} · ${project.year} · ${project.status || "build"}`;
@@ -1362,7 +1363,7 @@ export function buildCertificateCard(cert) {
 
   article.innerHTML = `
     <div class="cert-thumb">
-      <img src="${escapeHtml(cert.image)}" alt="${escapeHtml(cert.title)}" loading="lazy" />
+      <img src="${escapeHtml(resolveImagePath(cert.image))}" alt="${escapeHtml(cert.title)}" loading="lazy" />
       <div class="project-badge-row">
         <span class="cert-badge text-gGreen">verified</span>
         <span class="cert-badge text-gBlue">${escapeHtml(cert.issuer)}</span>
@@ -1459,11 +1460,11 @@ export function openCertificateModal(cert) {
   if (notes) notes.textContent = cert.notes;
   if (link) link.href = cert.link || "#";
   if (image) {
-    image.src = cert.image || "";
+    image.src = resolveImagePath(cert.image || "");
     image.alt = cert.title;
   }
 
-  setLightboxItems([{ title: cert.title, src: cert.image, alt: cert.title }]);
+  setLightboxItems([{ title: cert.title, src: resolveImagePath(cert.image), alt: cert.title }]);
   const openFullView = () => openLightbox(0);
   if (imageButton) imageButton.onclick = openFullView;
   if (fullViewButton) fullViewButton.onclick = openFullView;
@@ -1610,7 +1611,7 @@ export function openGalleryModal(item) {
   const copyButton = $("#btnCopyGalleryItem");
 
   if (title) title.textContent = item.title;
-  if (image) { image.src = item.image; image.alt = item.title; }
+  if (image) { image.src = resolveImagePath(item.image); image.alt = item.title; }
   if (meta) meta.textContent = `Category: ${item.category}${item.featured ? " · Featured" : ""}`;
   if (description) description.textContent = item.description;
 
@@ -2052,10 +2053,6 @@ export function setupEventHandlers() {
     if (!$("#lightbox")?.classList.contains("hidden")) {
       if (event.key === "ArrowLeft") nextLightboxImage(-1);
       if (event.key === "ArrowRight") nextLightboxImage(1);
-    }
-  });
-}
-
     }
   });
 }
