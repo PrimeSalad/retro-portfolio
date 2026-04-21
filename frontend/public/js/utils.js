@@ -73,6 +73,14 @@ export function safeJsonParse(value, fallback) {
   }
 }
 
+export function resolveImagePath(path) {
+  if (!path) return "";
+  if (path.startsWith("http") || path.startsWith("data:") || path.startsWith("/")) {
+    return path;
+  }
+  return "/" + path;
+}
+
 export function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")

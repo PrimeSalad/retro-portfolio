@@ -5,7 +5,7 @@
 
 import {
   $, $$,
-  clamp, shuffle, safeJsonParse, escapeHtml,
+  clamp, shuffle, safeJsonParse, escapeHtml, resolveImagePath,
   withSafeStorageRead, withSafeStorageWrite,
   toast, scrollToEl, openFlexModal, closeFlexModal,
   copyToClipboard, ensureSiblingMount,
@@ -1054,7 +1054,7 @@ export function buildProjectCard(project) {
     ? `<div class="project-iframe-wrapper">
          <iframe src="${escapeHtml(project.preview)}" class="project-preview-iframe" loading="lazy" title="${escapeHtml(project.title)} live preview"></iframe>
        </div>`
-    : `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" loading="lazy" />`;
+    : `<img src="${escapeHtml(resolveImagePath(project.image))}" alt="${escapeHtml(project.title)}" loading="lazy" />`;
 
   article.innerHTML = `
     <div class="project-thumb">
@@ -2052,6 +2052,10 @@ export function setupEventHandlers() {
     if (!$("#lightbox")?.classList.contains("hidden")) {
       if (event.key === "ArrowLeft") nextLightboxImage(-1);
       if (event.key === "ArrowRight") nextLightboxImage(1);
+    }
+  });
+}
+
     }
   });
 }
