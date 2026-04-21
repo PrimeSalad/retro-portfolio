@@ -1308,7 +1308,10 @@ export function openProjectModal(project) {
     };
   }
 
-  openFlexModal("#projectModal");
+  // Tiny delay to ensure browser handled DOM updates before showing large modal
+  setTimeout(() => {
+    openFlexModal("#projectModal");
+  }, 20);
 }
 
 export function closeProjectModal() {
