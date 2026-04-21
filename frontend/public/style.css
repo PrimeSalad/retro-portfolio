@@ -442,7 +442,7 @@ body[data-theme="dark"] .bg-noise {
 
 @media (min-width: 1024px) {
   .modal-backdrop {
-    /* disabled-blur: blur */8px);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -621,7 +621,7 @@ body[data-theme="dark"] .bg-noise {
 
 @media (min-width: 1024px) {
   .video-play-core {
-    /* disabled-blur: blur */10px);
+    backdrop-filter: blur(10px);
   }
 }
 
@@ -912,7 +912,7 @@ body[data-theme="dark"] .cert-thumb::after {
   .project-badge,
   .cert-badge,
   .card-chip {
-    /* disabled-blur: blur */6px);
+    backdrop-filter: blur(6px);
   }
 }
 
