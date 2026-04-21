@@ -173,20 +173,18 @@ textarea {
   align-items: center;
   justify-content: center;
   padding: 0 !important;
-  width: 64px !important;
-  height: 36px !important;
-  border-radius: 99px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer;
+  outline: none;
+  width: 54px !important;
+  height: 32px !important;
 }
 
 @media (max-width: 639px) {
   .theme-toggle {
-    width: 60px !important;
-    height: 32px !important;
-  }
-  
-  /* Disable heavy animations on mobile to prevent crashes */
-  .scanlines, .scanbeam, .bg-noise {
-    display: none !important;
+    width: 48px !important;
+    height: 28px !important;
   }
 }
 
@@ -195,28 +193,33 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 52px;
-  height: 26px;
+  width: 100%;
+  height: 100%;
   background: rgb(var(--bg-soft));
   border: 1px solid rgb(var(--border-dim));
   border-radius: 99px;
   padding: 0 6px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (max-width: 639px) {
-  .theme-switch-track {
-    width: 48px;
-    height: 24px;
-    padding: 0 4px;
-  }
+.theme-toggle:hover .theme-switch-track {
+  border-color: rgb(var(--g-blue) / 0.5);
+  background: rgb(var(--bg-panel));
 }
 
 .theme-icon {
   width: 12px;
   height: 12px;
   z-index: 1;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+@media (max-width: 639px) {
+  .theme-icon {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 .sun-icon {
@@ -227,53 +230,75 @@ textarea {
   color: #a5b4fc;
 }
 
-/* Light mode icons */
-body[data-theme="light"] .sun-icon {
-  opacity: 1;
-}
-body[data-theme="light"] .moon-icon {
-  opacity: 0.3;
-}
-
-/* Dark mode icons */
-body[data-theme="dark"] .sun-icon {
-  opacity: 0.3;
-}
-body[data-theme="dark"] .moon-icon {
-  opacity: 1;
-}
+/* Icons opacity logic */
+body[data-theme="light"] .sun-icon { opacity: 0.2; }
+body[data-theme="light"] .moon-icon { opacity: 1; }
+body[data-theme="dark"] .sun-icon { opacity: 1; }
+body[data-theme="dark"] .moon-icon { opacity: 0.2; }
 
 .theme-switch-knob {
   position: absolute;
   left: 4px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   background: white;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 639px) {
   .theme-switch-knob {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     left: 3px;
   }
 }
 
 body[data-theme="dark"] .theme-switch-knob {
-  left: 28px;
-  background: rgb(var(--g-blue));
+  left: calc(100% - 28px);
+  background: rgb(var(--bg-dark));
+  border: 1px solid rgb(var(--g-blue) / 0.3);
+  box-shadow: 0 0 12px rgb(var(--g-blue) / 0.2);
 }
 
 @media (max-width: 639px) {
   body[data-theme="dark"] .theme-switch-knob {
-    left: 27px;
+    left: calc(100% - 23px);
   }
+}
+
+/* Knob active state icons */
+.theme-switch-knob::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 639px) {
+  .theme-switch-knob::after {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+body[data-theme="light"] .theme-switch-knob::after {
+  /* Sun icon when in light mode (knob is on the left) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffb800' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E");
+}
+
+body[data-theme="dark"] .theme-switch-knob::after {
+  /* Moon icon when in dark mode (knob is on the right) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a5b4fc'%3E%3Cpath d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 #btnRun,
