@@ -237,8 +237,8 @@ export const PORTFOLIO_DATA = {
       "impact": "Streamlines inventory tracking and management for motorcycle parts businesses.",
       "outcome": "Businesses can efficiently manage stock levels, track sales, and optimize inventory operations.",
       "description": "MotoMart IMS is a comprehensive inventory management system designed for motorcycle parts retailers, providing real-time stock tracking, sales management, and inventory analytics to help businesses operate more efficiently.",
-      "image": "/images/projects/plastech.jpg",
-      "preview": "https://motomart-ims.vercel.app",
+      "image": "/images/projects/ims.jpg",
+      "preview": "#",
       "tech": [
         "React",
         "JavaScript",
