@@ -1075,14 +1075,10 @@ export function buildProjectCard(project) {
           </div>
         </div>
       </div>
-      <!-- Hidden click surface to ensure whole card is clickable even with iframe -->
-      <div class="absolute inset-0 z-[60] cursor-pointer"></div>
     </div>
   `;
 
-  article.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  article.addEventListener("click", () => {
     openProjectModal(project);
   });
 
@@ -1260,7 +1256,6 @@ export function openProjectModal(project) {
   const highlightRoot = $("#projectModalHighlights");
   const repo = $("#projectModalRepo");
   const demo = $("#projectModalDemo");
-  const copyButton = $("#btnCopyProject");
 
   if (title) title.textContent = project.title;
   if (image) {
@@ -1299,6 +1294,7 @@ export function openProjectModal(project) {
     demo.classList.toggle("hidden", demoUrl === "#");
   }
 
+  const copyButton = $("#btnCopyProject");
   if (copyButton) {
     copyButton.onclick = () => {
       const summary = [

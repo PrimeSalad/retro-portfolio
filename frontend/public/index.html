@@ -1212,57 +1212,34 @@
                     </button>
                 </div>
 
-                <div class="max-h-[85vh] overflow-y-auto">
-                    <div class="project-modal-visual border-b border-borderDim">
-                        <img id="projectModalImg" src="" alt="" class="project-modal-image" />
-                        <div class="project-modal-overlay">
-                            <div id="projectModalMeta" class="text-xs font-bold uppercase tracking-widest text-gBlue"></div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-6">
-                                <div>
-                                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 opacity-60">Summary</div>
-                                    <div id="projectModalDesc" class="text-sm leading-relaxed text-gray-300"></div>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 opacity-60">Role</div>
-                                    <div id="projectModalRole" class="text-sm font-bold text-white"></div>
-                                </div>
-                            </div>
-                            <div class="space-y-6">
-                                <div>
-                                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 opacity-60">Impact</div>
-                                    <div id="projectModalImpact" class="text-sm italic text-gray-400"></div>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 opacity-60">Technologies</div>
-                                    <div id="projectModalTech" class="flex flex-wrap gap-2"></div>
-                                </div>
-                            </div>
+                <div class="max-h-[80vh] overflow-y-auto p-6">
+                    <div class="space-y-5">
+                        <!-- Project Summary -->
+                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Project
+                                summary</div>
+                            <div id="projectModalDesc" class="text-sm leading-relaxed text-gray-300"></div>
                         </div>
 
-                        <div>
-                            <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3 opacity-60">Key Highlights</div>
-                            <ul id="projectModalHighlights" class="space-y-2 text-sm text-gray-300 list-none"></ul>
+                        <!-- Role -->
+                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Role</div>
+                            <div id="projectModalRole" class="text-sm leading-relaxed text-white"></div>
                         </div>
 
-                        <div class="pt-4 flex flex-wrap gap-3">
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-3 pt-2">
                             <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
-                                class="f-ring flex-1 min-w-[140px] text-center rounded-xl bg-gBlue px-5 py-3 text-sm font-bold text-white shadow-glow transition-all hover:scale-[1.02]">
+                                class="f-ring flex-1 min-w-[120px] text-center rounded-xl bg-gBlue px-5 py-3 text-sm font-bold text-white shadow-glow transition-all hover:scale-[1.02] hidden">
                                 Live Demo
                             </a>
                             <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
-                                class="f-ring flex-1 min-w-[140px] text-center rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-bold text-gray-200 transition-all hover:bg-opacity-80">
+                                class="f-ring flex-1 min-w-[120px] text-center rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:bg-opacity-80">
                                 GitHub
                             </a>
                             <button id="btnCopyProject" type="button"
-                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-400 transition-all hover:bg-opacity-80">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                                </svg>
+                                class="f-ring flex-1 min-w-[140px] rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:bg-opacity-80">
+                                Copy summary
                             </button>
                         </div>
                     </div>
