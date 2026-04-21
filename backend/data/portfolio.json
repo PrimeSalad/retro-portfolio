@@ -222,6 +222,32 @@
         "Focused on providing reliable and helpful pet care information."
       ],
       "status": "live"
+    },
+    {
+      "id": "p6",
+      "title": "MotoMart IMS",
+      "year": 2026,
+      "category": "Inventory Management System",
+      "role": "Developer",
+      "impact": "Streamlines inventory tracking and management for motorcycle parts businesses.",
+      "outcome": "Businesses can efficiently manage stock levels, track sales, and optimize inventory operations.",
+      "description": "MotoMart IMS is a comprehensive inventory management system designed for motorcycle parts retailers, providing real-time stock tracking, sales management, and inventory analytics to help businesses operate more efficiently.",
+      "image": "/images/projects/plastech.jpg",
+      "preview": "https://motomart-ims.vercel.app/login",
+      "tech": [
+        "React",
+        "JavaScript",
+        "Tailwind"
+      ],
+      "demo": "https://motomart-ims.vercel.app/login",
+      "repo": "https://github.com",
+      "score": 88,
+      "highlights": [
+        "Built comprehensive inventory tracking system for motorcycle parts.",
+        "Designed intuitive dashboard for real-time stock monitoring.",
+        "Focused on streamlining business operations and inventory workflows."
+      ],
+      "status": "live"
     }
   ],
   "timeline": [
