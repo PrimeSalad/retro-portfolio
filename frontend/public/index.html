@@ -1203,8 +1203,8 @@
             aria-modal="true" aria-label="Project details">
             <div class="modal-backdrop absolute inset-0" data-close="true"></div>
             <div
-                class="relative w-[92vw] max-w-3xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex items-center justify-between border-b border-borderDim px-5 py-4">
+                class="relative flex flex-col w-[92vw] max-w-3xl max-h-[92vh] animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
+                <div class="flex shrink-0 items-center justify-between border-b border-borderDim px-5 py-4">
                     <div id="projectModalTitle" class="text-lg font-bold text-white">Project</div>
                     <button id="btnCloseProjectModal" type="button"
                         class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
@@ -1212,8 +1212,14 @@
                     </button>
                 </div>
 
-                <div class="max-h-[80vh] overflow-y-auto p-6">
+                <div class="flex-1 min-h-0 overflow-y-auto p-6">
                     <div class="space-y-5">
+                        <div class="overflow-hidden rounded-xl border border-borderDim bg-bgDark">
+                            <img id="projectModalImg" src="" alt="" class="max-h-[45vh] w-full object-cover" />
+                        </div>
+
+                        <div id="projectModalMeta" class="text-xs text-gray-500"></div>
+
                         <!-- Project Summary -->
                         <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
                             <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Project
@@ -1225,6 +1231,30 @@
                         <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
                             <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Role</div>
                             <div id="projectModalRole" class="text-sm leading-relaxed text-white"></div>
+                        </div>
+
+                        <!-- Impact & Outcome -->
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                                <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Impact</div>
+                                <div id="projectModalImpact" class="text-sm leading-relaxed text-gray-300"></div>
+                            </div>
+                            <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                                <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Outcome</div>
+                                <div id="projectModalOutcome" class="text-sm leading-relaxed text-gray-300"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tech Stack -->
+                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Tech Stack</div>
+                            <div id="projectModalTech" class="flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <!-- Highlights -->
+                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Highlights</div>
+                            <ul id="projectModalHighlights" class="list-none space-y-1 text-sm text-gray-300"></ul>
                         </div>
 
                         <!-- Action Buttons -->
