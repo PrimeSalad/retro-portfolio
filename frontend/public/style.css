@@ -1068,42 +1068,42 @@ body[data-theme="dark"] .bg-noise {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  padding: 0.6rem 0.7rem 0.6rem;
+  padding: 1.25rem;
 }
 
 .project-card-title {
   color: rgb(var(--text-main));
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .project-card-subtitle {
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
   color: rgb(var(--text-muted));
-  font-size: 0.65rem;
+  font-size: 0.75rem;
 }
 
 .project-card-desc {
-  margin-top: 0.4rem;
+  margin-top: 0.75rem;
   color: rgb(var(--text-soft));
-  font-size: 0.72rem;
-  line-height: 1.45;
-  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .card-chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
+  gap: 0.4rem;
+  margin-top: auto;
 }
 
 .card-action-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .card-action,
@@ -1111,30 +1111,29 @@ body[data-theme="dark"] .bg-noise {
   flex: 1 1 0;
   min-width: 0;
   text-align: center;
-  border-radius: 0.6rem;
+  border-radius: 0.75rem;
   border: 1px solid rgb(var(--border-dim));
-  padding: 0.35rem 0.55rem;
-  font-size: 0.65rem;
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 200ms ease;
 }
 
 .card-action {
   background: rgb(var(--surface-button));
-  color: #fff;
+  color: #ffffff !important;
+  border-color: rgb(var(--surface-button));
 }
 
 .card-link {
   background: rgb(var(--bg-soft));
-  color: rgb(var(--text-soft));
+  color: rgb(var(--text-soft)) !important;
 }
 
 .card-action:hover,
 .card-link:hover {
   transform: translateY(-1px);
-  border-color: rgb(var(--g-blue) / 0.42);
+  filter: brightness(1.05);
 }
 
 /* Project Index: extra-compact card body when in main grid */
@@ -1596,6 +1595,45 @@ body[data-theme="dark"] .bg-noise {
   #imageGrid .image-card {
     height: 140px !important;
   }
+}
+
+/* UI Notes and Pills */
+.preview-note-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid rgb(var(--border-dim));
+  background: rgb(var(--bg-soft));
+  color: rgb(var(--text-muted));
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.preview-note-pill.text-gBlue { color: rgb(var(--g-blue)) !important; }
+.preview-note-pill.text-gGreen { color: #10b981 !important; }
+.preview-note-pill.text-gYellow { color: #f59e0b !important; }
+
+.uniform-gallery-note {
+  color: rgb(var(--text-faint));
+  font-size: 12px;
+}
+
+.preview-note {
+  color: rgb(var(--text-muted));
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.bg-bgDark {
+  background: rgb(var(--bg-dark)) !important;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Dynamic Styles & Animations */
