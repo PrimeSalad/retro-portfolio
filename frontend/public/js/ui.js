@@ -1047,8 +1047,9 @@ export function buildProjectCard(project) {
   article.setAttribute("role", "button");
   article.setAttribute("tabindex", "0");
 
-  // Check if project has live preview URL
-  const hasLivePreview = project.preview && project.preview !== "#" && project.preview.startsWith("http");
+  // Disable iframe previews on mobile to prevent crashes
+  const isMobile = window.innerWidth < 768;
+  const hasLivePreview = !isMobile && project.preview && project.preview !== "#" && project.preview.startsWith("http");
   
   const thumbnailContent = hasLivePreview 
     ? `<div class="project-iframe-wrapper">
