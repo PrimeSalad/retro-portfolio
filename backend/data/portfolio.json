@@ -763,6 +763,13 @@
       "description": "Cybersecurity learning experience and industry engagement event.",
       "image": "/images/gallery/kaspersky.jpg",
       "category": "event"
+    },
+    {
+      "title": "MarSU Logo Recognition",
+      "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
+      "image": "/images/events/award 2.jpg",
+      "category": "achievement",
+      "featured": true
     }
   ]
 }

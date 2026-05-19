@@ -1548,6 +1548,29 @@ body[data-theme="dark"] .bg-noise {
   }
 }
 
+/* Minimalist Mobile Projects */
+@media (max-width: 639px) {
+  #projectsGrid .project-card {
+    height: auto !important;
+    min-height: 180px;
+    border-radius: 1rem;
+    background: rgb(var(--bg-panel));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-mobile-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    height: 100%;
+  }
+
+  #projectsGrid .project-thumb {
+    height: auto !important;
+    background: transparent !important;
+  }
+}
+
 @media (max-width: 639px) {
   .kp-mini-grid {
     grid-template-columns: 1fr;

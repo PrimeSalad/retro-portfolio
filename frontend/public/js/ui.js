@@ -1047,31 +1047,34 @@ export function buildProjectCard(project) {
   article.setAttribute("role", "button");
   article.setAttribute("tabindex", "0");
 
-  // Mobile: show text only. Desktop: show preview iframe if available
   const isMobile = window.innerWidth < 768;
-  const hasLivePreview = !isMobile && project.preview && project.preview !== "#" && project.preview.startsWith("http");
-  
-  const thumbnailContent = hasLivePreview 
-    ? `<div class="project-iframe-wrapper">
-         <iframe src="${escapeHtml(project.preview)}" class="project-preview-iframe" loading="lazy" title="${escapeHtml(project.title)} live preview"></iframe>
-       </div>`
-    : isMobile
-    ? "" // Mobile: no image, just text
-    : `<img src="${escapeHtml(resolveImagePath(project.image))}" alt="${escapeHtml(project.title)}" loading="lazy" />`;
 
-  article.innerHTML = `
-    <div class="project-thumb">
-      ${thumbnailContent}
-      ${isMobile ? `
-        <div class="project-text-card">
-          <div class="project-badge-row">
-            <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
-          </div>
-          <div class="text-lg font-bold text-white mt-3">${escapeHtml(project.title)}</div>
-          <div class="text-xs text-gray-400 mt-2 line-clamp-2">${escapeHtml(project.description || "")}</div>
-          <div class="flex flex-wrap gap-1.5 mt-3">${techHtml}</div>
+  if (isMobile) {
+    article.innerHTML = `
+      <div class="project-mobile-card">
+        <div class="flex justify-between items-center mb-3">
+          <span class="project-badge text-gBlue text-[10px] px-2 py-0.5">${escapeHtml(project.category)}</span>
+          <span class="text-[10px] text-gray-500 font-bold">${project.year}</span>
         </div>
-      ` : `
+        <h3 class="text-base font-bold text-white mb-2 leading-tight">${escapeHtml(project.title)}</h3>
+        <p class="text-xs text-gray-400 line-clamp-3 mb-4 leading-relaxed">${escapeHtml(project.description || "")}</p>
+        <div class="flex flex-wrap gap-1.5 mt-auto">
+          ${(project.tech || []).slice(0, 3).map(t => `<span class="card-chip text-[9px] px-2 py-0.5">${escapeHtml(t)}</span>`).join("")}
+        </div>
+      </div>
+    `;
+  } else {
+    const hasLivePreview = project.preview && project.preview !== "#" && project.preview.startsWith("http");
+    
+    const thumbnailContent = hasLivePreview 
+      ? `<div class="project-iframe-wrapper">
+           <iframe src="${escapeHtml(project.preview)}" class="project-preview-iframe" loading="lazy" title="${escapeHtml(project.title)} live preview"></iframe>
+         </div>`
+      : `<img src="${escapeHtml(resolveImagePath(project.image))}" alt="${escapeHtml(project.title)}" loading="lazy" />`;
+
+    article.innerHTML = `
+      <div class="project-thumb">
+        ${thumbnailContent}
         <div class="project-badge-row">
           <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
         </div>
@@ -1088,9 +1091,9 @@ export function buildProjectCard(project) {
             </div>
           </div>
         </div>
-      `}
-    </div>
-  `;
+      </div>
+    `;
+  }
 
   article.addEventListener("click", () => {
     openProjectModal(project);

@@ -40,6 +40,12 @@ export const PORTFOLIO_DATA = {
       "src": "/images/events/infocus.jpg",
       "alt": "recognition event with team members on stage",
       "tag": "recognition"
+    },
+    {
+      "title": "MarSU Logo Recognition",
+      "src": "/images/events/award 2.jpg",
+      "alt": "MarSU Logo Recognition Event",
+      "tag": "recognition"
     }
   ],
   "videos": [
