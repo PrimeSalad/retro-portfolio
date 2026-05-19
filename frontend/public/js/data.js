@@ -45,6 +45,16 @@ export const PORTFOLIO_DATA = {
   ],
   "videos": [
     {
+      "title": "PawPrint AI Beta Preview",
+      "description": "PawPrint Beta helps you discover your dog's story — one photo at a time.",
+      "thumbnail": "/images/projects/plastech.jpg",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/1HAE47UCY1/"
+    },
+    {
       "title": "CertifiCat — Free Certificate Generator",
       "description": "A free, browser-based certificate generator built for organizations and educators. Features drag-and-drop design, bulk generation, and custom templates.",
       "thumbnail": "/images/projects/ims.jpg",
@@ -117,6 +127,32 @@ export const PORTFOLIO_DATA = {
   ],
   "projects": [
     {
+      "id": "p8",
+      "title": "MORI — Smart Action Engine",
+      "year": 2026,
+      "category": "AI Browser Extension",
+      "role": "Developer",
+      "impact": "Transforms online concerns into verified and actionable reports.",
+      "outcome": "Users can scan issues, verify information, and report directly to the right authority.",
+      "description": "An AI-powered browser extension that transforms online concerns into verified and actionable reports. From transport violations and public safety concerns to emergencies and scams, MORI helps users turn awareness into action.",
+      "image": "https://img.youtube.com/vi/WwPxjMTNU0Q/maxresdefault.jpg",
+      "preview": "https://mori-smart-action-engine.vercel.app/",
+      "tech": [
+        "React",
+        "AI",
+        "Extension API"
+      ],
+      "demo": "https://mori-smart-action-engine.vercel.app/",
+      "repo": "https://github.com/Privacy-Matters/Mori-Smart-Action-Engine-Extension",
+      "score": 96,
+      "highlights": [
+        "Scan issues and verify information powered by AI.",
+        "Report transport violations, public safety concerns, emergencies, and scams.",
+        "Helps users seamlessly report to the right authority, combating online inaction."
+      ],
+      "status": "live"
+    },
+    {
       "id": "p7",
       "title": "CertifiCat",
       "year": 2026,
@@ -125,7 +161,7 @@ export const PORTFOLIO_DATA = {
       "impact": "Empowers organizations and educators to generate professional certificates fast and free.",
       "outcome": "Users can drag-and-drop designs and bulk generate hundreds of certificates entirely in the browser.",
       "description": "CertifiCat is a free, browser-based certificate generator that features a drag-and-drop designer, bulk generation capabilities, and high-quality PDF/PNG exports without sign-ups or watermarks.",
-      "image": "/images/projects/ims.jpg",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230f172a' /%3E%3Cstop offset='100%25' stop-color='%233b82f6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23g)' /%3E%3Ctext x='400' y='210' font-family='Arial, sans-serif' font-size='72' font-weight='bold' fill='%23ffffff' text-anchor='middle' dominant-baseline='middle'%3ECertifiCat%3C/text%3E%3Ctext x='400' y='270' font-family='Arial, sans-serif' font-size='24' fill='%2394a3b8' text-anchor='middle' dominant-baseline='middle'%3EFree Certificate Generator%3C/text%3E%3C/svg%3E",
       "preview": "https://certificat-smoky.vercel.app/",
       "tech": [
         "React",
