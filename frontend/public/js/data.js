@@ -45,24 +45,6 @@ export const PORTFOLIO_DATA = {
   ],
   "videos": [
     {
-      "title": "PawPrint AI Beta Preview",
-      "description": "PawPrint Beta helps you discover your dog's story — one photo at a time.",
-      "tag": "product",
-      "duration": "Demo",
-      "platform": "Facebook Video",
-      "role": "Developer",
-      "link": "https://www.facebook.com/share/v/1HAE47UCY1/"
-    },
-    {
-      "title": "CertifiCat — Free Certificate Generator",
-      "description": "A free, browser-based certificate generator built for organizations and educators. Features drag-and-drop design, bulk generation, and custom templates.",
-      "tag": "product",
-      "duration": "Demo",
-      "platform": "Facebook Video",
-      "role": "Developer",
-      "link": "https://www.facebook.com/share/v/1CdRT2mrob/"
-    },
-    {
       "title": "MORI - Smart Action Engine",
       "description": "Mori is a Chrome extension that uses AI to bridge social media awareness and real-world civic action. It helps users identify, verify, and report community issues.",
       "thumbnail": "https://img.youtube.com/vi/WwPxjMTNU0Q/maxresdefault.jpg",
@@ -119,6 +101,24 @@ export const PORTFOLIO_DATA = {
       "platform": "Video",
       "role": "Video Editor",
       "link": "https://youtu.be/k6GOHz0osOY"
+    },
+    {
+      "title": "PawPrint AI Beta Preview",
+      "description": "PawPrint Beta helps you discover your dog's story — one photo at a time.",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/1HAE47UCY1/"
+    },
+    {
+      "title": "CertifiCat — Free Certificate Generator",
+      "description": "CertifiCat lets you design and bulk-generate professional certificates — free, in the browser.",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/1CdRT2mrob/"
     }
   ],
   "projects": [
