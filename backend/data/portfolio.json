@@ -35,6 +35,12 @@
       "src": "/images/events/infocus.jpg",
       "alt": "recognition event with team members on stage",
       "tag": "recognition"
+    },
+    {
+      "title": "MarSU Logo Recognition",
+      "src": "/images/events/award2.jpg",
+      "alt": "MarSU Logo Recognition Event",
+      "tag": "recognition"
     }
   ],
   "videos": [
@@ -767,7 +773,7 @@
     {
       "title": "MarSU Logo Recognition",
       "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
-      "image": "/images/events/award 2.jpg",
+      "image": "/images/events/award2.jpg",
       "category": "achievement",
       "featured": true
     }
