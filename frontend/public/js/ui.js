@@ -707,7 +707,7 @@ export function getVideoThumbnail(video) {
     return `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
   }
 
-  return video.thumbnail || "/images/events/cics.jpg";
+  return video.thumbnail || null;
 }
 
 export function getPlayableVideos() {

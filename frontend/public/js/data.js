@@ -56,7 +56,6 @@ export const PORTFOLIO_DATA = {
     {
       "title": "CertifiCat — Free Certificate Generator",
       "description": "A free, browser-based certificate generator built for organizations and educators. Features drag-and-drop design, bulk generation, and custom templates.",
-      "thumbnail": "/images/projects/ims.jpg",
       "tag": "product",
       "duration": "Demo",
       "platform": "Facebook Video",
@@ -158,7 +157,6 @@ export const PORTFOLIO_DATA = {
       "impact": "Empowers organizations and educators to generate professional certificates fast and free.",
       "outcome": "Users can drag-and-drop designs and bulk generate hundreds of certificates entirely in the browser.",
       "description": "CertifiCat is a free, browser-based certificate generator that features a drag-and-drop designer, bulk generation capabilities, and high-quality PDF/PNG exports without sign-ups or watermarks.",
-      "image": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230f172a' /%3E%3Cstop offset='100%25' stop-color='%233b82f6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23g)' /%3E%3Ctext x='400' y='210' font-family='Arial, sans-serif' font-size='72' font-weight='bold' fill='%23ffffff' text-anchor='middle' dominant-baseline='middle'%3ECertifiCat%3C/text%3E%3Ctext x='400' y='270' font-family='Arial, sans-serif' font-size='24' fill='%2394a3b8' text-anchor='middle' dominant-baseline='middle'%3EFree Certificate Generator%3C/text%3E%3C/svg%3E",
       "preview": "https://certificat-smoky.vercel.app/",
       "tech": [
         "React",
@@ -290,7 +288,6 @@ export const PORTFOLIO_DATA = {
       "impact": "Provides intelligent pet care guidance and support for pet owners.",
       "outcome": "Pet owners can access AI-powered advice for better pet care decisions.",
       "description": "PawPrint AI is an intelligent pet care assistant that helps pet owners make informed decisions about their pets' health, nutrition, and well-being through AI-powered conversations and personalized recommendations.",
-      "image": "/images/projects/plastech.jpg",
       "preview": "https://pawprint-ai-beta.vercel.app/",
       "tech": [
         "React",

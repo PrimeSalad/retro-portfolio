@@ -157,7 +157,6 @@
       "impact": "Empowers organizations and educators to generate professional certificates fast and free.",
       "outcome": "Users can drag-and-drop designs and bulk generate hundreds of certificates entirely in the browser.",
       "description": "CertifiCat is a free, browser-based certificate generator that features a drag-and-drop designer, bulk generation capabilities, and high-quality PDF/PNG exports without sign-ups or watermarks.",
-      "image": "/images/projects/ims.jpg",
       "preview": "https://certificat-smoky.vercel.app/",
       "tech": [
         "React",
@@ -289,7 +288,6 @@
       "impact": "Provides intelligent pet care guidance and support for pet owners.",
       "outcome": "Pet owners can access AI-powered advice for better pet care decisions.",
       "description": "PawPrint AI is an intelligent pet care assistant that helps pet owners make informed decisions about their pets' health, nutrition, and well-being through AI-powered conversations and personalized recommendations.",
-      "image": "/images/projects/plastech.jpg",
       "preview": "https://pawprint-ai-beta.vercel.app/",
       "tech": [
         "React",
@@ -838,44 +836,6 @@
     },
     {
       "title": "Hack for Gov 4",
-      "description": "Fourth edition of the government-focused hackathon series.",
-      "image": "/images/gallery/hackforgov4.jpg",
-      "category": "hackathon"
-    },
-    {
-      "title": "Kaspersky Event",
-      "description": "Cybersecurity learning experience and industry engagement event.",
-      "image": "/images/gallery/kaspersky.jpg",
-      "category": "event"
-    },
-    {
-      "title": "MarSU Logo Recognition",
-      "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
-      "image": "/images/events/award2.jpg",
-      "category": "achievement",
-      "featured": true
-    }
-  ]
-}   "title": "Hack for Gov 4",
-      "description": "Fourth edition of the government-focused hackathon series.",
-      "image": "/images/gallery/hackforgov4.jpg",
-      "category": "hackathon"
-    },
-    {
-      "title": "Kaspersky Event",
-      "description": "Cybersecurity learning experience and industry engagement event.",
-      "image": "/images/gallery/kaspersky.jpg",
-      "category": "event"
-    },
-    {
-      "title": "MarSU Logo Recognition",
-      "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
-      "image": "/images/events/award2.jpg",
-      "category": "achievement",
-      "featured": true
-    }
-  ]
-}itle": "Hack for Gov 4",
       "description": "Fourth edition of the government-focused hackathon series.",
       "image": "/images/gallery/hackforgov4.jpg",
       "category": "hackathon"
