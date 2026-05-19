@@ -76,7 +76,6 @@ export const PORTFOLIO_DATA = {
     {
       "title": "MarSU Presidential Report AVP | Prof. Dr. Diosdado P. Zulueta, DPA",
       "description": "Audio-visual presentation highlighting the MarSU presidential report with a more formal, institution-facing presentation style and polished pacing.",
-      "thumbnail": "/images/events/base.jpg",
       "tag": "avp",
       "duration": "AVP",
       "platform": "Video",
@@ -86,7 +85,6 @@ export const PORTFOLIO_DATA = {
     {
       "title": "CICS Promotional Video",
       "description": "Promotional edit presenting CICS through a cleaner institutional tone, polished cuts, and a stronger school-facing presentation flow.",
-      "thumbnail": "/images/events/cics.jpg",
       "tag": "promo",
       "duration": "Promo",
       "platform": "Video",
@@ -863,6 +861,11 @@ export const PORTFOLIO_DATA = {
       "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
       "image": "/images/events/award2.jpg",
       "category": "achievement",
+      "featured": true
+    }
+  ]
+};
+nt",
       "featured": true
     }
   ]

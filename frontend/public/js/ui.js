@@ -838,26 +838,27 @@ export function renderVideos() {
     visibleItems = pageData.items;
   }
 
-  if (!DATA.VIDEOS.length) {
+  if (!allVideos.length) {
     renderEmptyState(grid, "No videos added yet.");
     renderVideoPagination(0);
     return;
   }
 
-  const hasAnyPlayableWithThumb = visibleItems.some((video) => video.embedUrl && video.resolvedThumbnail);
+  // Find the first video that HAS a thumbnail to be the default highlight
+  const firstWithThumb = visibleItems.findIndex(v => v.resolvedThumbnail && v.embedUrl);
   
-  if (!hasAnyPlayableWithThumb) {
-    STATE.activeVideoIndex = -1; // No highlight if no good thumb+embed combo
-  } else {
-    // If current index is invalid or points to a non-thumb video, find the first good one
-    const currentVideo = visibleItems[STATE.activeVideoIndex];
-    if (!currentVideo || !currentVideo.embedUrl || !currentVideo.resolvedThumbnail) {
-      STATE.activeVideoIndex = visibleItems.findIndex(v => v.embedUrl && v.resolvedThumbnail);
+  if (firstWithThumb !== -1) {
+    // Only set an active index if we actually have something high-quality to show
+    if (STATE.activeVideoIndex === -1 || !visibleItems[STATE.activeVideoIndex]?.resolvedThumbnail) {
+      STATE.activeVideoIndex = firstWithThumb;
     }
+  } else {
+    STATE.activeVideoIndex = -1; // No video gets the highlight/expand treatment
   }
 
   visibleItems.forEach((video, index) => {
-    const isActive = index === STATE.activeVideoIndex && Boolean(video.embedUrl) && Boolean(video.resolvedThumbnail);
+    // A video is only "active" (highlighted/expanded) if it has a thumbnail AND an embed
+    const isActive = index === STATE.activeVideoIndex && Boolean(video.resolvedThumbnail) && Boolean(video.embedUrl);
     grid.appendChild(buildVideoCard(video, index, isActive));
   });
 
