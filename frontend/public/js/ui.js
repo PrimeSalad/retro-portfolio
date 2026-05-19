@@ -1047,7 +1047,7 @@ export function buildProjectCard(project) {
   article.setAttribute("role", "button");
   article.setAttribute("tabindex", "0");
 
-  // Disable iframe previews on mobile to prevent crashes
+  // Mobile: show text only. Desktop: show preview iframe if available
   const isMobile = window.innerWidth < 768;
   const hasLivePreview = !isMobile && project.preview && project.preview !== "#" && project.preview.startsWith("http");
   
@@ -1055,27 +1055,40 @@ export function buildProjectCard(project) {
     ? `<div class="project-iframe-wrapper">
          <iframe src="${escapeHtml(project.preview)}" class="project-preview-iframe" loading="lazy" title="${escapeHtml(project.title)} live preview"></iframe>
        </div>`
+    : isMobile
+    ? "" // Mobile: no image, just text
     : `<img src="${escapeHtml(resolveImagePath(project.image))}" alt="${escapeHtml(project.title)}" loading="lazy" />`;
 
   article.innerHTML = `
     <div class="project-thumb">
       ${thumbnailContent}
-      <div class="project-badge-row">
-        <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
-      </div>
-      
-      <div class="project-hover-overlay">
-        <div class="project-hover-content">
-          <div class="project-hover-minimal">
-            <div class="text-xl font-black text-white mb-4 leading-tight hover-slide-up" style="--slide-delay: 0ms;">${escapeHtml(project.title)}</div>
-            
-            <div class="hover-slide-up" style="--slide-delay: 60ms;">
-              <div class="text-[9px] text-gray-500 uppercase tracking-[0.3em] mb-3 font-black opacity-60">Tech Stack</div>
-              <div class="project-hover-tech">${techHtml}</div>
+      ${isMobile ? `
+        <div class="project-text-card">
+          <div class="project-badge-row">
+            <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
+          </div>
+          <div class="text-lg font-bold text-white mt-3">${escapeHtml(project.title)}</div>
+          <div class="text-xs text-gray-400 mt-2 line-clamp-2">${escapeHtml(project.description || "")}</div>
+          <div class="flex flex-wrap gap-1.5 mt-3">${techHtml}</div>
+        </div>
+      ` : `
+        <div class="project-badge-row">
+          <span class="project-badge text-gBlue">${escapeHtml(project.category)}</span>
+        </div>
+        
+        <div class="project-hover-overlay">
+          <div class="project-hover-content">
+            <div class="project-hover-minimal">
+              <div class="text-xl font-black text-white mb-4 leading-tight hover-slide-up" style="--slide-delay: 0ms;">${escapeHtml(project.title)}</div>
+              
+              <div class="hover-slide-up" style="--slide-delay: 60ms;">
+                <div class="text-[9px] text-gray-500 uppercase tracking-[0.3em] mb-3 font-black opacity-60">Tech Stack</div>
+                <div class="project-hover-tech">${techHtml}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      `}
     </div>
   `;
 

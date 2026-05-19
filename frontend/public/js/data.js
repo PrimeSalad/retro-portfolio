@@ -768,6 +768,13 @@ export const PORTFOLIO_DATA = {
       "description": "Cybersecurity learning experience and industry engagement event.",
       "image": "/images/gallery/kaspersky.jpg",
       "category": "event"
+    },
+    {
+      "title": "Award Recognition",
+      "description": "Achievement and recognition at a competitive event, holding certificate of accomplishment.",
+      "image": "/images/events/award.jpg",
+      "category": "achievement",
+      "featured": true
     }
   ]
 };
