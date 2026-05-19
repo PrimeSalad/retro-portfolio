@@ -57,7 +57,6 @@
     {
       "title": "CertifiCat — Free Certificate Generator",
       "description": "A free, browser-based certificate generator built for organizations and educators. Features drag-and-drop design, bulk generation, and custom templates.",
-      "thumbnail": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230f172a' /%3E%3Cstop offset='100%25' stop-color='%233b82f6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23g)' /%3E%3Ctext x='400' y='210' font-family='Arial, sans-serif' font-size='72' font-weight='bold' fill='%23ffffff' text-anchor='middle' dominant-baseline='middle'%3ECertifiCat%3C/text%3E%3Ctext x='400' y='270' font-family='Arial, sans-serif' font-size='24' fill='%2394a3b8' text-anchor='middle' dominant-baseline='middle'%3EFree Certificate Generator%3C/text%3E%3C/svg%3E",
       "tag": "product",
       "duration": "Demo",
       "platform": "Facebook Video",
@@ -861,6 +860,25 @@
     }
   ]
 }   "title": "Hack for Gov 4",
+      "description": "Fourth edition of the government-focused hackathon series.",
+      "image": "/images/gallery/hackforgov4.jpg",
+      "category": "hackathon"
+    },
+    {
+      "title": "Kaspersky Event",
+      "description": "Cybersecurity learning experience and industry engagement event.",
+      "image": "/images/gallery/kaspersky.jpg",
+      "category": "event"
+    },
+    {
+      "title": "MarSU Logo Recognition",
+      "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
+      "image": "/images/events/award2.jpg",
+      "category": "achievement",
+      "featured": true
+    }
+  ]
+}itle": "Hack for Gov 4",
       "description": "Fourth edition of the government-focused hackathon series.",
       "image": "/images/gallery/hackforgov4.jpg",
       "category": "hackathon"

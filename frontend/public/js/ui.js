@@ -734,7 +734,7 @@ export function buildVideoCard(video, index, isActive) {
   const activeEmbedUrl = hasEmbed ? withAutoplay(video.embedUrl) : "";
 
   button.type = "button";
-  button.className = `video-card js-enhanced-card f-ring rounded-2xl border border-borderDim bg-bgPanel text-left${isActive ? " is-active" : ""}`;
+  button.className = `video-card js-enhanced-card group f-ring rounded-2xl border border-borderDim bg-bgPanel text-left${isActive ? " is-active" : ""}`;
   button.dataset.animate = "true";
   button.setAttribute("aria-pressed", isActive ? "true" : "false");
   button.setAttribute(
@@ -745,9 +745,11 @@ export function buildVideoCard(video, index, isActive) {
         ? `Open video: ${video.title}`
         : `Video unavailable: ${video.title}`
   );
-  button.innerHTML = `
-    ${isActive && hasEmbed
-      ? `
+
+  let thumbnailHtml = "";
+
+  if (isActive && hasEmbed) {
+    thumbnailHtml = `
       <div class="video-thumb video-player-inline">
         <iframe
           class="video-player-frame"
@@ -759,11 +761,12 @@ export function buildVideoCard(video, index, isActive) {
           allowfullscreen
         ></iframe>
       </div>
-      `
-      : `
+    `;
+  } else if (video.resolvedThumbnail) {
+    thumbnailHtml = `
       <div class="video-thumb">
         <img
-          src="${escapeHtml(resolveImagePath(video.resolvedThumbnail || "/images/events/cics.jpg"))}"
+          src="${escapeHtml(resolveImagePath(video.resolvedThumbnail))}"
           alt="${escapeHtml(video.title)}"
           loading="lazy"
           class="video-thumb-img"
@@ -771,13 +774,32 @@ export function buildVideoCard(video, index, isActive) {
         <div class="video-thumb-overlay"></div>
         <div class="video-play-core" aria-hidden="true">&#9654;</div>
       </div>
-      `}
+    `;
+  } else {
+    // Elegant fallback when no thumbnail exists
+    const isFacebook = hasExternalUrl && video.externalUrl.includes('facebook.com');
+    const actionText = isFacebook ? "Watch on Facebook" : "Open Video";
+    
+    thumbnailHtml = `
+      <div class="flex items-center justify-center py-8 border-b border-borderDim bg-bgDark/40">
+        <div class="flex flex-col items-center gap-3 text-gBlue opacity-80 group-hover:opacity-100 transition-opacity">
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-gBlue/10 transition-transform group-hover:scale-110 group-hover:bg-gBlue/20">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-gBlue transition-colors">${actionText}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  button.innerHTML = `
+    ${thumbnailHtml}
     <div class="video-card-body">
       <div class="flex flex-wrap items-center gap-2">
         <span class="rounded-full border border-borderDim bg-bgDark px-2 py-1 text-[11px] uppercase tracking-[0.18em] text-gRed">${escapeHtml(video.tag || "video")}</span>
         <span class="text-xs text-gray-500">${escapeHtml(video.role || "Editor")}</span>
       </div>
-      <h4 class="mt-3 text-base font-bold text-white">${escapeHtml(video.title)}</h4>
+      <h4 class="mt-3 text-base font-bold text-white group-hover:text-gBlue transition-colors">${escapeHtml(video.title)}</h4>
       <p class="mt-2 text-sm leading-relaxed text-gray-400">${escapeHtml(video.description || "")}</p>
     </div>
   `;
@@ -822,15 +844,20 @@ export function renderVideos() {
     return;
   }
 
-  const hasAnyPlayable = visibleItems.some((video) => video.embedUrl);
-  if (!hasAnyPlayable) {
-    STATE.activeVideoIndex = 0;
+  const hasAnyPlayableWithThumb = visibleItems.some((video) => video.embedUrl && video.resolvedThumbnail);
+  
+  if (!hasAnyPlayableWithThumb) {
+    STATE.activeVideoIndex = -1; // No highlight if no good thumb+embed combo
   } else {
-    STATE.activeVideoIndex = clamp(STATE.activeVideoIndex, 0, visibleItems.length - 1);
+    // If current index is invalid or points to a non-thumb video, find the first good one
+    const currentVideo = visibleItems[STATE.activeVideoIndex];
+    if (!currentVideo || !currentVideo.embedUrl || !currentVideo.resolvedThumbnail) {
+      STATE.activeVideoIndex = visibleItems.findIndex(v => v.embedUrl && v.resolvedThumbnail);
+    }
   }
 
   visibleItems.forEach((video, index) => {
-    const isActive = Boolean(video.embedUrl) && hasAnyPlayable && index === STATE.activeVideoIndex;
+    const isActive = index === STATE.activeVideoIndex && Boolean(video.embedUrl) && Boolean(video.resolvedThumbnail);
     grid.appendChild(buildVideoCard(video, index, isActive));
   });
 
