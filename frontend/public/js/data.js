@@ -865,8 +865,3 @@ export const PORTFOLIO_DATA = {
     }
   ]
 };
-nt",
-      "featured": true
-    }
-  ]
-};
