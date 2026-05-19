@@ -858,7 +858,10 @@ export function renderVideos() {
 
   visibleItems.forEach((video, index) => {
     // A video is only "active" (highlighted/expanded) if it has a thumbnail AND an embed
-    const isActive = index === STATE.activeVideoIndex && Boolean(video.resolvedThumbnail) && Boolean(video.embedUrl);
+    const hasThumb = Boolean(video.resolvedThumbnail);
+    const hasEmbed = Boolean(video.embedUrl);
+    const isActive = index === STATE.activeVideoIndex && hasThumb && hasEmbed;
+    
     grid.appendChild(buildVideoCard(video, index, isActive));
   });
 
