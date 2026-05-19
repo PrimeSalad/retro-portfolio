@@ -656,6 +656,10 @@ export function getVideoEmbedUrl(rawUrl) {
     const host = url.hostname.replace(/^www\./, "");
     let videoId = "";
 
+    if (host === "facebook.com" || host === "fb.watch") {
+      return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(rawUrl)}&show_text=0`;
+    }
+
     if (host === "youtu.be") {
       videoId = url.pathname.replace(/^\/+/, "").split("/")[0] || "";
     } else if (host === "youtube.com" || host === "m.youtube.com") {

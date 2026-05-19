@@ -45,6 +45,26 @@
   ],
   "videos": [
     {
+      "title": "CertifiCat — Free Certificate Generator",
+      "description": "A free, browser-based certificate generator built for organizations and educators. Features drag-and-drop design, bulk generation, and custom templates.",
+      "thumbnail": "/images/projects/ims.jpg",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/1CdRT2mrob/"
+    },
+    {
+      "title": "MORI - Smart Action Engine",
+      "description": "Mori is a Chrome extension that uses AI to bridge social media awareness and real-world civic action. It helps users identify, verify, and report community issues.",
+      "thumbnail": "https://img.youtube.com/vi/WwPxjMTNU0Q/maxresdefault.jpg",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Video",
+      "role": "Video Editor",
+      "link": "https://www.youtube.com/watch?v=WwPxjMTNU0Q"
+    },
+    {
       "title": "MarSU Presidential Report AVP | Prof. Dr. Diosdado P. Zulueta, DPA",
       "description": "Audio-visual presentation highlighting the MarSU presidential report with a more formal, institution-facing presentation style and polished pacing.",
       "thumbnail": "/images/events/base.jpg",
@@ -96,6 +116,32 @@
     }
   ],
   "projects": [
+    {
+      "id": "p7",
+      "title": "CertifiCat",
+      "year": 2026,
+      "category": "Certificate Generator",
+      "role": "Developer",
+      "impact": "Empowers organizations and educators to generate professional certificates fast and free.",
+      "outcome": "Users can drag-and-drop designs and bulk generate hundreds of certificates entirely in the browser.",
+      "description": "CertifiCat is a free, browser-based certificate generator that features a drag-and-drop designer, bulk generation capabilities, and high-quality PDF/PNG exports without sign-ups or watermarks.",
+      "image": "/images/projects/ims.jpg",
+      "preview": "https://certificat-smoky.vercel.app/",
+      "tech": [
+        "React",
+        "JavaScript",
+        "Tailwind"
+      ],
+      "demo": "https://certificat-smoky.vercel.app/",
+      "repo": "https://github.com",
+      "score": 98,
+      "highlights": [
+        "Drag-and-drop certificate designer built directly in the browser.",
+        "Bulk generation feature supporting hundreds of recipients instantly.",
+        "Completely free with no sign-ups or watermarks required."
+      ],
+      "status": "live"
+    },
     {
       "id": "p1",
       "title": "salitAI.orbit",
