@@ -963,9 +963,44 @@
                 </span>
             </div>
 
-            <div class="mt-4 text-sm leading-relaxed text-gray-300">
-                UI/UX designer and frontend/mobile developer creating modern, responsive, user-centered
-                digital products with strong visual quality and practical delivery.
+            <div class="mt-4">
+                <p class="text-sm leading-relaxed text-gray-300">
+                    Full-stack developer, UI/UX designer, mobile dev, graphic artist, video editor, and social media manager — all in one. Builds modern, responsive digital products from polished interfaces and mobile apps to visual content and campaigns that actually look good and ship.
+                </p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gBlue">Full-Stack Dev</span>
+                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gYellow">UI/UX Design</span>
+                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gGreen">Mobile Dev</span>
+                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gRed">Video Editor</span>
+                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gray-300">Graphics</span>
+                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gray-300">Social Media</span>
+                </div>
+                <div class="mt-5 flex justify-center gap-6">
+                    <div class="flex flex-col items-center gap-1">
+                        <img
+                            src="/images/trophy.png"
+                            alt="Natatanging Pagkilala"
+                            class="trophy-img h-32 w-auto object-contain"
+                            id="trophyImg"
+                            loading="lazy"
+                            title="Click to view award"
+                        />
+                        <div class="text-[10px] font-semibold text-gray-300 text-center leading-tight">Distinguished Recognition Award</div>
+                        <div class="text-[9px] text-gray-500 text-center leading-tight">1st MarSU Boac Student Excellence Awards</div>
+                    </div>
+                    <div class="flex flex-col items-center gap-1">
+                        <img
+                            src="/images/badge.png"
+                            alt="PSITE International Presenter"
+                            class="trophy-img h-32 w-auto object-contain"
+                            id="badgeImg"
+                            loading="lazy"
+                            title="Click to view badge"
+                        />
+                        <div class="text-[10px] font-semibold text-gray-300 text-center leading-tight">International Presenter</div>
+                        <div class="text-[9px] text-gray-500 text-center leading-tight">PSITE — Est. 1994</div>
+                    </div>
+                </div>
             </div>
 
             <div class="mt-5">
@@ -1329,6 +1364,33 @@
     </div>
 
     <script type="module" src="js/main.js"></script>
+    <script>
+      function openPreview(src, title, subtitle) {
+        var o = document.createElement('div');
+        o.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;backdrop-filter:blur(8px)';
+        var i = document.createElement('img');
+        i.src = src;
+        i.style.cssText = 'max-height:80vh;max-width:88vw;object-fit:contain;border-radius:16px';
+        var cap = document.createElement('div');
+        cap.style.cssText = 'text-align:center;font-size:13px;line-height:1.6';
+        cap.innerHTML = '<strong style="color:#fff">' + title + '</strong><br><span style="color:#9ca3af;font-size:11px">' + subtitle + '</span>';
+        var x = document.createElement('button');
+        x.textContent = '✕';
+        x.style.cssText = 'position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;opacity:0.8;line-height:1';
+        x.addEventListener('click', function(e) { e.stopPropagation(); document.body.removeChild(o); });
+        o.appendChild(i); o.appendChild(cap); o.appendChild(x);
+        o.addEventListener('click', function() { document.body.removeChild(o); });
+        document.body.appendChild(o);
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('trophyImg').addEventListener('click', function() {
+          openPreview(this.src, 'Distinguished Recognition Award', '1st MarSU Boac Student Excellence Awards &middot; April 28, 2026');
+        });
+        document.getElementById('badgeImg').addEventListener('click', function() {
+          openPreview(this.src, 'International Presenter', 'Philippine Society of Information Technology Educators (PSITE)');
+        });
+      });
+    </script>
 </body>
 
 </html>

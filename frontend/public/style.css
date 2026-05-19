@@ -1537,6 +1537,17 @@ body[data-theme="dark"] .bg-noise {
   }
 }
 
+.trophy-img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.trophy-img:hover {
+  transform: scale(1.08);
+}
+
 .shadow-glow {
   box-shadow: var(--shadow-glow);
 }
