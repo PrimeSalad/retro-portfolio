@@ -1922,3 +1922,10 @@ body[data-theme="dark"] .bg-noise {
   }
 }
 
+/* Awards Spotlight Responsive Tweaks */
+@media (max-width: 480px) {
+  .trophy-img {
+    height: 70px !important;
+  }
+}
+
