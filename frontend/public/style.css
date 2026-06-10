@@ -1922,6 +1922,13 @@ body[data-theme="dark"] .bg-noise {
   }
 }
 
+/* Tech Chip Color Overrides */
+.tech-logo-chip img[src*="adobeillustrator"] { filter: drop-shadow(0 0 4px rgba(255, 154, 0, 0.4)); }
+.tech-logo-chip img[src*="adobephotoshop"] { filter: drop-shadow(0 0 4px rgba(49, 168, 255, 0.4)); }
+.tech-logo-chip img[src*="adobepremierepro"] { filter: drop-shadow(0 0 4px rgba(153, 153, 255, 0.4)); }
+.tech-logo-chip img[src*="adobeaftereffects"] { filter: drop-shadow(0 0 4px rgba(153, 153, 255, 0.4)); }
+.tech-logo-chip img[src*="canva"] { filter: drop-shadow(0 0 4px rgba(0, 196, 204, 0.4)); }
+
 /* Awards Spotlight Responsive Tweaks */
 @media (max-width: 480px) {
   .trophy-img {
