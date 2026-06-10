@@ -2046,6 +2046,10 @@ export function setupEventHandlers() {
   });
 
   $("#btnDownloadResume")?.addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.href = "/CURRICULUM-VITAE-LANDOY.pdf";
+    link.download = "CURRICULUM-VITAE-LANDOY.pdf";
+    link.click();
     toast("Resume download started");
   });
 
