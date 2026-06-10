@@ -888,6 +888,7 @@ export const PORTFOLIO_DATA = {
     { "title": "Publication Material 22", "src": "/images/pubmat/pubmat-22.jpg", "alt": "Graphic design work 22", "tag": "pubmat" },
     { "title": "Publication Material 23", "src": "/images/pubmat/pubmat-23.jpg", "alt": "Graphic design work 23", "tag": "pubmat" },
     { "title": "Publication Material 24", "src": "/images/pubmat/pubmat-24.jpg", "alt": "Graphic design work 24", "tag": "pubmat" },
-    { "title": "Publication Material 25", "src": "/images/pubmat/pubmat-25.jpg", "alt": "Graphic design work 25", "tag": "pubmat" }
+    { "title": "Publication Material 25", "src": "/images/pubmat/pubmat-25.jpg", "alt": "Graphic design work 25", "tag": "pubmat" },
+    { "title": "Publication Material 26", "src": "/images/pubmat/pubmat-26.jpg", "alt": "Graphic design work 26", "tag": "pubmat" }
   ]
 };
