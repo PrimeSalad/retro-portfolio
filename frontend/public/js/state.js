@@ -31,6 +31,7 @@ export const DATA = {
   CERTS: [],
   ACHIEVEMENTS: [],
   GALLERY_ITEMS: [],
+  GRAPHICS_ITEMS: [],
 };
 
 export function updateData(newData) {
@@ -41,4 +42,5 @@ export function updateData(newData) {
   if (newData.certs) DATA.CERTS = newData.certs;
   if (newData.achievements) DATA.ACHIEVEMENTS = newData.achievements;
   if (newData.gallery) DATA.GALLERY_ITEMS = newData.gallery;
+  if (newData.graphics) DATA.GRAPHICS_ITEMS = newData.graphics;
 }

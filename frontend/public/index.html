@@ -233,6 +233,11 @@
                             </button>
                             <button
                                 class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
+                                data-tab="graphics" type="button">
+                                Graphics
+                            </button>
+                            <button
+                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
                                 data-tab="videos" type="button">
                                 Videos
                             </button>
@@ -316,6 +321,37 @@
 
                         <div class="mt-4 preview-note">
                             Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
+                        </div>
+                    </section>
+
+                    <section id="section-graphics" data-section="graphics"
+                        class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-4 shadow-soft sm:p-5">
+                        <div class="mb-4 mini-toolbar">
+                            <div class="toolbar-group">
+                                <span class="preview-note-pill">Graphics pack</span>
+                                <h2 class="text-lg text-white mb-2">Graphic design & pubmats</h2>
+                            </div>
+
+                            <div class="toolbar-group">
+                                <button id="btnShuffleGraphics" type="button"
+                                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
+                                    Shuffle
+                                </button>
+                                <button id="viewAllGraphics" type="button"
+                                    class="f-ring rounded px-1 py-2 text-xs text-gBlue transition-colors">
+                                    View all
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="mb-4 text-sm leading-relaxed result-snippet">
+                            Collection of publication materials, social media graphics, and digital designs.
+                        </p>
+
+                        <div id="graphicsGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
+
+                        <div class="mt-4 preview-note">
+                            Tip: click a graphic to open lightbox.
                         </div>
                     </section>
 

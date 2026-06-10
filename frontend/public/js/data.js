@@ -861,5 +861,23 @@ export const PORTFOLIO_DATA = {
       "category": "achievement",
       "featured": true
     }
+  ],
+  "graphics": [
+    { "title": "Publication Material 1", "src": "/images/pubmat/1.jpg", "alt": "Graphic design work 1", "tag": "pubmat" },
+    { "title": "Publication Material 2", "src": "/images/pubmat/2.jpg", "alt": "Graphic design work 2", "tag": "pubmat" },
+    { "title": "Publication Material 3", "src": "/images/pubmat/3.jpg", "alt": "Graphic design work 3", "tag": "pubmat" },
+    { "title": "Publication Material 4", "src": "/images/pubmat/4.jpg", "alt": "Graphic design work 4", "tag": "pubmat" },
+    { "title": "Publication Material 5", "src": "/images/pubmat/5.jpg", "alt": "Graphic design work 5", "tag": "pubmat" },
+    { "title": "Publication Material 6", "src": "/images/pubmat/6.jpg", "alt": "Graphic design work 6", "tag": "pubmat" },
+    { "title": "Publication Material 7", "src": "/images/pubmat/7.jpg", "alt": "Graphic design work 7", "tag": "pubmat" },
+    { "title": "Publication Material 8", "src": "/images/pubmat/8.jpg", "alt": "Graphic design work 8", "tag": "pubmat" },
+    { "title": "Publication Material 9", "src": "/images/pubmat/9.jpg", "alt": "Graphic design work 9", "tag": "pubmat" },
+    { "title": "Publication Material 10", "src": "/images/pubmat/10.jpg", "alt": "Graphic design work 10", "tag": "pubmat" },
+    { "title": "Publication Material 11", "src": "/images/pubmat/11.jpg", "alt": "Graphic design work 11", "tag": "pubmat" },
+    { "title": "Publication Material 12 (1)", "src": "/images/pubmat/12 (1).jpg", "alt": "Graphic design work 12-1", "tag": "pubmat" },
+    { "title": "Publication Material 12 (2)", "src": "/images/pubmat/12 (2).jpg", "alt": "Graphic design work 12-2", "tag": "pubmat" },
+    { "title": "Publication Material 12 (3)", "src": "/images/pubmat/12 (3).jpg", "alt": "Graphic design work 12-3", "tag": "pubmat" },
+    { "title": "Publication Material 14", "src": "/images/pubmat/14.jpg", "alt": "Graphic design work 14", "tag": "pubmat" },
+    { "title": "Publication Material 15", "src": "/images/pubmat/15.jpg", "alt": "Graphic design work 15", "tag": "pubmat" }
   ]
 };

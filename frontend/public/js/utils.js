@@ -30,6 +30,7 @@ export const SECTION_KEYS = {
   GALLERY: "gallery",
   ABOUT: "about",
   ALL: "all",
+  GRAPHICS: "graphics",
 };
 
 export const AI = {

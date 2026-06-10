@@ -462,6 +462,7 @@ export function updateSectionVisibility(tab) {
 
 export function rerenderContentSections() {
   renderImages(DATA.IMAGE_ITEMS);
+  renderGraphics(DATA.GRAPHICS_ITEMS);
   renderVideos();
   renderProjects();
   renderTimeline();
@@ -639,6 +640,74 @@ export function renderImages(items) {
     items.length,
     visibleItems.length,
     "Image highlights"
+  );
+  applyEntryAnimations(grid);
+}
+
+/* =========================
+   Graphics
+========================= */
+export function renderGraphics(items) {
+  const grid = $("#graphicsGrid");
+  if (!grid) {
+    return;
+  }
+
+  const visibleItems = sliceForPreview(items, SECTION_KEYS.GRAPHICS);
+  
+  if (STATE.activeTab === SECTION_KEYS.GRAPHICS) {
+    STATE.currentImages = visibleItems;
+    setLightboxItems(
+      visibleItems.map((item) => ({
+        title: item.title,
+        src: resolveImagePath(item.src),
+        alt: item.alt,
+      }))
+    );
+  }
+
+  grid.innerHTML = "";
+
+  visibleItems.forEach((item, index) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "image-card js-enhanced-card f-ring";
+    card.setAttribute("aria-label", `Open graphic: ${item.title}`);
+    card.dataset.animate = "true";
+
+    card.innerHTML = `
+      <div class="image-card-media">
+        <div class="absolute left-2 top-2 z-10 rounded-full border border-borderDim bg-bgPanel px-1.5 py-0.5 text-[10px] text-gray-300">
+          ${escapeHtml(String(item.tag || "GRAPHICS").toUpperCase())}
+        </div>
+        <img src="${escapeHtml(resolveImagePath(item.src))}" alt="${escapeHtml(item.alt)}" loading="lazy" class="image-card-thumb" />
+        <div class="image-card-overlay">
+          <div class="clamp-2 text-xs font-medium text-white">${escapeHtml(item.title)}</div>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      if (STATE.activeTab !== SECTION_KEYS.GRAPHICS) {
+        setLightboxItems(
+          visibleItems.map((v) => ({
+            title: v.title,
+            src: resolveImagePath(v.src),
+            alt: v.alt,
+          }))
+        );
+      }
+      openLightbox(index);
+    });
+    grid.appendChild(card);
+  });
+
+  renderSectionPreviewMount(
+    "#graphicsGrid",
+    SECTION_KEYS.GRAPHICS,
+    items.length,
+    visibleItems.length,
+    "Graphics preview"
   );
   applyEntryAnimations(grid);
 }
@@ -1948,9 +2017,20 @@ export function setupEventHandlers() {
     toast("Images shuffled");
   });
 
+  $("#btnShuffleGraphics")?.addEventListener("click", () => {
+    DATA.GRAPHICS_ITEMS = shuffle(DATA.GRAPHICS_ITEMS);
+    renderGraphics(DATA.GRAPHICS_ITEMS);
+    toast("Graphics shuffled");
+  });
+
   $("#viewAllImages")?.addEventListener("click", () => {
     setTab(SECTION_KEYS.IMAGES);
     scrollToEl("#section-images");
+  });
+
+  $("#viewAllGraphics")?.addEventListener("click", () => {
+    setTab(SECTION_KEYS.GRAPHICS);
+    scrollToEl("#section-graphics");
   });
 
   $("#viewAllVideos")?.addEventListener("click", () => {
