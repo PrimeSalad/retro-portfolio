@@ -80,9 +80,8 @@ export function resolveImagePath(path) {
     return path;
   }
   
-  // Normalize: remove leading slash and replace spaces with underscores
+  // Normalize: remove leading slash
   let cleanPath = path.startsWith("/") ? path.substring(1) : path;
-  cleanPath = cleanPath.replace(/ /g, "_");
   
   if (!cleanPath.startsWith("images/")) {
     cleanPath = "images/" + cleanPath;

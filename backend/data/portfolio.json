@@ -35,33 +35,9 @@
       "src": "/images/events/infocus.jpg",
       "alt": "recognition event with team members on stage",
       "tag": "recognition"
-    },
-    {
-      "title": "MarSU Logo Recognition",
-      "src": "/images/events/award2.jpg",
-      "alt": "MarSU Logo Recognition Event",
-      "tag": "recognition"
     }
   ],
   "videos": [
-    {
-      "title": "PawPrint AI Beta Preview",
-      "description": "PawPrint Beta helps you discover your dog's story — one photo at a time.",
-      "tag": "product",
-      "duration": "Demo",
-      "platform": "Facebook Video",
-      "role": "Developer",
-      "link": "https://www.facebook.com/share/v/1HAE47UCY1/"
-    },
-    {
-      "title": "CertifiCat — Free Certificate Generator",
-      "description": "A free, browser-based certificate generator built for organizations and educators. Features drag-and-drop design, bulk generation, and custom templates.",
-      "tag": "product",
-      "duration": "Demo",
-      "platform": "Facebook Video",
-      "role": "Developer",
-      "link": "https://www.facebook.com/share/v/1CdRT2mrob/"
-    },
     {
       "title": "MORI - Smart Action Engine",
       "description": "Mori is a Chrome extension that uses AI to bridge social media awareness and real-world civic action. It helps users identify, verify, and report community issues.",
@@ -119,6 +95,24 @@
       "platform": "Video",
       "role": "Video Editor",
       "link": "https://youtu.be/k6GOHz0osOY"
+    },
+    {
+      "title": "PawPrint AI Beta Preview",
+      "description": "PawPrint Beta helps you discover your dog's story — one photo at a time.",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/1HAE47UCY1/"
+    },
+    {
+      "title": "CertifiCat — Free Certificate Generator",
+      "description": "CertifiCat lets you design and bulk-generate professional certificates — free, in the browser.",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/1CdRT2mrob/"
     }
   ],
   "projects": [
@@ -847,11 +841,46 @@
       "category": "event"
     },
     {
+      "title": "Award Recognition",
+      "description": "Achievement and recognition at a competitive event, holding certificate of accomplishment.",
+      "image": "/images/events/award.jpg",
+      "category": "achievement",
+      "featured": true
+    },
+    {
       "title": "MarSU Logo Recognition",
       "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
       "image": "/images/events/award2.jpg",
       "category": "achievement",
       "featured": true
     }
+  ],
+  "graphics": [
+    { "title": "Publication Material 01", "src": "/images/pubmat/pubmat-01.jpg", "alt": "Graphic design work 01", "tag": "pubmat" },
+    { "title": "Publication Material 02", "src": "/images/pubmat/pubmat-02.jpg", "alt": "Graphic design work 02", "tag": "pubmat" },
+    { "title": "Publication Material 03", "src": "/images/pubmat/pubmat-03.jpg", "alt": "Graphic design work 03", "tag": "pubmat" },
+    { "title": "Publication Material 04", "src": "/images/pubmat/pubmat-04.jpg", "alt": "Graphic design work 04", "tag": "pubmat" },
+    { "title": "Publication Material 05", "src": "/images/pubmat/pubmat-05.jpg", "alt": "Graphic design work 05", "tag": "pubmat" },
+    { "title": "Publication Material 06", "src": "/images/pubmat/pubmat-06.jpg", "alt": "Graphic design work 06", "tag": "pubmat" },
+    { "title": "Publication Material 07", "src": "/images/pubmat/pubmat-07.jpg", "alt": "Graphic design work 07", "tag": "pubmat" },
+    { "title": "Publication Material 08", "src": "/images/pubmat/pubmat-08.jpg", "alt": "Graphic design work 08", "tag": "pubmat" },
+    { "title": "Publication Material 09", "src": "/images/pubmat/pubmat-09.jpg", "alt": "Graphic design work 09", "tag": "pubmat" },
+    { "title": "Publication Material 10", "src": "/images/pubmat/pubmat-10.jpg", "alt": "Graphic design work 10", "tag": "pubmat" },
+    { "title": "Publication Material 11", "src": "/images/pubmat/pubmat-11.jpg", "alt": "Graphic design work 11", "tag": "pubmat" },
+    { "title": "Publication Material 12 (Variant 1)", "src": "/images/pubmat/pubmat-12-1.jpg", "alt": "Graphic design work 12-1", "tag": "pubmat" },
+    { "title": "Publication Material 12 (Variant 2)", "src": "/images/pubmat/pubmat-12-2.jpg", "alt": "Graphic design work 12-2", "tag": "pubmat" },
+    { "title": "Publication Material 12 (Variant 3)", "src": "/images/pubmat/pubmat-12-3.jpg", "alt": "Graphic design work 12-3", "tag": "pubmat" },
+    { "title": "Publication Material 14", "src": "/images/pubmat/pubmat-14.jpg", "alt": "Graphic design work 14", "tag": "pubmat" },
+    { "title": "Publication Material 15", "src": "/images/pubmat/pubmat-15.jpg", "alt": "Graphic design work 15", "tag": "pubmat" },
+    { "title": "Publication Material 16", "src": "/images/pubmat/pubmat-16.jpg", "alt": "Graphic design work 16", "tag": "pubmat" },
+    { "title": "Publication Material 17", "src": "/images/pubmat/pubmat-17.jpg", "alt": "Graphic design work 17", "tag": "pubmat" },
+    { "title": "Publication Material 18", "src": "/images/pubmat/pubmat-18.jpg", "alt": "Graphic design work 18", "tag": "pubmat" },
+    { "title": "Publication Material 19", "src": "/images/pubmat/pubmat-19.jpg", "alt": "Graphic design work 19", "tag": "pubmat" },
+    { "title": "Publication Material 20", "src": "/images/pubmat/pubmat-20.jpg", "alt": "Graphic design work 20", "tag": "pubmat" },
+    { "title": "Publication Material 21", "src": "/images/pubmat/pubmat-21.jpg", "alt": "Graphic design work 21", "tag": "pubmat" },
+    { "title": "Publication Material 22", "src": "/images/pubmat/pubmat-22.jpg", "alt": "Graphic design work 22", "tag": "pubmat" },
+    { "title": "Publication Material 23", "src": "/images/pubmat/pubmat-23.jpg", "alt": "Graphic design work 23", "tag": "pubmat" },
+    { "title": "Publication Material 24", "src": "/images/pubmat/pubmat-24.jpg", "alt": "Graphic design work 24", "tag": "pubmat" },
+    { "title": "Publication Material 25", "src": "/images/pubmat/pubmat-25.jpg", "alt": "Graphic design work 25", "tag": "pubmat" }
   ]
 }
