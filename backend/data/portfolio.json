@@ -735,6 +735,27 @@
   ],
   "achievements": [
     {
+      "badge": "Cum Laude",
+      "badgeColor": "gBlue",
+      "title": "BS Information Technology — Class of 2026",
+      "desc": "Graduated with Latin Honors (Cum Laude) in the Bachelor of Science in Information Technology program.",
+      "meta": "Academic Excellence"
+    },
+    {
+      "badge": "Awardee",
+      "badgeColor": "gYellow",
+      "title": "Distinguished Recognition Award",
+      "desc": "Awarded during the 1st MarSU Boac Student Excellence Awards.",
+      "meta": "Awarded: April 28, 2026"
+    },
+    {
+      "badge": "Presenter",
+      "badgeColor": "gRed",
+      "title": "International Presenter — PSITE",
+      "desc": "Recognized as an international presenter by the Philippine Society of Information Technology Educators.",
+      "meta": "PSITE Est. 1994"
+    },
+    {
       "badge": "Champion",
       "badgeColor": "gYellow",
       "title": "Marinduque State University Official Logo",
