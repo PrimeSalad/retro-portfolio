@@ -1,1550 +1,279 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <!--
-    File: index.html
-    Description: Retro-futuristic search-style portfolio with improved mobile responsiveness,
-    cleaner toolbar spacing, and better compact Google-like result previews.
-    Version: 3.6.0
-  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f3f0e8" />
+  <meta name="description" content="Gene Elpie Landoy is a creative technologist building thoughtful digital products through code, design, and storytelling." />
+  <meta property="og:title" content="Gene Elpie Landoy — Creative Technologist" />
+  <meta property="og:description" content="Selected products, visual work, experience, and field notes from a developer and designer in the Philippines." />
+  <meta property="og:image" content="/images/icon.jpg" />
+  <title>Gene Elpie Landoy — Creative Technologist</title>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gene Elpie Landoy | Retro Search Portfolio</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        bgDark: "rgb(var(--bg-dark) / <alpha-value>)",
-                        bgPanel: "rgb(var(--bg-panel) / <alpha-value>)",
-                        bgSoft: "rgb(var(--bg-soft) / <alpha-value>)",
-                        borderDim: "rgb(var(--border-dim) / <alpha-value>)",
-                        gBlue: "rgb(var(--g-blue) / <alpha-value>)",
-                        gRed: "rgb(var(--g-red) / <alpha-value>)",
-                        gYellow: "rgb(var(--g-yellow) / <alpha-value>)",
-                        gGreen: "rgb(var(--g-green) / <alpha-value>)",
-                        urlGreen: "rgb(var(--url-green) / <alpha-value>)",
-                    },
-                    fontFamily: {
-                        mono: ['"Roboto"', "Arial", "sans-serif"],
-                    },
-                    boxShadow: {
-                        soft: "var(--shadow-soft)",
-                        glow: "var(--shadow-glow)",
-                    },
-                    keyframes: {
-                        floaty: {
-                            "0%,100%": { transform: "translateY(0px)" },
-                            "50%": { transform: "translateY(-6px)" },
-                        },
-                        flicker: {
-                            "0%,100%": { opacity: "0.98" },
-                            "8%": { opacity: "0.9" },
-                            "10%": { opacity: "0.82" },
-                            "12%": { opacity: "0.96" },
-                            "72%": { opacity: "0.85" },
-                            "75%": { opacity: "0.98" },
-                        },
-                        scan: {
-                            "0%": { transform: "translateY(-45%)" },
-                            "100%": { transform: "translateY(150%)" },
-                        },
-                        pop: {
-                            "0%": { transform: "translateY(8px) scale(0.985)", opacity: "0" },
-                            "100%": { transform: "translateY(0px) scale(1)", opacity: "1" },
-                        },
-                    },
-                    animation: {
-                        floaty: "floaty 4.8s ease-in-out infinite",
-                        flicker: "flicker 6s infinite",
-                        scan: "scan 8s linear infinite",
-                        pop: "pop 220ms ease-out",
-                    },
-                },
-            },
-        };
-    </script>
-
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/jpeg" href="images/icon.jpg" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wdth,wght@75..100,400..700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 
-<body data-theme="dark" class="min-h-screen overflow-x-hidden font-mono text-gray-300 antialiased">
-    <div class="w-full">
-        <div class="scroll-progress" id="scrollProgress"></div>
-        <div class="scanlines"></div>
-        <div class="scanbeam animate-scan"></div>
-        <div class="bg-noise"></div>
-
-        <header id="topHeader" class="sticky top-0 z-50 border-b border-borderDim bg-bgDark/85 backdrop-blur-md">
-            <div class="mx-auto max-w-[1500px] px-4 py-4 sm:px-6 xl:px-10">
-                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <a href="#top" aria-label="Home"
-                        class="f-ring select-none rounded flex items-center gap-1 text-xl font-bold tracking-tighter leading-none sm:text-3xl">
-                        <span class="text-gBlue leading-none">E</span>
-                        <span class="text-gRed leading-none">L</span>
-                        <span class="text-gYellow leading-none">P</span>
-                        <span class="text-gBlue leading-none">I</span>
-                        <span class="text-gGreen leading-none">E</span>
-                        <span class="text-gRed leading-none">E</span>
-                        <span class="ml-1 hidden text-[10px] text-gray-500 md:inline-block self-center">portfolio</span>
-                    </a>
-
-                    <div class="ml-auto flex flex-wrap items-center justify-end gap-2 sm:gap-2.5">
-                        <a href="/CURRICULUM-VITAE-LANDOY.pdf" download class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors hover:bg-gBlue hover:text-white hover:border-gBlue sm:px-4 sm:py-2.5 sm:text-sm flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                            <span class="hidden sm:inline">Download CV</span>
-                        </a>
-
-                        <button id="btnOpenKp" type="button"
-                            class="f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:px-4 sm:py-2.5 sm:text-sm xl:hidden">
-                            Profile
-                        </button>
-
-                        <button id="btnTheme" type="button"
-                            class="theme-toggle f-ring transition-colors"
-                            aria-label="Toggle light and dark mode" aria-pressed="true"
-                            title="Toggle light and dark mode">
-                            <span class="theme-switch-track" aria-hidden="true">
-                                <svg class="theme-icon sun-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="5"></circle>
-                                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                                </svg>
-                                <svg class="theme-icon moon-icon" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="currentColor">
-                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                                </svg>
-                                <span class="theme-switch-knob"></span>
-                            </span>
-                        </button>
-
-                        <button id="btnCmd" type="button"
-                            class="f-ring hidden sm:flex rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-xs transition-colors sm:px-4 sm:py-2.5 sm:text-sm"
-                            aria-label="Open command palette" title="Command palette (Ctrl/Cmd+K)">
-                            ⌘K
-                        </button>
-                    </div>
-                </div>
-
-                <div class="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-4">
-                    <div class="min-w-0">
-                        <form id="searchShell"
-                            class="search-glow rounded-full border border-borderDim bg-bgPanel px-4 py-3 transition-all duration-300">
-                            <div class="flex min-w-0 items-center gap-3">
-                                <svg class="h-5 w-5 shrink-0 text-gray-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-
-                                <input id="searchInput" type="text" autocomplete="off" spellcheck="false"
-                                    placeholder="Search Gene Elpie Landoy portfolio..."
-                                    class="min-w-0 flex-1 bg-transparent text-white placeholder:text-gray-600 focus:outline-none" />
-
-                                <button id="btnVoice" type="button"
-                                    class="f-ring shrink-0 rounded text-gBlue transition-colors"
-                                    aria-label="Voice search" title="Voice search">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <button id="btnClear" type="button"
-                                    class="f-ring hidden shrink-0 rounded text-gray-500 transition-colors"
-                                    aria-label="Clear search" title="Clear">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12">
-                                        </path>
-                                    </svg>
-                                </button>
-
-                                <button type="submit" class="hidden" aria-hidden="true" tabindex="-1">
-                                    Search
-                                </button>
-                            </div>
-                        </form>
-
-                        <div id="metaLine"
-                            class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
-                            <span id="resultsCount">About 248 results</span>
-                            <span class="hidden text-gray-700 sm:inline">·</span>
-                            <span id="resultsTime">(0.011 seconds)</span>
-                            <span class="hidden text-gray-700 md:inline">·</span>
-                            <span class="hidden md:inline">
-                                Shortcuts:
-                                <span class="text-gray-300">/</span> focus ·
-                                <span class="text-gray-300">Ctrl/Cmd+K</span> palette
-                            </span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-end">
-                        <button id="btnRun" type="button"
-                            class="f-ring w-full whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-3 py-2 text-sm text-gray-100 transition-colors sm:px-4 sm:py-2.5 lg:w-auto">
-                            Search
-                        </button>
-                        <button id="btnLucky" type="button"
-                            class="f-ring w-full whitespace-nowrap rounded-full border border-borderDim bg-[#1d2736] px-3 py-2 text-sm text-gray-100 transition-colors sm:px-4 sm:py-2.5 lg:w-auto">
-                            I’m Feeling Futuristic
-                        </button>
-                    </div>
-                </div>
-
-                <nav class="mt-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-                    <div class="tabs-row min-w-0 overflow-x-auto">
-                        <div class="flex min-w-max gap-2 pb-1">
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="all" type="button">
-                                All
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="images" type="button">
-                                Images
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="graphics" type="button">
-                                Graphics
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="videos" type="button">
-                                Videos
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="about" type="button">
-                                About me
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="timeline" type="button">
-                                Timeline
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="projects" type="button">
-                                Projects
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="certificates" type="button">
-                                Certificates
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="achievements" type="button">
-                                Achievements
-                            </button>
-                            <button
-                                class="tab-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-sm transition-colors sm:px-4 sm:py-2"
-                                data-tab="gallery" type="button">
-                                Gallery
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="hidden grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center xl:shrink-0">
-                        <button id="btnSaveSearch" type="button"
-                            class="f-ring w-full rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors sm:w-auto sm:px-4">
-                            Save
-                        </button>
-                        <button id="btnOpenSaved" type="button"
-                            class="f-ring w-full rounded-full border border-borderDim bg-bgPanel px-3 py-2 text-sm transition-colors sm:w-auto sm:px-4">
-                            Saved
-                        </button>
-                    </div>
-                </nav>
-            </div>
-        </header>
-
-        <main id="top"
-            class="mx-auto grid max-w-[1500px] grid-cols-1 gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-8 xl:grid-cols-[minmax(0,1fr)_360px] xl:px-10">
-            <section class="min-w-0 space-y-6 sm:space-y-8" aria-label="Search results">
-                <div id="resultsArea" class="flex flex-col space-y-6 sm:space-y-8">
-                    <section id="section-images" data-section="images"
-                        class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-4 shadow-soft sm:p-5">
-                        <div class="mb-4 mini-toolbar">
-                            <div class="toolbar-group">
-                                <span class="preview-note-pill">Image pack</span>
-                                <h2 class="text-lg text-white mb-2">Portfolio visuals</h2>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button id="btnShuffleImages" type="button"
-                                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                                    Shuffle
-                                </button>
-                                <button id="viewAllImages" type="button"
-                                    class="f-ring rounded px-1 py-2 text-xs text-gBlue transition-colors">
-                                    View all
-                                </button>
-                            </div>
-                        </div>
-
-                        <p class="mb-4 text-sm leading-relaxed result-snippet">
-                            Quick visual preview of projects, recognition, events, and field work. Open any image
-                            for full view.
-                        </p>
-
-                        <div id="imageGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
-
-                        <div class="mt-4 preview-note">
-                            Tip: click an image to open lightbox. Use ← → to navigate. Swipe on mobile.
-                        </div>
-                    </section>
-
-                    <section id="section-graphics" data-section="graphics"
-                        class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-4 shadow-soft sm:p-5">
-                        <div class="mb-4 mini-toolbar">
-                            <div class="toolbar-group">
-                                <span class="preview-note-pill">Graphics pack</span>
-                                <h2 class="text-lg text-white mb-2">Graphic design & pubmats</h2>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button id="btnShuffleGraphics" type="button"
-                                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                                    Shuffle
-                                </button>
-                                <button id="viewAllGraphics" type="button"
-                                    class="f-ring rounded px-1 py-2 text-xs text-gBlue transition-colors">
-                                    View all
-                                </button>
-                            </div>
-                        </div>
-
-                        <p class="mb-4 text-sm leading-relaxed result-snippet">
-                            Collection of publication materials, social media graphics, and digital designs.
-                        </p>
-
-                        <div id="graphicsGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
-
-                        <div class="mt-4 preview-note">
-                            Tip: click a graphic to open lightbox.
-                        </div>
-                    </section>
-
-                    <article id="section-videos" data-section="videos" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://sys.elpie.dev</span>
-                            <span class="text-gray-600">â€º</span>
-                            <span>videos</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Reels + edits
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.2rem,2.1vw,1.55rem)] font-semibold text-gBlue transition-all mb-3"
-                            data-scrollto="#videosPanel" tabindex="0" role="link" aria-label="Open videos panel">
-                            Video Editing Highlights
-                        </h3>
-
-                        <p class="mt-1.5 text-sm leading-relaxed result-snippet">
-                            A compact reel section for event coverage, broadcast edits, motion-assisted recaps, and
-                            short-form storytelling work.
-                        </p>
-
-                        <div class="section-divider mt-6 border-borderDim transition-colors group-hover:border-gRed">
-                            <div id="videosPanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                                <div class="mini-toolbar mb-4">
-                                    <div class="toolbar-group">
-                                        <h4 class="text-base text-white">Video edits</h4>
-                                        <span class="uniform-gallery-note">Click a card and it plays directly in place</span>
-                                    </div>
-
-                                    <div class="toolbar-group">
-                                        <button id="viewAllVideos" type="button"
-                                            class="f-ring rounded px-1 py-2 text-xs text-gBlue transition-colors">
-                                            View all
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div id="videoGrid" class="grid gap-3 sm:grid-cols-2"></div>
-
-                                <div class="mt-4 preview-note">
-                                    Linked videos play directly inside the clicked card.
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article id="section-projects" data-section="projects" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://sys.elpie.dev</span>
-                            <span class="text-gray-600">›</span>
-                            <span>projects</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Preview cards
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.2rem,2.1vw,1.55rem)] font-semibold text-gBlue transition-all mb-3"
-                            data-scrollto="#projectsPanel" tabindex="0" role="link" aria-label="Open projects panel">
-                            Project index – featured case studies
-                        </h3>
-
-                        <p class="mt-1.5 text-sm leading-relaxed result-snippet">
-                            Clean Google-style cards showing just enough about each project. Open a card to see the full
-                            story, stack, and impact.
-                        </p>
-
-                        <div class="section-divider mt-6 border-borderDim transition-colors group-hover:border-gBlue">
-                            <div id="projectsPanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel pt-6 px-3 pb-3 sm:pt-8 sm:px-4 sm:pb-4 lg:pt-10">
-                                <div class="mini-toolbar mb-4">
-                                    <div class="toolbar-group">
-                                        <span class="preview-note-pill text-gBlue">compact</span>
-                                        <span class="preview-note-pill text-gGreen">modal-first</span>
-                                        <span class="preview-note-pill text-gYellow">preview only</span>
-                                    </div>
-
-                                    <div class="project-toolbar-controls">
-                                        <input id="projectSearch" type="text" autocomplete="off"
-                                            placeholder="Filter projects..."
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 placeholder:text-gray-600 sm:min-w-[230px]" />
-                                        <select id="projectSort"
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 sm:min-w-[128px]"
-                                            aria-label="Sort projects">
-                                            <option value="impact">Impact</option>
-                                            <option value="newest">Newest</option>
-                                            <option value="oldest">Oldest</option>
-                                            <option value="title">Title</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <p class="mb-4 preview-note">
-                                    Main page shows smaller cards like Google results. Open a project card for the
-                                    complete case-study view.
-                                </p>
-
-                                <div id="projectsGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article id="section-timeline" data-section="timeline" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://sys.elpie.dev</span>
-                            <span class="text-gray-600">›</span>
-                            <span>timeline</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Snapshot
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all mb-3"
-                            data-scrollto="#timelinePanel" tabindex="0" role="link" aria-label="Open timeline panel">
-                            Gene Elpie Landoy — Career Timeline
-                        </h3>
-
-                        <p class="mt-2 text-sm leading-relaxed result-snippet">
-                            Search-result style milestone preview with filters for frontend, publication, design,
-                            backend, leadership, and video work.
-                        </p>
-
-                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gBlue">
-                            <div class="mb-3 flex flex-wrap items-center gap-2">
-                                <span class="text-xs text-gray-500">Filter:</span>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="all" type="button">
-                                    All
-                                </button>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="frontend" type="button">
-                                    Frontend
-                                </button>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="publication" type="button">
-                                    Publication
-                                </button>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="backend" type="button">
-                                    Backend
-                                </button>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="design" type="button">
-                                    UI/UX
-                                </button>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="video" type="button">
-                                    Video
-                                </button>
-                                <button
-                                    class="chip-btn f-ring rounded-full border border-borderDim bg-bgPanel px-3 py-1.5 text-xs transition-colors"
-                                    data-timeline-filter="leadership" type="button">
-                                    Leadership
-                                </button>
-
-                                <div class="flex-1"></div>
-
-                                <button id="btnExpandAllTimeline" type="button"
-                                    class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                                    Expand all
-                                </button>
-                            </div>
-
-                            <div id="timelinePanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                                <div class="timeline-rail">
-                                    <div id="timelineList" class="space-y-4"></div>
-                                </div>
-
-                                <div class="mt-4 preview-note">
-                                    Preview timeline on page, detailed context on expand.
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article id="section-certificates" data-section="certificates" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://sys.elpie.dev</span>
-                            <span class="text-gray-600">›</span>
-                            <span>certificates</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Compact cards
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all mb-3"
-                            data-scrollto="#certPanel" tabindex="0" role="link" aria-label="Open certificates panel">
-                            Certificates — Quick Verification Preview
-                        </h3>
-
-                        <p class="mt-2 text-sm leading-relaxed result-snippet">
-                            Smaller certificate cards with thumbnail, issuer, issue date, and a clean preview.
-                            Full verification stays in the modal.
-                        </p>
-
-                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
-                            <div id="certPanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                                <div class="mini-toolbar mb-4">
-                                    <div class="toolbar-group">
-                                        <span class="preview-note-pill text-gGreen">verified</span>
-                                        <span class="preview-note-pill text-gBlue">preview image</span>
-                                        <span class="preview-note-pill text-gYellow">small layout</span>
-                                    </div>
-
-                                    <div class="stack-toolbar-controls">
-                                        <input id="certSearch" type="text" autocomplete="off"
-                                            placeholder="Filter certificates..."
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 placeholder:text-gray-600 sm:min-w-[240px]" />
-                                        <select id="certSort"
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200 sm:min-w-[128px]"
-                                            aria-label="Sort certificates">
-                                            <option value="highlights">Highlights</option>
-                                            <option value="newest">Newest</option>
-                                            <option value="oldest">Oldest</option>
-                                            <option value="issuer">Issuer</option>
-                                            <option value="title">Title</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <p class="mb-4 preview-note">
-                                    Certificates stay compact here so the page reads like search results, not full
-                                    records.
-                                </p>
-
-                                <div id="certGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article id="section-achievements" data-section="achievements" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://sys.elpie.dev</span>
-                            <span class="text-gray-600">›</span>
-                            <span>achievements</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Highlights
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all mb-3"
-                            data-scrollto="#achPanel" tabindex="0" role="link" aria-label="Open achievements panel">
-                            Notable Achievements & Awards
-                        </h3>
-
-                        <p class="mt-2 text-sm leading-relaxed result-snippet">
-                            Key wins, research work, competitions, and performance metrics in a compact preview.
-                        </p>
-
-                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gRed">
-                            <div id="achPanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                                <div class="compact-stats mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                                    <div class="rounded-xl border border-borderDim bg-bgDark">
-                                        <div class="text-xs text-gray-500">Contributions</div>
-                                        <div class="text-2xl font-bold text-white">
-                                            <span class="counter" data-target="2">0</span>k+
-                                        </div>
-                                    </div>
-                                    <div class="rounded-xl border border-borderDim bg-bgDark">
-                                        <div class="text-xs text-gray-500">Talks</div>
-                                        <div class="text-2xl font-bold text-white">
-                                            <span class="counter" data-target="18">0</span>
-                                        </div>
-                                    </div>
-                                    <div class="rounded-xl border border-borderDim bg-bgDark">
-                                        <div class="text-xs text-gray-500">Projects shipped</div>
-                                        <div class="text-2xl font-bold text-white">
-                                            <span class="counter" data-target="42">0</span>
-                                        </div>
-                                    </div>
-                                    <div class="rounded-xl border border-borderDim bg-bgDark">
-                                        <div class="text-xs text-gray-500">Perf gains</div>
-                                        <div class="text-2xl font-bold text-white">
-                                            <span class="counter" data-target="40">0</span>%
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="achGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article id="section-gallery" data-section="gallery" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://gene-landoy.dev</span>
-                            <span class="text-gray-600">›</span>
-                            <span>gallery</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Uniform thumbnails
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all mb-3"
-                            data-scrollto="#galleryPanel" tabindex="0" role="link" aria-label="Open gallery panel">
-                            Creative Gallery
-                        </h3>
-
-                        <p class="mt-2 text-sm leading-relaxed result-snippet">
-                            Visual highlights from events, competitions, and tech experiences.
-                        </p>
-
-                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gYellow">
-                            <div id="galleryPanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                                <div class="mini-toolbar mb-4">
-                                    <div class="toolbar-group">
-                                        <h4 class="text-base text-white">Interactive Gallery</h4>
-                                    </div>
-
-                                    <div class="stack-toolbar-controls">
-                                        <button id="btnShuffleGallery" type="button"
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2.5 text-xs transition-colors">
-                                            Shuffle
-                                        </button>
-                                        <select id="galleryFilter"
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-4 py-2.5 text-xs text-gray-200"
-                                            aria-label="Filter gallery">
-                                            <option value="all">All Projects</option>
-                                            <option value="featured">Featured</option>
-                                            <option value="webgl">WebGL</option>
-                                            <option value="animation">Animation</option>
-                                            <option value="interactive">Interactive</option>
-                                            <option value="art">Digital Art</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div id="galleryGrid" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article id="section-about" data-section="about" class="group">
-                        <div class="mb-1 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-                            <span class="text-urlGreen">https://sys.elpie.dev</span>
-                            <span class="text-gray-600">›</span>
-                            <span>about</span>
-                            <span
-                                class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[11px] text-gray-500">
-                                Summary
-                            </span>
-                        </div>
-
-                        <h3 class="search-result-title search-link inline-block cursor-pointer text-[clamp(1.3rem,2.4vw,1.95rem)] text-gBlue transition-all"
-                            data-scrollto="#aboutPanel" tabindex="0" role="link" aria-label="Open about panel">
-                            About Gene Elpie Landoy
-                        </h3>
-
-                        <p class="mt-2 text-sm leading-relaxed result-snippet">
-                            Creative technologist focused on polished interfaces, frontend systems, design, and
-                            practical delivery.
-                        </p>
-
-                        <div class="section-divider mt-4 border-borderDim transition-colors group-hover:border-gGreen">
-                            <div id="aboutPanel"
-                                class="google-preview-shell compact-panel rounded-2xl border border-borderDim bg-bgPanel p-3 sm:p-4">
-                                <div class="flex flex-wrap items-center justify-between gap-3">
-                                    <h4 class="text-base text-white">Quick intro</h4>
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        <button id="btnCopyBio" type="button"
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                                            Copy bio
-                                        </button>
-                                        <button id="btnDownloadResume" type="button"
-                                            class="f-ring rounded-full border border-borderDim bg-bgDark px-3 py-2 text-xs transition-colors">
-                                            Download resume
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_260px]">
-                                    <div class="min-w-0">
-                                        <p id="bioText" class="text-sm leading-relaxed text-gray-300">
-                                            I'm Gene Elpie Landoy, a creative technologist, UI/UX designer, frontend and
-                                            mobile developer, graphic designer, public speaker, and video editor. I
-                                            build
-                                            clean interfaces, strong visual systems, and polished digital experiences.
-                                        </p>
-
-                                        <div class="mt-4">
-                                            <div class="tech-logo-grid">
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="" loading="lazy" />React</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="" loading="lazy" />TypeScript</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="" loading="lazy" />JavaScript</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/flutter/02569B" alt="" loading="lazy" />Flutter</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/dart/0175C2" alt="" loading="lazy" />Dart</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/firebase/FFCA28" alt="" loading="lazy" />Firebase</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/nodedotjs/5FA04E" alt="" loading="lazy" />Node.js</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/express/ffffff" alt="" loading="lazy" />Express</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/mongodb/47A248" alt="" loading="lazy" />MongoDB</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="" loading="lazy" />PostgreSQL</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="" loading="lazy" />Tailwind</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" loading="lazy" />Figma</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobeillustrator/FF9A00" alt="" loading="lazy" />Illustrator</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobephotoshop/31A8FF" alt="" loading="lazy" />Photoshop</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobepremierepro/9999FF" alt="" loading="lazy" />Premiere Pro</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobeaftereffects/9999FF" alt="" loading="lazy" />After Effects</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobelightroom/31A8FF" alt="" loading="lazy" />Lightroom</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/canva/00C4CC" alt="" loading="lazy" />Canva</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/capcut/ffffff" alt="" loading="lazy" />CapCut</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/python/3776AB" alt="" loading="lazy" />Python</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/git/F05032" alt="" loading="lazy" />Git</span>
-                                                <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/obsstudio/302E31" alt="" loading="lazy" />OBS</span>
-                                            </div>
-                                        </div>
-
-                                        <!-- Awards in About Section -->
-                                        <div class="mt-8 border-t border-borderDim pt-8 text-center">
-                                            <div class="mb-6 text-xs font-bold uppercase tracking-widest text-gray-500">Distinguished Honors</div>
-                                            <div class="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16">
-                                                <div class="flex flex-col items-center gap-2 group cursor-pointer" 
-                                                     data-award-trigger="trophy">
-                                                    <div class="relative">
-                                                        <div class="absolute -inset-3 bg-gYellow/15 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                                                        <img
-                                                            src="/images/trophy.png"
-                                                            alt="Distinguished Recognition Award"
-                                                            class="trophy-img relative h-20 sm:h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1"
-                                                            data-award-title="Distinguished Recognition Award"
-                                                            data-award-subtitle="1st MarSU Boac Student Excellence Awards &middot; April 28, 2026"
-                                                            loading="lazy"
-                                                        />
-                                                    </div>
-                                                    <div class="text-[10px] font-bold text-white tracking-wider uppercase mt-1">Distinguished Award</div>
-                                                    <div class="text-[9px] text-gray-500 leading-none tracking-tight">Student Excellence</div>
-                                                </div>
-                                                <div class="flex flex-col items-center gap-2 group cursor-pointer"
-                                                     data-award-trigger="badge">
-                                                    <div class="relative">
-                                                        <div class="absolute -inset-3 bg-gRed/15 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                                                        <img
-                                                            src="/images/badge.png"
-                                                            alt="International Presenter"
-                                                            class="trophy-img relative h-20 sm:h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1"
-                                                            data-award-title="International Presenter"
-                                                            data-award-subtitle="Philippine Society of Information Technology Educators (PSITE)"
-                                                            loading="lazy"
-                                                        />
-                                                    </div>
-                                                    <div class="text-[10px] font-bold text-white tracking-wider uppercase mt-1">International Presenter</div>
-                                                    <div class="text-[9px] text-gray-500 leading-none tracking-tight">PSITE &middot; Est. 1994</div>
-                                                </div>
-                                                <div class="flex flex-col items-center gap-2 group cursor-pointer"
-                                                     data-award-trigger="cumlaude">
-                                                    <div class="relative">
-                                                        <div class="absolute -inset-3 bg-gBlue/15 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                                                        <img
-                                                            src="/images/cum laude.png"
-                                                            alt="Cum Laude 2026"
-                                                            class="trophy-img relative h-20 sm:h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1"
-                                                            data-award-title="Cum Laude"
-                                                            data-award-subtitle="BS Information Technology &middot; Class of 2026"
-                                                            loading="lazy"
-                                                        />
-                                                    </div>
-                                                    <div class="text-[10px] font-bold text-white tracking-wider uppercase mt-1">Cum Laude 2026</div>
-                                                    <div class="text-[9px] text-gray-500 leading-none tracking-tight">Academic Excellence</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex flex-col gap-4">
-                                        <div class="profile-snippet-card rounded-2xl border border-borderDim bg-bgDark/50 p-5 backdrop-blur-sm transition-all hover:border-gBlue/50 hover:shadow-glow">
-                                            <div class="mb-4 flex items-center justify-between">
-                                                <div class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Search Snippet</div>
-                                                <div class="h-1.5 w-1.5 rounded-full bg-gGreen animate-pulse"></div>
-                                            </div>
-                                            <div class="space-y-3">
-                                                <div class="flex items-center gap-3">
-                                                    <div class="h-1 w-1 rounded-full bg-gBlue"></div>
-                                                    <div class="text-xs text-gray-300">
-                                                        <span class="font-semibold text-gray-500">Primary:</span> UI + Frontend Systems
-                                                    </div>
-                                                </div>
-                                                <div class="flex items-center gap-3">
-                                                    <div class="h-1 w-1 rounded-full bg-gRed"></div>
-                                                    <div class="text-xs text-gray-300">
-                                                        <span class="font-semibold text-gray-500">Secondary:</span> Design + Leadership
-                                                    </div>
-                                                </div>
-                                                <div class="flex items-center gap-3">
-                                                    <div class="h-1 w-1 rounded-full bg-gYellow"></div>
-                                                    <div class="text-xs text-gray-300">
-                                                        <span class="font-semibold text-gray-500">Mode:</span> 
-                                                        <span class="text-gGreen">Shipping</span> + <span class="text-gBlue">Polish</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="rounded-2xl border border-borderDim bg-bgDark/30 p-4 text-[10px] text-gray-500 leading-relaxed italic">
-                                            "Building digital experiences that feel human and function perfectly."
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <details class="preview-details preview-details-polished group mt-6">
-                                    <summary class="flex items-center gap-2 cursor-pointer text-sm font-medium text-gBlue hover:text-white transition-colors">
-                                        <span>Open quick contact form</span>
-                                        <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    </summary>
-
-                                    <div class="pt-2 pb-1">
-                                        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-                                            <h5 class="text-sm text-white">Send a message</h5>
-                                            <span class="text-xs text-gray-500">Sends to backend if wired</span>
-                                        </div>
-
-                                        <form id="contactForm" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                                            <input type="text" name="name" required placeholder="Your name"
-                                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                                            <input type="email" name="email" required placeholder="Email"
-                                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                                            <textarea name="message" rows="4" required placeholder="Message"
-                                                class="f-ring rounded-xl border border-borderDim bg-bgDark px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600 lg:col-span-2"></textarea>
-
-                                            <div class="flex items-center gap-3 mt-2 lg:col-span-2">
-                                                <button type="submit"
-                                                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-3 text-sm text-gray-200 transition-colors">
-                                                    Send
-                                                </button>
-                                                <span id="contactStatus" class="text-xs text-gray-500"></span>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </details>
-
-                                <!-- Testimonials Section -->
-                                <div class="mt-6 pt-6 border-t border-borderDim">
-                                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-                                        <h4 class="text-base text-white">What people say</h4>
-                                        <span class="text-xs text-gray-500">5 recommendations</span>
-                                    </div>
-
-                                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                                        <!-- Testimonial 1 -->
-                                        <div class="testimonial-card rounded-xl border border-borderDim bg-bgDark p-4 transition-all hover:border-gBlue">
-                                            <div class="flex items-start gap-3 mb-3">
-                                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gBlue/10 text-gBlue font-bold text-sm">
-                                                    JM
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <div class="text-sm font-medium text-white line-clamp-1">Engr. Jayvi Mandalihan</div>
-                                                    <div class="text-xs text-gray-500 line-clamp-1">College of Information and Computing Sciences</div>
-                                                </div>
-                                            </div>
-                                            <p class="text-sm leading-relaxed text-gray-300">
-                                                “One of the best qualities of a good leader is being someone others can count on; someone who shows up and gives their best no matter the challenge. That’s who Mr. Landoy is. I’ve seen how he always gives his full effort, not just helping, but truly committing to the task like it’s his own.”
-                                            </p>
-                                        </div>
-
-                                        <!-- Testimonial 2 -->
-                                        <div class="testimonial-card rounded-xl border border-borderDim bg-bgDark p-4 transition-all hover:border-gGreen">
-                                            <div class="flex items-start gap-3 mb-3">
-                                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gGreen/10 text-gGreen font-bold text-sm">
-                                                    AR
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <div class="text-sm font-medium text-white line-clamp-1">Aldrin Requiz, MIT</div>
-                                                    <div class="text-xs text-gray-500 line-clamp-1">College of Information and Computing Sciences</div>
-                                                </div>
-                                            </div>
-                                            <p class="text-sm leading-relaxed text-gray-300">
-                                                “Mr. Landoy is the kind of teammate who brings stability and quiet strength to any group. He doesn’t need to stand out to make a difference—his consistency, support, and genuine commitment naturally lift the entire team. Always reliable, always present, and always working with purpose.”
-                                            </p>
-                                        </div>
-
-                                        <!-- Testimonial 3 -->
-                                        <div class="testimonial-card rounded-xl border border-borderDim bg-bgDark p-4 transition-all hover:border-gYellow">
-                                            <div class="flex items-start gap-3 mb-3">
-                                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gYellow/10 text-gYellow font-bold text-sm">
-                                                    SL
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <div class="text-sm font-medium text-white line-clamp-1">Shiela Mae Liwanagan</div>
-                                                    <div class="text-xs text-gray-500 line-clamp-1">Accenture</div>
-                                                </div>
-                                            </div>
-                                            <p class="text-sm leading-relaxed text-gray-300">
-                                                “Mr. Landoy stands out not just for his technical abilities but for how naturally he works within a team. Whether in design, development, or collaborative problem-solving, he consistently brings valuable skills and a focused mindset to every task. He listens first and contributes with intention.”
-                                            </p>
-                                        </div>
-
-                                        <!-- Testimonial 4 -->
-                                        <div class="testimonial-card rounded-xl border border-borderDim bg-bgDark p-4 transition-all hover:border-gRed lg:col-span-2">
-                                            <div class="flex items-start gap-3 mb-3">
-                                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gRed/10 text-gRed font-bold text-sm">
-                                                    KL
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <div class="text-sm font-medium text-white line-clamp-1">Kryzha Lineses Lope</div>
-                                                    <div class="text-xs text-gray-500 line-clamp-1">Educational System Technological Institute</div>
-                                                </div>
-                                            </div>
-                                            <p class="text-sm leading-relaxed text-gray-300">
-                                                “Mr. Landoy is one of the most reliable and technically skilled professionals I’ve had the pleasure of working with. He consistently delivers high-quality results and stays updated with the latest technologies. What makes him truly stand out is his dedication to client satisfaction. He listens carefully, communicates clearly, and always goes the extra mile to make sure the final output exceeds expectations.”
-                                            </p>
-                                        </div>
-
-                                        <!-- Testimonial 5 -->
-                                        <div class="testimonial-card rounded-xl border border-borderDim bg-bgDark p-4 transition-all hover:border-gBlue">
-                                            <div class="flex items-start gap-3 mb-3">
-                                                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gBlue/10 text-gBlue font-bold text-sm">
-                                                    JR
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <div class="text-sm font-medium text-white line-clamp-1">John Ryan Rodelas</div>
-                                                    <div class="text-xs text-gray-500 line-clamp-1">Information Technology</div>
-                                                </div>
-                                            </div>
-                                            <p class="text-sm leading-relaxed text-gray-300">
-                                                “Mr. Landoy leads with purpose, not pressure. He knows how to guide a team with clarity, patience, and confidence, making sure everyone feels heard and supported. What sets him apart is his ability to stay calm under pressure while staying focused on the bigger picture.”
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <aside class="hidden min-w-0 self-start xl:block">
-                <div id="kpDesktopMount"
-                    class="kp-shell sticky top-28 rounded-2xl border border-borderDim bg-bgPanel p-5 shadow-soft"
-                    aria-label="Knowledge panel"></div>
-            </aside>
-        </main>
-
-        <button id="btnTop" type="button"
-            class="f-ring fixed bottom-5 right-5 z-[95] hidden rounded-full border border-borderDim bg-bgPanel px-4 py-3 text-sm shadow-soft transition-colors sm:bottom-6 sm:right-6"
-            aria-label="Back to top" title="Back to top">
-            ↑ Top
-        </button>
-
-        <footer class="mt-8 border-t border-borderDim py-6">
-            <div
-                class="mx-auto flex max-w-[1500px] flex-col items-center justify-center gap-4 px-4 text-center text-sm text-gray-600 sm:px-6 xl:px-10">
-                <div class="flex flex-wrap justify-center gap-6">
-                    <!-- Facebook -->
-                    <a href="https://facebook.com/yourprofile" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gBlue transition-colors" aria-label="Facebook">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                    </a>
-                    <!-- Instagram -->
-                    <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gRed transition-colors" aria-label="Instagram">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
-                        </svg>
-                    </a>
-                    <!-- LinkedIn -->
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gBlue transition-colors" aria-label="LinkedIn">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                    <!-- GitHub -->
-                    <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gBlue transition-colors" aria-label="GitHub">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                    <!-- Gmail -->
-                    <a href="mailto:your.email@gmail.com" class="text-gray-400 hover:text-gRed transition-colors" aria-label="Gmail">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </a>
-                </div>
-                <p class="text-xs text-gray-500">© 2026 Gene Elpie Landoy. All rights reserved.</p>
-            </div>
-        </footer>
-
-        <template id="kpTemplate">
-            <div class="kp-avatar-wrap">
-                <img src="/images/icon.jpg" alt="Gene Elpie Landoy avatar" class="kp-avatar" loading="lazy" />
-            </div>
-
-            <div class="mt-4 flex items-start justify-between gap-2">
-                <div class="min-w-0 flex-1">
-                    <h2 class="text-2xl font-bold leading-tight text-white mb-2">Gene Elpie Landoy</h2>
-                    <div class="profile-skill-marquee mt-2" aria-label="Roles and specialties">
-                        <div class="profile-skill-viewport">
-                            <div class="profile-skill-track">
-                                <span class="profile-dog" aria-hidden="true">🐕</span>
-                                <span class="profile-skill-item">UI/UX</span>
-                                <span class="profile-skill-dot" aria-hidden="true"></span>
-                                <span class="profile-skill-item">Graphic Design</span>
-                                <span class="profile-skill-dot" aria-hidden="true"></span>
-                                <span class="profile-skill-item">Frontend</span>
-                                <span class="profile-skill-dot" aria-hidden="true"></span>
-                                <span class="profile-skill-item">Mobile</span>
-                                <span class="profile-skill-dot" aria-hidden="true"></span>
-                                <span class="profile-skill-item">Social Media</span>
-                                <span class="profile-skill-dot" aria-hidden="true"></span>
-                                <span class="profile-skill-item">Public Speaking</span>
-                                <span class="profile-skill-dot" aria-hidden="true"></span>
-                                <span class="profile-skill-item">Video Editing</span>
-                                <span class="profile-dog" aria-hidden="true">🐕</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <span
-                    class="animate-flicker rounded-full border border-borderDim bg-bgSoft px-2 py-1 text-[11px] text-gray-400">
-                    online
-                </span>
-            </div>
-
-            <div class="mt-4">
-                <p class="text-sm leading-relaxed text-gray-300">
-                    Full-stack developer, UI/UX designer, mobile dev, graphic artist, video editor, and social media manager — all in one. Builds modern, responsive digital products from polished interfaces and mobile apps to visual content and campaigns that actually look good and ship.
-                </p>
-                <div class="mt-3 flex flex-wrap gap-1.5">
-                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gBlue">Full-Stack Dev</span>
-                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gYellow">UI/UX Design</span>
-                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gGreen">Mobile Dev</span>
-                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gRed">Video Editor</span>
-                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gray-300">Graphics</span>
-                    <span class="rounded-full border border-borderDim bg-bgPanel px-2 py-0.5 text-[10px] text-gray-300">Social Media</span>
-                </div>
-                <!-- Awards Spotlight Section -->
-                <div class="mt-5 flex flex-wrap justify-center gap-4 sm:gap-6">
-                    <div class="flex flex-col items-center gap-1 w-[80px] sm:w-auto">
-                        <img
-                            src="/images/trophy.png"
-                            alt="Distinguished Recognition Award"
-                            class="trophy-img h-24 sm:h-32 w-auto object-contain cursor-pointer"
-                            data-award-title="Distinguished Recognition Award"
-                            data-award-subtitle="1st MarSU Boac Student Excellence Awards &middot; April 28, 2026"
-                            loading="lazy"
-                        />
-                        <div class="text-[9px] sm:text-[10px] font-semibold text-gray-300 text-center leading-tight">Distinguished Recognition Award</div>
-                        <div class="text-[8px] sm:text-[9px] text-gray-500 text-center leading-tight">1st MarSU Boac Student Excellence Awards</div>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 w-[80px] sm:w-auto">
-                        <img
-                            src="/images/badge.png"
-                            alt="International Presenter"
-                            class="trophy-img h-24 sm:h-32 w-auto object-contain cursor-pointer"
-                            data-award-title="International Presenter"
-                            data-award-subtitle="Philippine Society of Information Technology Educators (PSITE)"
-                            loading="lazy"
-                        />
-                        <div class="text-[9px] sm:text-[10px] font-semibold text-gray-300 text-center leading-tight">International Presenter</div>
-                        <div class="text-[8px] sm:text-[9px] text-gray-500 text-center leading-tight">PSITE — Est. 1994</div>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 w-[80px] sm:w-auto">
-                        <img
-                            src="/images/cum laude.png"
-                            alt="Cum Laude 2026"
-                            class="trophy-img h-24 sm:h-32 w-auto object-contain cursor-pointer"
-                            data-award-title="Cum Laude"
-                            data-award-subtitle="BS Information Technology &middot; Class of 2026"
-                            loading="lazy"
-                        />
-                        <div class="text-[9px] sm:text-[10px] font-semibold text-gray-300 text-center leading-tight">Cum Laude</div>
-                        <div class="text-[8px] sm:text-[9px] text-gray-500 text-center leading-tight">BS IT Class of 2026</div>
-                    </div>
-                </div>
-            </div>
-
-                <div class="mt-5">
-                <div class="mb-2 text-xs text-gray-500 uppercase tracking-widest">Tech Stack & Creative Tools</div>
-                <div class="tech-logo-grid">
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="" loading="lazy" />React</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="" loading="lazy" />TypeScript</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="" loading="lazy" />JavaScript</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/flutter/02569B" alt="" loading="lazy" />Flutter</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/dart/0175C2" alt="" loading="lazy" />Dart</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/firebase/FFCA28" alt="" loading="lazy" />Firebase</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="" loading="lazy" />Node.js</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/express/ffffff" alt="" loading="lazy" />Express</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/mongodb/47A248" alt="" loading="lazy" />MongoDB</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="" loading="lazy" />PostgreSQL</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="" loading="lazy" />Tailwind</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/figma/F24E1E" alt="" loading="lazy" />Figma</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobeillustrator/FF9A00" alt="" loading="lazy" />Illustrator</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobephotoshop/31A8FF" alt="" loading="lazy" />Photoshop</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobepremierepro/9999FF" alt="" loading="lazy" />Premiere Pro</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobeaftereffects/9999FF" alt="" loading="lazy" />After Effects</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/adobelightroom/31A8FF" alt="" loading="lazy" />Lightroom</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/canva/00C4CC" alt="" loading="lazy" />Canva</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/capcut/ffffff" alt="" loading="lazy" />CapCut</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/python/3776AB" alt="" loading="lazy" />Python</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/git/F05032" alt="" loading="lazy" />Git</span>
-                    <span class="tech-logo-chip"><img src="https://cdn.simpleicons.org/obsstudio/302E31" alt="" loading="lazy" />OBS</span>
-                </div>
-            </div>
-
-            <div class="kp-mini-grid mt-5">
-                <div class="kp-mini-card">
-                    <span class="kp-mini-icon kp-mini-icon-location" aria-hidden="true">L</span>
-                    <span class="kp-mini-label">Location</span>
-                    <span class="kp-mini-value">Boac, Marinduque</span>
-                    <span class="kp-mini-subvalue">Marinduque, Philippines</span>
-                </div>
-                <div class="kp-mini-card">
-                    <span class="kp-mini-icon kp-mini-icon-focus" aria-hidden="true">F</span>
-                    <span class="kp-mini-label">Focus</span>
-                    <span class="kp-mini-value">Frontend + UI Systems</span>
-                    <span class="kp-mini-subvalue">Interfaces, flows, and product polish</span>
-                </div>
-                <div class="kp-mini-card">
-                    <span class="kp-mini-icon kp-mini-icon-mode" aria-hidden="true">M</span>
-                    <span class="kp-mini-label">Mode</span>
-                    <span class="kp-mini-value text-gGreen">Ship • Measure • Refine</span>
-                    <span class="kp-mini-subvalue">Fast delivery with iterative cleanup</span>
-                </div>
-                <div class="kp-mini-card kp-mini-card-stack">
-                    <span class="kp-mini-icon kp-mini-icon-stack" aria-hidden="true">S</span>
-                    <span class="kp-mini-label">Stack</span>
-                    <span class="kp-mini-stack-row">
-                        <span class="kp-stack-chip">React</span>
-                        <span class="kp-stack-chip">TS</span>
-                        <span class="kp-stack-chip">Flutter</span>
-                        <span class="kp-stack-chip">Node</span>
-                        <span class="kp-stack-chip">Figma</span>
-                    </span>
-                </div>
-            </div>
-
-            <div class="mt-5 flex gap-3">
-                <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer"
-                    class="kp-btn-ghost f-ring flex-1 rounded-xl border border-borderDim px-4 py-2.5 text-center text-sm transition-all">
-                    GitHub
-                </a>
-                <a href="mailto:g.landoyelpie@gmail.com"
-                    class="kp-btn-primary f-ring flex-1 rounded-xl px-4 py-2.5 text-center text-sm text-white transition-all">
-                    Contact
-                </a>
-            </div>
-
-            <div class="mt-5 border-t border-borderDim pt-4">
-                <div class="mb-2 text-xs text-gray-500">Quick links</div>
-                <div class="grid grid-cols-2 gap-2">
-                    <button
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-                        type="button" data-scrollto="#projectsPanel">
-                        Projects
-                    </button>
-                    <button
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-                        type="button" data-scrollto="#timelinePanel">
-                        Timeline
-                    </button>
-                    <button
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-                        type="button" data-scrollto="#certPanel">
-                        Certs
-                    </button>
-                    <button
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors"
-                        type="button" data-scrollto="#aboutPanel">
-                        About me
-                    </button>
-                </div>
-            </div>
-        </template>
-
-        <div id="kpDrawer" class="fixed inset-0 z-[96] hidden" role="dialog" aria-modal="true"
-            aria-label="Profile panel">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="absolute right-0 top-0 flex h-full w-[92vw] max-w-md animate-pop flex-col border-l border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-                    <div class="text-sm text-gray-300">Profile</div>
-                    <button id="btnCloseKp" type="button"
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                        ✕
-                    </button>
-                </div>
-                <div id="kpMobileMount" class="kp-drawer-body overflow-y-auto p-4"></div>
-            </div>
-        </div>
-
-        <div id="lightbox" class="fixed inset-0 z-[95] hidden items-center justify-center" role="dialog"
-            aria-modal="true" aria-label="Image lightbox">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderDim px-4 py-3">
-                    <div id="lightboxTitle" class="clamp-2 text-sm text-gray-300">Image title</div>
-                    <div class="flex items-center gap-2">
-                        <button id="btnPrevImg" type="button"
-                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                            ←
-                        </button>
-                        <button id="btnNextImg" type="button"
-                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                            →
-                        </button>
-                        <button id="btnCloseLightbox" type="button"
-                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                            ✕
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-bgDark">
-                    <img id="lightboxImg" src="" alt="" class="max-h-[76vh] w-full object-contain" />
-                </div>
-            </div>
-        </div>
-
-        <div id="certModal" class="fixed inset-0 z-[90] hidden items-center justify-center" role="dialog"
-            aria-modal="true" aria-label="Certificate details">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="relative w-[92vw] max-w-5xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-                    <div id="certModalTitle" class="text-sm text-gray-300">Certificate</div>
-                    <button id="btnCloseCertModal" type="button"
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                        ✕
-                    </button>
-                </div>
-
-                <div class="max-h-[88vh] overflow-hidden">
-                    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_420px]">
-                        <div class="border-b border-borderDim bg-bgDark xl:border-b-0 xl:border-r">
-                            <div class="cert-preview-shell h-full">
-                                <div class="cert-preview-topbar">
-                                    <span class="text-xs text-gray-500">Certificate image</span>
-                                    <div class="flex items-center gap-2">
-                                        <button id="btnOpenCertImage" type="button"
-                                            class="f-ring rounded-full border border-borderDim bg-bgSoft px-3 py-1.5 text-[11px] transition-colors">
-                                            Full view
-                                        </button>
-                                    </div>
-                                </div>
-                                <button id="btnCertImage" type="button" class="cert-preview-frame h-full w-full">
-                                    <img id="certModalImage" src="" alt="Certificate preview"
-                                        class="cert-preview-image" />
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="max-h-[calc(88vh-56px)] overflow-y-auto p-4">
-                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                                    <div class="text-xs text-gray-500">Issuer</div>
-                                    <div id="certModalIssuer" class="mt-1 text-sm text-white"></div>
-                                </div>
-                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                                    <div class="text-xs text-gray-500">Issued</div>
-                                    <div id="certModalIssued" class="mt-1 text-sm text-white"></div>
-                                </div>
-                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                                    <div class="text-xs text-gray-500">Credential ID</div>
-                                    <div id="certModalId" class="mt-1 text-sm text-white"></div>
-                                </div>
-                                <div class="rounded-xl border border-borderDim bg-bgSoft p-3">
-                                    <div class="text-xs text-gray-500">Status</div>
-                                    <div class="mt-1 text-sm">
-                                        <span
-                                            class="inline-flex items-center rounded-full border border-borderDim bg-bgPanel px-2 py-1 text-xs text-gGreen">
-                                            Verified
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-4 rounded-xl border border-borderDim bg-bgSoft p-3">
-                                <div class="text-xs text-gray-500">Notes</div>
-                                <div id="certModalNotes" class="mt-1 text-sm leading-7 text-gray-300"></div>
-                            </div>
-
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <a id="certModalLink" href="#" target="_blank" rel="noreferrer"
-                                    class="f-ring rounded-xl border border-borderDim bg-[#21262d] px-4 py-2 text-sm text-gray-200 transition-colors">
-                                    Verify link
-                                </a>
-                                <button id="btnCopyCert" type="button"
-                                    class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-                                    Copy details
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="projectModal" class="fixed inset-0 z-[91] hidden items-center justify-center" role="dialog"
-            aria-modal="true" aria-label="Project details">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="relative flex flex-col w-[92vw] max-w-3xl max-h-[92vh] animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex shrink-0 items-center justify-between border-b border-borderDim px-5 py-4">
-                    <div id="projectModalTitle" class="text-lg font-bold text-white">Project</div>
-                    <button id="btnCloseProjectModal" type="button"
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                        ✕
-                    </button>
-                </div>
-
-                <div class="flex-1 min-h-0 overflow-y-auto p-6">
-                    <div class="space-y-5">
-                        <div id="projectModalMeta" class="text-xs text-gray-500"></div>
-
-                        <!-- Project Summary -->
-                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
-                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Project
-                                summary</div>
-                            <div id="projectModalDesc" class="text-sm leading-relaxed text-gray-300"></div>
-                        </div>
-
-                        <!-- Role -->
-                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
-                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Role</div>
-                            <div id="projectModalRole" class="text-sm leading-relaxed text-white"></div>
-                        </div>
-
-                        <!-- Impact & Outcome -->
-                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
-                                <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Impact</div>
-                                <div id="projectModalImpact" class="text-sm leading-relaxed text-gray-300"></div>
-                            </div>
-                            <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
-                                <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Outcome</div>
-                                <div id="projectModalOutcome" class="text-sm leading-relaxed text-gray-300"></div>
-                            </div>
-                        </div>
-
-                        <!-- Tech Stack -->
-                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
-                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Tech Stack</div>
-                            <div id="projectModalTech" class="flex flex-wrap gap-2"></div>
-                        </div>
-
-                        <!-- Highlights -->
-                        <div class="rounded-xl border border-borderDim bg-bgSoft p-4">
-                            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Highlights</div>
-                            <ul id="projectModalHighlights" class="list-none space-y-1 text-sm text-gray-300"></ul>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="flex flex-wrap gap-3 pt-2">
-                            <a id="projectModalDemo" href="#" target="_blank" rel="noreferrer"
-                                class="f-ring flex-1 min-w-[120px] text-center rounded-xl bg-gBlue px-5 py-3 text-sm font-bold text-white shadow-glow transition-all hover:scale-[1.02] hidden">
-                                Live Demo
-                            </a>
-                            <a id="projectModalRepo" href="#" target="_blank" rel="noreferrer"
-                                class="f-ring flex-1 min-w-[120px] text-center rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:bg-opacity-80">
-                                GitHub
-                            </a>
-                            <button id="btnCopyProject" type="button"
-                                class="f-ring flex-1 min-w-[140px] rounded-xl border border-borderDim bg-bgDark px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:bg-opacity-80">
-                                Copy summary
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="galleryModal" class="fixed inset-0 z-[92] hidden items-center justify-center" role="dialog"
-            aria-modal="true" aria-label="Gallery details">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="relative w-[92vw] max-w-3xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-                    <div id="galleryModalTitle" class="clamp-2 text-sm text-gray-300">Project</div>
-                    <button id="btnCloseGalleryModal" type="button"
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                        ✕
-                    </button>
-                </div>
-
-                <div class="bg-bgDark">
-                    <img id="galleryModalImg" src="" alt="" class="max-h-[55vh] w-full object-cover" />
-                </div>
-
-                <div class="space-y-3 p-4">
-                    <div id="galleryModalMeta" class="text-xs text-gray-500"></div>
-                    <div id="galleryModalDesc" class="text-sm leading-7 text-gray-300"></div>
-                    <div id="galleryModalTech" class="flex flex-wrap gap-2"></div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <button id="btnCopyGalleryItem" type="button"
-                            class="f-ring rounded-xl border border-borderDim bg-bgSoft px-4 py-2 text-sm text-gray-200 transition-colors">
-                            Copy summary
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="cmdPalette" class="fixed inset-0 z-[97] hidden items-center justify-center" role="dialog"
-            aria-modal="true" aria-label="Command palette">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="border-b border-borderDim px-4 py-3">
-                    <div class="text-xs text-gray-500">Command palette</div>
-                    <input id="cmdInput" autocomplete="off"
-                        placeholder="Type: images, videos, projects, timeline, certs, achievements, gallery, about, top..."
-                        class="f-ring mt-2 w-full rounded-xl border border-borderDim bg-bgSoft px-3 py-3 text-sm text-gray-200 placeholder:text-gray-600" />
-                </div>
-                <div id="cmdList" class="max-h-[55vh] overflow-y-auto p-2"></div>
-            </div>
-        </div>
-
-        <div id="savedModal" class="fixed inset-0 z-[98] hidden items-center justify-center" role="dialog"
-            aria-modal="true" aria-label="Saved searches">
-            <div class="modal-backdrop absolute inset-0" data-close="true"></div>
-            <div
-                class="relative w-[92vw] max-w-xl animate-pop overflow-hidden rounded-2xl border border-borderDim bg-bgPanel shadow-soft">
-                <div class="flex items-center justify-between border-b border-borderDim px-4 py-3">
-                    <div class="text-sm text-gray-300">Saved searches</div>
-                    <button id="btnCloseSaved" type="button"
-                        class="f-ring rounded-xl border border-borderDim bg-bgSoft px-3 py-2 text-xs transition-colors">
-                        ✕
-                    </button>
-                </div>
-                <div id="savedList" class="space-y-3 p-4"></div>
-            </div>
-        </div>
-
-        <div id="toast" class="fixed bottom-5 left-1/2 z-[100] hidden -translate-x-1/2" role="status"
-            aria-live="polite">
-            <div id="toastText"
-                class="rounded-full border border-borderDim bg-bgPanel px-4 py-2 text-xs text-gray-200 shadow-glow">
-                Copied!
-            </div>
-        </div>
+<body data-theme="light">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="page-progress" id="pageProgress" aria-hidden="true"></div>
+
+  <header class="mobile-bar" aria-label="Mobile navigation">
+    <a class="wordmark" href="#top" aria-label="Gene Elpie Landoy, home">
+      <span class="wordmark-mark">GE</span>
+      <span>Landoy</span>
+    </a>
+    <div class="mobile-actions">
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" aria-pressed="false">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg>
+      </button>
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
     </div>
+  </header>
 
-    <script type="module" src="js/main.js"></script>
-    <script>
-      /**
-       * Image Preview Helper
-       */
-      function openPreview(src, title, subtitle) {
-        var o = document.createElement('div');
-        o.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;backdrop-filter:blur(10px);padding:20px;';
-        
-        var i = document.createElement('img');
-        i.src = src;
-        i.style.cssText = 'max-height:80vh;max-width:92vw;object-fit:contain;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);';
-        
-        var cap = document.createElement('div');
-        cap.style.cssText = 'text-align:center;font-family:sans-serif;line-height:1.6;';
-        cap.innerHTML = '<strong style="color:#fff;font-size:16px;display:block;margin-bottom:4px;">' + title + '</strong><span style="color:#9ca3af;font-size:12px;">' + subtitle + '</span>';
-        
-        var x = document.createElement('button');
-        x.textContent = '✕';
-        x.style.cssText = 'position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;opacity:0.7;line-height:1;transition:opacity 0.2s;';
-        x.onmouseover = function() { this.opacity = 1; };
-        x.onmouseout = function() { this.opacity = 0.7; };
-        x.onclick = function(e) { e.stopPropagation(); document.body.removeChild(o); };
-        
-        o.appendChild(i); o.appendChild(cap); o.appendChild(x);
-        o.onclick = function() { document.body.removeChild(o); };
-        document.body.appendChild(o);
-      }
+  <aside class="side-rail" aria-label="Primary navigation">
+    <a class="wordmark" href="#top" aria-label="Gene Elpie Landoy, home">
+      <span class="wordmark-mark">GE</span>
+      <span>Landoy</span>
+    </a>
 
-      /**
-       * Award Click Delegation
-       */
-      document.addEventListener('click', function(e) {
-        var awardImg = e.target.closest('.trophy-img');
-        if (awardImg && awardImg.dataset.awardTitle) {
-          openPreview(
-            awardImg.src, 
-            awardImg.dataset.awardTitle, 
-            awardImg.dataset.awardSubtitle
-          );
-        }
-      });
-    </script>
+    <nav class="rail-nav" aria-label="Portfolio sections">
+      <a class="rail-link is-active" href="#work"><span>01</span>All projects</a>
+      <a class="rail-link" href="#profile"><span>02</span>Profile</a>
+      <a class="rail-link" href="#experience"><span>03</span>Experience</a>
+      <a class="rail-link" href="#toolkit"><span>04</span>Toolkit</a>
+      <a class="rail-link" href="#archive"><span>05</span>Visual archive</a>
+      <a class="rail-link" href="#recognition"><span>06</span>Recognition</a>
+      <a class="rail-link" href="#contact"><span>07</span>Say hello</a>
+    </nav>
+
+    <div class="rail-footer">
+      <p class="availability"><span class="status-dot" aria-hidden="true"></span>Open to good work</p>
+      <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <a href="mailto:g.landoyelpie@gmail.com">Email <span aria-hidden="true">↗</span></a>
+      <a href="/CURRICULUM-VITAE-LANDOY.pdf" download>Résumé <span aria-hidden="true">↓</span></a>
+      <button class="theme-label theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" aria-pressed="false">
+        <span class="theme-swatch" aria-hidden="true"></span><span data-theme-label>Dark mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <div class="mobile-menu-inner">
+      <p class="eyebrow">Index / 2026</p>
+      <nav aria-label="Mobile portfolio sections">
+        <a href="#work"><span>01</span>All projects</a>
+        <a href="#profile"><span>02</span>Profile</a>
+        <a href="#experience"><span>03</span>Experience</a>
+        <a href="#toolkit"><span>04</span>Toolkit</a>
+        <a href="#archive"><span>05</span>Visual archive</a>
+        <a href="#recognition"><span>06</span>Recognition</a>
+        <a href="#contact"><span>07</span>Say hello</a>
+      </nav>
+      <a class="menu-email" href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com</a>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <section class="hero section-shell" id="top" aria-labelledby="heroTitle">
+      <div class="hero-portrait reveal">
+        <figure class="portrait-frame">
+          <img src="/images/icon.jpg" alt="Gene Elpie Landoy standing outside a café" width="288" height="360" fetchpriority="high" />
+        </figure>
+      </div>
+
+      <div class="hero-copy reveal" data-delay="1">
+        <div class="hero-kicker">
+          <span>Creative technologist</span>
+          <span class="kicker-line" aria-hidden="true"></span>
+          <span>Marinduque, PH</span>
+        </div>
+        <h1 id="heroTitle">Gene Elpie <em>Landoy</em></h1>
+        <p class="hero-intro">I’m a developer and designer building thoughtful web, mobile, and AI products.</p>
+        <p class="hero-intro hero-intro-secondary">I also work across graphic design, video, and creative direction—turning rough ideas into things people can actually use.</p>
+        <div class="hero-socials" aria-label="Profile links">
+          <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">github ↗</a>
+          <a href="mailto:g.landoyelpie@gmail.com">email ↗</a>
+          <a href="/CURRICULUM-VITAE-LANDOY.pdf" download>résumé ↓</a>
+        </div>
+      </div>
+
+      <div class="hero-proof reveal" data-delay="2" aria-label="Portfolio highlights">
+        <div><strong id="projectCount">08</strong><span>Products & prototypes</span></div>
+        <div><strong id="recognitionCount">11</strong><span>Recognitions earned</span></div>
+        <div><strong>01</strong><span>Rule: make it matter</span></div>
+        <div><strong>PH</strong><span>Based in Marinduque</span></div>
+      </div>
+    </section>
+
+    <section class="section-shell ruled-section" id="work" aria-labelledby="workTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">01</span><p class="eyebrow">All projects</p></div>
+        <h2 id="workTitle">Every project, <em>not just the highlights.</em></h2>
+        <p>All product work currently documented in this portfolio—from civic tech and AI to education, research, finance, and games.</p>
+      </header>
+
+      <div class="filter-row reveal" role="group" aria-label="Filter projects">
+        <button class="filter-button is-active" type="button" data-project-filter="all" aria-pressed="true">All work</button>
+        <button class="filter-button" type="button" data-project-filter="ai" aria-pressed="false">AI</button>
+        <button class="filter-button" type="button" data-project-filter="mobile" aria-pressed="false">Mobile</button>
+        <button class="filter-button" type="button" data-project-filter="web" aria-pressed="false">Web</button>
+      </div>
+      <div class="project-grid" id="projectGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section-shell ruled-section" id="profile" aria-labelledby="profileTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">02</span><p class="eyebrow">Profile</p></div>
+        <h2 id="profileTitle">Part builder, part editor, <em>always curious.</em></h2>
+      </header>
+
+      <div class="profile-grid">
+        <article class="profile-statement reveal">
+          <p class="big-copy">I like the point where <span>systems thinking</span> meets visual instinct.</p>
+          <p>I work across product strategy, UI/UX, frontend and mobile development, graphic design, video, and public speaking. That mix helps me see both the interface and the story behind it.</p>
+          <a class="text-link" href="/CURRICULUM-VITAE-LANDOY.pdf" download>Download full résumé <span aria-hidden="true">↓</span></a>
+        </article>
+
+        <figure class="profile-photo reveal" data-delay="1">
+          <img src="/images/events/award.jpg" alt="Gene holding an award certificate at a university event" width="1365" height="2048" loading="lazy" />
+          <figcaption>Proof over promises / 2026</figcaption>
+        </figure>
+
+        <div class="profile-facts reveal" data-delay="2">
+          <p class="eyebrow">A few coordinates</p>
+          <dl>
+            <div><dt>Home base</dt><dd>Boac, Marinduque</dd></div>
+            <div><dt>Current focus</dt><dd>Useful AI + human interfaces</dd></div>
+            <div><dt>Community</dt><dd>DotOrbit Development Team</dd></div>
+            <div><dt>Degree</dt><dd>BS Information Technology, Cum Laude</dd></div>
+            <div><dt>Working style</dt><dd>Curious, collaborative, detail-led</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell ruled-section" id="experience" aria-labelledby="experienceTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">03</span><p class="eyebrow">Experience</p></div>
+        <h2 id="experienceTitle">Leadership with my <em>sleeves rolled up.</em></h2>
+        <p>Roles where product direction, engineering, editorial craft, and team stewardship overlap.</p>
+      </header>
+      <div class="experience-list" id="experienceList"></div>
+      <button class="text-button reveal" id="experienceToggle" type="button" aria-expanded="false">Show full history <span aria-hidden="true">＋</span></button>
+    </section>
+
+    <section class="section-shell ruled-section" id="toolkit" aria-labelledby="toolkitTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">04</span><p class="eyebrow">Toolkit</p></div>
+        <h2 id="toolkitTitle">One brain, <em>four working modes.</em></h2>
+      </header>
+
+      <div class="toolkit-grid">
+        <article class="tool-card reveal"><span class="tool-index">A</span><h3>Build</h3><p>React, JavaScript, TypeScript, Flutter, Dart, Node.js, Express, Python</p></article>
+        <article class="tool-card reveal" data-delay="1"><span class="tool-index">B</span><h3>Design</h3><p>Figma, Illustrator, Photoshop, Canva, interface systems, product flows</p></article>
+        <article class="tool-card reveal" data-delay="2"><span class="tool-index">C</span><h3>Ship</h3><p>Firebase, PostgreSQL, MongoDB, Git, REST APIs, rapid prototyping</p></article>
+        <article class="tool-card reveal" data-delay="3"><span class="tool-index">D</span><h3>Tell</h3><p>Premiere Pro, After Effects, editorial direction, speaking, visual narrative</p></article>
+      </div>
+
+      <div class="ticker" aria-label="Core disciplines">
+        <div><span>Product design</span><i></i><span>Frontend engineering</span><i></i><span>Creative direction</span><i></i><span>Mobile development</span><i></i><span>Product design</span><i></i><span>Frontend engineering</span><i></i><span>Creative direction</span><i></i><span>Mobile development</span></div>
+      </div>
+    </section>
+
+    <section class="section-shell ruled-section" id="archive" aria-labelledby="archiveTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">05</span><p class="eyebrow">Visual archive</p></div>
+        <h2 id="archiveTitle">Scenes from the work <em>around the work.</em></h2>
+        <p>Design output, conference rooms, hackathon tables, and the people who made the days memorable.</p>
+      </header>
+
+      <div class="archive-tabs reveal" role="tablist" aria-label="Visual archive categories">
+        <button role="tab" aria-selected="true" data-archive-tab="moments">Field moments</button>
+        <button role="tab" aria-selected="false" data-archive-tab="graphics">Graphic work</button>
+      </div>
+      <div class="archive-grid" id="archiveGrid" aria-live="polite"></div>
+      <button class="text-button reveal" id="archiveToggle" type="button" aria-expanded="false">View more from the archive <span aria-hidden="true">＋</span></button>
+    </section>
+
+    <section class="section-shell ruled-section" id="recognition" aria-labelledby="recognitionTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">06</span><p class="eyebrow">Recognition</p></div>
+        <h2 id="recognitionTitle">The work is better when <em>people feel it.</em></h2>
+      </header>
+
+      <div class="quote-stage reveal">
+        <div class="quote-mark" aria-hidden="true">“</div>
+        <blockquote id="testimonialQuote"></blockquote>
+        <div class="quote-footer">
+          <p><strong id="testimonialName"></strong><span id="testimonialRole"></span></p>
+          <div class="quote-controls">
+            <button class="icon-button" id="quotePrev" type="button" aria-label="Previous recommendation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <span id="quoteCounter" aria-live="polite"></span>
+            <button class="icon-button" id="quoteNext" type="button" aria-label="Next recommendation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="credentials-block reveal">
+        <div class="credentials-header"><p class="eyebrow">Selected credentials</p><p id="credentialCount"></p></div>
+        <div class="credential-grid" id="credentialGrid"></div>
+        <button class="text-button" id="credentialToggle" type="button" aria-expanded="false">Show more credentials <span aria-hidden="true">＋</span></button>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contactTitle">
+      <div class="contact-halftone" aria-hidden="true"></div>
+      <div class="contact-copy reveal">
+        <p class="eyebrow">07 / Say hello</p>
+        <h2 id="contactTitle">Have an idea worth <em>making real?</em></h2>
+        <p>I’m open to product work, creative collaborations, and conversations that start with “what if?”</p>
+        <a href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" novalidate>
+        <div class="field-row">
+          <label for="contactName">Your name</label>
+          <input id="contactName" name="name" type="text" autocomplete="name" required />
+          <span class="field-error" data-error-for="contactName"></span>
+        </div>
+        <div class="field-row">
+          <label for="contactEmail">Email address</label>
+          <input id="contactEmail" name="email" type="email" autocomplete="email" required />
+          <span class="field-error" data-error-for="contactEmail"></span>
+        </div>
+        <div class="field-row field-message">
+          <label for="contactMessage">Tell me about it</label>
+          <textarea id="contactMessage" name="message" rows="3" required></textarea>
+          <span class="field-error" data-error-for="contactMessage"></span>
+        </div>
+        <div class="form-submit">
+          <button class="button button-light" type="submit">Send note <span aria-hidden="true">↗</span></button>
+          <p id="contactStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <footer class="site-footer">
+      <a class="wordmark" href="#top"><span class="wordmark-mark">GE</span><span>Landoy</span></a>
+      <p>Built with intention in Marinduque.</p>
+      <p>© <span id="currentYear">2026</span> Gene Elpie Landoy</p>
+    </footer>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightboxTitle">
+    <div class="lightbox-bar">
+      <p id="lightboxTitle"></p>
+      <button class="icon-button" id="lightboxClose" type="button" aria-label="Close image viewer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <img id="lightboxImage" src="" alt="" />
+  </dialog>
+
+  <script type="module" src="/js/main.js"></script>
 </body>
-
 </html>
