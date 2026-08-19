@@ -118,13 +118,20 @@
         <p>All product work currently documented in this portfolio—from civic tech and AI to education, research, finance, and games.</p>
       </header>
 
-      <div class="filter-row reveal" role="group" aria-label="Filter projects">
-        <button class="filter-button is-active" type="button" data-project-filter="all" aria-pressed="true">All work</button>
-        <button class="filter-button" type="button" data-project-filter="ai" aria-pressed="false">AI</button>
-        <button class="filter-button" type="button" data-project-filter="mobile" aria-pressed="false">Mobile</button>
-        <button class="filter-button" type="button" data-project-filter="web" aria-pressed="false">Web</button>
+      <div class="carousel-toolbar reveal">
+        <div class="filter-row" role="group" aria-label="Filter projects">
+          <button class="filter-button is-active" type="button" data-project-filter="all" aria-pressed="true">All work</button>
+          <button class="filter-button" type="button" data-project-filter="ai" aria-pressed="false">AI</button>
+          <button class="filter-button" type="button" data-project-filter="mobile" aria-pressed="false">Mobile</button>
+          <button class="filter-button" type="button" data-project-filter="web" aria-pressed="false">Web</button>
+        </div>
+        <div class="carousel-nav" aria-label="Project carousel controls">
+          <span id="projectCarouselCount"></span>
+          <button class="icon-button" id="projectPrev" type="button" aria-label="Scroll projects left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+          <button class="icon-button" id="projectNext" type="button" aria-label="Scroll projects right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+        </div>
       </div>
-      <div class="project-grid" id="projectGrid" aria-live="polite"></div>
+      <div class="project-grid carousel-track" id="projectGrid" aria-live="polite" tabindex="0" aria-label="Projects, horizontally scrollable"></div>
     </section>
 
     <section class="section-shell ruled-section" id="profile" aria-labelledby="profileTitle">
@@ -193,12 +200,21 @@
         <p>Design output, conference rooms, hackathon tables, and the people who made the days memorable.</p>
       </header>
 
-      <div class="archive-tabs reveal" role="tablist" aria-label="Visual archive categories">
-        <button role="tab" aria-selected="true" data-archive-tab="moments">Field moments</button>
-        <button role="tab" aria-selected="false" data-archive-tab="graphics">Graphic work</button>
+      <div class="carousel-toolbar reveal">
+        <div class="archive-tabs" role="tablist" aria-label="Visual archive categories">
+          <button role="tab" aria-selected="true" data-archive-tab="all">All pictures</button>
+          <button role="tab" aria-selected="false" data-archive-tab="moments">Moments</button>
+          <button role="tab" aria-selected="false" data-archive-tab="projects">Projects</button>
+          <button role="tab" aria-selected="false" data-archive-tab="graphics">Graphics</button>
+          <button role="tab" aria-selected="false" data-archive-tab="credentials">Credentials</button>
+        </div>
+        <div class="carousel-nav" aria-label="Visual archive carousel controls">
+          <span id="archiveCarouselCount"></span>
+          <button class="icon-button" id="archivePrev" type="button" aria-label="Scroll pictures left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+          <button class="icon-button" id="archiveNext" type="button" aria-label="Scroll pictures right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+        </div>
       </div>
-      <div class="archive-grid" id="archiveGrid" aria-live="polite"></div>
-      <button class="text-button reveal" id="archiveToggle" type="button" aria-expanded="false">View more from the archive <span aria-hidden="true">＋</span></button>
+      <div class="archive-grid carousel-track" id="archiveGrid" aria-live="polite" tabindex="0" aria-label="Visual archive, horizontally scrollable"></div>
     </section>
 
     <section class="section-shell ruled-section" id="recognition" aria-labelledby="recognitionTitle">

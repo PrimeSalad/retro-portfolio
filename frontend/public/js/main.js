@@ -33,6 +33,21 @@ const testimonials = [
   },
 ];
 
+const extraArchiveItems = [
+  { title: "Portfolio cover", image: "/images/base.jpg", tag: "feature" },
+  { title: "Distinguished Recognition Award", image: "/images/trophy.png", tag: "award", fit: "contain" },
+  { title: "International Presenter Badge", image: "/images/badge.png", tag: "award", fit: "contain" },
+  { title: "Cum Laude Recognition", image: "/images/cum laude.png", tag: "award", fit: "contain" },
+  { title: "Event Gallery 03", image: "/images/events/gallery/3.jpg", tag: "event" },
+  { title: "Event Gallery 04", image: "/images/events/gallery/4.jpg", tag: "event" },
+  { title: "Event Gallery 05", image: "/images/events/gallery/5.jpg", tag: "event" },
+  { title: "Event Gallery 06", image: "/images/events/gallery/6.jpg", tag: "event" },
+  { title: "Event Gallery 07", image: "/images/events/gallery/7.jpg", tag: "event" },
+  { title: "Hackathon Gallery", image: "/images/events/gallery/hag.jpg", tag: "hackathon" },
+  { title: "Community Event", image: "/images/events/gallery/event1.jpg", tag: "event" },
+  { title: "CodeMaster Recognition", image: "/images/gallery/codemaster.jpg", tag: "award" },
+];
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -71,6 +86,8 @@ function renderProjects(filter = "all") {
 
   const projects = [...(data.projects || [])].sort((a, b) => Number(a.status === "archive") - Number(b.status === "archive"));
   const visible = filter === "all" ? projects : projects.filter((project) => projectKind(project).includes(filter));
+  const count = $("#projectCarouselCount");
+  if (count) count.textContent = `${visible.length} projects`;
 
   if (!visible.length) {
     root.innerHTML = '<p class="empty-projects">No work in this category yet. Try another filter.</p>';
@@ -103,6 +120,7 @@ function renderProjects(filter = "all") {
         <div class="project-tags" aria-label="Technologies">${tags}</div>
       </article>`;
   }).join("");
+  root.scrollLeft = 0;
 
   $$(".project-media img", root).forEach((image) => {
     image.addEventListener("error", () => {
@@ -164,39 +182,59 @@ function renderExperience() {
   });
 }
 
-const archiveState = { tab: "moments", expanded: false };
+const archiveState = { tab: "all" };
+
+function uniqueImages(items) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const path = item.src || item.image;
+    if (!path || seen.has(path)) return false;
+    seen.add(path);
+    return true;
+  });
+}
+
+function archiveCollections() {
+  const moments = uniqueImages([...(data.images || []), ...(data.gallery || []), ...extraArchiveItems])
+    .map((item) => ({ ...item, archiveCategory: "moments" }));
+  const projects = uniqueImages((data.projects || []).filter((item) => item.image))
+    .map((item) => ({ ...item, archiveCategory: "projects", tag: item.category || "project" }));
+  const graphics = uniqueImages(data.graphics || [])
+    .map((item) => ({ ...item, image: item.src, archiveCategory: "graphics" }));
+  const credentials = uniqueImages((data.certs || data.certificates || []).map((item) => ({
+    ...item,
+    image: item.image || (String(item.link || "").startsWith("/images/") ? item.link : ""),
+    tag: item.issuer || "credential",
+    fit: "contain",
+  }))).map((item) => ({ ...item, archiveCategory: "credentials" }));
+
+  return { moments, projects, graphics, credentials };
+}
 
 function archiveItems() {
-  if (archiveState.tab === "graphics") return data.graphics || [];
-  return [...(data.images || []), ...(data.gallery || [])].filter((item, index, array) => {
-    const path = item.src || item.image;
-    return path && array.findIndex((candidate) => (candidate.src || candidate.image) === path) === index;
-  });
+  const collections = archiveCollections();
+  if (archiveState.tab !== "all") return collections[archiveState.tab] || [];
+  return uniqueImages([...collections.projects, ...collections.moments, ...collections.graphics, ...collections.credentials]);
 }
 
 function renderArchive() {
   const root = $("#archiveGrid");
-  const toggle = $("#archiveToggle");
-  if (!root || !toggle) return;
+  if (!root) return;
 
   const items = archiveItems();
-  const limit = archiveState.expanded ? 12 : 6;
-  root.innerHTML = items.slice(0, limit).map((item, index) => {
+  const count = $("#archiveCarouselCount");
+  if (count) count.textContent = `${items.length} pictures`;
+  root.innerHTML = items.map((item, index) => {
     const path = resolveImagePath(item.src || item.image || "");
     const title = item.title || item.alt || "Portfolio image";
-    const label = item.tag || item.category || archiveState.tab;
+    const label = item.tag || item.category || item.archiveCategory || archiveState.tab;
     return `
-      <button class="archive-item reveal" type="button" data-lightbox-src="${escapeHtml(path)}" data-lightbox-title="${escapeHtml(title)}" aria-label="View ${escapeHtml(title)}" data-delay="${index % 3}">
+      <button class="archive-item reveal ${item.fit === "contain" ? "is-contain" : ""}" type="button" data-lightbox-src="${escapeHtml(path)}" data-lightbox-title="${escapeHtml(title)}" aria-label="View ${escapeHtml(title)}" data-delay="${index % 3}">
         <img src="${escapeHtml(path)}" alt="" width="720" height="540" loading="lazy" />
         <span><b>${escapeHtml(title)}</b><i>${escapeHtml(label)}</i></span>
       </button>`;
   }).join("");
-
-  toggle.hidden = items.length <= 6;
-  toggle.setAttribute("aria-expanded", String(archiveState.expanded));
-  toggle.innerHTML = archiveState.expanded
-    ? 'Show less <span aria-hidden="true">−</span>'
-    : 'View more from the archive <span aria-hidden="true">＋</span>';
+  root.scrollLeft = 0;
 
   $$("[data-lightbox-src]", root).forEach((button) => button.addEventListener("click", () => openLightbox(button.dataset.lightboxSrc, button.dataset.lightboxTitle)));
   observeReveals(root);
@@ -206,16 +244,21 @@ function setupArchive() {
   $$("[data-archive-tab]").forEach((button) => {
     button.addEventListener("click", () => {
       archiveState.tab = button.dataset.archiveTab;
-      archiveState.expanded = false;
       $$("[data-archive-tab]").forEach((item) => item.setAttribute("aria-selected", String(item === button)));
       renderArchive();
     });
   });
+}
 
-  $("#archiveToggle")?.addEventListener("click", () => {
-    archiveState.expanded = !archiveState.expanded;
-    renderArchive();
-  });
+function setupCarousel(trackSelector, previousSelector, nextSelector) {
+  const track = $(trackSelector);
+  if (!track) return;
+  const move = (direction) => {
+    const distance = Math.max(260, track.clientWidth * 0.72) * direction;
+    track.scrollBy({ left: distance, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  };
+  $(previousSelector)?.addEventListener("click", () => move(-1));
+  $(nextSelector)?.addEventListener("click", () => move(1));
 }
 
 function openLightbox(src, title) {
@@ -436,9 +479,11 @@ function init() {
   setupMobileMenu();
   renderProjects();
   setupProjectFilters();
+  setupCarousel("#projectGrid", "#projectPrev", "#projectNext");
   renderExperience();
   setupArchive();
   renderArchive();
+  setupCarousel("#archiveGrid", "#archivePrev", "#archiveNext");
   setupLightbox();
   setupTestimonials();
   renderCredentials();
