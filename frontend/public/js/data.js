@@ -190,7 +190,7 @@ export const PORTFOLIO_DATA = {
       "impact": "Transforms online concerns into verified and actionable reports.",
       "outcome": "Users can scan issues, verify information, and report directly to the right authority.",
       "description": "A browser extension that turns online public concerns into structured, verifiable reports for transport, safety, emergency, and scam incidents.",
-      "image": "/images/projects/captures/mori.jpg",
+      "image": "/images/projects/captures/mori-2026.png",
       "preview": "https://mori-smart-action-engine.vercel.app/",
       "tech": [
         "React",
