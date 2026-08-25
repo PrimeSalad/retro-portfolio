@@ -654,6 +654,19 @@ function renderGithubHeatmap(contributionData, events) {
     dayMap.forEach((count) => { totalContributions += count; });
   }
 
+  /* Keep the hero proof metric synced to the current calendar year. */
+  if (contributionData && contributionData.contributions) {
+    const currentYear = today.getFullYear();
+    let currentYearContributions = 0;
+    dayMap.forEach((count, dateKey) => {
+      if (dateKey.startsWith(`${currentYear}-`)) currentYearContributions += count;
+    });
+    const heroContributionCount = $("#heroContributionCount");
+    const heroContributionLabel = $("#heroContributionLabel");
+    if (heroContributionCount) heroContributionCount.textContent = currentYearContributions.toLocaleString();
+    if (heroContributionLabel) heroContributionLabel.textContent = `contributions in ${currentYear}`;
+  }
+
   /* ── Calculate date range: FULL 1 year back from today, aligned to Sunday ── */
   const start = new Date(today);
   start.setDate(start.getDate() - 364); // Exactly 52 weeks back
@@ -1050,6 +1063,57 @@ function setupMobileMenu() {
   button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
   $$("a", menu).forEach((link) => link.addEventListener("click", () => setOpen(false)));
   window.addEventListener("resize", () => { if (window.innerWidth > 900) setOpen(false); }, { passive: true });
+}
+
+function setupAvailabilityPanel() {
+  const panel = $("#availabilityPanel");
+  const backdrop = $(".availability-backdrop");
+  const toggles = $$('[data-availability-toggle]');
+  const closeButton = $("[data-availability-close]", panel);
+  if (!panel || !toggles.length || !closeButton) return;
+
+  let lastTrigger = null;
+
+  const setOpen = (open, trigger = lastTrigger, restoreFocus = false) => {
+    if (open && trigger) lastTrigger = trigger;
+    panel.hidden = !open;
+    if (backdrop) backdrop.hidden = !open;
+    document.body.classList.toggle("availability-open", open);
+    toggles.forEach((button) => {
+      button.setAttribute("aria-expanded", String(open));
+      $$('[data-availability-symbol]', button).forEach((symbol) => {
+        symbol.textContent = open ? "−" : "+";
+      });
+    });
+
+    if (open) {
+      window.requestAnimationFrame(() => closeButton.focus());
+    } else if (restoreFocus && lastTrigger) {
+      lastTrigger.focus();
+    }
+  };
+
+  toggles.forEach((button) => button.addEventListener("click", () => {
+    setOpen(panel.hidden, button, false);
+  }));
+
+  closeButton.addEventListener("click", () => setOpen(false, lastTrigger, true));
+  backdrop?.addEventListener("click", () => setOpen(false, lastTrigger, true));
+
+  document.addEventListener("click", (event) => {
+    if (panel.hidden || panel.contains(event.target) || event.target.closest("[data-availability-toggle]")) return;
+    setOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || panel.hidden) return;
+    event.preventDefault();
+    setOpen(false, lastTrigger, true);
+  });
+
+  if (new URLSearchParams(window.location.search).get("availability") === "open") {
+    setOpen(true, toggles[0]);
+  }
 }
 
 function setupScrollUX() {
@@ -1802,6 +1866,7 @@ function init() {
   setupTheme();
   setupHeroLocalTime();
   setupMobileMenu();
+  setupAvailabilityPanel();
   renderProjects();
   setupProjectFilters();
   setupCarousel("#projectGrid", "#projectPrev", "#projectNext");

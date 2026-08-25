@@ -428,7 +428,7 @@ export const PORTFOLIO_DATA = {
       "id": "t1",
       "year": "2026",
       "date": "Jan - Present",
-      "title": "Lead Developer, DotOrbit Development Team",
+      "title": "Software Engineering Lead, DotOrbit Development Team",
       "tags": [
         "backend",
         "leadership",

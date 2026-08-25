@@ -67,7 +67,10 @@
     </div>
 
     <div class="rail-footer">
-      <p class="rail-presence"><span class="presence-avatars" aria-hidden="true"><i>G</i><i>+</i></span><span><strong>Available now</strong><small>open to opportunities</small></span></p>
+      <button class="rail-presence" type="button" data-availability-toggle aria-controls="availabilityPanel" aria-expanded="false">
+        <span class="presence-avatars" aria-hidden="true"><i>G</i><i data-availability-symbol>+</i></span>
+        <span><strong>Available now</strong><small>open to opportunities</small></span>
+      </button>
       <a class="rail-chat" href="#contact">Start a conversation <span aria-hidden="true">→</span></a>
       <p class="rail-email-label">For work, collaborations &amp; everything else</p>
       <a class="rail-email" href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com</a>
@@ -95,9 +98,37 @@
         <button type="button" data-open-typing>Typing test <kbd>⌘ J</kbd></button>
         <button type="button" data-open-runner>Byte runner <kbd>⌘ G</kbd></button>
       </div>
+      <button class="mobile-availability-trigger" type="button" data-availability-toggle aria-controls="availabilityPanel" aria-expanded="false">
+        <span class="mobile-availability-mark" aria-hidden="true">G<i data-availability-symbol>+</i></span>
+        <span><strong>Available now</strong><small>open to opportunities</small></span>
+        <span aria-hidden="true">→</span>
+      </button>
       <a class="menu-email" href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com</a>
     </div>
   </div>
+
+  <div class="availability-backdrop" data-availability-close hidden></div>
+  <section class="availability-panel" id="availabilityPanel" role="dialog" aria-modal="false" aria-labelledby="availabilityTitle" hidden>
+    <header class="availability-panel-header">
+      <p><span class="status-dot" aria-hidden="true"></span>Availability / 2026</p>
+      <button type="button" data-availability-close aria-label="Close availability details">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+      </button>
+    </header>
+    <div class="availability-panel-body">
+      <p class="eyebrow">Open to opportunities</p>
+      <h2 id="availabilityTitle">Let’s ship useful software.</h2>
+      <p>Available for selected full-stack software engineering opportunities across web, mobile, and AI.</p>
+      <dl>
+        <div><dt>Focus</dt><dd>Full-stack software engineering</dd></div>
+        <div><dt>Based in</dt><dd>Marinduque, Philippines · GMT+8</dd></div>
+      </dl>
+    </div>
+    <footer class="availability-panel-actions">
+      <a href="mailto:g.landoyelpie@gmail.com">Send an email <span aria-hidden="true">↗</span></a>
+      <a href="https://www.linkedin.com/in/gene-elpie-landoy-b1851b28b/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+    </footer>
+  </section>
 
   <main id="main-content">
     <section class="hero hero--signature section-shell" id="top" aria-labelledby="heroTitle">
@@ -120,6 +151,7 @@
           <p>Right now I'm building useful new stuff end to end. I love turning rough ideas and real requirements into things people actually use.</p>
           <nav class="hero-signature-links" aria-label="Profile links">
             <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">github <span aria-hidden="true">↗</span></a>
+            <a href="https://www.linkedin.com/in/gene-elpie-landoy-b1851b28b/" target="_blank" rel="noreferrer">linkedin <span aria-hidden="true">↗</span></a>
             <a href="mailto:g.landoyelpie@gmail.com">email <span aria-hidden="true">↗</span></a>
             <a href="/CURRICULUM-VITAE-LANDOY.pdf" download>résumé <span aria-hidden="true">↗</span></a>
           </nav>
@@ -127,10 +159,10 @@
       </div>
 
       <footer class="hero-signature-meta reveal" data-delay="2">
-        <a href="#work"><strong id="projectCount">10</strong><span>projects</span><i aria-hidden="true">↗</i></a>
-        <a href="#achievements"><strong id="recognitionCount">12</strong><span>recognitions</span><i aria-hidden="true">↗</i></a>
-        <a href="#github"><strong>46</strong><span>repositories</span><i aria-hidden="true">↗</i></a>
-        <a href="#profile"><strong>CL</strong><span>cum laude</span><i aria-hidden="true">↗</i></a>
+        <a href="#github"><strong id="heroContributionCount">1,254</strong><span id="heroContributionLabel">contributions in 2026</span><i aria-hidden="true">↗</i></a>
+        <a href="https://www.linkedin.com/in/gene-elpie-landoy-b1851b28b/" target="_blank" rel="noreferrer"><strong>300+</strong><span>developer connections</span><i aria-hidden="true">↗</i></a>
+        <a href="#github"><strong>46</strong><span>public repositories</span><i aria-hidden="true">↗</i></a>
+        <a href="#work"><strong id="projectCount">10</strong><span>selected projects</span><i aria-hidden="true">↗</i></a>
       </footer>
       <div class="halftone-divider" aria-hidden="true"></div>
     </section>
