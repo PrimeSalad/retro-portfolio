@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title description">
+  <title id="title">Unchainly iPhone app product presentation</title>
+  <desc id="description">Monochrome presentation of Unchainly, a recovery tracker and blocker for iPhone.</desc>
+  <rect width="1600" height="1000" fill="#f2f2ee"/>
+  <path d="M0 118h1600M0 882h1600" stroke="#171717" stroke-width="2"/>
+  <g fill="#171717" font-family="Arial, Helvetica, sans-serif">
+    <text x="90" y="78" font-size="22" font-weight="700" letter-spacing="5">UNCHAINLY®</text>
+    <text x="1510" y="78" font-size="16" text-anchor="end" letter-spacing="3">IOS / 2026</text>
+    <text x="90" y="240" font-size="112" font-weight="700" letter-spacing="-6">BREAK THE LOOP.</text>
+    <text x="94" y="292" font-size="23" letter-spacing="2">RECOVERY TRACKER &amp; BLOCKER — PRIVATE BY DESIGN</text>
+  </g>
+
+  <g transform="translate(104 370)">
+    <rect width="370" height="355" rx="20" fill="#171717"/>
+    <text x="30" y="49" fill="#f2f2ee" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2">TODAY / RECOVERY</text>
+    <text x="30" y="132" fill="#f2f2ee" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">24</text>
+    <text x="134" y="128" fill="#a9a9a5" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">DAY STREAK</text>
+    <path d="M30 172h310" stroke="#646461"/>
+    <text x="30" y="213" fill="#a9a9a5" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="2">FOCUS WINDOW</text>
+    <text x="340" y="213" fill="#f2f2ee" font-family="Arial, Helvetica, sans-serif" font-size="13" text-anchor="end">ACTIVE</text>
+    <rect x="30" y="238" width="310" height="52" rx="26" fill="#f2f2ee"/>
+    <text x="185" y="271" fill="#171717" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" text-anchor="middle" letter-spacing="2">START CHECK-IN</text>
+    <text x="30" y="326" fill="#a9a9a5" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="1.5">DATA STAYS ON YOUR DEVICE</text>
+  </g>
+
+  <g transform="translate(535 328)">
+    <rect width="350" height="600" rx="60" fill="#0d0d0d"/>
+    <rect x="12" y="12" width="326" height="576" rx="50" fill="#f8f8f5" stroke="#535350"/>
+    <rect x="117" y="28" width="116" height="28" rx="14" fill="#0d0d0d"/>
+    <text x="38" y="94" fill="#171717" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" letter-spacing="2">UNCHAINLY</text>
+    <text x="38" y="150" fill="#171717" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">You're in control.</text>
+    <text x="38" y="177" fill="#666663" font-family="Arial, Helvetica, sans-serif" font-size="13">Build distance. Understand the pattern.</text>
+    <rect x="38" y="215" width="274" height="126" rx="18" fill="#171717"/>
+    <text x="60" y="247" fill="#adada8" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="2">CURRENT STREAK</text>
+    <text x="60" y="309" fill="#f8f8f5" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">24 days</text>
+    <text x="38" y="385" fill="#171717" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">RECOVERY TOOLS</text>
+    <g font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#171717">
+      <rect x="38" y="408" width="132" height="58" rx="14" fill="#e3e3df"/><text x="54" y="442">Block triggers</text>
+      <rect x="180" y="408" width="132" height="58" rx="14" fill="#e3e3df"/><text x="196" y="442">SOS reset</text>
+      <rect x="38" y="476" width="132" height="58" rx="14" fill="#e3e3df"/><text x="54" y="510">Daily journal</text>
+      <rect x="180" y="476" width="132" height="58" rx="14" fill="#e3e3df"/><text x="196" y="510">View insights</text>
+    </g>
+    <circle cx="175" cy="559" r="4" fill="#171717"/>
+  </g>
+
+  <g transform="translate(965 384)" font-family="Arial, Helvetica, sans-serif">
+    <text fill="#171717" font-size="16" font-weight="700" letter-spacing="3">ONE PRIVATE SYSTEM</text>
+    <g transform="translate(0 49)">
+      <path d="M0 0h500" stroke="#171717"/>
+      <text y="42" fill="#171717" font-size="25" font-weight="700">01</text>
+      <text x="66" y="42" fill="#171717" font-size="20" font-weight="700">BLOCK</text>
+      <text x="66" y="70" fill="#666663" font-size="15">Apps and websites during risk windows.</text>
+    </g>
+    <g transform="translate(0 156)">
+      <path d="M0 0h500" stroke="#171717"/>
+      <text y="42" fill="#171717" font-size="25" font-weight="700">02</text>
+      <text x="66" y="42" fill="#171717" font-size="20" font-weight="700">REFLECT</text>
+      <text x="66" y="70" fill="#666663" font-size="15">Journal urges, triggers, and what helped.</text>
+    </g>
+    <g transform="translate(0 263)">
+      <path d="M0 0h500" stroke="#171717"/>
+      <text y="42" fill="#171717" font-size="25" font-weight="700">03</text>
+      <text x="66" y="42" fill="#171717" font-size="20" font-weight="700">RECOVER</text>
+      <text x="66" y="70" fill="#666663" font-size="15">Use SOS tools and learn from patterns.</text>
+      <path d="M0 101h500" stroke="#171717"/>
+    </g>
+    <rect y="402" width="500" height="70" rx="35" fill="#171717"/>
+    <text x="250" y="445" fill="#f2f2ee" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="2">AVAILABLE ON THE APP STORE ↗</text>
+  </g>
+
+  <text x="90" y="941" fill="#171717" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2">DESIGNED &amp; DEVELOPED BY GENE ELPIE LANDOY</text>
+  <text x="1510" y="941" fill="#171717" font-family="Arial, Helvetica, sans-serif" font-size="15" text-anchor="end" letter-spacing="2">APPLE ID 6794420100</text>
+</svg>
