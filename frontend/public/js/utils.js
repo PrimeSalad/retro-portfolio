@@ -36,8 +36,8 @@ export const SECTION_KEYS = {
 export const AI = {
   SEARCH_ENDPOINT: "/api/search",
   HEALTH_ENDPOINT: "/api/health",
-  TIMEOUT_MS: 14000,
-  HEALTH_TIMEOUT_MS: 2500,
+  TIMEOUT_MS: 45000,
+  HEALTH_TIMEOUT_MS: 5000,
 };
 
 export const DEFAULT_QUERY = "querying portfolio: Gene Elpie Landoy.";

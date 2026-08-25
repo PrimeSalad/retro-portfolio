@@ -1,29 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f3f0e8" />
-  <meta name="description" content="Gene Elpie Landoy is a creative technologist building thoughtful digital products through code, design, and storytelling." />
-  <meta property="og:title" content="Gene Elpie Landoy — Creative Technologist" />
-  <meta property="og:description" content="Selected products, visual work, experience, and field notes from a developer and designer in the Philippines." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Portfolio of Gene Elpie Landoy, a full-stack developer and product designer building web, mobile, and AI products in the Philippines." />
+  <meta property="og:title" content="Gene Elpie Landoy — Full-Stack Developer &amp; Product Designer" />
+  <meta property="og:description" content="Selected software projects, professional experience, technical credentials, and design work by Gene Elpie Landoy." />
   <meta property="og:image" content="/images/icon.jpg" />
-  <title>Gene Elpie Landoy — Creative Technologist</title>
+  <title>Gene Elpie Landoy — Full-Stack Developer &amp; Product Designer</title>
 
+  <link rel="icon" href="/images/icon.jpg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="/images/icon.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wdth,wght@75..100,400..700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    try {
+      const savedTheme = localStorage.getItem("gene-portfolio-theme");
+      if (savedTheme === "dark" || savedTheme === "light") document.documentElement.dataset.theme = savedTheme;
+    } catch { /* Keep the light default when storage is unavailable. */ }
+  </script>
+  <link rel="stylesheet" href="/reference.css" />
+  <link rel="stylesheet" href="/minimal.css" />
 </head>
 
-<body data-theme="light">
+<body>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="page-progress" id="pageProgress" aria-hidden="true"></div>
 
   <header class="mobile-bar" aria-label="Mobile navigation">
     <a class="wordmark" href="#top" aria-label="Gene Elpie Landoy, home">
-      <span class="wordmark-mark">GE</span>
-      <span>Landoy</span>
+      <span>Gene Elpie Landoy</span>
     </a>
     <div class="mobile-actions">
       <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" aria-pressed="false">
@@ -38,25 +46,31 @@
 
   <aside class="side-rail" aria-label="Primary navigation">
     <a class="wordmark" href="#top" aria-label="Gene Elpie Landoy, home">
-      <span class="wordmark-mark">GE</span>
-      <span>Landoy</span>
+      <span>Gene Elpie Landoy</span>
     </a>
 
     <nav class="rail-nav" aria-label="Portfolio sections">
-      <a class="rail-link is-active" href="#work"><span>01</span>All projects</a>
-      <a class="rail-link" href="#profile"><span>02</span>Profile</a>
-      <a class="rail-link" href="#experience"><span>03</span>Experience</a>
-      <a class="rail-link" href="#toolkit"><span>04</span>Toolkit</a>
-      <a class="rail-link" href="#archive"><span>05</span>Visual archive</a>
-      <a class="rail-link" href="#recognition"><span>06</span>Recognition</a>
-      <a class="rail-link" href="#contact"><span>07</span>Say hello</a>
+      <a class="rail-link is-active" href="#work">Projects</a>
+      <a class="rail-link" href="#profile">Profile</a>
+      <a class="rail-link" href="#experience">Experience</a>
+      <a class="rail-link" href="#toolkit">Stack</a>
+      <a class="rail-link" href="#achievements">Certifications</a>
+      <a class="rail-link" href="#github">GitHub</a>
+      <a class="rail-link" href="#archive">Archive</a>
+      <a class="rail-link" href="#recognition">Recommendations</a>
     </nav>
 
+    <div class="rail-tools" aria-label="Interactive playground">
+      <button type="button" data-open-command><span>Ask anything</span><kbd>⌘ K</kbd></button>
+      <button type="button" data-open-typing><span>Typing test</span><kbd>⌘ J</kbd></button>
+      <button type="button" data-open-runner><span>Byte runner</span><kbd>⌘ G</kbd></button>
+    </div>
+
     <div class="rail-footer">
-      <p class="availability"><span class="status-dot" aria-hidden="true"></span>Open to good work</p>
-      <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-      <a href="mailto:g.landoyelpie@gmail.com">Email <span aria-hidden="true">↗</span></a>
-      <a href="/CURRICULUM-VITAE-LANDOY.pdf" download>Résumé <span aria-hidden="true">↓</span></a>
+      <p class="rail-presence"><span class="presence-avatars" aria-hidden="true"><i>G</i><i>+</i></span><span><strong>Available now</strong><small>open to opportunities</small></span></p>
+      <a class="rail-chat" href="#contact">Start a conversation <span aria-hidden="true">→</span></a>
+      <p class="rail-email-label">For work, collaborations &amp; everything else</p>
+      <a class="rail-email" href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com</a>
       <button class="theme-label theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" aria-pressed="false">
         <span class="theme-swatch" aria-hidden="true"></span><span data-theme-label>Dark mode</span>
       </button>
@@ -65,57 +79,67 @@
 
   <div class="mobile-menu" id="mobileMenu" hidden>
     <div class="mobile-menu-inner">
-      <p class="eyebrow">Index / 2026</p>
+      <p class="eyebrow">Portfolio / 2026</p>
       <nav aria-label="Mobile portfolio sections">
-        <a href="#work"><span>01</span>All projects</a>
+        <a href="#work"><span>01</span>Projects</a>
         <a href="#profile"><span>02</span>Profile</a>
         <a href="#experience"><span>03</span>Experience</a>
         <a href="#toolkit"><span>04</span>Toolkit</a>
-        <a href="#archive"><span>05</span>Visual archive</a>
-        <a href="#recognition"><span>06</span>Recognition</a>
-        <a href="#contact"><span>07</span>Say hello</a>
+        <a href="#achievements"><span>05</span>Recognition</a>
+        <a href="#github"><span>06</span>GitHub activity</a>
+        <a href="#archive"><span>07</span>Visual archive</a>
+        <a href="#recognition"><span>08</span>Recommendations</a>
       </nav>
+      <div class="mobile-menu-tools">
+        <button type="button" data-open-command>Ask anything <kbd>⌘ K</kbd></button>
+        <button type="button" data-open-typing>Typing test <kbd>⌘ J</kbd></button>
+        <button type="button" data-open-runner>Byte runner <kbd>⌘ G</kbd></button>
+      </div>
       <a class="menu-email" href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com</a>
     </div>
   </div>
 
   <main id="main-content">
-    <section class="hero section-shell" id="top" aria-labelledby="heroTitle">
-      <div class="hero-portrait reveal">
-        <figure class="portrait-frame">
-          <img src="/images/icon.jpg" alt="Gene Elpie Landoy standing outside a café" width="288" height="360" fetchpriority="high" />
+    <section class="hero hero--signature section-shell" id="top" aria-labelledby="heroTitle">
+      <header class="hero-identity reveal">
+        <div class="hero-identity-meta">
+          <p>Full-stack developer / Product designer</p>
+          <p><span class="status-dot" aria-hidden="true"></span>Open to meaningful work</p>
+        </div>
+        <h1 id="heroTitle"><span>Gene Elpie</span> <span>Landoy</span></h1>
+      </header>
+
+      <div class="hero-signature-body">
+        <figure class="hero-signature-photo reveal">
+          <img src="/images/icon.jpg" alt="Gene Elpie Landoy standing outside a café" width="2048" height="2048" fetchpriority="high" />
+          <span class="photo-halftone" aria-hidden="true"></span>
         </figure>
-      </div>
 
-      <div class="hero-copy reveal" data-delay="1">
-        <div class="hero-kicker">
-          <span>Creative technologist</span>
-          <span class="kicker-line" aria-hidden="true"></span>
-          <span>Marinduque, PH</span>
-        </div>
-        <h1 id="heroTitle">Gene Elpie <em>Landoy</em></h1>
-        <p class="hero-intro">I’m a developer and designer building thoughtful web, mobile, and AI products.</p>
-        <p class="hero-intro hero-intro-secondary">I also work across graphic design, video, and creative direction—turning rough ideas into things people can actually use.</p>
-        <div class="hero-socials" aria-label="Profile links">
-          <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">github ↗</a>
-          <a href="mailto:g.landoyelpie@gmail.com">email ↗</a>
-          <a href="/CURRICULUM-VITAE-LANDOY.pdf" download>résumé ↓</a>
+        <div class="hero-signature-copy reveal" data-delay="1">
+          <p class="hero-signature-lead">I'm a full-stack developer &amp; product designer. I build modern web, mobile, and AI products.</p>
+          <p>Right now I'm building useful new stuff end to end. I love turning rough ideas and real requirements into things people actually use.</p>
+          <nav class="hero-signature-links" aria-label="Profile links">
+            <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">github <span aria-hidden="true">↗</span></a>
+            <a href="mailto:g.landoyelpie@gmail.com">email <span aria-hidden="true">↗</span></a>
+            <a href="/CURRICULUM-VITAE-LANDOY.pdf" download>résumé <span aria-hidden="true">↗</span></a>
+          </nav>
         </div>
       </div>
 
-      <div class="hero-proof reveal" data-delay="2" aria-label="Portfolio highlights">
-        <div><strong id="projectCount">08</strong><span>Products & prototypes</span></div>
-        <div><strong id="recognitionCount">11</strong><span>Recognitions earned</span></div>
-        <div><strong>01</strong><span>Rule: make it matter</span></div>
-        <div><strong>PH</strong><span>Based in Marinduque</span></div>
-      </div>
+      <footer class="hero-signature-meta reveal" data-delay="2">
+        <a href="#work"><strong id="projectCount">10</strong><span>projects</span><i aria-hidden="true">↗</i></a>
+        <a href="#achievements"><strong id="recognitionCount">12</strong><span>recognitions</span><i aria-hidden="true">↗</i></a>
+        <a href="#github"><strong>46</strong><span>repositories</span><i aria-hidden="true">↗</i></a>
+        <a href="#profile"><strong>CL</strong><span>cum laude</span><i aria-hidden="true">↗</i></a>
+      </footer>
+      <div class="halftone-divider" aria-hidden="true"></div>
     </section>
 
     <section class="section-shell ruled-section" id="work" aria-labelledby="workTitle">
       <header class="section-heading reveal">
-        <div><span class="section-number">01</span><p class="eyebrow">All projects</p></div>
-        <h2 id="workTitle">Every project, <em>not just the highlights.</em></h2>
-        <p>All product work currently documented in this portfolio—from civic tech and AI to education, research, finance, and games.</p>
+        <div><span class="section-number">01</span><p class="eyebrow">Selected projects</p></div>
+        <h2 id="workTitle">Products built for <em>real-world use.</em></h2>
+        <p>Web, mobile, and AI work across public service, research, education, business operations, and consumer products.</p>
       </header>
 
       <div class="carousel-toolbar reveal">
@@ -132,18 +156,47 @@
         </div>
       </div>
       <div class="project-grid carousel-track" id="projectGrid" aria-live="polite" tabindex="0" aria-label="Projects, horizontally scrollable"></div>
+      <aside class="builder-proof reveal" aria-labelledby="builderProofTitle">
+        <div class="builder-proof-heading">
+          <p class="eyebrow">Community signal</p>
+          <h3 id="builderProofTitle">Featured on App Builders PH.</h3>
+          <p>Support two products I designed and shipped.</p>
+        </div>
+        <div class="builder-proof-embeds">
+          <div class="builder-widget">
+            <a class="builder-widget-copy" href="https://appbuildersph.com/apps/unchainly" target="_blank" rel="noreferrer" aria-label="View Unchainly on App Builders PH">
+              <img src="/images/projects/unchainly-appbuilders.webp" alt="" width="48" height="48" loading="lazy" aria-hidden="true" />
+              <span>
+                <strong>Unchainly</strong>
+                <small>App Builders PH</small>
+              </span>
+            </a>
+            <iframe src="https://appbuildersph.com/embed/apps/unchainly" title="Unchainly votes on App Builders PH" width="320" height="72" loading="lazy" scrolling="no"></iframe>
+          </div>
+          <div class="builder-widget">
+            <a class="builder-widget-copy" href="https://appbuildersph.com/apps/certificat" target="_blank" rel="noreferrer" aria-label="View CertifCat on App Builders PH">
+              <img src="/images/projects/certificat-appbuilders.webp" alt="" width="48" height="48" loading="lazy" aria-hidden="true" />
+              <span>
+                <strong>CertifCat</strong>
+                <small>App Builders PH</small>
+              </span>
+            </a>
+            <iframe src="https://appbuildersph.com/embed/apps/certificat" title="CertifCat votes on App Builders PH" width="320" height="72" loading="lazy" scrolling="no"></iframe>
+          </div>
+        </div>
+      </aside>
     </section>
 
     <section class="section-shell ruled-section" id="profile" aria-labelledby="profileTitle">
       <header class="section-heading reveal">
         <div><span class="section-number">02</span><p class="eyebrow">Profile</p></div>
-        <h2 id="profileTitle">Part builder, part editor, <em>always curious.</em></h2>
+        <h2 id="profileTitle">Technical range, <em>grounded in delivery.</em></h2>
       </header>
 
       <div class="profile-grid">
         <article class="profile-statement reveal">
-          <p class="big-copy">I like the point where <span>systems thinking</span> meets visual instinct.</p>
-          <p>I work across product strategy, UI/UX, frontend and mobile development, graphic design, video, and public speaking. That mix helps me see both the interface and the story behind it.</p>
+          <p class="big-copy">I turn complex requirements into <span>clear, working products.</span></p>
+          <p>I work across product planning, UI/UX, frontend, backend, mobile development, and visual communication. That range lets me take ownership from early decisions through implementation and release.</p>
           <a class="text-link" href="/CURRICULUM-VITAE-LANDOY.pdf" download>Download full résumé <span aria-hidden="true">↓</span></a>
         </article>
 
@@ -153,13 +206,13 @@
         </figure>
 
         <div class="profile-facts reveal" data-delay="2">
-          <p class="eyebrow">A few coordinates</p>
+          <p class="eyebrow">Professional profile</p>
           <dl>
             <div><dt>Home base</dt><dd>Boac, Marinduque</dd></div>
-            <div><dt>Current focus</dt><dd>Useful AI + human interfaces</dd></div>
+            <div><dt>Current focus</dt><dd>Full-stack systems &amp; AI products</dd></div>
             <div><dt>Community</dt><dd>DotOrbit Development Team</dd></div>
             <div><dt>Degree</dt><dd>BS Information Technology, Cum Laude</dd></div>
-            <div><dt>Working style</dt><dd>Curious, collaborative, detail-led</dd></div>
+            <div><dt>Working style</dt><dd>Structured, collaborative, detail-focused</dd></div>
           </dl>
         </div>
       </div>
@@ -168,24 +221,24 @@
     <section class="section-shell ruled-section" id="experience" aria-labelledby="experienceTitle">
       <header class="section-heading reveal">
         <div><span class="section-number">03</span><p class="eyebrow">Experience</p></div>
-        <h2 id="experienceTitle">Leadership with my <em>sleeves rolled up.</em></h2>
-        <p>Roles where product direction, engineering, editorial craft, and team stewardship overlap.</p>
+        <h2 id="experienceTitle">Experience built through <em>hands-on delivery.</em></h2>
+        <p>Professional work across public-service systems, product development, technical leadership, and editorial production.</p>
       </header>
       <div class="experience-list" id="experienceList"></div>
-      <button class="text-button reveal" id="experienceToggle" type="button" aria-expanded="false">Show full history <span aria-hidden="true">＋</span></button>
+      <button class="text-button reveal" id="experienceToggle" type="button" aria-expanded="false" aria-controls="experienceList">Show full history <span aria-hidden="true">＋</span></button>
     </section>
 
     <section class="section-shell ruled-section" id="toolkit" aria-labelledby="toolkitTitle">
       <header class="section-heading reveal">
         <div><span class="section-number">04</span><p class="eyebrow">Toolkit</p></div>
-        <h2 id="toolkitTitle">One brain, <em>four working modes.</em></h2>
+        <h2 id="toolkitTitle">Tools I use to <em>design, build, and ship.</em></h2>
       </header>
 
       <div class="toolkit-grid">
-        <article class="tool-card reveal"><span class="tool-index">A</span><h3>Build</h3><p>React, JavaScript, TypeScript, Flutter, Dart, Node.js, Express, Python</p></article>
-        <article class="tool-card reveal" data-delay="1"><span class="tool-index">B</span><h3>Design</h3><p>Figma, Illustrator, Photoshop, Canva, interface systems, product flows</p></article>
-        <article class="tool-card reveal" data-delay="2"><span class="tool-index">C</span><h3>Ship</h3><p>Firebase, PostgreSQL, MongoDB, Git, REST APIs, rapid prototyping</p></article>
-        <article class="tool-card reveal" data-delay="3"><span class="tool-index">D</span><h3>Tell</h3><p>Premiere Pro, After Effects, editorial direction, speaking, visual narrative</p></article>
+        <article class="tool-card reveal"><span class="tool-index">A</span><h3>Engineering</h3><p>React, Next.js, JavaScript, TypeScript, Tailwind CSS, Flutter, Dart, Node.js, Express, Python, Flask, FastAPI</p></article>
+        <article class="tool-card reveal" data-delay="1"><span class="tool-index">B</span><h3>Product design</h3><p>Figma, Adobe Illustrator, Photoshop, After Effects, Canva, UI/UX systems, product design, visual identity</p></article>
+        <article class="tool-card reveal" data-delay="2"><span class="tool-index">C</span><h3>Delivery</h3><p>Firebase, PostgreSQL, MongoDB, Supabase, Vercel, Git, GitHub, REST APIs, GraphQL, Docker, CI/CD</p></article>
+        <article class="tool-card reveal" data-delay="3"><span class="tool-index">D</span><h3>Communication</h3><p>Premiere Pro, After Effects, DaVinci Resolve, editorial direction, content strategy, storytelling, visual narrative</p></article>
       </div>
 
       <div class="ticker" aria-label="Core disciplines">
@@ -193,18 +246,197 @@
       </div>
     </section>
 
+    <section class="section-shell ruled-section" id="achievements" aria-labelledby="achievementsTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">05</span><p class="eyebrow">Recognition</p></div>
+        <h2 id="achievementsTitle">Recognition earned through <em>technical work and leadership.</em></h2>
+        <p>Academic honors, professional eligibility, technical awards, training, and international presentation experience.</p>
+      </header>
+
+      <div class="achievements-grid reveal" aria-label="Featured achievements">
+        <article class="achievement-card achievement-card-honors">
+          <div class="achievement-card-topline"><span>01</span><span>Latin honors / 2026</span></div>
+          <div class="achievement-emblem">
+            <img src="/images/cum laude.png" alt="Marinduque State University Cum Laude medal" width="931" height="1288" loading="lazy" />
+          </div>
+          <div class="achievement-copy">
+            <p class="achievement-label">Cum Laude</p>
+            <h3>BS Information Technology — Class of 2026</h3>
+            <p>Graduated with Latin Honors in the Bachelor of Science in Information Technology program.</p>
+          </div>
+          <div class="achievement-meta">Academic Excellence</div>
+        </article>
+
+        <article class="achievement-card achievement-card-award">
+          <div class="achievement-card-topline"><span>02</span><span>University recognition</span></div>
+          <div class="achievement-emblem">
+            <img src="/images/trophy.png" alt="Distinguished Recognition Award plaque presented to Gene Elpie Landoy" width="1076" height="1450" loading="lazy" />
+          </div>
+          <div class="achievement-copy">
+            <p class="achievement-label">Awardee</p>
+            <h3>Distinguished Recognition Award</h3>
+            <p>Awarded during the 1st MarSU Boac Student Excellence Awards.</p>
+          </div>
+          <div class="achievement-meta">April 28, 2026</div>
+        </article>
+
+        <article class="achievement-card achievement-card-presenter">
+          <div class="achievement-card-topline"><span>03</span><span>International stage</span></div>
+          <div class="achievement-emblem">
+            <img src="/images/badge.png" alt="Philippine Society of Information Technology Educators presenter badge" width="943" height="960" loading="lazy" />
+          </div>
+          <div class="achievement-copy">
+            <p class="achievement-label">Presenter</p>
+            <h3>International Presenter — PSITE</h3>
+            <p>Recognized as an international presenter by the Philippine Society of Information Technology Educators.</p>
+          </div>
+          <div class="achievement-meta">PSITE · Est. 1994</div>
+        </article>
+
+        <article class="achievement-card achievement-card-spark">
+          <div class="achievement-card-topline"><span>04</span><span>Technical training / SPARK</span></div>
+          <div class="achievement-emblem">
+            <img src="/images/spark.png" alt="SPARK Social Media Marketing 2.0 technical training medal" width="1228" height="1228" loading="lazy" />
+          </div>
+          <div class="achievement-copy">
+            <p class="achievement-label">Training</p>
+            <h3>SPARK — Social Media Marketing 2.0</h3>
+            <p>Technical training on the shift toward AI-powered interaction in social media marketing.</p>
+          </div>
+          <div class="achievement-meta">DICT · Digital Transformation Centers</div>
+        </article>
+      </div>
+
+      <section class="credentials-feature reveal" aria-labelledby="credentialsTitle">
+        <header class="credentials-heading">
+          <div>
+            <p class="eyebrow">Professional credentials / Complete archive</p>
+            <h3 id="credentialsTitle">Training, eligibility, and <em>verified recognition.</em></h3>
+            <p>Certificates and awards covering software development, leadership, design, cybersecurity, and public service.</p>
+          </div>
+          <div class="credentials-total" aria-label="Selected credential count">
+            <strong id="certTotal">00</strong>
+            <span>All<br />credentials</span>
+          </div>
+        </header>
+
+        <div class="certificate-carousel" id="certificateCarousel" role="region" aria-roledescription="carousel" aria-label="Professional certificates">
+          <div class="cert-track" id="certGrid" tabindex="0" aria-label="Certificate slides">
+            <!-- Certificates will be loaded here -->
+          </div>
+
+          <div class="cert-controls">
+            <div class="cert-position">
+              <span id="certCounter">01 / 01</span>
+              <span class="cert-progress" aria-hidden="true"><i></i></span>
+              <span>Auto-rotates every 6 seconds</span>
+            </div>
+            <div class="cert-actions" aria-label="Certificate carousel controls">
+              <button class="cert-auto-control" id="certAutoplayToggle" type="button" aria-pressed="true" aria-label="Pause certificate autoplay">
+                <svg class="cert-pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10M15 7v10"></path></svg>
+                <svg class="cert-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5Z"></path></svg>
+                <span id="certAutoplayLabel">Auto on</span>
+              </button>
+              <button class="cert-arrow" id="certPrev" type="button" aria-label="Previous certificate">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+              </button>
+              <button class="cert-arrow" id="certNext" type="button" aria-label="Next certificate">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+              </button>
+            </div>
+          </div>
+          <p class="sr-only" id="certLive" aria-live="polite"></p>
+        </div>
+      </section>
+    </section>
+
+    <section class="section-shell ruled-section" id="github" aria-labelledby="githubTitle">
+      <header class="section-heading reveal">
+        <div><span class="section-number">06</span><p class="eyebrow">GitHub activity</p></div>
+        <h2 id="githubTitle">Recent public <em>development activity.</em></h2>
+        <p>Live GitHub data showing recent repository updates, public events, and contributions over the last twelve months.</p>
+      </header>
+
+      <div class="github-dashboard reveal" id="githubDashboard" aria-busy="true">
+        <div class="github-profile">
+          <img id="githubAvatar" src="https://avatars.githubusercontent.com/u/160018090?v=4" alt="PrimeSalad GitHub avatar" width="72" height="72" loading="lazy" />
+          <div>
+            <p class="eyebrow">Developer profile</p>
+            <h3 id="githubName">Gene Elpie L. Landoy</h3>
+            <a href="https://github.com/PrimeSalad" target="_blank" rel="noreferrer">@PrimeSalad ↗</a>
+          </div>
+          <dl class="github-metrics">
+            <div><dt>Repositories</dt><dd id="githubRepoCount">46</dd></div>
+            <div><dt>Followers</dt><dd id="githubFollowerCount">08</dd></div>
+            <div><dt>Recent updates</dt><dd id="githubEventCount">06</dd></div>
+          </dl>
+        </div>
+
+        <div class="github-heatmap-panel">
+          <div class="github-panel-heading">
+            <div><p class="eyebrow">Last 12 months</p><h3>Contribution activity</h3></div>
+            <p id="githubStatus" role="status" aria-live="polite">Cached profile · checking live graph…</p>
+          </div>
+          <div class="github-heatmap-wrapper">
+            <div class="github-heatmap-inner">
+              <div class="github-heatmap-months" id="githubHeatmapMonths" aria-hidden="true"></div>
+              <div class="github-heatmap-body">
+                <div class="github-heatmap-days" aria-hidden="true">
+                  <span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span>
+                </div>
+                <div class="github-heatmap" id="githubHeatmap" role="img" aria-label="GitHub contribution graph is loading"></div>
+              </div>
+            </div>
+          </div>
+          <div class="heatmap-footer">
+            <div class="heatmap-legend" aria-hidden="true"><span>Less</span><i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><span>More</span></div>
+          </div>
+          <div class="heatmap-tooltip" id="heatmapTooltip" aria-hidden="true"></div>
+          <div class="github-contribution-stats" id="githubContribStats">
+            <div><strong id="contribTotal">—</strong><span>Total contributions</span></div>
+            <div><strong id="contribLongestStreak">—</strong><span>Longest streak</span></div>
+            <div><strong id="contribCurrentStreak">—</strong><span>Current streak</span></div>
+          </div>
+        </div>
+
+        <div class="github-columns">
+          <div class="github-feed-panel">
+            <div class="github-panel-heading"><div><p class="eyebrow">Recent events</p><h3>Latest public activity</h3></div></div>
+            <ol class="github-feed" id="githubFeed">
+              <li><span class="github-event-dot" aria-hidden="true"></span><p>Updated <a href="https://github.com/PrimeSalad/Smart-Trike-A-Mobile-TODA-Booking-System" target="_blank" rel="noreferrer">Smart Trike</a><time datetime="2026-08-23">Aug 23, 2026</time></p></li>
+              <li><span class="github-event-dot" aria-hidden="true"></span><p>Updated <a href="https://github.com/PrimeSalad/flowguard" target="_blank" rel="noreferrer">flowguard</a><time datetime="2026-08-20">Aug 20, 2026</time></p></li>
+              <li><span class="github-event-dot" aria-hidden="true"></span><p>Updated <a href="https://github.com/PrimeSalad/ar-system" target="_blank" rel="noreferrer">ar-system</a><time datetime="2026-08-18">Aug 18, 2026</time></p></li>
+              <li><span class="github-event-dot" aria-hidden="true"></span><p>Updated <a href="https://github.com/PrimeSalad/sbccc" target="_blank" rel="noreferrer">sbccc</a><time datetime="2026-08-13">Aug 13, 2026</time></p></li>
+              <li><span class="github-event-dot" aria-hidden="true"></span><p>Updated <a href="https://github.com/PrimeSalad/lyds" target="_blank" rel="noreferrer">lyds</a><time datetime="2026-08-03">Aug 3, 2026</time></p></li>
+              <li><span class="github-event-dot" aria-hidden="true"></span><p>Updated <a href="https://github.com/PrimeSalad/hiraya" target="_blank" rel="noreferrer">hiraya</a><time datetime="2026-07-22">Jul 22, 2026</time></p></li>
+            </ol>
+          </div>
+          <div class="github-repos-panel">
+            <div class="github-panel-heading"><div><p class="eyebrow">Recently updated</p><h3>Repositories</h3></div></div>
+            <div class="github-repos" id="githubRepos">
+              <a class="github-repo" href="https://github.com/PrimeSalad/Smart-Trike-A-Mobile-TODA-Booking-System" target="_blank" rel="noreferrer"><span><strong>Smart-Trike-A-Mobile-TODA-Booking-System</strong><small>TypeScript</small></span><span><small>Aug 23</small><b aria-hidden="true">↗</b></span></a>
+              <a class="github-repo" href="https://github.com/PrimeSalad/flowguard" target="_blank" rel="noreferrer"><span><strong>flowguard</strong><small>TypeScript</small></span><span><small>Aug 20</small><b aria-hidden="true">↗</b></span></a>
+              <a class="github-repo" href="https://github.com/PrimeSalad/ar-system" target="_blank" rel="noreferrer"><span><strong>ar-system</strong><small>TypeScript</small></span><span><small>Aug 18</small><b aria-hidden="true">↗</b></span></a>
+              <a class="github-repo" href="https://github.com/PrimeSalad/sbccc" target="_blank" rel="noreferrer"><span><strong>sbccc</strong><small>CSS</small></span><span><small>Aug 13</small><b aria-hidden="true">↗</b></span></a>
+              <a class="github-repo" href="https://github.com/PrimeSalad/lyds" target="_blank" rel="noreferrer"><span><strong>lyds</strong><small>TypeScript</small></span><span><small>Aug 03</small><b aria-hidden="true">↗</b></span></a>
+              <a class="github-repo" href="https://github.com/PrimeSalad/hiraya" target="_blank" rel="noreferrer"><span><strong>hiraya</strong><small>TypeScript</small></span><span><small>Jul 22</small><b aria-hidden="true">↗</b></span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section-shell ruled-section" id="archive" aria-labelledby="archiveTitle">
       <header class="section-heading reveal">
-        <div><span class="section-number">05</span><p class="eyebrow">Visual archive</p></div>
-        <h2 id="archiveTitle">Scenes from the work <em>around the work.</em></h2>
-        <p>Design output, conference rooms, hackathon tables, and the people who made the days memorable.</p>
+        <div><span class="section-number">07</span><p class="eyebrow">Visual archive</p></div>
+        <h2 id="archiveTitle">Selected design and <em>event documentation.</em></h2>
+        <p>Publication design, conference presentations, hackathons, technical events, and professional milestones.</p>
       </header>
 
       <div class="carousel-toolbar reveal">
         <div class="archive-tabs" role="tablist" aria-label="Visual archive categories">
           <button role="tab" aria-selected="true" data-archive-tab="all">All pictures</button>
           <button role="tab" aria-selected="false" data-archive-tab="moments">Moments</button>
-          <button role="tab" aria-selected="false" data-archive-tab="projects">Projects</button>
           <button role="tab" aria-selected="false" data-archive-tab="graphics">Graphics</button>
           <button role="tab" aria-selected="false" data-archive-tab="credentials">Credentials</button>
         </div>
@@ -219,8 +451,8 @@
 
     <section class="section-shell ruled-section" id="recognition" aria-labelledby="recognitionTitle">
       <header class="section-heading reveal">
-        <div><span class="section-number">06</span><p class="eyebrow">Recognition</p></div>
-        <h2 id="recognitionTitle">The work is better when <em>people feel it.</em></h2>
+        <div><span class="section-number">08</span><p class="eyebrow">Recommendations</p></div>
+        <h2 id="recognitionTitle">What collaborators say about <em>working with me.</em></h2>
       </header>
 
       <div class="quote-stage reveal">
@@ -236,51 +468,161 @@
         </div>
       </div>
 
-      <div class="credentials-block reveal">
-        <div class="credentials-header"><p class="eyebrow">Selected credentials</p><p id="credentialCount"></p></div>
-        <div class="credential-grid" id="credentialGrid"></div>
-        <button class="text-button" id="credentialToggle" type="button" aria-expanded="false">Show more credentials <span aria-hidden="true">＋</span></button>
-      </div>
     </section>
 
-    <section class="contact-section" id="contact" aria-labelledby="contactTitle">
-      <div class="contact-halftone" aria-hidden="true"></div>
-      <div class="contact-copy reveal">
-        <p class="eyebrow">07 / Say hello</p>
-        <h2 id="contactTitle">Have an idea worth <em>making real?</em></h2>
-        <p>I’m open to product work, creative collaborations, and conversations that start with “what if?”</p>
-        <a href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com <span aria-hidden="true">↗</span></a>
+    <section class="contact-section section-shell" id="contact" aria-labelledby="contactTitle">
+      <header class="contact-header reveal">
+        <div class="contact-index"><span>09</span><p class="eyebrow">Contact</p></div>
+        <p class="contact-availability"><span class="status-dot" aria-hidden="true"></span>Open to full-time, contract &amp; project work</p>
+      </header>
+
+      <div class="contact-pitch reveal" data-delay="1">
+        <h2 id="contactTitle">Have a role or <em>project in mind?</em></h2>
+        <p>Tell me what you are building, what you need, and where my experience can help.</p>
       </div>
 
-      <form class="contact-form reveal" id="contactForm" novalidate>
+      <div class="contact-direct reveal" data-delay="1">
+        <span class="contact-direct-label">Direct email</span>
+        <a href="mailto:g.landoyelpie@gmail.com">g.landoyelpie@gmail.com</a>
+        <button class="contact-copy-button" id="copyEmailButton" type="button" data-email="g.landoyelpie@gmail.com">
+          <span data-copy-label>Copy address</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="1"></rect><path d="M16 8V5H5v11h3"></path></svg>
+        </button>
+        <p class="sr-only" id="copyEmailStatus" role="status" aria-live="polite"></p>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" aria-label="Send Gene a project note" novalidate>
         <div class="field-row">
-          <label for="contactName">Your name</label>
-          <input id="contactName" name="name" type="text" autocomplete="name" required />
-          <span class="field-error" data-error-for="contactName"></span>
+          <label for="contactName"><span class="field-title"><b>01</b>Your name</span><span>Required</span></label>
+          <input id="contactName" name="name" type="text" autocomplete="name" aria-describedby="contactNameError" required />
+          <span class="field-error" id="contactNameError" data-error-for="contactName"></span>
         </div>
         <div class="field-row">
-          <label for="contactEmail">Email address</label>
-          <input id="contactEmail" name="email" type="email" autocomplete="email" required />
-          <span class="field-error" data-error-for="contactEmail"></span>
+          <label for="contactEmail"><span class="field-title"><b>02</b>Email address</span><span>Required</span></label>
+          <input id="contactEmail" name="email" type="email" autocomplete="email" aria-describedby="contactEmailError" required />
+          <span class="field-error" id="contactEmailError" data-error-for="contactEmail"></span>
         </div>
         <div class="field-row field-message">
-          <label for="contactMessage">Tell me about it</label>
-          <textarea id="contactMessage" name="message" rows="3" required></textarea>
-          <span class="field-error" data-error-for="contactMessage"></span>
+          <label for="contactMessage"><span class="field-title"><b>03</b>Role or project details</span><span>Required</span></label>
+          <textarea id="contactMessage" name="message" rows="3" aria-describedby="contactMessageError" required></textarea>
+          <span class="field-error" id="contactMessageError" data-error-for="contactMessage"></span>
         </div>
         <div class="form-submit">
-          <button class="button button-light" type="submit">Send note <span aria-hidden="true">↗</span></button>
+          <button class="contact-send" type="submit"><span>Send message</span><span class="contact-send-arrow" aria-hidden="true">↗</span></button>
           <p id="contactStatus" role="status" aria-live="polite"></p>
         </div>
       </form>
+
+      <footer class="contact-footnote reveal">
+        <p>Boac, Marinduque · Philippines</p>
+        <p>Usually replies within 1–2 days.</p>
+      </footer>
     </section>
 
     <footer class="site-footer">
-      <a class="wordmark" href="#top"><span class="wordmark-mark">GE</span><span>Landoy</span></a>
-      <p>Built with intention in Marinduque.</p>
+      <a class="wordmark" href="#top"><span>Gene Elpie Landoy</span></a>
+      <p>Designed and built in Marinduque, Philippines.</p>
       <p>© <span id="currentYear">2026</span> Gene Elpie Landoy</p>
     </footer>
   </main>
+
+  <dialog class="command-dialog" id="commandDialog" aria-labelledby="commandTitle">
+    <div class="dialog-topline">
+      <span>Portfolio assistant</span>
+      <button class="dialog-close" type="button" data-close-command aria-label="Close ask anything">esc</button>
+    </div>
+    <div class="command-body">
+      <p class="dialog-kicker">Ask anything</p>
+      <h2 id="commandTitle">What do you want to ask?</h2>
+      <form id="askForm">
+        <label class="sr-only" for="askInput">Ask about Gene's portfolio</label>
+        <div class="command-input-row">
+          <input id="askInput" name="question" type="search" autocomplete="off" placeholder="e.g. What does Gene build?" required />
+          <button type="submit">ask <span aria-hidden="true">↵</span></button>
+        </div>
+      </form>
+      <div class="command-suggestions" aria-label="Suggested questions">
+        <button type="button" data-question="What are Gene's strongest projects?">strongest projects</button>
+        <button type="button" data-question="What is Gene's technical stack?">technical stack</button>
+        <button type="button" data-question="What awards has Gene received?">awards &amp; credentials</button>
+      </div>
+      <div class="command-answer" id="askAnswer" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <p>Ask about projects, experience, skills, awards, or availability.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="typing-dialog" id="typingDialog" aria-labelledby="typingTitle">
+    <div class="dialog-topline">
+      <span>Typing test</span>
+      <button class="dialog-close" type="button" data-close-typing aria-label="Close typing test">esc</button>
+    </div>
+    <div class="typing-body">
+      <div class="typing-heading">
+        <div><p class="dialog-kicker">Build mode</p><h2 id="typingTitle">Type the line.</h2></div>
+        <button class="typing-restart" id="typingRestart" type="button">restart <span aria-hidden="true">↻</span></button>
+      </div>
+      <p class="typing-prompt" id="typingPrompt" aria-label="I turn rough ideas into useful products people actually use.">I turn rough ideas into useful products people actually use.</p>
+      <label class="sr-only" for="typingInput">Type the sentence shown above</label>
+      <textarea id="typingInput" rows="3" spellcheck="false" autocomplete="off" placeholder="Start typing here…" aria-describedby="typingStatus"></textarea>
+      <div class="typing-progress" aria-hidden="true"><i id="typingProgress"></i></div>
+      <div class="typing-stats" aria-live="polite">
+        <p><strong id="typingWpm">0</strong><span>wpm</span></p>
+        <p><strong id="typingAccuracy">100%</strong><span>accuracy</span></p>
+        <p><strong id="typingTime">0s</strong><span>time</span></p>
+      </div>
+      <div class="typing-footer">
+        <p id="typingStatus" role="status" aria-live="polite">Ready — start typing when you are.</p>
+        <p class="typing-hint"><kbd>esc</kbd> close</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="runner-dialog" id="runnerDialog" aria-labelledby="runnerTitle">
+    <div class="dialog-topline">
+      <span>Byte runner / GEL-01</span>
+      <button class="dialog-close" type="button" data-close-runner aria-label="Close Byte runner">esc</button>
+    </div>
+    <div class="runner-body">
+      <div class="runner-heading">
+        <div>
+          <p class="dialog-kicker"><span class="status-dot" aria-hidden="true"></span> Break mode</p>
+          <h2 id="runnerTitle">Keep the build moving.</h2>
+        </div>
+        <p>Help Byte clear the bugs.</p>
+      </div>
+
+      <div class="runner-scoreboard" aria-label="Byte runner score">
+        <p><span>Score</span><strong id="runnerScore">000</strong></p>
+        <p><span>Best</span><strong id="runnerBest">000</strong></p>
+        <p><span>Speed</span><strong id="runnerSpeed">1.0×</strong></p>
+      </div>
+
+      <div class="runner-stage" id="runnerStage">
+        <canvas id="runnerCanvas" width="960" height="320" role="img" aria-label="Byte, a pixel dog, running through a landscape and jumping over bug obstacles"></canvas>
+        <div class="runner-overlay" id="runnerOverlay">
+          <p class="eyebrow">Tiny game / real controls</p>
+          <strong id="runnerOverlayTitle">Ready, Byte?</strong>
+          <span id="runnerOverlayCopy">Press start, space, or tap the track.</span>
+        </div>
+      </div>
+
+      <div class="runner-controls">
+        <button class="runner-start" id="runnerStart" type="button">Start run <span aria-hidden="true">→</span></button>
+        <button class="runner-jump" id="runnerJump" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16 12 9l7 7M12 9v11M5 4h14"></path></svg>
+          <span>Jump</span><kbd>space</kbd>
+        </button>
+        <button class="runner-restart" id="runnerRestart" type="button">Restart <span aria-hidden="true">↻</span></button>
+      </div>
+      <div class="runner-foot">
+        <p class="runner-hint">Space / ↑ / tap to jump <span>·</span> R to restart <span>·</span> Esc to close</p>
+        <a href="https://opengameart.org/content/dog-spritesheets" target="_blank" rel="noreferrer">Dog sprite / CC0 <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="sr-only" id="runnerAnnouncement" aria-live="polite"></p>
+    </div>
+  </dialog>
 
   <dialog class="lightbox" id="lightbox" aria-labelledby="lightboxTitle">
     <div class="lightbox-bar">

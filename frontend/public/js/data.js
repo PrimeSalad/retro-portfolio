@@ -12,7 +12,7 @@ export const PORTFOLIO_DATA = {
       "tag": "conference"
     },
     {
-      
+
       "title": "Hack4Gov 3",
       "src": "/images/events/hack3.jpg",
       "alt": "hackathon with participants collaborating",
@@ -123,6 +123,65 @@ export const PORTFOLIO_DATA = {
   ],
   "projects": [
     {
+      "id": "p14",
+      "title": "Unchainly",
+      "year": 2026,
+      "category": "iOS Recovery & Focus App",
+      "role": "Founder / Product Designer / iOS Developer",
+      "impact": "Turns recovery into a private, structured daily practice instead of a willpower-only challenge.",
+      "outcome": "People can block high-risk apps and websites, record urges and triggers, use SOS tools, and understand their recovery patterns in one local-first product.",
+      "description": "A private iPhone recovery companion for blocking triggers, journaling daily, tracking urges, using SOS tools, and understanding progress.",
+      "image": "/images/projects/captures/unchainly-site.png",
+      "website": "https://www.unchainly.space/",
+      "app_store": "https://apps.apple.com/ph/app/unchainly/id6794420100",
+      "preview": "https://apps.apple.com/ph/app/unchainly/id6794420100",
+      "tech": [
+        "iOS",
+        "SwiftUI",
+        "Screen Time API",
+        "Local-first"
+      ],
+      "demo": "https://apps.apple.com/ph/app/unchainly/id6794420100",
+      "repo": "#",
+      "score": 100,
+      "highlights": [
+        "App and website blocking with automatic release controls.",
+        "Daily journal, urge and trigger tracking, SOS tools, and recovery insights.",
+        "Private by design, with sensitive recovery data stored locally on device."
+      ],
+      "highlight_label": "App Store release",
+      "featured": true,
+      "status": "live"
+    },
+    {
+      "id": "p15",
+      "title": "LYDS — Boac Youth Information System",
+      "year": 2026,
+      "category": "Public-Service Management System",
+      "role": "Full-Stack Developer",
+      "impact": "Gives the Local Youth Development Section a focused digital workspace for managing youth information and day-to-day program operations.",
+      "outcome": "Section staff can work through a centralized, production-ready system designed around the Municipality of Boac's actual administrative requirements.",
+      "description": "A production youth information management system built for the Local Youth Development Section of Boac, covering reliable digital workflows, records, and operational support.",
+      "image": "/images/projects/captures/lyds.png",
+      "website": "https://lyds-boac-2026.vercel.app/login",
+      "preview": "https://lyds-boac-2026.vercel.app/login",
+      "tech": [
+        "React",
+        "TypeScript",
+        "Civic Tech",
+        "Full Stack"
+      ],
+      "demo": "https://lyds-boac-2026.vercel.app/login",
+      "repo": "https://github.com/PrimeSalad/lyds",
+      "score": 99,
+      "highlights": [
+        "Built and maintained as a real production system for local public service.",
+        "Translates youth-program and reporting requirements into clear digital workflows.",
+        "Includes ongoing frontend, backend, database, maintenance, and technical support ownership."
+      ],
+      "status": "live"
+    },
+    {
       "id": "p8",
       "title": "MORI — Smart Action Engine",
       "year": 2026,
@@ -130,8 +189,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Transforms online concerns into verified and actionable reports.",
       "outcome": "Users can scan issues, verify information, and report directly to the right authority.",
-      "description": "An AI-powered browser extension that transforms online concerns into verified and actionable reports. From transport violations and public safety concerns to emergencies and scams, MORI helps users turn awareness into action.",
-      "image": "https://img.youtube.com/vi/WwPxjMTNU0Q/maxresdefault.jpg",
+      "description": "A browser extension that turns online public concerns into structured, verifiable reports for transport, safety, emergency, and scam incidents.",
+      "image": "/images/projects/captures/mori.jpg",
       "preview": "https://mori-smart-action-engine.vercel.app/",
       "tech": [
         "React",
@@ -156,7 +215,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Empowers organizations and educators to generate professional certificates fast and free.",
       "outcome": "Users can drag-and-drop designs and bulk generate hundreds of certificates entirely in the browser.",
-      "description": "CertifiCat is a free, browser-based certificate generator that features a drag-and-drop designer, bulk generation capabilities, and high-quality PDF/PNG exports without sign-ups or watermarks.",
+      "description": "A free browser-based certificate designer with drag-and-drop layouts, bulk generation, and high-quality PDF/PNG export—without accounts or watermarks.",
+      "image": "/images/projects/captures/certificat.jpg",
       "preview": "https://certificat-smoky.vercel.app/",
       "tech": [
         "React",
@@ -171,6 +231,8 @@ export const PORTFOLIO_DATA = {
         "Bulk generation feature supporting hundreds of recipients instantly.",
         "Completely free with no sign-ups or watermarks required."
       ],
+      "highlight_label": "Featured maker tool",
+      "featured": true,
       "status": "live"
     },
     {
@@ -181,8 +243,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "AI takes the notes so the whole team can focus on the actual meeting.",
       "outcome": "Task ownership and deadlines are extracted automatically from meeting content.",
-      "description": "salitAI.orbit captures spoken discussion, transforms it into structured notes, and highlights assigned action items with due dates so that teams leave every meeting with clarity.",
-      "image": "/images/projects/salitai.jpg",
+      "description": "A meeting assistant that converts spoken discussions into structured notes, assigned action items, owners, and due dates.",
+      "image": "/images/projects/captures/salitai.jpg",
       "preview": "https://salit-ai-orbit.space/",
       "tech": [
         "React",
@@ -208,8 +270,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Preserves and shares cultural knowledge through AI-powered documentation.",
       "outcome": "Communities can document, preserve, and share their cultural heritage digitally.",
-      "description": "MorionKnow.AI is a cultural preservation platform that uses AI to help communities document, organize, and share their cultural knowledge, traditions, and heritage through intelligent conversations and smart recommendations.",
-      "image": "/images/projects/plastech.jpg",
+      "description": "A cultural knowledge platform that helps communities document, organize, and share local heritage through guided AI conversations.",
+      "image": "/images/projects/captures/morionknow.jpg",
       "preview": "https://morionknow-ai.space/",
       "tech": [
         "React",
@@ -235,8 +297,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Supports marine conservation efforts in Marinduque through accessible research tools.",
       "outcome": "DOST Marinduque researchers can document and track coral health more effectively.",
-      "description": "Coral.orbit is a mobile marine research app developed for DOST Marinduque, designed for coral mapping and enabling researchers to document coral health, track changes over time, and contribute to local marine conservation efforts.",
-      "image": "/images/projects/shape.jpg",
+      "description": "A mobile field app for DOST Marinduque researchers to map coral sites, record health observations, and track environmental changes over time.",
+      "image": "/images/projects/captures/coral.jpg",
       "preview": "https://coralorbit.vercel.app/",
       "tech": [
         "Flutter",
@@ -261,8 +323,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Streamlines project management and tracking for DOST Marinduque initiatives.",
       "outcome": "Teams can monitor project progress, milestones, and deliverables more effectively.",
-      "description": "Waymark is a mobile project tracking app developed for DOST Marinduque that simplifies project management by organizing tasks, tracking milestones, and providing clear visibility into project status and team progress.",
-      "image": "/images/projects/travel.jpg",
+      "description": "A mobile project tracker for DOST Marinduque teams, bringing tasks, milestones, project status, and team progress into one workflow.",
+      "image": "/images/projects/captures/waymark.jpg",
       "preview": "https://waymarkorbit.vercel.app/",
       "tech": [
         "Flutter",
@@ -287,7 +349,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Provides intelligent pet care guidance and support for pet owners.",
       "outcome": "Pet owners can access AI-powered advice for better pet care decisions.",
-      "description": "PawPrint AI is an intelligent pet care assistant that helps pet owners make informed decisions about their pets' health, nutrition, and well-being through AI-powered conversations and personalized recommendations.",
+      "description": "An AI-assisted pet care product that gives owners accessible guidance on everyday health, nutrition, and well-being questions.",
+      "image": "/images/projects/captures/pawprint.jpg",
       "preview": "https://pawprint-ai-beta.vercel.app/",
       "tech": [
         "React",
@@ -313,8 +376,8 @@ export const PORTFOLIO_DATA = {
       "role": "Developer",
       "impact": "Streamlines inventory tracking and management for motorcycle parts businesses.",
       "outcome": "Businesses can efficiently manage stock levels, track sales, and optimize inventory operations.",
-      "description": "MotoMart IMS is a comprehensive inventory management system designed for motorcycle parts retailers, providing real-time stock tracking, sales management, and inventory analytics to help businesses operate more efficiently.",
-      "image": "/images/projects/ims.jpg",
+      "description": "An inventory and sales system for motorcycle-parts retailers with live stock levels, transaction tracking, and operational reporting.",
+      "image": "/images/projects/captures/motomart.jpg",
       "preview": "#",
       "tech": [
         "React",
@@ -330,99 +393,42 @@ export const PORTFOLIO_DATA = {
         "Focused on streamlining business operations and inventory workflows."
       ],
       "status": "live"
-    },
-    {
-      "id": "p9",
-      "title": "Alertify",
-      "year": "Archive",
-      "category": "Android Disaster Response",
-      "role": "Designer and Developer",
-      "impact": "Supports faster disaster reporting and coordinated local response.",
-      "outcome": "A mobile-first concept for municipalities across Marinduque.",
-      "description": "An Android-based disaster management and rapid-response system designed for the Province of Marinduque.",
-      "image": "/images/projects/alertify.jpg",
-      "preview": "#",
-      "tech": ["Android", "Mobile UX", "Civic Tech"],
-      "demo": "#",
-      "repo": "#",
-      "score": 82,
-      "status": "archive"
-    },
-    {
-      "id": "p10",
-      "title": "FTA Agriculture Dashboard",
-      "year": "Archive",
-      "category": "Agriculture Analytics",
-      "role": "Designer and Developer",
-      "impact": "Makes farmer, user, and crop activity easier to monitor.",
-      "outcome": "A consolidated dashboard for agricultural operations and performance.",
-      "description": "A data-rich administrative dashboard for tracking farmers, users, crops, cooperatives, orders, and recent activity.",
-      "image": "/images/projects/fta.jpg",
-      "preview": "#",
-      "tech": ["Dashboard", "Analytics", "UI/UX"],
-      "demo": "#",
-      "repo": "#",
-      "score": 80,
-      "status": "archive"
-    },
-    {
-      "id": "p11",
-      "title": "Threadify",
-      "year": "Archive",
-      "category": "Digital Wallet",
-      "role": "Designer and Developer",
-      "impact": "Explores a simpler, mobile-first wallet experience.",
-      "outcome": "A focused financial product concept built around clarity and ease of use.",
-      "description": "A mobile digital-wallet concept with a polished fintech identity and a streamlined everyday money experience.",
-      "image": "/images/projects/threadify.jpg",
-      "preview": "#",
-      "tech": ["Mobile", "Fintech", "UI/UX"],
-      "demo": "#",
-      "repo": "#",
-      "score": 79,
-      "status": "archive"
-    },
-    {
-      "id": "p12",
-      "title": "TimeTap",
-      "year": "Archive",
-      "category": "Scheduling and Time Management",
-      "role": "Designer and Developer",
-      "impact": "Helps students and researchers organize appointments and schedules.",
-      "outcome": "A custom scheduling experience designed for academic workflows.",
-      "description": "A mobile scheduling app concept that improves time management for students and researchers through a clear appointment workflow.",
-      "image": "/images/projects/timetap.jpg",
-      "preview": "#",
-      "tech": ["Mobile", "Scheduling", "UI/UX"],
-      "demo": "#",
-      "repo": "#",
-      "score": 78,
-      "status": "archive"
-    },
-    {
-      "id": "p13",
-      "title": "WHG Pixel Game",
-      "year": "Archive",
-      "category": "Game Prototype",
-      "role": "Designer and Developer",
-      "impact": "Explores interaction design through a compact pixel-game format.",
-      "outcome": "A playable visual prototype with stages, obstacles, and collectible elements.",
-      "description": "A colorful pixel-art game experiment focused on movement, level progression, and playful interaction.",
-      "image": "/images/projects/whg.jpg",
-      "preview": "#",
-      "tech": ["Game Design", "Pixel Art", "Prototype"],
-      "demo": "#",
-      "repo": "#",
-      "score": 76,
-      "status": "archive"
     }
   ],
   "timeline": [
     {
+      "id": "t0",
+      "year": "2026",
+      "date": "Jul 2026 - Present",
+      "title": "Full-Stack Developer, Local Youth Development Section",
+      "url": "https://lyds-boac-2026.vercel.app/login",
+      "link_label": "Open LYDS live system",
+      "tags": [
+        "full stack",
+        "public service",
+        "system maintenance",
+        "technical support"
+      ],
+      "bullets": [
+        "Develop and maintain the LYDS web system across frontend, backend, database, bug fixes, and production support.",
+        "Translate program and reporting requirements into reliable digital workflows while providing day-to-day technical support to section staff."
+      ],
+      "metrics": [
+        "Production system ownership",
+        "Full-stack delivery and operational support"
+      ],
+      "stack": [
+        "Full Stack",
+        "LYDS",
+        "System Maintenance",
+        "Technical Support"
+      ]
+    },
+    {
       "id": "t1",
       "year": "2026",
       "date": "Jan - Present",
-      "title": "Founder and Lead Developer, DotOrbit Development Team",
+      "title": "Lead Developer, DotOrbit Development Team",
       "tags": [
         "backend",
         "leadership",
@@ -431,12 +437,12 @@ export const PORTFOLIO_DATA = {
         "frontend"
       ],
       "bullets": [
-        "Managed team delivery rhythm and kept the task board aligned with actual priorities.",
-        "Built and coordinated modular services so the system could scale more safely."
+        "Lead product planning and full-stack implementation across the team's web, mobile, and AI projects.",
+        "Break product goals into deliverable features, review technical decisions, and coordinate releases across contributors."
       ],
       "metrics": [
-        "Balanced coding with product direction",
-        "Focused the team on features that mattered most"
+        "End-to-end product delivery",
+        "Cross-functional team leadership"
       ],
       "stack": [
         "PostgreSQL",
@@ -455,12 +461,12 @@ export const PORTFOLIO_DATA = {
         "leadership"
       ],
       "bullets": [
-        "Handled product-side planning while still contributing technical implementation.",
-        "Kept backend work aligned with team structure and expected delivery flow."
+        "Owned backend implementation and product requirements, translating project goals into APIs, data models, and sprint priorities.",
+        "Coordinated technical delivery with team members and kept implementation aligned with stakeholder needs."
       ],
       "metrics": [
-        "Product + engineering alignment",
-        "Improved team coordination under sprint work"
+        "Backend and product ownership",
+        "Sprint planning and technical coordination"
       ],
       "stack": [
         "PostgreSQL",
@@ -472,28 +478,6 @@ export const PORTFOLIO_DATA = {
     {
       "id": "t3",
       "year": "2025",
-      "date": "Jul 2025 - Jul 2026",
-      "title": "Organization Canva Admin, MarSU - College of Information and Computing Sciences",
-      "tags": [
-        "publication",
-        "design",
-        "leadership"
-      ],
-      "bullets": [
-        "Managed Canva for Education organization access and student onboarding.",
-        "Helped student organizations use creative tools better for events and publication work."
-      ],
-      "metrics": [
-        "Onboarded 200+ student orgs",
-        "Led workshops with 100+ attendees"
-      ],
-      "stack": [
-        "Canva for Education"
-      ]
-    },
-    {
-      "id": "t4",
-      "year": "2025",
       "date": "Jul 2025 - Jan 2026",
       "title": "Correspondent, Sentro Publication",
       "tags": [
@@ -502,12 +486,12 @@ export const PORTFOLIO_DATA = {
         "publication"
       ],
       "bullets": [
-        "Produced publication-related outputs and supported coverage-related execution.",
-        "Improved content handling through better creative and editorial coordination."
+        "Wrote, designed, and supported coverage for campus publication releases.",
+        "Coordinated with editors and creatives to move stories from assignment to final layout on schedule."
       ],
       "metrics": [
-        "Consistent content delivery",
-        "Stronger publication contribution"
+        "Editorial coverage and design",
+        "Reliable release support"
       ],
       "stack": [
         "Writing",
@@ -516,7 +500,7 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      "id": "t5",
+      "id": "t4",
       "year": "2025",
       "date": "Jul 2025 - Jul 2026",
       "title": "Associate Editor-in-Chief, Infocus Publication and Broadcasting Team",
@@ -528,12 +512,12 @@ export const PORTFOLIO_DATA = {
         "video"
       ],
       "bullets": [
-        "Supported direction, creative quality, and execution across publication and broadcast outputs.",
-        "Helped maintain stronger coordination between content and design responsibilities."
+        "Coordinated editorial, design, and broadcast workflows while maintaining quality across releases.",
+        "Reviewed content and visual output, resolved production gaps, and supported contributors through delivery."
       ],
       "metrics": [
-        "Higher publication quality",
-        "Broader team coordination"
+        "Cross-functional production leadership",
+        "Editorial and visual quality control"
       ],
       "stack": [
         "Editorial",
@@ -542,7 +526,7 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      "id": "t6",
+      "id": "t5",
       "year": "2024",
       "date": "Jul 2024 - Jul 2025",
       "title": "Editor-in-Chief, Infocus Publication and Broadcasting Team",
@@ -554,12 +538,12 @@ export const PORTFOLIO_DATA = {
         "video"
       ],
       "bullets": [
-        "Led the publication team and shaped output quality across multiple deliverables.",
-        "Oversaw direction, approvals, and presentation quality for content releases."
+        "Led editorial planning, assignments, approvals, and publication standards across the team.",
+        "Directed content and visual production from coverage planning through final release."
       ],
       "metrics": [
-        "Leadership in publication",
-        "Clearer editorial direction"
+        "Team and publication ownership",
+        "End-to-end editorial direction"
       ],
       "stack": [
         "Editorial",
@@ -568,7 +552,7 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      "id": "t7",
+      "id": "t6",
       "year": "2023",
       "date": "Jul 2023 - Jul 2024",
       "title": "Chief Layout Artist, Infocus Publication and Broadcasting Team",
@@ -580,12 +564,12 @@ export const PORTFOLIO_DATA = {
         "design"
       ],
       "bullets": [
-        "Improved visual presentation consistency and layout quality.",
-        "Worked closely with content and creative contributors for polished outputs."
+        "Defined layout direction and visual standards for print and digital publication materials.",
+        "Worked with writers, editors, and creatives to deliver readable, consistent outputs on schedule."
       ],
       "metrics": [
-        "Better visual consistency",
-        "Faster output turnaround"
+        "Consistent visual system",
+        "Reliable production turnaround"
       ],
       "stack": [
         "Canva",
@@ -594,7 +578,7 @@ export const PORTFOLIO_DATA = {
       ]
     },
     {
-      "id": "t8",
+      "id": "t7",
       "year": "2022",
       "date": "Aug 2022 - Sep 2022",
       "title": "Head Layout Artist, The Heart Publication",
@@ -603,12 +587,12 @@ export const PORTFOLIO_DATA = {
         "design"
       ],
       "bullets": [
-        "Led layout direction for publication materials.",
-        "Established stronger visual output quality through layout decisions."
+        "Led visual layout for publication materials, balancing hierarchy, readability, and brand consistency.",
+        "Prepared release-ready designs in coordination with the editorial team."
       ],
       "metrics": [
-        "Cleaner layouts",
-        "Improved readability"
+        "Publication layout leadership",
+        "Readable, release-ready design"
       ],
       "stack": [
         "Publication design",
@@ -652,8 +636,8 @@ export const PORTFOLIO_DATA = {
       "title": "CodeMaster Award",
       "preview_weight": 102,
       "issuer": "DOST",
-      "issued": "2025",
-      "issued_detail": "2025",
+      "issued": "Apr 2026",
+      "issued_detail": "April 10, 2026",
       "credential_id": "N/A",
       "link": "/images/certificate/codemaster_award_-_dost.jpg",
       "notes": "Recognition award for coding excellence and technical achievement from DOST.",
@@ -718,8 +702,8 @@ export const PORTFOLIO_DATA = {
       "title": "Emerging Leader Award",
       "preview_weight": 103,
       "issuer": "DOST",
-      "issued": "2025",
-      "issued_detail": "2025",
+      "issued": "Apr 2026",
+      "issued_detail": "April 10, 2026",
       "credential_id": "N/A",
       "link": "/images/certificate/emerging_leader_award_-dost.jpg",
       "notes": "Leadership recognition award from DOST for emerging talent and leadership potential.",
@@ -739,8 +723,8 @@ export const PORTFOLIO_DATA = {
       "title": "ICITE2025 International Conference on Information Technology Education",
       "preview_weight": 98,
       "issuer": "ICITE2025",
-      "issued": "Nov 2024",
-      "issued_detail": "November 27-29, 2024",
+      "issued": "Nov 2025",
+      "issued_detail": "November 27-29, 2025",
       "credential_id": "N/A",
       "link": "/images/certificate/ICITE2025_International_Conference_on_Information_Technology_Education.jpg",
       "notes": "Conference certificate associated with participation or presentation in an international technology education event.",
@@ -805,19 +789,19 @@ export const PORTFOLIO_DATA = {
       "title": "Technical Excellence Award",
       "preview_weight": 104,
       "issuer": "DOST",
-      "issued": "2025",
-      "issued_detail": "2025",
+      "issued": "Apr 2026",
+      "issued_detail": "April 10, 2026",
       "credential_id": "N/A",
       "link": "/images/certificate/technical_execellence_-dost.jpg",
       "notes": "Recognition award for technical excellence and outstanding technical achievement from DOST.",
       "image": "/images/certificate/technical_execellence_-dost.jpg"
     },
     {
-      "title": "Top Achiever and Best Project Execution Award",
+      "title": "Top Achiever and Best in Project Execution Award",
       "preview_weight": 105,
       "issuer": "DOST",
-      "issued": "2025",
-      "issued_detail": "2025",
+      "issued": "Apr 2026",
+      "issued_detail": "April 10, 2026",
       "credential_id": "N/A",
       "link": "/images/certificate/top_achiever_and_best_project_execution_award_-_dost.jpg",
       "notes": "Top achievement award recognizing best project execution and outstanding performance from DOST.",
@@ -901,9 +885,16 @@ export const PORTFOLIO_DATA = {
       "title": "DOST: Regional Innovation Contest and Exhibition (RICE)",
       "desc": "Presented a crop deficiency detection concept using leaf color analysis.",
       "meta": "Tech: Arduino"
+    },
+    {
+      "badge": "Training",
+      "badgeColor": "gRed",
+      "title": "SPARK — Social Media Marketing 2.0",
+      "desc": "Completed technical training on the shift toward AI-powered interaction in social media marketing.",
+      "meta": "DICT · Digital Transformation Centers"
     }
   ],
-  
+
   "gallery": [
     {
       "title": "BASE Hackathon",

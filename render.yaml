@@ -10,5 +10,9 @@ services:
         value: 20.0.0
       - key: GEMINI_API_KEY
         sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash-lite
+      - key: GEMINI_TIMEOUT_MS
+        value: 11000
       - key: FRONTEND_URL
-        value: https://your-portfolio.vercel.app # Update this after Vercel deployment
+        value: https://elpie-portfolio.vercel.app
