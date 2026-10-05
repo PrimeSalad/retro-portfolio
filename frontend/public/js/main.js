@@ -1977,7 +1977,18 @@ function projectLinks(project) {
 ========================= */
 const caseState = { list: [], index: 0 };
 
-function renderCaseStudy() {
+/* Scroll areas hide their scrollbars; a bottom fade signals there is more to read. */
+function updateCaseFade() {
+  ["#caseDialog .case-content", "#caseDialog .case-body"].forEach((selector) => {
+    const area = $(selector);
+    if (!area) return;
+    const scrollable = getComputedStyle(area).overflowY === "auto";
+    const remaining = area.scrollHeight - area.clientHeight - area.scrollTop;
+    area.classList.toggle("has-more", scrollable && remaining > 2);
+  });
+}
+
+function renderCaseStudy(direction = 0) {
   const project = caseState.list[caseState.index];
   if (!project) return;
   const title = project.title || "Untitled project";
@@ -2018,7 +2029,14 @@ function renderCaseStudy() {
   $("#casePrev").disabled = total < 2;
   $("#caseNext").disabled = total < 2;
   $("#caseLive").textContent = `${title}, case study ${caseState.index + 1} of ${total}`;
-  $("#caseDialog").scrollTop = 0;
+  $$("#caseDialog .case-content, #caseDialog .case-body").forEach((area) => { area.scrollTop = 0; });
+  requestAnimationFrame(updateCaseFade);
+  if (direction && !reduceMotion.matches && $(".case-body")?.animate) {
+    $(".case-body").animate([
+      { opacity: 0.35, transform: `translateX(${direction * 14}px)` },
+      { opacity: 1, transform: "none" },
+    ], { duration: 260, easing: "cubic-bezier(.2,.7,.3,1)" });
+  }
 
   try { history.replaceState(null, "", `#case-${projectSlug(project)}`); } catch { /* sandboxed frames */ }
 }
@@ -2040,7 +2058,7 @@ function setupCaseStudies() {
   const step = (delta) => {
     if (caseState.list.length < 2) return;
     caseState.index = (caseState.index + delta + caseState.list.length) % caseState.list.length;
-    renderCaseStudy();
+    renderCaseStudy(delta);
   };
   const close = () => { if (dialog.open) dialog.close(); };
 
@@ -2061,6 +2079,12 @@ function setupCaseStudies() {
     if (!location.hash.startsWith("#case-")) return;
     try { history.replaceState(null, "", location.pathname + location.search); } catch { /* ignore */ }
   });
+
+  $$("#caseDialog .case-content, #caseDialog .case-body").forEach((area) => {
+    area.addEventListener("scroll", updateCaseFade, { passive: true });
+  });
+  $("#caseImage").addEventListener("load", updateCaseFade);
+  window.addEventListener("resize", () => { if (dialog.open) updateCaseFade(); }, { passive: true });
 
   const copyButton = $("#caseCopyLink");
   copyButton.addEventListener("click", async () => {

@@ -1640,11 +1640,18 @@ kbd {
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.25);
   overscroll-behavior: contain;
 }
+/* Motion only, no opacity: fading the panel let the page ghost through it. */
 .case-dialog[open],
-.swipe-dialog[open] { animation: dialog-rise 260ms cubic-bezier(.2, .7, .3, 1); }
+.swipe-dialog[open] { animation: dialog-rise 300ms cubic-bezier(.2, .7, .3, 1); }
+.case-dialog[open]::backdrop,
+.swipe-dialog[open]::backdrop { animation: backdrop-in 220ms ease; }
 @keyframes dialog-rise {
-  from { opacity: 0; transform: translateY(14px) scale(0.985); }
-  to { opacity: 1; transform: none; }
+  from { transform: translateY(18px) scale(0.98); }
+  to { transform: none; }
+}
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .case-dialog .dialog-topline,
 .swipe-dialog .dialog-topline {
@@ -1806,6 +1813,91 @@ kbd {
   color: var(--faint);
   font-family: var(--font-mono);
   font-size: 10px;
+}
+
+
+/* Case study layout: fixed header and footer, no visible scrollbars.
+   Desktop shows the screenshot and the story side by side. */
+.case-dialog {
+  width: min(calc(100% - 32px), 1060px);
+  height: min(680px, calc(100dvh - 32px));
+  max-height: none;
+  overflow: hidden;
+}
+.case-dialog[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.case-dialog .dialog-topline { position: static; }
+.case-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+.case-media {
+  min-height: 0;
+  display: grid;
+  place-content: center;
+  overflow: hidden;
+  aspect-ratio: auto;
+  padding: 32px;
+  border-right: 1px solid var(--line);
+  border-bottom: 0;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0) 0 0 / 18px 18px,
+    var(--surface-soft);
+}
+.case-media img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+.case-media[href]:hover img { transform: translateY(-3px); }
+.case-media[hidden] { display: none; }
+.case-body:has(.case-media[hidden]) { grid-template-columns: 1fr; }
+.case-content {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: 28px 30px 26px;
+}
+.case-content::-webkit-scrollbar,
+.case-body::-webkit-scrollbar { display: none; }
+.case-content.has-more,
+.case-body.has-more {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+}
+.case-content h2 { font-size: clamp(28px, 3.4vw, 38px); }
+.case-impact { font-size: 16px; }
+.case-nav {
+  position: static;
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .case-dialog { height: calc(100dvh - 32px); }
+  .case-body {
+    display: block;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+  .case-media {
+    display: block;
+    padding: 18px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .case-media img { max-height: none; }
+  .case-content { overflow: visible; }
+  .case-content.has-more { -webkit-mask-image: none; mask-image: none; }
 }
 
 /* Swipe mode */
