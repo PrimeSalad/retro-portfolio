@@ -75,15 +75,6 @@ function safeUrl(url) {
   }
 }
 
-function projectHost(url) {
-  if (!url || url === "#") return "Portfolio archive";
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return "Live product";
-  }
-}
-
 function projectKind(project) {
   const text = `${project.category || ""} ${(project.tech || []).join(" ")}`.toLowerCase();
   const kinds = [];
@@ -140,63 +131,33 @@ function renderProjects(filter = "all") {
     const title = escapeHtml(project.title || "Untitled project");
     const category = escapeHtml(project.category || "Digital product");
     const description = escapeHtml(project.description || project.impact || "");
-    const url = safeUrl(project.website || project.demo || project.preview || project.repo) || "#";
+    const url = safeUrl(project.website || project.demo || project.preview || project.repo) || "";
     const appStoreUrl = safeUrl(project.app_store || "");
     const image = project.image ? resolveImagePath(project.image) : "";
-    const isLive = project.status !== "archive" && url !== "#";
-    const isFlagship = Boolean(project.featured);
-    const highlightLabel = escapeHtml(project.highlight_label || (appStoreUrl ? "App Store release" : "Featured project"));
-    const captureLabel = isFlagship ? highlightLabel : isLive ? "Live site capture" : "Project archive";
-    const host = escapeHtml(projectHost(url));
+    const isLive = project.status !== "archive" && Boolean(url || appStoreUrl);
     const tags = (project.tech || []).slice(0, 4).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+    const caseAttrs = `type="button" data-case="${escapeHtml(project.id)}"`;
     const media = image
-      ? `<img src="${escapeHtml(image)}" alt="Interface preview of ${title}" width="1440" height="900" loading="${index < 2 ? "eager" : "lazy"}" />`
+      ? `<img src="${escapeHtml(image)}" alt="" width="1440" height="900" loading="${index < 2 ? "eager" : "lazy"}" />`
       : `<span class="project-placeholder"><span>${escapeHtml(initials(project.title))}</span></span>`;
-    const framedMedia = `
-      <span class="project-windowbar" aria-hidden="true">
-        <span class="project-window-controls"><i></i><i></i><i></i></span>
-        <span class="project-window-address">${host}</span>
-        <span class="project-capture-label">${captureLabel}</span>
-      </span>
-      <span class="project-shot">${media}</span>`;
-    const mediaMarkup = url === "#"
-      ? `<div class="project-media" aria-label="${title} project preview">${framedMedia}</div>`
-      : `<a class="project-media" href="${escapeHtml(url)}" target="_blank" rel="noreferrer" aria-label="Open the live ${title} product">${framedMedia}</a>`;
-    const titleMarkup = url === "#"
-      ? title
-      : `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${title}</a>`;
-    const actionMarkup = isFlagship && appStoreUrl
-      ? `<div class="project-flagship-actions">
-          <a class="project-action project-site-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">Visit product site <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
-          <a class="project-app-store" href="${escapeHtml(appStoreUrl)}" target="_blank" rel="noreferrer" aria-label="Download ${title} on the App Store">
-            <img src="/images/app-store-badge.svg" alt="Download on the App Store" width="120" height="40" />
-          </a>
-        </div>`
-      : url === "#"
-      ? `<span class="project-action is-archive"><i aria-hidden="true"></i>Archived build</span>`
-      : `<a class="project-action" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">View live product <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>`;
-    const accoladeMarkup = isFlagship
-      ? `<div class="project-accolade" aria-label="${highlightLabel}">
-          <svg class="project-laurel" viewBox="0 0 24 30" aria-hidden="true"><path d="M20 2C10 7 5 17 6 28M14 7C11 7 9 6 8 4M11 12c-3 0-5-1-6-3m5 9c-3 0-5-1-6-3m7-4c1-3 3-5 6-6m-8 12c1-3 3-5 6-6m-8 12c1-3 3-5 6-6"></path></svg>
-          <span>${highlightLabel}</span>
-          <svg class="project-laurel is-right" viewBox="0 0 24 30" aria-hidden="true"><path d="M20 2C10 7 5 17 6 28M14 7C11 7 9 6 8 4M11 12c-3 0-5-1-6-3m5 9c-3 0-5-1-6-3m7-4c1-3 3-5 6-6m-8 12c1-3 3-5 6-6m-8 12c1-3 3-5 6-6"></path></svg>
-        </div>`
-      : "";
+    /* One quiet outbound link per card; the case study holds everything else. */
+    const outbound = appStoreUrl
+      ? `<a class="project-out" href="${escapeHtml(appStoreUrl)}" target="_blank" rel="noreferrer" aria-label="${title} on the App Store">App Store <span aria-hidden="true">↗</span></a>`
+      : url
+      ? `<a class="project-out" href="${escapeHtml(url)}" target="_blank" rel="noreferrer" aria-label="Open the live ${title} product">Live site <span aria-hidden="true">↗</span></a>`
+      : `<span class="project-out is-archive">Archived</span>`;
 
     return `
-      <article class="project-card reveal ${isLive ? "is-live" : "is-archive"}${isFlagship ? " is-flagship" : ""}" data-kind="${escapeHtml(projectKind(project))}" data-delay="${index % 2}">
-        ${accoladeMarkup}
-        ${mediaMarkup}
+      <article class="project-card reveal ${isLive ? "is-live" : "is-archive"}" data-kind="${escapeHtml(projectKind(project))}" data-delay="${index % 2}">
+        <button class="project-media" ${caseAttrs} tabindex="-1" aria-hidden="true"><span class="project-shot">${media}</span></button>
         <div class="project-content">
-          <div class="project-topline"><span>${String(index + 1).padStart(2, "0")} / ${isFlagship ? `${highlightLabel} / ` : ""}${category}</span><span>${escapeHtml(project.year || "2026")}</span></div>
-          <h3>${titleMarkup}</h3>
+          <div class="project-topline"><span>${String(index + 1).padStart(2, "0")} · ${category}</span><span>${escapeHtml(project.year || "2026")}</span></div>
+          <h3><button class="project-title" ${caseAttrs}>${title}</button></h3>
           <p>${description}</p>
-          <div class="project-card-footer">
-            <div class="project-tags" aria-label="Technologies">${tags}</div>
-            <div class="project-card-actions">
-              <button class="project-case-button" type="button" data-case="${escapeHtml(project.id)}" aria-label="Open the ${title} case study">Case study <span aria-hidden="true">＋</span></button>
-              ${actionMarkup}
-            </div>
+          <div class="project-tags" aria-label="Technologies">${tags}</div>
+          <div class="project-card-actions">
+            <button class="project-case-link" ${caseAttrs} aria-label="Read the ${title} case study">Case study <span aria-hidden="true">→</span></button>
+            ${outbound}
           </div>
         </div>
       </article>`;
@@ -2372,18 +2333,6 @@ function setupCountUps() {
   counters.forEach((counter) => observer.observe(counter));
 }
 
-function setupProjectSpotlight() {
-  const grid = $("#projectGrid");
-  if (!grid || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-  grid.addEventListener("pointermove", (event) => {
-    const card = event.target.closest(".project-card");
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
-    card.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
-  }, { passive: true });
-}
-
 function setCounts() {
   const projectCount = $("#projectCount");
   const recognitionCount = $("#recognitionCount");
@@ -2426,7 +2375,6 @@ function init() {
   setupMiniRunner();
   setupCaseStudies();
   setupSwipeMode();
-  setupProjectSpotlight();
   setupScrollUX();
   setCounts();
   setupCountUps();

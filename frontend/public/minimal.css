@@ -675,73 +675,6 @@ kbd {
   transition: border-color var(--motion-fast);
 }
 
-.project-card.is-flagship {
-  min-width: min(62%, 440px);
-  border-color: var(--ink);
-}
-
-.project-card.is-flagship .project-topline > span:first-child {
-  color: var(--ink);
-}
-
-.project-accolade {
-  position: absolute;
-  z-index: 2;
-  top: 10px;
-  left: 10px;
-  min-height: 32px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 9px;
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  backdrop-filter: blur(5px);
-}
-
-.project-laurel {
-  width: 14px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.35;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.project-laurel.is-right { transform: scaleX(-1); }
-
-.project-flagship-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-.project-site-link {
-  min-height: 40px;
-  border-bottom: 1px solid var(--line-strong);
-}
-
-.project-app-store {
-  width: 120px;
-  height: 40px;
-  display: block;
-  flex: 0 0 auto;
-}
-
-.project-app-store img {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
 .project-card:hover {
   border-color: var(--ink);
   transform: none;
@@ -775,15 +708,6 @@ kbd {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
-.project-card-footer {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 12px;
-}
-
-.project-card-footer > .project-action { justify-self: end; }
 .project-tags { gap: 4px 10px; }
 .project-tags span {
   padding: 0;
@@ -858,7 +782,11 @@ kbd {
   flex: 0 0 48px;
   border-radius: 9px;
   object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 260ms ease;
 }
+.builder-widget:hover .builder-widget-copy img,
+.builder-widget:focus-within .builder-widget-copy img { filter: none; }
 .builder-widget-copy > span {
   min-width: 0;
   display: grid;
@@ -1050,8 +978,7 @@ kbd {
 
 .project-card:hover,
 .project-card:focus-within { border-color: var(--accent-green); }
-.project-card:hover .project-action,
-.project-card:focus-within .project-action { color: var(--accent-green); }
+
 
 .project-card:focus-within .project-shot img,
 .achievement-card:focus-within .achievement-emblem img,
@@ -1442,8 +1369,7 @@ kbd {
   .section-heading > div { grid-row: auto; padding-top: 0; }
   .section-heading h2 { font-size: clamp(27px, 8vw, 34px); }
   .section-heading > p { margin-top: -6px; }
-  .project-card,
-  .project-card.is-flagship { min-width: calc(92% - 12px); }
+  .project-card { min-width: calc(92% - 12px); }
   .builder-proof { grid-template-columns: 1fr; gap: 14px; }
   .builder-proof-heading { max-width: 38ch; }
 
@@ -1515,11 +1441,6 @@ kbd {
   .profile-facts dl > div { grid-template-columns: 1fr; gap: 5px; }
   .tool-card { grid-template-columns: 32px 1fr; }
   .contact-direct { grid-template-columns: 1fr; }
-  .project-flagship-actions {
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-  }
 }
 
 @media (max-height: 820px) and (min-width: 1101px) {
@@ -1545,88 +1466,77 @@ kbd {
 .builder-proof-heading > p:last-child { margin-top: 0; }
 .builder-proof-embeds { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 
-/* Project cards: case study entry point + pointer spotlight */
-.project-card { isolation: isolate; }
-.project-card::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(360px circle at var(--spot-x, 50%) var(--spot-y, 0%), color-mix(in srgb, var(--accent-green) 9%, transparent), transparent 65%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 260ms ease;
+/* Project cards: one image, one story, two quiet links. */
+.project-media {
+  width: 100%;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
 }
-.project-card:hover::after { opacity: 1; }
-.project-card > * { position: relative; z-index: 1; }
-.project-card > .project-accolade { position: absolute; z-index: 2; }
-
+.project-title {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.project-title:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.project-content > .project-tags { margin: 14px 0 16px; }
 .project-card-actions {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px 14px;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
 }
-.project-card-actions > .project-flagship-actions { margin-left: auto; }
-.project-case-button {
-  min-height: 40px;
+.project-case-link,
+.project-out {
+  min-height: 36px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 0 12px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  color: var(--ink);
+  padding: 0;
+  border: 0;
+  background: none;
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  transition: border-color var(--motion-fast), background-color var(--motion-fast), color var(--motion-fast);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
 }
-.project-case-button:hover,
-.project-case-button:focus-visible {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--bg);
-}
-.project-action { min-height: 40px; }
+.project-case-link { color: var(--ink); }
+.project-case-link span { transition: transform var(--motion-fast); }
+.project-case-link:hover span,
+.project-card:hover .project-case-link span { transform: translateX(3px); }
+.project-out { color: var(--muted); transition: color var(--motion-fast); }
+.project-out:hover { color: var(--ink); }
+.project-out.is-archive { color: var(--faint); }
 
-/* Swipe mode CTA in the project toolbar */
+/* Swipe mode: a text action that sits with the count, not a pill. */
 .swipe-cta {
   min-height: 36px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-right: 6px;
-  padding: 0 13px 0 10px;
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--bg);
+  gap: 6px;
+  margin-right: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: transform var(--motion-fast), box-shadow var(--motion-fast);
 }
-.swipe-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px color-mix(in srgb, var(--ink) 22%, transparent); }
-.swipe-cta-icon { position: relative; width: 16px; height: 14px; }
-.swipe-cta-icon i {
-  position: absolute;
-  inset: 1px 3px;
-  border: 1.5px solid currentColor;
-  border-radius: 3px;
-}
-.swipe-cta-icon i:first-child { transform: rotate(-12deg) translateX(-2px); opacity: 0.55; }
-.swipe-cta-icon i:last-child { background: var(--ink); transform: rotate(8deg) translateX(2px); animation: swipe-nudge 2.8s ease-in-out infinite; }
-@keyframes swipe-nudge {
-  0%, 70%, 100% { transform: rotate(8deg) translateX(2px); }
-  80% { transform: rotate(16deg) translateX(5px); }
-  90% { transform: rotate(4deg) translateX(1px); }
-}
+.swipe-cta span { transition: transform var(--motion-fast); }
+.swipe-cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+.swipe-cta:hover span { transform: translateX(2px); }
 
 /* Shared dialog shell for case studies and swipe mode */
 .case-dialog,
@@ -2197,9 +2107,7 @@ kbd {
   .reveal { transform: none; }
   .availability-panel { animation: none; }
   .case-dialog[open],
-  .swipe-dialog[open],
-  .swipe-cta-icon i:last-child { animation: none; }
-  .project-card::after { display: none; }
+  .swipe-dialog[open] { animation: none; }
   .rail-tools-menu,
   .rail-tools .rail-tool { transition: none; }
 }
