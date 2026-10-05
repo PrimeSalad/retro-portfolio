@@ -1919,6 +1919,37 @@ function setupMiniRunner() {
 }
 
 /* =========================
+   Playground dropdown in the side rail
+========================= */
+function setupRailTools() {
+  const root = $("#railTools");
+  const toggle = $("#railToolsToggle");
+  const menu = $("#railToolsMenu");
+  if (!root || !toggle || !menu) return;
+  const storageKey = "gene-portfolio-playground-open";
+
+  const setOpen = (open, persist = true) => {
+    root.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    /* Collapsed items must not be reachable by Tab or screen readers. */
+    menu.inert = !open;
+    if (!persist) return;
+    try { localStorage.setItem(storageKey, open ? "1" : "0"); } catch { /* private mode */ }
+  };
+
+  let saved = null;
+  try { saved = localStorage.getItem(storageKey); } catch { /* private mode */ }
+  setOpen(saved === "1", false);
+
+  toggle.addEventListener("click", () => setOpen(!root.classList.contains("is-open")));
+  menu.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    setOpen(false);
+    toggle.focus();
+  });
+}
+
+/* =========================
    Shared dialog helpers
 ========================= */
 function openExclusiveDialog(dialog) {
@@ -2350,6 +2381,7 @@ function init() {
   setupTheme();
   setupHeroLocalTime();
   setupMobileMenu();
+  setupRailTools();
   setupAvailabilityPanel();
   renderProjects();
   setupProjectFilters();
