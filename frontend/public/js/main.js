@@ -103,15 +103,31 @@ function initials(title) {
     .toUpperCase();
 }
 
+function sortedProjects() {
+  return [...(data.projects || [])].sort((a, b) =>
+    Number(Boolean(b.featured)) - Number(Boolean(a.featured))
+      || Number(a.status === "archive") - Number(b.status === "archive")
+      || (b.score || 0) - (a.score || 0));
+}
+
+function projectSlug(project) {
+  return String(project.title || project.id)
+    .split(/\s+[—-]\s+/)[0]
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+/* Projects currently shown in the grid, in order; the case study viewer browses this list. */
+let visibleProjects = [];
+
 function renderProjects(filter = "all") {
   const root = $("#projectGrid");
   if (!root) return;
 
-  const projects = [...(data.projects || [])].sort((a, b) =>
-    Number(Boolean(b.featured)) - Number(Boolean(a.featured))
-      || Number(a.status === "archive") - Number(b.status === "archive")
-      || (b.score || 0) - (a.score || 0));
+  const projects = sortedProjects();
   const visible = filter === "all" ? projects : projects.filter((project) => projectKind(project).includes(filter));
+  visibleProjects = visible;
   const count = $("#projectCarouselCount");
   if (count) count.textContent = `${visible.length} projects`;
 
@@ -177,7 +193,10 @@ function renderProjects(filter = "all") {
           <p>${description}</p>
           <div class="project-card-footer">
             <div class="project-tags" aria-label="Technologies">${tags}</div>
-            ${actionMarkup}
+            <div class="project-card-actions">
+              <button class="project-case-button" type="button" data-case="${escapeHtml(project.id)}" aria-label="Open the ${title} case study">Case study <span aria-hidden="true">＋</span></button>
+              ${actionMarkup}
+            </div>
           </div>
         </div>
       </article>`;
@@ -1899,6 +1918,409 @@ function setupMiniRunner() {
   updateScoreboard();
 }
 
+/* =========================
+   Shared dialog helpers
+========================= */
+function openExclusiveDialog(dialog) {
+  $$("dialog[open]").forEach((openDialog) => {
+    if (openDialog !== dialog) openDialog.close();
+  });
+  if (!dialog.open) dialog.showModal();
+  if ($("#menuToggle")?.getAttribute("aria-expanded") === "true") $("#menuToggle")?.click();
+}
+
+function projectLinks(project) {
+  const links = [];
+  const live = safeUrl(project.website || project.demo || project.preview);
+  const appStore = safeUrl(project.app_store);
+  const repo = safeUrl(project.repo);
+  if (live && live !== appStore) links.push({ href: live, label: "Visit live product" });
+  if (appStore) links.push({ href: appStore, label: "App Store", appStore: true });
+  /* Bare "https://github.com" placeholders are not real repositories. */
+  if (repo && new URL(repo).pathname.length > 1) links.push({ href: repo, label: "Source code" });
+  return links;
+}
+
+/* =========================
+   Case studies
+========================= */
+const caseState = { list: [], index: 0 };
+
+function renderCaseStudy() {
+  const project = caseState.list[caseState.index];
+  if (!project) return;
+  const title = project.title || "Untitled project";
+  const total = caseState.list.length;
+  const position = `${String(caseState.index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+  const primaryLink = projectLinks(project)[0];
+
+  $("#caseCounter").textContent = `Case study ${position}`;
+  $("#caseKicker").textContent = [project.category, project.year].filter(Boolean).join(" · ");
+  $("#caseTitle").textContent = title;
+  $("#caseImpact").textContent = project.impact || project.description || "";
+  $("#caseRole").textContent = project.role || "Developer";
+  $("#caseOutcome").textContent = project.outcome || project.description || "";
+
+  const image = $("#caseImage");
+  const media = $("#caseMedia");
+  media.hidden = !project.image;
+  if (project.image) {
+    image.src = resolveImagePath(project.image);
+    image.alt = `Interface preview of ${title}`;
+  }
+  if (primaryLink) {
+    media.href = primaryLink.href;
+    media.setAttribute("aria-label", `Open ${title}`);
+  } else {
+    media.removeAttribute("href");
+    media.removeAttribute("aria-label");
+  }
+
+  $("#caseHighlights").innerHTML = (project.highlights || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  $("#caseStack").innerHTML = (project.tech || [])
+    .map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+  $("#caseLinks").innerHTML = projectLinks(project).map((link) => link.appStore
+    ? `<a class="case-app-store" href="${escapeHtml(link.href)}" target="_blank" rel="noreferrer" aria-label="Download ${escapeHtml(title)} on the App Store"><img src="/images/app-store-badge.svg" alt="" width="120" height="40" /></a>`
+    : `<a class="case-link" href="${escapeHtml(link.href)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)} <span aria-hidden="true">↗</span></a>`).join("");
+
+  $("#casePrev").disabled = total < 2;
+  $("#caseNext").disabled = total < 2;
+  $("#caseLive").textContent = `${title}, case study ${caseState.index + 1} of ${total}`;
+  $("#caseDialog").scrollTop = 0;
+
+  try { history.replaceState(null, "", `#case-${projectSlug(project)}`); } catch { /* sandboxed frames */ }
+}
+
+function openCaseStudy(projectId, list = visibleProjects) {
+  const dialog = $("#caseDialog");
+  if (!dialog) return;
+  const source = list.some((project) => project.id === projectId) ? list : sortedProjects();
+  caseState.list = source;
+  caseState.index = Math.max(0, source.findIndex((project) => project.id === projectId));
+  renderCaseStudy();
+  openExclusiveDialog(dialog);
+}
+
+function setupCaseStudies() {
+  const dialog = $("#caseDialog");
+  if (!dialog) return;
+
+  const step = (delta) => {
+    if (caseState.list.length < 2) return;
+    caseState.index = (caseState.index + delta + caseState.list.length) % caseState.list.length;
+    renderCaseStudy();
+  };
+  const close = () => { if (dialog.open) dialog.close(); };
+
+  $("#projectGrid")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-case]");
+    if (button) openCaseStudy(button.dataset.case);
+  });
+  $("#casePrev").addEventListener("click", () => step(-1));
+  $("#caseNext").addEventListener("click", () => step(1));
+  $("[data-close-case]").addEventListener("click", close);
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
+  dialog.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.key === "ArrowLeft") { event.preventDefault(); step(-1); }
+    if (event.key === "ArrowRight") { event.preventDefault(); step(1); }
+  });
+  dialog.addEventListener("close", () => {
+    if (!location.hash.startsWith("#case-")) return;
+    try { history.replaceState(null, "", location.pathname + location.search); } catch { /* ignore */ }
+  });
+
+  const copyButton = $("#caseCopyLink");
+  copyButton.addEventListener("click", async () => {
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(location.href);
+      copied = true;
+    } catch { /* clipboard blocked */ }
+    copyButton.textContent = copied ? "link copied ✓" : "copy failed";
+    window.setTimeout(() => { copyButton.textContent = "copy link"; }, 1600);
+  });
+
+  const openFromHash = () => {
+    const match = location.hash.match(/^#case-([a-z0-9-]+)$/);
+    if (!match) return;
+    const all = sortedProjects();
+    const project = all.find((item) => projectSlug(item) === match[1]);
+    if (project) openCaseStudy(project.id, all);
+  };
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+}
+
+/* =========================
+   Swipe mode — TidyPaw-style review of the project list
+========================= */
+function setupSwipeMode() {
+  const dialog = $("#swipeDialog");
+  const deck = $("#swipeDeck");
+  if (!dialog || !deck) return;
+
+  const done = $("#swipeDone");
+  const controls = $("#swipeControls");
+  const undoButton = $("#swipeUndo");
+  const progress = $("#swipeProgress");
+  const live = $("#swipeLive");
+  const SWIPE_DISTANCE = 96;
+  const FLING_VELOCITY = 0.55;
+
+  let projects = [];
+  let index = 0;
+  let decisions = [];
+  let animating = false;
+
+  const cardMarkup = (project, depth) => {
+    const title = escapeHtml(project.title || "Untitled project");
+    const image = project.image ? `<img src="${escapeHtml(resolveImagePath(project.image))}" alt="" draggable="false" />` : "";
+    const tags = (project.tech || []).slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+    return `
+      <article class="swipe-card" data-depth="${depth}"${depth ? ' aria-hidden="true"' : ""}>
+        <div class="swipe-card-media">${image}<b class="swipe-stamp is-like" aria-hidden="true">Shortlist</b><b class="swipe-stamp is-skip" aria-hidden="true">Skip</b></div>
+        <div class="swipe-card-copy">
+          <p>${escapeHtml(project.category || "Digital product")} · ${escapeHtml(project.year || "")}</p>
+          <h3>${title}</h3>
+          <span>${escapeHtml(project.description || project.impact || "")}</span>
+          <div class="swipe-card-tags">${tags}</div>
+        </div>
+      </article>`;
+  };
+
+  const likedProjects = () => decisions.filter((item) => item.liked).map((item) => item.project);
+
+  const renderDone = () => {
+    const liked = likedProjects();
+    $("#swipeDoneTitle").textContent = liked.length
+      ? `${liked.length} project${liked.length === 1 ? "" : "s"} caught your eye.`
+      : "Tough crowd — nothing shortlisted.";
+    $("#swipeShortlist").innerHTML = liked.length
+      ? liked.map((project) => `<li><button type="button" data-swipe-case="${escapeHtml(project.id)}"><span>${escapeHtml(project.title)}</span><small>${escapeHtml(project.category || "")}</small><i aria-hidden="true">→</i></button></li>`).join("")
+      : '<li class="is-empty">Start over to give the projects another look.</li>';
+    const subject = liked.length ? "Your portfolio — projects I liked" : "Hello from your portfolio";
+    const body = liked.length
+      ? `Hi Gene,\n\nI went through your portfolio in swipe mode and these stood out:\n${liked.map((project) => `• ${project.title}`).join("\n")}\n\n`
+      : "Hi Gene,\n\n";
+    $("#swipeEmail").href = `mailto:g.landoyelpie@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const render = () => {
+    const finished = index >= projects.length;
+    deck.hidden = finished;
+    done.hidden = !finished;
+    controls.hidden = finished;
+    dialog.classList.toggle("is-finished", finished);
+    undoButton.disabled = decisions.length === 0;
+    progress.textContent = finished
+      ? "Done"
+      : `${String(index + 1).padStart(2, "0")} / ${String(projects.length).padStart(2, "0")}`;
+    if (finished) {
+      renderDone();
+      return;
+    }
+    deck.innerHTML = projects.slice(index, index + 3)
+      .map((project, depth) => cardMarkup(project, depth))
+      .reverse()
+      .join("");
+    attachDrag(deck.querySelector('.swipe-card[data-depth="0"]'));
+  };
+
+  const commit = (liked, card = deck.querySelector('.swipe-card[data-depth="0"]')) => {
+    if (animating || index >= projects.length) return;
+    const project = projects[index];
+    decisions.push({ project, liked });
+    live.textContent = `${project.title} ${liked ? "added to shortlist" : "skipped"}.`;
+    const finish = () => {
+      animating = false;
+      index += 1;
+      render();
+      if (index >= projects.length) $("#swipeEmail")?.focus();
+    };
+    if (!card || reduceMotion.matches) {
+      finish();
+      return;
+    }
+    animating = true;
+    card.style.transition = "transform 280ms cubic-bezier(.2,.7,.3,1), opacity 280ms ease";
+    card.style.setProperty(liked ? "--like" : "--skip", "1");
+    card.style.transform = `translateX(${liked ? 130 : -130}%) rotate(${liked ? 18 : -18}deg)`;
+    card.style.opacity = "0";
+    window.setTimeout(finish, 290);
+  };
+
+  const undo = () => {
+    if (animating || !decisions.length) return;
+    const last = decisions.pop();
+    index = Math.max(0, index - 1);
+    live.textContent = `Brought back ${last.project.title}.`;
+    render();
+    const card = deck.querySelector('.swipe-card[data-depth="0"]');
+    if (card && !reduceMotion.matches && card.animate) {
+      card.animate([
+        { transform: `translateX(${last.liked ? 120 : -120}%) rotate(${last.liked ? 16 : -16}deg)`, opacity: 0 },
+        { transform: "none", opacity: 1 },
+      ], { duration: 300, easing: "cubic-bezier(.2,.7,.3,1)" });
+    }
+    $("#swipeLike")?.focus();
+  };
+
+  function attachDrag(card) {
+    if (!card) return;
+    let startX = 0;
+    let startY = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
+    let dragging = false;
+
+    const setOffset = (dx, dy) => {
+      card.style.transform = `translate(${dx}px, ${dy * 0.25}px) rotate(${dx / 18}deg)`;
+      card.style.setProperty("--like", String(Math.max(0, Math.min(1, dx / SWIPE_DISTANCE))));
+      card.style.setProperty("--skip", String(Math.max(0, Math.min(1, -dx / SWIPE_DISTANCE))));
+    };
+
+    card.addEventListener("pointerdown", (event) => {
+      if (animating || event.button > 0) return;
+      dragging = true;
+      startX = lastX = event.clientX;
+      startY = event.clientY;
+      lastTime = event.timeStamp;
+      velocity = 0;
+      card.setPointerCapture(event.pointerId);
+      card.style.transition = "none";
+      card.classList.add("is-dragging");
+    });
+    card.addEventListener("pointermove", (event) => {
+      if (!dragging) return;
+      const elapsed = Math.max(1, event.timeStamp - lastTime);
+      velocity = (event.clientX - lastX) / elapsed;
+      lastX = event.clientX;
+      lastTime = event.timeStamp;
+      setOffset(event.clientX - startX, event.clientY - startY);
+    });
+    const release = (event) => {
+      if (!dragging) return;
+      dragging = false;
+      card.classList.remove("is-dragging");
+      const dx = event.clientX - startX;
+      if (event.type === "pointerup" && (Math.abs(dx) > SWIPE_DISTANCE || (Math.abs(velocity) > FLING_VELOCITY && Math.abs(dx) > 24))) {
+        commit(dx > 0, card);
+        return;
+      }
+      card.style.transition = "transform 220ms cubic-bezier(.2,.7,.3,1)";
+      setOffset(0, 0);
+      card.style.transform = "";
+    };
+    card.addEventListener("pointerup", release);
+    card.addEventListener("pointercancel", release);
+  }
+
+  const reset = () => {
+    projects = sortedProjects();
+    index = 0;
+    decisions = [];
+    animating = false;
+    render();
+  };
+
+  const open = () => {
+    if (!projects.length) reset();
+    openExclusiveDialog(dialog);
+    window.setTimeout(() => (index < projects.length ? $("#swipeLike") : $("#swipeEmail"))?.focus(), 30);
+  };
+  const close = () => { if (dialog.open) dialog.close(); };
+
+  $$("[data-open-swipe]").forEach((button) => button.addEventListener("click", open));
+  $("[data-close-swipe]").addEventListener("click", close);
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
+  $("#swipeLike").addEventListener("click", () => commit(true));
+  $("#swipeSkip").addEventListener("click", () => commit(false));
+  undoButton.addEventListener("click", undo);
+  $("#swipeRestart").addEventListener("click", () => {
+    reset();
+    $("#swipeLike")?.focus();
+  });
+  $("#swipeShortlist").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-swipe-case]");
+    if (button) openCaseStudy(button.dataset.swipeCase, likedProjects());
+  });
+
+  dialog.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "z") {
+      event.preventDefault();
+      undo();
+      return;
+    }
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.key === "ArrowRight") { event.preventDefault(); commit(true); }
+    if (event.key === "ArrowLeft") { event.preventDefault(); commit(false); }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "e") {
+      event.preventDefault();
+      open();
+    }
+  });
+}
+
+/* =========================
+   Motion polish
+========================= */
+function setupCountUps() {
+  const counters = $$("[data-count-up]");
+  if (!counters.length || reduceMotion.matches || !("IntersectionObserver" in window)) return;
+
+  const animate = (element) => {
+    const match = element.textContent.trim().match(/^([\d,]+)(.*)$/);
+    if (!match) return;
+    const target = Number(match[1].replace(/,/g, ""));
+    const suffix = match[2];
+    const pad = /^0\d/.test(match[1]) ? match[1].length : 0;
+    if (!target) return;
+    const format = (value) => `${pad ? String(value).padStart(pad, "0") : value.toLocaleString()}${suffix}`;
+    const duration = 1100;
+    const start = performance.now();
+    let written = format(0);
+    element.textContent = written;
+
+    const frame = (now) => {
+      /* Live data (e.g. GitHub) replaced the number mid-animation: let it win. */
+      if (element.textContent !== written) return;
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - (1 - progress) ** 3;
+      written = format(Math.round(target * eased));
+      element.textContent = written;
+      if (progress < 1) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      animate(entry.target);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach((counter) => observer.observe(counter));
+}
+
+function setupProjectSpotlight() {
+  const grid = $("#projectGrid");
+  if (!grid || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  grid.addEventListener("pointermove", (event) => {
+    const card = event.target.closest(".project-card");
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
+    card.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
+  }, { passive: true });
+}
+
 function setCounts() {
   const projectCount = $("#projectCount");
   const recognitionCount = $("#recognitionCount");
@@ -1938,8 +2360,12 @@ function init() {
   setupCommandCenter();
   setupTypingTest();
   setupMiniRunner();
+  setupCaseStudies();
+  setupSwipeMode();
+  setupProjectSpotlight();
   setupScrollUX();
   setCounts();
+  setupCountUps();
   observeReveals();
   warmBackend();
 }

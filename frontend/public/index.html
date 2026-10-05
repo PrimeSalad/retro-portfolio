@@ -61,6 +61,7 @@
       <button type="button" data-open-command><span>Ask anything</span><kbd>⌘ K</kbd></button>
       <button type="button" data-open-typing><span>Typing test</span><kbd>⌘ J</kbd></button>
       <button type="button" data-open-runner><span>Byte runner</span><kbd>⌘ G</kbd></button>
+      <button type="button" data-open-swipe><span>Swipe my work</span><kbd>⌘ E</kbd></button>
     </div>
 
     <div class="rail-footer">
@@ -94,6 +95,7 @@
         <button type="button" data-open-command>Ask anything <kbd>⌘ K</kbd></button>
         <button type="button" data-open-typing>Typing test <kbd>⌘ J</kbd></button>
         <button type="button" data-open-runner>Byte runner <kbd>⌘ G</kbd></button>
+        <button type="button" data-open-swipe>Swipe my work <kbd>⌘ E</kbd></button>
       </div>
       <button class="mobile-availability-trigger" type="button" data-availability-toggle aria-controls="availabilityPanel" aria-expanded="false">
         <span class="mobile-availability-mark" aria-hidden="true">G<i data-availability-symbol>+</i></span>
@@ -156,10 +158,10 @@
       </div>
 
       <footer class="hero-signature-meta reveal" data-delay="2">
-        <a href="#github"><strong id="heroContributionCount">1,254</strong><span id="heroContributionLabel">contributions in 2026</span><i aria-hidden="true">↗</i></a>
-        <a href="https://www.linkedin.com/in/gene-elpie-landoy-b1851b28b/" target="_blank" rel="noreferrer"><strong>300+</strong><span>developer connections</span><i aria-hidden="true">↗</i></a>
-        <a href="#github"><strong>46</strong><span>public repositories</span><i aria-hidden="true">↗</i></a>
-        <a href="#work"><strong id="projectCount">10</strong><span>selected projects</span><i aria-hidden="true">↗</i></a>
+        <a href="#github"><strong id="heroContributionCount" data-count-up>1,254</strong><span id="heroContributionLabel">contributions in 2026</span><i aria-hidden="true">↗</i></a>
+        <a href="https://www.linkedin.com/in/gene-elpie-landoy-b1851b28b/" target="_blank" rel="noreferrer"><strong data-count-up>300+</strong><span>developer connections</span><i aria-hidden="true">↗</i></a>
+        <a href="#github"><strong data-count-up>46</strong><span>public repositories</span><i aria-hidden="true">↗</i></a>
+        <a href="#work"><strong id="projectCount" data-count-up>10</strong><span>selected projects</span><i aria-hidden="true">↗</i></a>
       </footer>
       <div class="halftone-divider" aria-hidden="true"></div>
     </section>
@@ -179,6 +181,7 @@
           <button class="filter-button" type="button" data-project-filter="web" aria-pressed="false">Web</button>
         </div>
         <div class="carousel-nav" aria-label="Project carousel controls">
+          <button class="swipe-cta" type="button" data-open-swipe><span class="swipe-cta-icon" aria-hidden="true"><i></i><i></i></span>Swipe mode</button>
           <span id="projectCarouselCount"></span>
           <button class="icon-button" id="projectPrev" type="button" aria-label="Scroll projects left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
           <button class="icon-button" id="projectNext" type="button" aria-label="Scroll projects right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
@@ -189,7 +192,7 @@
         <div class="builder-proof-heading">
           <p class="eyebrow">Community signal</p>
           <h3 id="builderProofTitle">Featured on App Builders PH.</h3>
-          <p>Support two products I designed and shipped.</p>
+          <p>Support three products I designed and shipped.</p>
         </div>
         <div class="builder-proof-embeds">
           <div class="builder-widget">
@@ -211,6 +214,16 @@
               </span>
             </a>
             <iframe src="https://appbuildersph.com/embed/apps/certificat" title="CertifCat votes on App Builders PH" width="320" height="72" loading="lazy" scrolling="no"></iframe>
+          </div>
+          <div class="builder-widget">
+            <a class="builder-widget-copy" href="https://www.appbuildersph.com/apps/tidypaw-photo-cleaner" target="_blank" rel="noreferrer" aria-label="View TidyPaw on App Builders PH">
+              <img src="/images/projects/tidypaw-appbuilders.webp" alt="" width="48" height="48" loading="lazy" aria-hidden="true" />
+              <span>
+                <strong>TidyPaw</strong>
+                <small>App Builders PH</small>
+              </span>
+            </a>
+            <iframe src="https://appbuildersph.com/embed/apps/tidypaw-photo-cleaner" title="TidyPaw votes on App Builders PH" width="320" height="72" loading="lazy" scrolling="no"></iframe>
           </div>
         </div>
       </aside>
@@ -650,6 +663,73 @@
         <a href="https://opengameart.org/content/dog-spritesheets" target="_blank" rel="noreferrer">Dog sprite / CC0 <span aria-hidden="true">↗</span></a>
       </div>
       <p class="sr-only" id="runnerAnnouncement" aria-live="polite"></p>
+    </div>
+  </dialog>
+
+  <dialog class="case-dialog" id="caseDialog" aria-labelledby="caseTitle">
+    <div class="dialog-topline">
+      <span id="caseCounter">Case study</span>
+      <div class="case-topline-actions">
+        <button class="case-copy" id="caseCopyLink" type="button">copy link</button>
+        <button class="dialog-close" type="button" data-close-case aria-label="Close case study">esc</button>
+      </div>
+    </div>
+    <article class="case-body">
+      <a class="case-media" id="caseMedia" target="_blank" rel="noreferrer"><img id="caseImage" alt="" width="1440" height="900" /></a>
+      <div class="case-content">
+        <p class="dialog-kicker" id="caseKicker"></p>
+        <h2 id="caseTitle"></h2>
+        <p class="case-impact" id="caseImpact"></p>
+        <dl class="case-facts">
+          <div><dt>Role</dt><dd id="caseRole"></dd></div>
+          <div><dt>Outcome</dt><dd id="caseOutcome"></dd></div>
+        </dl>
+        <h3 class="case-subhead">What I built</h3>
+        <ul class="case-highlights" id="caseHighlights"></ul>
+        <div class="case-stack" id="caseStack" aria-label="Technologies"></div>
+        <div class="case-links" id="caseLinks"></div>
+      </div>
+    </article>
+    <footer class="case-nav">
+      <button type="button" id="casePrev"><span aria-hidden="true">←</span> Previous</button>
+      <span class="case-nav-hint"><kbd>←</kbd> <kbd>→</kbd> to browse</span>
+      <button type="button" id="caseNext">Next <span aria-hidden="true">→</span></button>
+    </footer>
+    <p class="sr-only" id="caseLive" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="swipe-dialog" id="swipeDialog" aria-labelledby="swipeTitle">
+    <div class="dialog-topline">
+      <span>Swipe mode / inspired by TidyPaw</span>
+      <button class="dialog-close" type="button" data-close-swipe aria-label="Close swipe mode">esc</button>
+    </div>
+    <div class="swipe-body">
+      <div class="swipe-heading">
+        <div>
+          <p class="dialog-kicker"><span class="status-dot" aria-hidden="true"></span> Speed review</p>
+          <h2 id="swipeTitle">Swipe right on what you like.</h2>
+        </div>
+        <p id="swipeProgress" aria-live="polite">01 / 11</p>
+      </div>
+      <div class="swipe-stage" id="swipeStage">
+        <div class="swipe-deck" id="swipeDeck"></div>
+        <div class="swipe-done" id="swipeDone" hidden>
+          <p class="eyebrow">Your shortlist</p>
+          <h3 id="swipeDoneTitle">Nice picks.</h3>
+          <ul id="swipeShortlist"></ul>
+          <div class="swipe-done-actions">
+            <a class="swipe-email" id="swipeEmail" href="mailto:g.landoyelpie@gmail.com">Email Gene about these <span aria-hidden="true">↗</span></a>
+            <button type="button" id="swipeRestart">Start over <span aria-hidden="true">↻</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="swipe-controls" id="swipeControls">
+        <button class="swipe-skip" id="swipeSkip" type="button" aria-label="Skip project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg><span>Skip</span></button>
+        <button class="swipe-undo" id="swipeUndo" type="button" aria-label="Undo last swipe" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10a6 6 0 0 1 0 12h-3"></path></svg><span>Undo</span></button>
+        <button class="swipe-like" id="swipeLike" type="button" aria-label="Add project to shortlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10Z"></path></svg><span>Like</span></button>
+      </div>
+      <p class="swipe-hint"><kbd>←</kbd> skip <span>·</span> <kbd>→</kbd> like <span>·</span> <kbd>⌘ Z</kbd> undo <span>·</span> drag or swipe the card</p>
+      <p class="sr-only" id="swipeLive" aria-live="polite"></p>
     </div>
   </dialog>
 
