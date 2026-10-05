@@ -2105,7 +2105,15 @@ function setupSwipeMode() {
       ? `Hi Gene,\n\nI went through your portfolio in swipe mode and these stood out:\n${liked.map((project) => `• ${project.title}`).join("\n")}\n\n`
       : "Hi Gene,\n\n";
     $("#swipeEmail").href = `mailto:g.landoyelpie@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    requestAnimationFrame(updateShortlistFade);
   };
+
+  const shortlist = $("#swipeShortlist");
+  function updateShortlistFade() {
+    const remaining = shortlist.scrollHeight - shortlist.clientHeight - shortlist.scrollTop;
+    shortlist.classList.toggle("has-more", remaining > 2);
+  }
+  shortlist.addEventListener("scroll", updateShortlistFade, { passive: true });
 
   const render = () => {
     const finished = index >= projects.length;

@@ -1696,7 +1696,14 @@ kbd {
 }
 
 /* Swipe mode */
-.swipe-dialog { width: min(calc(100% - 32px), 520px); }
+.swipe-dialog {
+  /* The deck shrinks with the viewport so the dialog always fits: no scrollbars, ever. */
+  --deck-h: clamp(250px, calc(100vh - 360px), 430px);
+  --deck-h: clamp(250px, calc(100dvh - 360px), 430px);
+  width: min(calc(100% - 32px), 520px);
+  overflow: hidden;
+  overflow: clip;
+}
 .swipe-body { padding: 24px 26px 22px; }
 .swipe-heading {
   display: flex;
@@ -1725,12 +1732,11 @@ kbd {
 }
 .swipe-stage {
   position: relative;
-  min-height: 430px;
   margin-top: 20px;
 }
 .swipe-deck {
   position: relative;
-  height: 430px;
+  height: var(--deck-h);
 }
 .swipe-card {
   position: absolute;
@@ -1752,9 +1758,10 @@ kbd {
 .swipe-card[data-depth="2"] { transform: translateY(24px) scale(0.91); opacity: 0.6; pointer-events: none; }
 .swipe-card-media {
   position: relative;
-  flex: none;
+  flex: 1 1 auto;
+  min-height: 72px;
+  max-height: 260px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
   border-bottom: 1px solid var(--line);
   background: var(--surface-soft);
 }
@@ -1783,7 +1790,7 @@ kbd {
 .swipe-card-copy {
   min-height: 0;
   display: flex;
-  flex: 1;
+  flex: none;
   flex-direction: column;
   padding: 16px 18px 18px;
 }
@@ -1871,7 +1878,9 @@ kbd {
 }
 .swipe-hint span { margin-inline: 4px; }
 .swipe-done {
-  min-height: 430px;
+  /* Takes over the space the deck and controls used, and scrolls its list inside. */
+  height: calc(var(--deck-h) + 120px);
+  min-height: 0;
   display: flex;
   flex-direction: column;
   padding: 26px 22px 22px;
@@ -1889,11 +1898,23 @@ kbd {
   line-height: 1.15;
 }
 .swipe-done ul {
+  min-height: 0;
   display: grid;
+  flex: 0 1 auto;
+  align-content: start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
   margin: 18px 0 0;
   padding: 0;
   border-top: 1px solid var(--line);
   list-style: none;
+}
+.swipe-done ul::-webkit-scrollbar { display: none; }
+/* No scrollbar: a fade tells people the shortlist continues. */
+.swipe-done ul.has-more {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);
 }
 .swipe-done li { border-bottom: 1px solid var(--line); }
 .swipe-done li.is-empty { padding: 14px 0; color: var(--muted); font-size: 14px; }
@@ -1958,10 +1979,11 @@ kbd {
   .case-nav-hint { display: none; }
   .swipe-body { padding: 18px 16px; }
   .swipe-heading h2 { font-size: 22px; }
-  .swipe-stage,
-  .swipe-deck,
-  .swipe-done { min-height: 392px; height: auto; }
-  .swipe-deck { height: 392px; }
+  .swipe-dialog {
+    --deck-h: clamp(240px, calc(100vh - 320px), 400px);
+    --deck-h: clamp(240px, calc(100dvh - 320px), 400px);
+  }
+  .swipe-done { height: calc(var(--deck-h) + 104px); }
   .swipe-hint { display: none; }
   .swipe-controls { margin-top: 30px; }
 }
