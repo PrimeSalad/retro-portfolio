@@ -169,7 +169,9 @@ body {
   color: var(--rail-ink);
   transition: border-color var(--motion-fast), background-color var(--motion-fast), border-radius 260ms ease;
 }
+/* reference.css paints rail buttons with --ink on hover, which matches the rail's own background. */
 .rail-tools .rail-tools-toggle:hover {
+  color: var(--rail-ink);
   border-color: var(--rail-muted);
   background: color-mix(in srgb, var(--rail-ink) 5%, transparent);
 }
