@@ -152,70 +152,57 @@ body {
 
 .rail-link.is-active::after { opacity: 1; }
 
-/* Playground: one disclosure instead of four loose rows. */
+/* Playground: a nav-style row that unfolds into a small tree of tools. */
 .rail-tools {
   display: block;
-  margin-top: 22px;
+  margin-top: 0;
   padding-top: 0;
   border-top: 0;
 }
 
 .rail-tools .rail-tools-toggle {
   width: 100%;
-  min-height: 44px;
-  padding: 0 12px 0 10px;
-  border: 1px solid var(--rail-line);
-  border-radius: 10px;
-  color: var(--rail-ink);
-  transition: border-color var(--motion-fast), background-color var(--motion-fast), border-radius 260ms ease;
+  min-height: 40px;
+  display: grid;
+  grid-template-columns: 30px 1fr 12px;
+  align-items: center;
+  gap: 0;
+  padding: 0 2px 0 0;
+  border-bottom: 1px solid var(--rail-line);
+  color: var(--rail-muted);
+  font-size: 10px;
+  transition: color var(--motion-fast);
 }
 /* reference.css paints rail buttons with --ink on hover, which matches the rail's own background. */
-.rail-tools .rail-tools-toggle:hover {
-  color: var(--rail-ink);
-  border-color: var(--rail-muted);
-  background: color-mix(in srgb, var(--rail-ink) 5%, transparent);
-}
-.rail-tools.is-open .rail-tools-toggle {
-  border-color: var(--rail-muted);
-  border-radius: 10px 10px 0 0;
-  background: color-mix(in srgb, var(--rail-ink) 5%, transparent);
-}
-.rail-tools-title {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 10.5px;
-  letter-spacing: 0.02em;
-}
-.rail-tools-glyph {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
+.rail-tools .rail-tools-toggle:hover,
+.rail-tools.is-open .rail-tools-toggle { color: var(--rail-ink); }
+.rail-tools-mark {
+  display: inline-block;
+  width: max-content;
+  font-size: 11px;
+  line-height: 1;
   transition: transform 420ms cubic-bezier(.2, .7, .3, 1);
 }
-.rail-tools.is-open .rail-tools-glyph { transform: rotate(90deg); }
-.rail-tools-toggle:hover .rail-tools-glyph { transform: rotate(45deg); }
-.rail-tools.is-open .rail-tools-toggle:hover .rail-tools-glyph { transform: rotate(135deg); }
-.rail-tools-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--rail-muted);
-}
-.rail-tools-meta small { font-size: 10px; }
-.rail-tools-chevron {
-  width: 14px;
-  height: 14px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.rail-tools-toggle:hover .rail-tools-mark,
+.rail-tools.is-open .rail-tools-mark { transform: scale(1.25); }
+.rail-tools-plus {
+  position: relative;
+  width: 9px;
+  height: 9px;
   transition: transform 260ms cubic-bezier(.2, .7, .3, 1);
 }
-.rail-tools.is-open .rail-tools-chevron { transform: rotate(180deg); }
+.rail-tools-plus::before,
+.rail-tools-plus::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 9px;
+  height: 1px;
+  background: currentColor;
+}
+.rail-tools-plus::after { transform: rotate(90deg); }
+.rail-tools.is-open .rail-tools-plus { transform: rotate(45deg); }
 
 .rail-tools-menu {
   display: grid;
@@ -224,92 +211,73 @@ body {
 }
 .rail-tools.is-open .rail-tools-menu { grid-template-rows: 1fr; }
 .rail-tools-list {
+  --tool-h: 34px;
+  position: relative;
   min-height: 0;
   display: grid;
   overflow: hidden;
-  padding: 0 4px;
-  border: 1px solid transparent;
-  border-top: 0;
-  border-radius: 0 0 10px 10px;
-  transition: border-color 260ms ease, padding 320ms cubic-bezier(.2, .7, .3, 1);
+  margin-left: 4px;
+  padding-left: 26px;
 }
-.rail-tools.is-open .rail-tools-list {
-  padding: 4px;
-  border-color: var(--rail-muted);
+.rail-tools.is-open .rail-tools-list { padding-block: 4px 6px; }
+/* Tree trunk: stops at the last tool's branch, like └. */
+.rail-tools-list::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: calc(6px + var(--tool-h) / 2);
+  left: 0;
+  width: 1px;
+  background: var(--rail-line);
 }
 
 .rail-tools .rail-tool {
-  min-height: 46px;
-  display: grid;
-  grid-template-columns: 30px minmax(0, 1fr) auto;
+  position: relative;
+  min-height: var(--tool-h);
+  display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 6px 6px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 2px 0 0;
   border: 0;
-  border-radius: 7px;
   color: var(--rail-muted);
+  font-size: 10px;
   opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 200ms ease, transform 260ms cubic-bezier(.2, .7, .3, 1), background-color var(--motion-fast), color var(--motion-fast);
+  transform: translateY(-4px);
+  transition: opacity 200ms ease, transform 260ms cubic-bezier(.2, .7, .3, 1), color var(--motion-fast);
 }
+/* Branch tick from the tree line to each tool. */
+.rail-tools .rail-tool::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -25px;
+  width: 12px;
+  height: 1px;
+  background: var(--rail-line);
+  transition: width 220ms cubic-bezier(.2, .7, .3, 1), background-color var(--motion-fast);
+}
+.rail-tools .rail-tool > span { transition: transform 220ms cubic-bezier(.2, .7, .3, 1); }
 .rail-tools.is-open .rail-tool { opacity: 1; transform: none; }
-.rail-tools.is-open .rail-tool:nth-child(2) { transition-delay: 40ms, 40ms, 0s, 0s; }
-.rail-tools.is-open .rail-tool:nth-child(3) { transition-delay: 80ms, 80ms, 0s, 0s; }
-.rail-tools.is-open .rail-tool:nth-child(4) { transition-delay: 120ms, 120ms, 0s, 0s; }
+.rail-tools.is-open .rail-tool:nth-child(2) { transition-delay: 40ms, 40ms, 0s; }
+.rail-tools.is-open .rail-tool:nth-child(3) { transition-delay: 80ms, 80ms, 0s; }
+.rail-tools.is-open .rail-tool:nth-child(4) { transition-delay: 120ms, 120ms, 0s; }
 .rail-tools .rail-tool:hover,
-.rail-tools .rail-tool:focus-visible {
-  background: color-mix(in srgb, var(--rail-ink) 8%, transparent);
-  color: var(--rail-ink);
-}
-.rail-tool-icon {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--rail-line);
-  border-radius: 8px;
-  transition: border-color var(--motion-fast), background-color var(--motion-fast), color var(--motion-fast);
-}
-.rail-tool-icon svg {
-  width: 15px;
-  height: 15px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.rail-tool:hover .rail-tool-icon,
-.rail-tool:focus-visible .rail-tool-icon {
-  border-color: var(--rail-ink);
-  background: var(--rail-ink);
-  color: var(--rail-bg);
-}
-.rail-tool-copy {
-  min-width: 0;
-  display: grid;
-  gap: 1px;
-}
-.rail-tool-copy strong,
-.rail-tool-copy small {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.rail-tool-copy strong {
-  color: var(--rail-ink);
-  font-size: 10.5px;
-  font-weight: 500;
-}
-.rail-tool-copy small {
+.rail-tools .rail-tool:focus-visible { color: var(--rail-ink); }
+.rail-tools .rail-tool:hover::before,
+.rail-tools .rail-tool:focus-visible::before { width: 18px; background: var(--rail-ink); }
+.rail-tools .rail-tool:hover > span,
+.rail-tools .rail-tool:focus-visible > span { transform: translateX(3px); }
+.side-rail .rail-tool kbd {
+  padding: 0;
+  border: 0;
   color: var(--rail-muted);
   font-size: 10px;
+  opacity: 0.55;
+  transition: opacity var(--motion-fast);
 }
-.rail-tool kbd {
-  padding: 1px 4px;
-  font-size: 10px;
-  opacity: 0.8;
-}
+.rail-tool:hover kbd,
+.rail-tool:focus-visible kbd { opacity: 1; }
 
 .side-rail kbd {
   border-color: var(--rail-line);
@@ -1558,11 +1526,9 @@ kbd {
   .side-rail { padding-block: 22px; }
   .rail-nav { margin-top: 24px; }
   .rail-link { min-height: 34px; }
-  .rail-tools { margin-top: 14px; }
-  .rail-tools .rail-tools-toggle { min-height: 36px; }
-  .rail-tools .rail-tool { min-height: 38px; padding-block: 3px; }
-  .rail-tool-icon { width: 26px; height: 26px; }
-  .rail-tools .rail-tool { grid-template-columns: 26px minmax(0, 1fr) auto; }
+  .rail-tools { margin-top: 0; }
+  .rail-tools .rail-tools-toggle { min-height: 34px; }
+  .rail-tools-list { --tool-h: 30px; }
   .rail-footer { padding-top: 14px; }
   .rail-email-label { display: none; }
   .theme-label { min-height: 32px; }
