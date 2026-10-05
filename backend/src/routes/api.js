@@ -42,8 +42,9 @@ router.get('/models', async (req, res) => {
 });
 
 router.post('/search', async (req, res) => {
-  const query = String(req.body?.query || "").trim();
+  const query = typeof req.body?.query === "string" ? req.body.query.trim() : "";
   if (!query) return res.status(400).json({ ok: false, error: "Missing query" });
+  if (query.length > 500) return res.status(400).json({ ok: false, error: "Question is too long (500 characters max)." });
 
   let portfolioDataStr = "{}";
   try {
@@ -100,9 +101,18 @@ Answer:
 });
 
 router.post('/contact', (req, res) => {
-  const { name, email, message } = req.body;
+  const field = (value) => (typeof value === "string" ? value.trim() : "");
+  const name = field(req.body?.name);
+  const email = field(req.body?.email);
+  const message = field(req.body?.message);
   if (!name || !email || !message) {
     return res.status(400).json({ ok: false, error: "Missing required fields" });
+  }
+  if (name.length > 120 || email.length > 254 || message.length > 5000) {
+    return res.status(400).json({ ok: false, error: "One or more fields are too long" });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ ok: false, error: "Invalid email address" });
   }
 
   const MESSAGES_PATH = path.join(__dirname, '../../data/messages.json');

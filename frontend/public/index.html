@@ -523,17 +523,17 @@
       <form class="contact-form reveal" id="contactForm" aria-label="Send Gene a project note" novalidate>
         <div class="field-row">
           <label for="contactName"><span class="field-title"><b>01</b>Your name</span><span>Required</span></label>
-          <input id="contactName" name="name" type="text" autocomplete="name" aria-describedby="contactNameError" required />
+          <input id="contactName" name="name" type="text" autocomplete="name" maxlength="120" aria-describedby="contactNameError" required />
           <span class="field-error" id="contactNameError" data-error-for="contactName"></span>
         </div>
         <div class="field-row">
           <label for="contactEmail"><span class="field-title"><b>02</b>Email address</span><span>Required</span></label>
-          <input id="contactEmail" name="email" type="email" autocomplete="email" aria-describedby="contactEmailError" required />
+          <input id="contactEmail" name="email" type="email" autocomplete="email" maxlength="254" aria-describedby="contactEmailError" required />
           <span class="field-error" id="contactEmailError" data-error-for="contactEmail"></span>
         </div>
         <div class="field-row field-message">
           <label for="contactMessage"><span class="field-title"><b>03</b>Role or project details</span><span>Required</span></label>
-          <textarea id="contactMessage" name="message" rows="3" aria-describedby="contactMessageError" required></textarea>
+          <textarea id="contactMessage" name="message" rows="3" maxlength="5000" aria-describedby="contactMessageError" required></textarea>
           <span class="field-error" id="contactMessageError" data-error-for="contactMessage"></span>
         </div>
         <div class="form-submit">
@@ -566,7 +566,7 @@
       <form id="askForm">
         <label class="sr-only" for="askInput">Ask about Gene's portfolio</label>
         <div class="command-input-row">
-          <input id="askInput" name="question" type="search" autocomplete="off" placeholder="e.g. What does Gene build?" required />
+          <input id="askInput" name="question" type="search" autocomplete="off" maxlength="500" placeholder="e.g. What does Gene build?" required />
           <button type="submit">ask <span aria-hidden="true">↵</span></button>
         </div>
       </form>

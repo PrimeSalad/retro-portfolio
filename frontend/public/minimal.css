@@ -100,7 +100,7 @@ body {
   max-width: 10ch;
   color: var(--rail-muted);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 400;
   line-height: 1.35;
   text-transform: uppercase;
@@ -130,7 +130,7 @@ body {
 .rail-link::before {
   content: counter(rail-link, decimal-leading-zero);
   color: var(--rail-muted);
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .rail-link::after {
@@ -267,7 +267,7 @@ kbd {
   align-items: center;
   gap: 9px;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -318,7 +318,7 @@ kbd {
   padding: 10px 0;
   border-bottom: 1px solid var(--line);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.45;
 }
 .availability-panel-body dt { color: var(--faint); text-transform: uppercase; }
@@ -337,7 +337,7 @@ kbd {
   gap: 10px;
   padding: 0 15px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10.5px;
   transition: background var(--motion-fast), color var(--motion-fast);
 }
 .availability-panel-actions a + a { border-left: 1px solid var(--line); }
@@ -366,7 +366,7 @@ kbd {
   gap: 24px;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -450,7 +450,7 @@ kbd {
 }
 .hero-signature-meta span {
   margin-top: 4px;
-  font-size: 8px;
+  font-size: 10px;
 }
 .hero-signature-meta i { display: none; }
 
@@ -587,7 +587,7 @@ kbd {
   background: color-mix(in srgb, var(--surface) 94%, transparent);
   color: var(--ink);
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 10px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   backdrop-filter: blur(5px);
@@ -677,7 +677,7 @@ kbd {
   padding: 0;
   border: 0;
   border-radius: 0;
-  font-size: 7px;
+  font-size: 10px;
 }
 .project-tags span + span::before {
   content: "/";
@@ -766,7 +766,7 @@ kbd {
 .builder-widget-copy small {
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 7px;
+  font-size: 10px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
@@ -813,7 +813,7 @@ kbd {
   margin-top: 8px;
   color: var(--accent-green);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -993,7 +993,7 @@ kbd {
   margin-top: 12px;
   color: var(--faint);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 10px;
 }
 .typing-footer .typing-hint { margin-top: 0; }
 #typingStatus.is-complete { color: var(--accent-green); }
@@ -1052,7 +1052,7 @@ kbd {
 .runner-scoreboard span {
   color: var(--faint);
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 10px;
   text-transform: uppercase;
 }
 .runner-scoreboard strong {
@@ -1118,7 +1118,7 @@ kbd {
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-control);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10.5px;
   text-transform: uppercase;
 }
 .runner-start {
@@ -1160,7 +1160,7 @@ kbd {
 .runner-hint {
   color: var(--faint);
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 10px;
   text-transform: uppercase;
 }
 .runner-hint span { margin-inline: 5px; }
@@ -1168,7 +1168,7 @@ kbd {
   flex: none;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 7px;
+  font-size: 10px;
   text-transform: uppercase;
 }
 
@@ -1252,8 +1252,8 @@ kbd {
   }
   .mobile-availability-mark i { font-style: normal; }
   .mobile-availability-trigger > span:nth-child(2) { display: grid; }
-  .mobile-availability-trigger strong { font-family: var(--font-mono); font-size: 9px; font-weight: 500; }
-  .mobile-availability-trigger small { color: var(--faint); font-family: var(--font-mono); font-size: 8px; }
+  .mobile-availability-trigger strong { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; }
+  .mobile-availability-trigger small { color: var(--faint); font-family: var(--font-mono); font-size: 10px; }
   .mobile-availability-trigger[aria-expanded="true"] { border-color: var(--accent-green); }
 
   .availability-backdrop {
@@ -1393,7 +1393,7 @@ kbd {
     padding-left: 40%;
   }
   .runner-overlay strong { font-size: 22px; }
-  .runner-overlay span { font-size: 9px; line-height: 1.45; }
+  .runner-overlay span { font-size: 10.5px; line-height: 1.45; }
   .runner-foot {
     align-items: flex-start;
     flex-direction: column;

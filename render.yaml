@@ -16,3 +16,5 @@ services:
         value: 11000
       - key: FRONTEND_URL
         value: https://elpie-portfolio.vercel.app
+      - key: KEEP_ALIVE_INTERVAL_MS
+        value: 600000

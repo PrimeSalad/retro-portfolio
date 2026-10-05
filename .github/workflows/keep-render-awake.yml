@@ -1,0 +1,27 @@
+name: Keep Render awake
+
+# Backup for the server's self-ping: if the Render service ever falls asleep
+# (restart, deploy, missed interval), this wakes it back up.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping backend health endpoint
+        env:
+          HEALTH_URL: https://retro-portfolio-7csw.onrender.com/api/health
+        run: |
+          for attempt in 1 2 3; do
+            if curl --fail --silent --show-error --max-time 60 "$HEALTH_URL"; then
+              echo; echo "Backend is awake."; exit 0
+            fi
+            echo "Attempt $attempt failed; retrying in 20s…"; sleep 20
+          done
+          echo "::warning::Backend did not respond after 3 attempts."

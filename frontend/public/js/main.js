@@ -1,6 +1,6 @@
 import { PORTFOLIO_DATA } from "./data.js";
 import { escapeHtml, resolveImagePath } from "./utils.js";
-import { aiSearch, submitContactForm } from "./api.js";
+import { aiHealthCheck, aiSearch, submitContactForm } from "./api.js";
 
 const data = PORTFOLIO_DATA;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -152,7 +152,7 @@ function renderProjects(filter = "all") {
     const actionMarkup = isFlagship && appStoreUrl
       ? `<div class="project-flagship-actions">
           <a class="project-action project-site-link" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">Visit product site <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
-          <a class="project-app-store" href="${escapeHtml(appStoreUrl)}" target="_blank" rel="noreferrer" aria-label="Download Unchainly on the App Store">
+          <a class="project-app-store" href="${escapeHtml(appStoreUrl)}" target="_blank" rel="noreferrer" aria-label="Download ${title} on the App Store">
             <img src="/images/app-store-badge.svg" alt="Download on the App Store" width="120" height="40" />
           </a>
         </div>`
@@ -689,10 +689,10 @@ function renderGithubHeatmap(contributionData, events) {
 
   /* ── Render month labels (GitHub style - positioned above weeks) ── */
   if (monthsRoot) {
-    const cellSize = 11;
-    const gap = 3;
-    const weekWidth = cellSize + gap;
-    const monthSpans = [];
+    /* Read the column step from the grid itself so labels track the CSS cell size. */
+    const gridStyles = getComputedStyle(root);
+    const weekWidth = (Number.parseFloat(gridStyles.gridAutoColumns) + Number.parseFloat(gridStyles.columnGap)) || 11;
+    const labels = [];
     let lastMonth = -1;
 
     for (let w = 0; w < totalWeeks; w++) {
@@ -701,12 +701,15 @@ function renderGithubHeatmap(contributionData, events) {
       const month = weekStart.getMonth();
 
       if (month !== lastMonth) {
-        const leftPos = w * weekWidth;
-        monthSpans.push(`<span style="position:absolute;left:${leftPos}px">${monthNames[month]}</span>`);
+        /* A partial leading month would collide with the next label, so drop it. */
+        if (labels.length === 1 && w - labels[0].week < 3) labels.pop();
+        labels.push({ week: w, month });
         lastMonth = month;
       }
     }
-    monthsRoot.innerHTML = monthSpans.join("");
+    monthsRoot.innerHTML = labels
+      .map(({ week, month }) => `<span style="position:absolute;left:${week * weekWidth}px">${monthNames[month]}</span>`)
+      .join("");
   }
 
   /* ── Render cells ── */
@@ -1063,6 +1066,11 @@ function setupMobileMenu() {
   button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
   $$("a", menu).forEach((link) => link.addEventListener("click", () => setOpen(false)));
   window.addEventListener("resize", () => { if (window.innerWidth > 900) setOpen(false); }, { passive: true });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || menu.hidden) return;
+    setOpen(false);
+    button.focus();
+  });
 }
 
 function setupAvailabilityPanel() {
@@ -1241,6 +1249,15 @@ function localPortfolioAnswer(question) {
   const certs = data.certs || data.certificates || [];
   const achievements = data.achievements || [];
 
+  const namedProject = projects.find((project) => {
+    const name = String(project.title || "").split(/\s+[—-]\s+/)[0].toLowerCase();
+    return name.length > 2 && query.includes(name);
+  });
+  if (namedProject) {
+    const link = namedProject.app_store ? " It's available on the App Store." : "";
+    return `${namedProject.title} (${namedProject.year}, ${namedProject.category}): ${namedProject.description} ${namedProject.outcome || ""}${link}`.replace(/\s+/g, " ").trim();
+  }
+
   if (/project|build|product|work/.test(query)) {
     const names = projects.slice(0, 6).map((project) => project.title).join(", ");
     return `Gene has ${projects.length} documented projects across web, mobile, AI, public service, research, education, and business systems. Featured work includes ${names}.`;
@@ -1409,6 +1426,12 @@ function setupTypingTest() {
     timerId = 0;
     if (dialog.open) dialog.close();
   };
+
+  /* Pasting or dropping the sentence would report an impossible WPM. */
+  ["paste", "drop"].forEach((type) => input.addEventListener(type, (event) => {
+    event.preventDefault();
+    status.textContent = "Type it out — pasting doesn't count.";
+  }));
 
   input.addEventListener("input", () => {
     if (!startedAt && input.value) {
@@ -1834,13 +1857,36 @@ function setupMiniRunner() {
     }
   });
 
+  /* Rescale the current run instead of restarting it, so mobile toolbar
+     resizes and rotation don't wipe the score or unpause the game. */
   let resizeTimer = 0;
   window.addEventListener("resize", () => {
     if (!dialog.open) return;
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
+      const rect = canvas.getBoundingClientRect();
+      if (Math.max(280, rect.width || 640) === worldWidth && Math.max(140, rect.height || 200) === worldHeight) return;
+      const previousWidth = worldWidth;
+      const previousHeight = worldHeight;
+      const previousGroundOffset = groundY - dog.height - dog.y;
+      const previousVelocity = dog.velocityY;
       configureWorld();
-      reset(hasStarted && !gameOver);
+      if (!hasStarted) {
+        reset();
+        return;
+      }
+      const scaleX = worldWidth / previousWidth;
+      const scaleY = worldHeight / previousHeight;
+      distance *= scaleX;
+      nextObstacleDistance *= scaleX;
+      obstacles.forEach((obstacle) => {
+        obstacle.x *= scaleX;
+        obstacle.width *= scaleY;
+        obstacle.height *= scaleY;
+      });
+      dog.y = groundY - dog.height - Math.max(0, previousGroundOffset * scaleY);
+      dog.velocityY = previousVelocity * scaleY;
+      if (!running) drawScene();
     }, 120);
   });
 
@@ -1860,6 +1906,14 @@ function setCounts() {
   if (projectCount) projectCount.textContent = String((data.projects || []).length).padStart(2, "0");
   if (recognitionCount) recognitionCount.textContent = String((data.achievements || []).length).padStart(2, "0");
   if (currentYear) currentYear.textContent = String(new Date().getFullYear());
+}
+
+/* The Render backend can be cold; wake it while the visitor reads so the
+   assistant and contact form answer quickly when they're used. */
+function warmBackend() {
+  const ping = () => { aiHealthCheck(); };
+  if ("requestIdleCallback" in window) window.requestIdleCallback(ping, { timeout: 3000 });
+  else window.setTimeout(ping, 1500);
 }
 
 function init() {
@@ -1887,6 +1941,7 @@ function init() {
   setupScrollUX();
   setCounts();
   observeReveals();
+  warmBackend();
 }
 
 init();

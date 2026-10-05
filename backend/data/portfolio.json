@@ -148,6 +148,37 @@
       "status": "live"
     },
     {
+      "id": "p16",
+      "title": "TidyPaw",
+      "year": 2026,
+      "category": "iOS Photo Cleanup App",
+      "role": "Founder / Product Designer / iOS Developer",
+      "impact": "Makes camera-roll cleanup fast and calm without ever uploading a single photo.",
+      "outcome": "People swipe through their library, confirm every deletion before it happens, and keep sensitive copies in a Face ID-protected Private Vault — no account, no cloud, no analytics.",
+      "description": "A private iPhone and iPad photo cleaner: swipe to keep or review for deletion, undo anything, confirm before removal, and lock sensitive copies in a Face ID vault.",
+      "image": "/images/projects/captures/tidypaw.jpg",
+      "website": "https://tidypaw.expo.app/",
+      "app_store": "https://apps.apple.com/ph/app/tidypaw-photo-cleaner/id6810586344",
+      "preview": "https://apps.apple.com/ph/app/tidypaw-photo-cleaner/id6810586344",
+      "tech": [
+        "iOS",
+        "iPadOS",
+        "Face ID",
+        "Local-first"
+      ],
+      "demo": "https://apps.apple.com/ph/app/tidypaw-photo-cleaner/id6810586344",
+      "repo": "#",
+      "score": 99,
+      "highlights": [
+        "Swipe-to-review workflow with undo, long-press preview, and a final confirmation queue before anything is deleted.",
+        "Private Vault protected by Face ID or device passcode; no account, no ads identity, and no photo uploads.",
+        "Cleanup history, streaks, and collectible badge cards make progress feel rewarding. Released on the App Store September 2026."
+      ],
+      "highlight_label": "New on the App Store",
+      "featured": true,
+      "status": "live"
+    },
+    {
       "id": "p15",
       "title": "LYDS — Boac Youth Information System",
       "year": 2026,
