@@ -2351,9 +2351,37 @@ function warmBackend() {
   else window.setTimeout(ping, 1500);
 }
 
+function setupProfilePhotoRotation() {
+  const figure = document.getElementById("profilePhoto");
+  if (!figure) return;
+  const photos = Array.from(figure.querySelectorAll(".profile-photo-stack img"));
+  const caption = figure.querySelector("figcaption");
+  if (photos.length < 2) return;
+
+  let index = Math.max(0, photos.findIndex((img) => img.classList.contains("is-active")));
+  let paused = false;
+
+  const show = (next) => {
+    photos[index].classList.remove("is-active");
+    index = (next + photos.length) % photos.length;
+    photos[index].classList.add("is-active");
+    if (caption) caption.textContent = photos[index].dataset.caption || "";
+  };
+
+  figure.addEventListener("mouseenter", () => { paused = true; });
+  figure.addEventListener("mouseleave", () => { paused = false; });
+  figure.addEventListener("click", () => show(index + 1));
+
+  window.setInterval(() => {
+    if (paused || document.hidden) return;
+    show(index + 1);
+  }, 5000);
+}
+
 function init() {
   setupTheme();
   setupHeroLocalTime();
+  setupProfilePhotoRotation();
   setupMobileMenu();
   setupRailTools();
   setupAvailabilityPanel();

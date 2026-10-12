@@ -832,6 +832,16 @@ kbd {
 .big-copy { font-size: clamp(25px, 3.2vw, 34px); }
 .profile-photo { border-radius: var(--radius-card); }
 .profile-photo img { filter: grayscale(1); }
+.profile-photo-stack { display: grid; }
+.profile-photo-stack img {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity 700ms ease, filter 260ms ease;
+}
+.profile-photo-stack img.is-active { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .profile-photo-stack img { transition: filter 260ms ease; }
+}
 .profile-facts dl > div { grid-template-columns: 170px 1fr; padding-block: 15px; }
 
 .experience-item { grid-template-columns: 140px 1fr; padding-block: 24px; }
