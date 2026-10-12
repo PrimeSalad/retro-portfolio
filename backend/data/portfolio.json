@@ -35,6 +35,12 @@
       "src": "/images/events/infocus.jpg",
       "alt": "recognition event with team members on stage",
       "tag": "recognition"
+    },
+    {
+      "title": "AppBuildersPH Hackathon 2026 — with Bryl Lim",
+      "src": "/images/events/appbuildersph-bryl-lim.jpg",
+      "alt": "Gene with Bryl Lim, founder of App Builders PH, at the AppBuildersPH Hackathon 2026",
+      "tag": "hackathon"
     }
   ],
   "videos": [
@@ -649,6 +655,17 @@
   ],
   "certs": [
     {
+      "title": "AppBuildersPH Hackathon 2026",
+      "preview_weight": 106,
+      "issuer": "App Builders PH",
+      "issued": "Oct 2026",
+      "issued_detail": "October 9-10, 2026",
+      "credential_id": "N/A",
+      "link": "/images/certificate/AppBuildersPH_Hackathon_2026_Certificate_of_Participation.jpg",
+      "notes": "Certificate of participation for the AppBuildersPH Hackathon 2026 at Cyberzone, SM Makati, competing as a member of team DotOrbit. Signed by Bryl Lim, Founder of App Builders PH.",
+      "image": "/images/certificate/AppBuildersPH_Hackathon_2026_Certificate_of_Participation.jpg"
+    },
+    {
       "title": "Canva Essentials",
       "preview_weight": 10,
       "issuer": "Canva",
@@ -885,6 +902,13 @@
       "meta": "Tech: Figma, Adobe Illustrator, Ibis Paint"
     },
     {
+      "badge": "Participant",
+      "badgeColor": "gGreen",
+      "title": "AppBuildersPH Hackathon 2026",
+      "desc": "Competed with team DotOrbit at Cyberzone, SM Makati in the App Builders PH community hackathon.",
+      "meta": "October 9-10, 2026 · App Builders PH"
+    },
+    {
       "badge": "1st Place",
       "badgeColor": "gBlue",
       "title": "Base PH Hackathon 2025",
@@ -1002,6 +1026,13 @@
       "description": "Official recognition for the design and implementation of the Marinduque State University logo and branding system.",
       "image": "/images/events/award2.jpg",
       "category": "achievement",
+      "featured": true
+    },
+    {
+      "title": "AppBuildersPH Hackathon 2026",
+      "description": "With Bryl Lim, founder of App Builders PH, at the AppBuildersPH Hackathon 2026 in Cyberzone, SM Makati, competing with team DotOrbit.",
+      "image": "/images/events/appbuildersph-bryl-lim.jpg",
+      "category": "hackathon",
       "featured": true
     }
   ],

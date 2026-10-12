@@ -34,6 +34,7 @@ const testimonials = [
 ];
 
 const extraArchiveItems = [
+  { title: "AppBuildersPH Hackathon 2026 — with Bryl Lim", image: "/images/events/appbuildersph-bryl-lim.jpg", tag: "hackathon" },
   { title: "Portfolio cover", image: "/images/base.jpg", tag: "feature" },
   { title: "Distinguished Recognition Award", image: "/images/trophy.png", tag: "award", fit: "contain" },
   { title: "International Presenter Badge", image: "/images/badge.png", tag: "award", fit: "contain" },
