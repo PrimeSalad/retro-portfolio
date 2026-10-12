@@ -830,18 +830,9 @@ kbd {
   gap: 48px;
 }
 .big-copy { font-size: clamp(25px, 3.2vw, 34px); }
+.profile-photos { display: grid; gap: 20px; align-content: start; }
 .profile-photo { border-radius: var(--radius-card); }
 .profile-photo img { filter: grayscale(1); }
-.profile-photo-stack { display: grid; }
-.profile-photo-stack img {
-  grid-area: 1 / 1;
-  opacity: 0;
-  transition: opacity 700ms ease, filter 260ms ease;
-}
-.profile-photo-stack img.is-active { opacity: 1; }
-@media (prefers-reduced-motion: reduce) {
-  .profile-photo-stack img { transition: filter 260ms ease; }
-}
 .profile-facts dl > div { grid-template-columns: 170px 1fr; padding-block: 15px; }
 
 .experience-item { grid-template-columns: 140px 1fr; padding-block: 24px; }
@@ -1397,6 +1388,8 @@ kbd {
   .runner-restart { grid-row: 2; }
   .profile-grid { grid-template-columns: 1fr; gap: 32px; }
   .profile-photo { width: min(100%, 320px); }
+  .profile-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .profile-photos .profile-photo { width: 100%; }
   .profile-facts dl > div { grid-template-columns: 126px 1fr; }
   .tool-card { grid-template-columns: 36px 120px 1fr; }
   .cert-slide-media { border-radius: var(--radius-card) var(--radius-card) 0 0; }
