@@ -546,7 +546,7 @@ export const PORTFOLIO_DATA = {
       "id": "t0",
       "year": "2026",
       "date": "Jul 2026 - Oct 2026",
-      "title": "Full-Stack Developer, Local Youth Development Section",
+      "title": "Administrative Aide II, Local Youth Development Section",
       "url": "https://lyds-boac-2026.vercel.app/login",
       "link_label": "Open LYDS live system",
       "tags": [
