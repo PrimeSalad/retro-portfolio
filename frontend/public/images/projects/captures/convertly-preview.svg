@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
   <title id="title">Convertly: file tools with private, on-device AI</title>
-  <desc id="desc">A private browser workspace for converting files, chatting with documents, transcribing audio, reading scans, and removing image backgrounds.</desc>
+  <desc id="desc">A private browser workspace for converting files, chatting with documents, creating PowerPoint decks, transcribing audio, reading scans, and removing image backgrounds.</desc>
   <defs>
     <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#D8F76A" stop-opacity=".2"/>
@@ -80,7 +80,7 @@
       <path d="M30 29h14v19H30zM34 25h14v19" fill="none" stroke="#222a23" stroke-width="1.8" stroke-linejoin="round"/>
       <text x="18" y="86" fill="#202620" font-size="16" font-weight="700">Ask a document</text>
       <text x="18" y="109" fill="#747d75" font-size="13">Chat with PDFs and Word files</text>
-      <text x="18" y="129" fill="#747d75" font-size="13">or build a study guide.</text>
+      <text x="18" y="129" fill="#747d75" font-size="13">or create a PowerPoint.</text>
     </g>
     <g transform="translate(1016 335)">
       <rect width="280" height="149" rx="16" fill="#fff" stroke="#e3e6df"/>
