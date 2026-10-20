@@ -1468,6 +1468,12 @@ function setupMiniRunner() {
   let score = 0;
   let best = 0;
   let speedMultiplier = 1;
+  /* Konami code toggles god mode: Byte smashes bugs instead of crashing,
+     and any run that used it never touches the saved best score. */
+  const konami = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
+  let konamiIndex = 0;
+  let godMode = false;
+  let godRun = false;
   let running = false;
   let gameOver = false;
   let hasStarted = false;
@@ -1664,6 +1670,7 @@ function setupMiniRunner() {
     distance = 0;
     score = 0;
     speedMultiplier = 1;
+    godRun = godMode;
     obstacles = [];
     nextObstacleDistance = worldWidth * 0.72;
     dog.y = groundY - dog.height;
@@ -1671,7 +1678,8 @@ function setupMiniRunner() {
     startButton.disabled = false;
     stage.dataset.state = "ready";
     startButton.innerHTML = `Start run <span aria-hidden="true">→</span>`;
-    showOverlay("Ready, Byte?", "Press start, space, or tap the track.");
+    if (godMode) showOverlay("God mode, Byte.", "Bugs can't stop you. These runs skip the best score.");
+    else showOverlay("Ready, Byte?", "Press start, space, or tap the track.");
     updateScoreboard();
     drawScene();
     if (startImmediately) start();
@@ -1682,7 +1690,7 @@ function setupMiniRunner() {
     gameOver = true;
     stage.dataset.state = "game-over";
     window.cancelAnimationFrame(animationFrame);
-    if (score > best) {
+    if (score > best && !godRun) {
       best = score;
       try { localStorage.setItem("gene-byte-runner-best", String(best)); } catch { /* Non-persistent best is fine. */ }
     }
@@ -1745,10 +1753,12 @@ function setupMiniRunner() {
     obstacles.forEach((obstacle) => { obstacle.x -= speed * delta; });
     obstacles = obstacles.filter((obstacle) => obstacle.x + obstacle.width > -10);
 
-    if (obstacles.some(intersectsObstacle)) {
+    const hits = obstacles.filter(intersectsObstacle);
+    if (hits.length && !godMode) {
       endRun();
       return;
     }
+    if (hits.length) obstacles = obstacles.filter((obstacle) => !hits.includes(obstacle));
 
     updateScoreboard();
     drawScene(time);
@@ -1822,7 +1832,24 @@ function setupMiniRunner() {
   dialog.addEventListener("close", pause);
   document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
 
+  const toggleGodMode = () => {
+    godMode = !godMode;
+    if (godMode) godRun = true;
+    stage.dataset.god = godMode ? "on" : "off";
+    const message = godMode ? "God mode on. Byte smashes every bug; these runs skip the best score." : "God mode off. Bugs bite again.";
+    if (announcement) announcement.textContent = message;
+    if (!dialog.open) open();
+    else if (!running) showOverlay(godMode ? "God mode, Byte." : "Mortal again.", message);
+  };
+
   document.addEventListener("keydown", (event) => {
+    const key = String(event.key || "").toLowerCase();
+    konamiIndex = key === konami[konamiIndex] ? konamiIndex + 1 : key === konami[0] ? 1 : 0;
+    if (konamiIndex === konami.length) {
+      konamiIndex = 0;
+      toggleGodMode();
+      return;
+    }
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "g") {
       event.preventDefault();
       open();
@@ -1936,6 +1963,22 @@ function projectLinks(project) {
   return links;
 }
 
+/* Demo videos play inside the case study. Facebook share links can't be
+   resolved in the browser, so data stores the canonical reel/watch URL. */
+function videoEmbed(project) {
+  const source = safeUrl(project.video_embed);
+  if (!source) return null;
+  const url = new URL(source);
+  if (/(^|\.)youtube\.com$/.test(url.hostname)) {
+    const id = url.searchParams.get("v");
+    return id ? { src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1`, vertical: false } : null;
+  }
+  if (/(^|\.)facebook\.com$/.test(url.hostname)) {
+    return { src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(source)}&show_text=false&autoplay=true`, vertical: url.pathname.startsWith("/reel/"), sized: true };
+  }
+  return null;
+}
+
 /* =========================
    Case studies
 ========================= */
@@ -1974,6 +2017,14 @@ function renderCaseStudy(direction = 0) {
     image.src = resolveImagePath(project.image);
     image.alt = `Interface preview of ${title}`;
   }
+  const stage = $("#caseVideo");
+  const hasVideo = Boolean(videoEmbed(project) && project.image);
+  media.classList.toggle("is-replaced", hasVideo);
+  stage.hidden = !hasVideo;
+  stage.classList.remove("is-playing", "is-vertical");
+  stage.innerHTML = hasVideo
+    ? `<button class="case-play" type="button" aria-label="Play the ${escapeHtml(title)} demo video"><img src="${escapeHtml(resolveImagePath(project.image))}" alt="" width="1440" height="900" /><span class="case-play-badge"><span aria-hidden="true">▶</span> Play demo</span></button>`
+    : "";
   if (primaryLink) {
     media.href = primaryLink.href;
     media.setAttribute("aria-label", `Open ${title}`);
@@ -2039,7 +2090,27 @@ function setupCaseStudies() {
     if (event.key === "ArrowLeft") { event.preventDefault(); step(-1); }
     if (event.key === "ArrowRight") { event.preventDefault(); step(1); }
   });
+  $("#caseVideo").addEventListener("click", (event) => {
+    if (!event.target.closest(".case-play")) return;
+    const project = caseState.list[caseState.index];
+    const embed = project && videoEmbed(project);
+    if (!embed) return;
+    const stage = $("#caseVideo");
+    stage.classList.add("is-playing");
+    stage.classList.toggle("is-vertical", embed.vertical);
+    const frame = Object.assign(document.createElement("iframe"), {
+      title: `${project.title} demo video`,
+      allow: "autoplay; encrypted-media; picture-in-picture; fullscreen",
+      allowFullscreen: true,
+    });
+    stage.replaceChildren(frame);
+    /* Facebook's player only fills the frame when it is told the exact size. */
+    const { width, height } = frame.getBoundingClientRect();
+    frame.src = embed.sized ? `${embed.src}&width=${Math.round(width)}&height=${Math.round(height)}` : embed.src;
+  });
   dialog.addEventListener("close", () => {
+    /* Dropping the iframe is the only reliable way to stop third-party playback. */
+    $("#caseVideo").replaceChildren();
     if (!location.hash.startsWith("#case-")) return;
     try { history.replaceState(null, "", location.pathname + location.search); } catch { /* ignore */ }
   });

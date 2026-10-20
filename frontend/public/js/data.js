@@ -170,6 +170,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p17",
+      "video_embed": "https://www.facebook.com/reel/1200623032471580",
       "title": "Unhooked",
       "year": 2026,
       "status": "live",
@@ -260,6 +261,8 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p8",
+      "video": "https://www.youtube.com/watch?v=WwPxjMTNU0Q",
+      "video_embed": "https://www.youtube.com/watch?v=WwPxjMTNU0Q",
       "title": "MORI — Smart Action Engine",
       "year": 2026,
       "category": "AI Browser Extension",
@@ -286,6 +289,8 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p7",
+      "video": "https://www.facebook.com/share/v/1CdRT2mrob/",
+      "video_embed": "https://www.facebook.com/reel/2680807968958228",
       "title": "CertifiCat",
       "year": 2026,
       "category": "Certificate Generator",
@@ -314,6 +319,8 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p1",
+      "video": "https://www.youtube.com/watch?v=Y_EXZ8S8tFY",
+      "video_embed": "https://www.youtube.com/watch?v=Y_EXZ8S8tFY",
       "title": "salitAI.orbit",
       "year": 2026,
       "category": "Speech to Text AI Assistant",
@@ -368,6 +375,8 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p3",
+      "video": "https://www.youtube.com/watch?v=nsXajy5PN4s",
+      "video_embed": "https://www.youtube.com/watch?v=nsXajy5PN4s",
       "title": "Coral.orbit",
       "year": 2025,
       "category": "Mobile App - Marine Research",
@@ -394,6 +403,8 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p4",
+      "video": "https://youtu.be/k6GOHz0osOY",
+      "video_embed": "https://www.youtube.com/watch?v=k6GOHz0osOY",
       "title": "Waymark",
       "year": 2026,
       "category": "Mobile App - Project Tracking",
@@ -420,6 +431,8 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "p5",
+      "video": "https://www.facebook.com/share/v/1HAE47UCY1/",
+      "video_embed": "https://www.facebook.com/reel/3124827577906476",
       "title": "PawPrint AI",
       "year": 2026,
       "category": "Pet Care AI Assistant",

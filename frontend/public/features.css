@@ -1,0 +1,111 @@
+/* Demo videos inside the case study: the screenshot doubles as the poster
+   and swaps to the player in place, so the layout never jumps. */
+.case-media.is-replaced { display: none; }
+.case-video {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  overflow: hidden;
+  padding: 32px;
+  border-right: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0) 0 0 / 18px 18px,
+    var(--surface-soft);
+}
+.case-video[hidden] { display: none; }
+.case-play {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.case-play img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 500ms cubic-bezier(.2, .7, .3, 1), filter 300ms ease;
+}
+.case-play-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 300ms cubic-bezier(.2, .7, .3, 1);
+}
+.case-play:hover img { transform: translateY(-3px); filter: brightness(0.92); }
+.case-play:hover .case-play-badge { transform: translate(-50%, -50%) scale(1.06); }
+.case-play:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 12px; }
+.case-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 10px;
+  background: #000;
+}
+/* Reels are portrait: size by height so the whole frame stays visible. */
+.case-video.is-vertical iframe {
+  width: auto;
+  height: min(100%, 560px);
+  max-width: 100%;
+  aspect-ratio: 9 / 16;
+  margin-inline: auto;
+}
+.case-video.is-vertical {
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+  justify-items: center;
+}
+
+@media (max-width: 900px) {
+  .case-video {
+    display: block;
+    padding: 18px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .case-video.is-vertical iframe { height: min(70dvh, 560px); }
+}
+
+/* Byte runner god mode badge */
+.runner-stage[data-god="on"]::after {
+  content: "God mode";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* The hero meta row now holds only the title line; keep it muted. */
+.hero-identity-meta p:only-child { color: inherit; }
