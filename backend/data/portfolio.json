@@ -144,7 +144,7 @@
       "impact": "Combines everyday file conversion with practical AI while keeping users’ files in their browser.",
       "outcome": "People can convert documents and media, create PowerPoint decks from documents, ask questions about files, transcribe audio, read scans, and remove image backgrounds without uploading files or creating an account.",
       "description": "A free browser toolbox for file conversion, PDF tools, media downloads, and on-device AI for document Q&A, PowerPoint creation, transcription, OCR, and background removal.",
-      "image": "/images/projects/captures/convertly-preview.svg",
+      "image": "/images/projects/captures/convertly-home.png",
       "website": "https://tryconvertly.vercel.app/",
       "preview": "https://tryconvertly.vercel.app/",
       "demo": "https://tryconvertly.vercel.app/",
