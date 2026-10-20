@@ -1,9 +1,3 @@
-@font-face {
-  font-family: "Geist Pixel";
-  src: url("https://cdn.jsdelivr.net/gh/vercel/geist-pixel-font@main/fonts/webfonts/GeistPixel-Square.woff2") format("woff2");
-  font-display: swap;
-}
-
 :root {
   --bg: #ffffff;
   --surface: #ffffff;
@@ -22,7 +16,7 @@
   --content-width: 672px;
   --font-sans: "Geist", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
-  --font-pixel: "Geist Pixel", "Geist Mono", monospace;
+  --font-pixel: var(--font-sans);
   color-scheme: light;
 }
 

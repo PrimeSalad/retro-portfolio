@@ -1,0 +1,223 @@
+/*
+  Flat editorial layer
+  No logo, no boxes, no rounded corners. Hairline rules, whitespace, and type do the work.
+*/
+
+:root {
+  --radius-control: 0;
+  --radius-card: 0;
+  --content-width: 920px;
+  --section-space: clamp(80px, 9vw, 120px);
+}
+
+kbd,
+.heatmap-tooltip,
+.builder-widget-copy img,
+.project-placeholder span,
+.achievement-emblem { border-radius: 0; }
+
+/* Rail: name only, no mark, no per-row dividers */
+.wordmark::before { display: none; content: none; }
+.side-rail .wordmark { display: block; grid-template-columns: none; min-height: 0; }
+.side-rail .wordmark span {
+  max-width: none;
+  color: var(--rail-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  text-transform: none;
+}
+.mobile-bar .wordmark { font-size: 14px; font-weight: 500; }
+
+.rail-nav { margin-top: 48px; border-top: 0; }
+.rail-link { min-height: 32px; border-bottom: 0; }
+.rail-link::before { color: var(--rail-line); }
+.rail-link:hover::before,
+.rail-link.is-active::before { color: var(--rail-muted); }
+.rail-tools { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rail-line); }
+.rail-tools .rail-tools-toggle { min-height: 32px; border-bottom: 0; }
+
+.rail-presence { gap: 12px; }
+.rail-presence .presence-avatars { display: none; }
+.rail-presence::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--status);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--status) 20%, transparent);
+}
+.rail-chat {
+  min-height: 36px;
+  padding-inline: 0;
+  border: 0;
+  border-bottom: 1px solid var(--rail-ink);
+  background: transparent;
+  color: var(--rail-ink);
+}
+.rail-chat:hover { background: transparent; color: var(--rail-ink); opacity: 0.7; }
+
+/* Hero: one line of name, one statement, one small portrait */
+.hero { padding-top: clamp(44px, 5vw, 72px); }
+.hero-identity { padding-top: 0; border-top: 0; }
+.hero h1 {
+  display: block;
+  margin: 20px 0 44px;
+  font-size: clamp(44px, 5.6vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.hero-signature-body {
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 56px;
+  align-items: start;
+}
+.hero-signature-photo {
+  order: 2;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1;
+  border-radius: 0;
+}
+.hero-signature-photo img {
+  height: 100%;
+  transform: scale(1.5);
+  transform-origin: 50% 58%;
+}
+.hero-signature-copy { order: 1; padding-top: 0; border-top: 0; }
+.hero-signature-copy > p {
+  max-width: 28ch;
+  color: var(--ink);
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+.hero-signature-copy > p + p {
+  max-width: 48ch;
+  margin-top: 22px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  letter-spacing: 0;
+}
+.hero-signature-links { gap: 8px 24px; margin-top: 30px; }
+.hero-signature-links a {
+  min-height: 36px;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 5px;
+}
+.hero-signature-links a:hover { text-decoration-color: var(--ink); }
+
+.hero-signature-meta {
+  gap: 24px;
+  margin-top: 56px;
+  padding: 24px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.hero-signature-meta a { min-height: 0; padding: 0; }
+.hero-signature-meta a + a { border-left: 0; }
+.hero-signature-meta strong { font-size: 30px; }
+.hero-signature-meta span { margin-top: 8px; }
+
+/* Section headings stack: label, title, lede */
+.section-heading { display: block; margin-bottom: 44px; }
+.section-heading > div { padding-top: 0; margin-bottom: 20px; }
+.section-heading h2 {
+  max-width: 760px;
+  font-size: clamp(32px, 4.2vw, 46px);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+.section-heading > p { max-width: 560px; margin-top: 18px; font-size: 15px; }
+
+/* Controls: text tabs, square icon buttons */
+.filter-row,
+.archive-tabs { gap: 0 22px; }
+.filter-button,
+.archive-tabs button {
+  min-height: 36px;
+  padding-inline: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+}
+.filter-button:hover,
+.archive-tabs button:hover {
+  border-color: var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+}
+.filter-button.is-active,
+.archive-tabs button[aria-selected="true"] {
+  border-color: var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+.carousel-toolbar { margin-bottom: 28px; padding-bottom: 0; }
+.icon-button { border-color: var(--line-strong); }
+
+/* Projects: image, text, nothing else */
+.project-grid { gap: 36px; padding: 0 0 8px; }
+.project-card { min-width: calc(50% - 18px); border: 0; background: transparent; }
+.project-card:hover,
+.project-card:focus-within { border-color: transparent; }
+.project-shot { border: 1px solid var(--line); }
+.project-content { padding: 18px 0 0; }
+.project-card h3 { margin-top: 10px; font-size: 22px; }
+.project-card-footer { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+
+.builder-proof { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+.builder-widget { border-color: var(--line); }
+
+/* Profile */
+.profile-photo { border-radius: 0; }
+.profile-photo img { border: 1px solid var(--line); }
+
+/* Recognition and credentials */
+.achievements-grid { gap: 36px; }
+.achievement-card { min-width: 280px; padding: 0; border: 0; background: transparent; }
+.achievement-emblem { margin: 14px 0 16px; background: var(--surface-soft); }
+.cert-slide {
+  border: 0;
+  border-block: 1px solid var(--line);
+  background: transparent;
+}
+.cert-slide-media { border-right: 1px solid var(--line); background: var(--surface-soft); }
+.cert-document { border-color: var(--line); box-shadow: none; }
+.credentials-feature { border-top: 1px solid var(--ink); }
+
+/* GitHub: one ruled sheet */
+.github-dashboard { border: 0; border-block: 1px solid var(--line); }
+.github-profile { padding: 24px 0; }
+.github-heatmap-panel,
+.github-feed-panel,
+.github-repos-panel { padding: 24px 0; }
+.github-feed-panel { padding-right: 28px; }
+.github-repos-panel { padding-left: 28px; }
+
+/* Archive */
+.archive-grid { gap: 24px; }
+.archive-item { min-width: 240px; border: 0; background: transparent; }
+.archive-item img { border: 1px solid var(--line); }
+.archive-item > span { padding: 10px 0 0; }
+
+/* Recommendations and contact */
+.quote-stage { border-top: 1px solid var(--ink); }
+.contact-send { padding-inline: 20px; }
+.contact-direct > a { font-size: clamp(20px, 2.6vw, 26px); }
+
+@media (max-width: 1023px) {
+  .hero-signature-body { grid-template-columns: 1fr; gap: 32px; }
+  .hero-signature-photo { order: 1; max-width: 180px; }
+  .hero-signature-copy { order: 2; }
+  .hero-signature-meta { grid-template-columns: repeat(2, 1fr); gap: 20px 24px; }
+  .hero-signature-meta a + a { border-left: 0; }
+  .project-card { min-width: min(86%, 420px); }
+}

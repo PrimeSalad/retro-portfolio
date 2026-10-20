@@ -1,35 +1,43 @@
 import { PORTFOLIO_DATA } from "./data.js";
 import { escapeHtml, resolveImagePath } from "./utils.js";
 import { aiHealthCheck, aiSearch, submitContactForm } from "./api.js";
+import { setupTerminal } from "./terminal.js";
+import { setupRecruiter } from "./recruiter.js";
 
 const data = PORTFOLIO_DATA;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+/* Full recommendation texts, as written (source: whatpeoplesay.md). */
 const testimonials = [
   {
-    quote: "One of the best qualities of a good leader is being someone others can count on—someone who shows up and gives their best no matter the challenge. That’s who Mr. Landoy is.",
     name: "Engr. Jayvi M. Mandalihan, LPT",
     role: "College of Information and Computing Sciences",
+    headline: "Consistency, Commitment, and Quiet Strength",
+    quote: "One of the best qualities of a good leader is being someone others can count on; someone who shows up and gives their best no matter the challenge. That’s who Mr. Landoy is. As someone who has taught him in previous courses, especially during group projects, I’ve seen how he always gives his full effort, not just helping, but truly committing to the task like it’s his own. Apparently, he doesn’t do things for show, but deep down, Mr. Landoy hopes his efforts are seen and appreciated. Like anyone who works hard, a simple recognition gives him that extra push to keep going. He may not say it out loud, but being appreciated reminds him that what he’s doing matters.",
   },
   {
-    quote: "Mr. Landoy brings stability and quiet strength to any group. His consistency, support, and genuine commitment naturally lift the entire team.",
     name: "Aldrin Requiz, MIT",
     role: "College of Information and Computing Sciences",
+    headline: "Reliable, Collaborative, and Always Present",
+    quote: "Mr. Landoy is the kind of teammate who brings stability and quiet strength to any group. He doesn’t need to stand out to make a difference—his consistency, support, and genuine commitment naturally lift the entire team. Always reliable, always present, and always working with purpose.",
   },
   {
-    quote: "He listens first, contributes with intention, and always puts the success of the team above personal credit. Reliable, skilled, and easy to work with.",
     name: "Shiela Mae Liwanagan",
     role: "Accenture",
+    headline: "Skilled, Supportive, and Goal-Oriented",
+    quote: "Mr. Landoy stands out not just for his technical abilities but for how well he works with others. He brings strong skills to the table, whether in design, development, or collaboration, and uses them to help the team succeed. He listens, contributes thoughtfully, and stays focused on shared goals. Reliable, skilled, and easy to work with, he is the kind of teammate every project needs.",
   },
   {
-    quote: "He listens carefully, communicates clearly, and always goes the extra mile to make sure the final output exceeds expectations.",
     name: "Kryzha Lineses Lope",
-    role: "Educational System Technological Institute",
+    role: "Educational System Technological Institute · Computer Science",
+    headline: "Excellence in Every Detail and Delivers Results That Matter",
+    quote: "Mr. Landoy is one of the most reliable and technically skilled professionals I’ve had the pleasure of working with. He consistently delivers high-quality results and stays updated with the latest technologies, ensuring that every project is both efficient and future-ready. What makes him truly stand out is his dedication to client satisfaction. He listens carefully, communicates clearly, and always goes the extra mile to make sure the final output exceeds expectations. His strong sense of responsibility and attention to detail make him someone you can trust, not just to get the job done, but to do it with excellence. If you’re looking for someone who is both technically sharp and service-oriented, Mr. Landoy is the kind of professional you want on your team.",
   },
   {
-    quote: "Mr. Landoy leads with purpose, not pressure. He guides a team with clarity, patience, and confidence while staying focused on the bigger picture.",
     name: "John Ryan Rodelas",
     role: "Information Technology",
+    headline: "A Natural and Effective Leader",
+    quote: "Mr. Landoy leads with purpose, not pressure. He knows how to guide a team with clarity, patience, and confidence, making sure everyone feels heard and supported. What sets him apart is his ability to stay calm under pressure while staying focused on the bigger picture.",
   },
 ];
 
@@ -79,9 +87,11 @@ function safeUrl(url) {
 function projectKind(project) {
   const text = `${project.category || ""} ${(project.tech || []).join(" ")}`.toLowerCase();
   const kinds = [];
-  if (/\bai\b|gemini|artificial intelligence/.test(text)) kinds.push("ai");
-  if (/mobile|flutter|dart|ios|android|swiftui|screen time/.test(text)) kinds.push("mobile");
-  if (/react|javascript|typescript|web|browser|tailwind/.test(text)) kinds.push("web");
+  if (/\bai\b|gemini|gemma|artificial intelligence/.test(text)) kinds.push("ai");
+  if (/mobile|flutter|dart|ios|android|swiftui|react native|expo|screen time/.test(text)) kinds.push("mobile");
+  /* TypeScript alone only means web when the project is not a mobile app. */
+  const isMobile = kinds.includes("mobile");
+  if (/react(?! native)|javascript|web|browser|tailwind/.test(text) || (!isMobile && /typescript/.test(text))) kinds.push("web");
   return kinds.join(" ");
 }
 
@@ -203,7 +213,9 @@ function renderExperience() {
   const timeline = data.timeline || [];
   root.innerHTML = timeline.map((item, index) => {
     const roleUrl = safeUrl(item.url);
-    const roleTitle = escapeHtml(item.title || "Experience");
+    const [role, ...orgParts] = String(item.title || "Experience").split(/,\s+/);
+    const org = orgParts.join(", ");
+    const roleTitle = escapeHtml(role);
     const roleHeading = roleUrl
       ? `<a href="${roleUrl}" target="_blank" rel="noreferrer">${roleTitle}<span aria-hidden="true">↗</span></a>`
       : roleTitle;
@@ -213,11 +225,17 @@ function renderExperience() {
 
     return `
       <article class="experience-item reveal ${index >= 5 ? "is-extra" : ""}" ${index >= 5 ? "hidden" : ""}>
+        <span class="experience-logo" aria-hidden="true">${escapeHtml(initials(org || role))}</span>
         <div class="experience-date">${escapeHtml(item.date || item.year || "")}</div>
         <div class="experience-main">
           <h3>${roleHeading}</h3>
+          ${org ? `<p class="experience-org">${escapeHtml(org)}</p>` : ""}
           <p>${escapeHtml(experienceSummary(item))}</p>
           ${roleLink}
+        </div>
+        <div class="experience-details">
+          ${(item.bullets || []).length > 1 ? `<ul>${item.bullets.slice(1).map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul>` : ""}
+          ${(item.metrics || []).length ? `<p><strong>Impact</strong> ${item.metrics.map(escapeHtml).join(" · ")}</p>` : ""}
         </div>
         <div class="experience-stack" aria-label="Focus areas">${(item.stack || item.tags || []).slice(0, 5).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
       </article>`;
@@ -328,8 +346,15 @@ function renderCertificates() {
   const certificates = [...PORTFOLIO_DATA.certs]
     .sort((a, b) => (b.preview_weight || 0) - (a.preview_weight || 0));
 
+  /* Certificates and honors overlap on a few events (a hackathon has both a
+     participation certificate and a placement), so count each event once. */
+  const eventKey = (title) => String(title || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const certKeys = new Set(certificates.map((cert) => eventKey(cert.title)));
+  const honors = (data.achievements || []).filter((item) => !certKeys.has(eventKey(item.title)));
   const total = $("#certTotal");
-  if (total) total.textContent = String(certificates.length).padStart(2, "0");
+  if (total) total.textContent = String(certificates.length + honors.length);
+  const breakdown = $("#certBreakdown");
+  if (breakdown) breakdown.textContent = `${certificates.length} certificates · ${(data.achievements || []).length} honors`;
 
   grid.innerHTML = certificates.map((cert, index) => {
     const title = escapeHtml(cert.title || "Professional certificate");
@@ -380,6 +405,26 @@ function renderCertificates() {
         </div>
       </article>`;
   }).join("");
+}
+
+/* Honors & awards: every achievement the four feature cards don't already show. */
+function renderHonors() {
+  const list = $("#honorsList");
+  if (!list) return;
+  const featured = new Set($$(".achievement-card h3").map((heading) => heading.textContent.trim().toLowerCase()));
+  const placement = /place|champion|winner/i;
+  list.innerHTML = (data.achievements || [])
+    .filter((item) => !featured.has(String(item.title).trim().toLowerCase()))
+    .map((item, index) => `
+      <li class="honor reveal" data-delay="${index % 4}">
+        <span class="honor-badge${placement.test(item.badge || "") ? " is-placement" : ""}">${escapeHtml(item.badge || "Honor")}</span>
+        <div>
+          <h4>${escapeHtml(item.title)}</h4>
+          <p>${escapeHtml(item.desc || "")}</p>
+          ${item.meta ? `<small>${escapeHtml(item.meta)}</small>` : ""}
+        </div>
+      </li>`).join("");
+  observeReveals(list);
 }
 
 function setupCertificateCarousel() {
@@ -875,6 +920,29 @@ function renderGithubRepos(repos) {
   }).join("");
 }
 
+/* "Currently building" on the profile card: the latest push from the events
+   already fetched, else the most recently pushed repo. */
+function renderCurrentlyBuilding(events, repos) {
+  const target = $("#liBuilding");
+  if (!target) return;
+  const push = events.find((event) => event.type === "PushEvent");
+  const repo = repos[0];
+  const name = (push?.repo?.name || repo?.full_name || repo?.name || "").replace(`${GITHUB_USER}/`, "");
+  const when = push?.created_at || repo?.pushed_at;
+  if (!name || !when) return;
+  const message = push?.payload?.commits?.at(-1)?.message?.split("\n")[0] || "";
+
+  const minutes = Math.round((Date.now() - new Date(when).getTime()) / 60000);
+  const relative = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+  const ago = minutes < 60 ? relative.format(-Math.max(1, minutes), "minute")
+    : minutes < 1440 ? relative.format(-Math.round(minutes / 60), "hour")
+    : relative.format(-Math.round(minutes / 1440), "day");
+  const recent = minutes < 60 * 24 * 7;
+
+  target.innerHTML = `<span class="li-building-dot${recent ? " is-live" : ""}" aria-hidden="true"></span>${recent ? "Currently building" : "Last shipped"} <a href="https://github.com/${GITHUB_USER}/${escapeHtml(name)}" target="_blank" rel="noreferrer">${escapeHtml(name)}</a>${message ? ` <span class="li-building-msg">“${escapeHtml(message)}”</span>` : ""} <span class="li-building-time">· ${escapeHtml(ago)}</span>`;
+  target.hidden = false;
+}
+
 async function loadGithubActivity() {
   const dashboard = $("#githubDashboard");
   const status = $("#githubStatus");
@@ -906,6 +974,11 @@ async function loadGithubActivity() {
     renderGithubHeatmap(contributions, events);
     renderGithubFeed(events);
     renderGithubRepos(repos);
+    /* Live data only: the cached fallback is months old and would mislead. */
+    renderCurrentlyBuilding(
+      eventsResult.status === "fulfilled" ? eventsResult.value : [],
+      reposResult.status === "fulfilled" ? reposResult.value : [],
+    );
     dashboard.dataset.source = usingCachedGithub ? "cached-plus-live" : "live";
     if (!contributions) {
       status.textContent = usingCachedGithub
@@ -942,26 +1015,65 @@ function setupLightbox() {
   });
 }
 
-let testimonialIndex = 0;
-
-function renderTestimonial() {
-  const item = testimonials[testimonialIndex];
-  $("#testimonialQuote").textContent = item.quote;
-  $("#testimonialName").textContent = item.name;
-  $("#testimonialRole").textContent = item.role;
-  $("#quoteCounter").textContent = `${String(testimonialIndex + 1).padStart(2, "0")} / ${String(testimonials.length).padStart(2, "0")}`;
+/* Recommendations: LinkedIn-style list. Long texts clamp with "see more",
+   and only the first three show until "Show all" is pressed. */
+function recoInitials(name) {
+  const words = name.split(",")[0].split(/\s+/).filter((word) => word && !word.endsWith("."));
+  return initials([words[0], words[words.length - 1]].join(" "));
 }
 
 function setupTestimonials() {
-  $("#quotePrev")?.addEventListener("click", () => {
-    testimonialIndex = (testimonialIndex - 1 + testimonials.length) % testimonials.length;
-    renderTestimonial();
+  const list = $("#recoList");
+  if (!list) return;
+  const visibleCount = 3;
+  list.innerHTML = testimonials.map((item, index) => `
+    <li class="reco reveal${index >= visibleCount ? " is-extra" : ""}"${index >= visibleCount ? " hidden" : ""} data-delay="${index % 3}">
+      <span class="reco-avatar" aria-hidden="true">${escapeHtml(recoInitials(item.name))}</span>
+      <div class="reco-body">
+        <p class="reco-name">${escapeHtml(item.name)}</p>
+        <p class="reco-role">${escapeHtml(item.role)}</p>
+        <p class="reco-headline">${escapeHtml(item.headline)}</p>
+        <blockquote class="reco-quote" id="recoQuote${index}">${escapeHtml(item.quote)}</blockquote>
+        <button class="reco-more" type="button" aria-expanded="false" aria-controls="recoQuote${index}" hidden>…see more</button>
+      </div>
+    </li>`).join("");
+
+  /* "see more" only where the clamp actually hides text. */
+  const syncClamps = () => $$(".reco", list).forEach((item) => {
+    const quote = $(".reco-quote", item);
+    const more = $(".reco-more", item);
+    if (item.hidden || quote.classList.contains("is-open")) return;
+    more.hidden = quote.scrollHeight <= quote.clientHeight + 2;
   });
-  $("#quoteNext")?.addEventListener("click", () => {
-    testimonialIndex = (testimonialIndex + 1) % testimonials.length;
-    renderTestimonial();
+  list.addEventListener("click", (event) => {
+    const more = event.target.closest(".reco-more");
+    if (!more) return;
+    const quote = $(`#${more.getAttribute("aria-controls")}`);
+    const open = !quote.classList.contains("is-open");
+    quote.classList.toggle("is-open", open);
+    more.setAttribute("aria-expanded", String(open));
+    more.textContent = open ? "see less" : "…see more";
   });
-  renderTestimonial();
+
+  const toggle = $("#recoToggle");
+  const extras = $$(".reco.is-extra", list);
+  if (toggle && extras.length) {
+    toggle.hidden = false;
+    toggle.textContent = `Show all ${testimonials.length} recommendations`;
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") !== "true";
+      toggle.setAttribute("aria-expanded", String(expanded));
+      extras.forEach((item) => {
+        item.hidden = !expanded;
+        item.classList.toggle("is-visible", expanded);
+      });
+      toggle.textContent = expanded ? "Show less" : `Show all ${testimonials.length} recommendations`;
+      syncClamps();
+    });
+  }
+  requestAnimationFrame(syncClamps);
+  window.addEventListener("resize", syncClamps, { passive: true });
+  observeReveals(list);
 }
 
 let revealObserver;
@@ -1000,12 +1112,60 @@ function setupTheme() {
     $$('[data-theme-label]').forEach((label) => { label.textContent = theme === "dark" ? "Light mode" : "Dark mode"; });
   };
 
+  /* The new theme grows out of the button as a circle. Browsers without view
+     transitions (or reduced-motion users) get the plain CSS colour fade. */
+  const switchTheme = (next, button) => {
+    const root = document.documentElement;
+    if (!document.startViewTransition || reduceMotion.matches) {
+      apply(next);
+      return;
+    }
+    const rect = button.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    root.classList.add("is-theme-switching");
+    const transition = document.startViewTransition(() => apply(next));
+    transition.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 620, easing: "cubic-bezier(.2, .7, .2, 1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    }).catch(() => {});
+    transition.finished.finally(() => root.classList.remove("is-theme-switching"));
+  };
+
   apply(initial);
   $$('[data-theme-toggle]').forEach((button) => button.addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    apply(next);
+    switchTheme(next, button);
     try { localStorage.setItem(storageKey, next); } catch { /* Storage can be unavailable. */ }
   }));
+}
+
+/* Skills: chips used by the projects and roles on this page are marked,
+   with the count in the tooltip, from the same data those sections render. */
+const skillAliases = {
+  "tailwind css": "tailwind",
+  "rest apis": "rest api",
+};
+
+function renderSkillCounts() {
+  const usage = new Map();
+  const add = (tag) => {
+    const key = String(tag).toLowerCase();
+    usage.set(key, (usage.get(key) || 0) + 1);
+  };
+  (data.projects || []).forEach((project) => (project.tech || []).forEach(add));
+  (data.timeline || []).forEach((role) => (role.stack || []).forEach(add));
+
+  $$(".skill-chips [data-skill]").forEach((chip) => {
+    const name = chip.textContent.trim().toLowerCase();
+    const count = usage.get(skillAliases[name] || name) || 0;
+    if (!count) return;
+    chip.classList.add("is-used");
+    chip.title = `Used in ${count} project${count === 1 ? "" : "s"} and role${count === 1 ? "" : "s"} on this page`;
+  });
 }
 
 function setupHeroLocalTime() {
@@ -1014,14 +1174,14 @@ function setupHeroLocalTime() {
 
   const formatter = new Intl.DateTimeFormat("en-PH", {
     timeZone: "Asia/Manila",
-    hour: "2-digit",
+    hour: "numeric",
     minute: "2-digit",
-    hour12: false,
+    hour12: true,
   });
 
   const update = () => {
     const now = new Date();
-    time.textContent = `MRQ ${formatter.format(now)}`;
+    time.textContent = formatter.format(now);
     time.dateTime = now.toISOString();
   };
 
@@ -1105,10 +1265,166 @@ function setupAvailabilityPanel() {
   }
 }
 
+/* One underline that glides to the active tab instead of each tab
+   drawing its own. */
+function setupNavIndicator() {
+  const nav = $(".rail-nav");
+  if (!nav) return () => {};
+  const indicator = Object.assign(document.createElement("span"), { className: "rail-indicator" });
+  indicator.setAttribute("aria-hidden", "true");
+  nav.append(indicator);
+  nav.classList.add("has-indicator");
+
+  const place = () => {
+    const current = $(".rail-link.is-active", nav);
+    const inMore = Boolean(current?.closest(".rail-more"));
+    $("#railMore")?.classList.toggle("has-active", inMore);
+    const active = inMore ? $("#railMoreToggle") : current;
+    if (!active || !active.offsetWidth) {
+      indicator.style.opacity = "0";
+      return;
+    }
+    const label = $("span", active) || active;
+    const left = label.getBoundingClientRect().left - nav.getBoundingClientRect().left;
+    indicator.style.opacity = "1";
+    indicator.style.width = `${label.offsetWidth}px`;
+    indicator.style.transform = `translateX(${left}px)`;
+  };
+  place();
+  window.addEventListener("resize", place, { passive: true });
+  document.fonts?.ready.then(place);
+  return place;
+}
+
+function setupAsideSticky() {
+  const aside = $(".li-aside");
+  if (!aside || !("ResizeObserver" in window)) return;
+  const update = () => {
+    const pinnedTop = 80;
+    const fitTop = window.innerHeight - aside.offsetHeight - 16;
+    aside.style.setProperty("--li-aside-top", `${Math.min(pinnedTop, fitTop)}px`);
+  };
+  new ResizeObserver(update).observe(aside);
+  window.addEventListener("resize", update, { passive: true });
+  update();
+}
+
+/* "More" dropdown in the top bar: click to open, closes on outside click,
+   Escape, or after choosing a section. */
+function setupNavMore() {
+  const root = $("#railMore");
+  const toggle = $("#railMoreToggle");
+  const menu = $("#railMoreMenu");
+  if (!root || !toggle || !menu) return;
+  const setOpen = (open) => {
+    root.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    menu.inert = !open;
+  };
+  setOpen(false);
+  toggle.addEventListener("click", () => setOpen(!root.classList.contains("is-open")));
+  menu.addEventListener("click", (event) => { if (event.target.closest("a")) setOpen(false); });
+  document.addEventListener("click", (event) => { if (!root.contains(event.target)) setOpen(false); });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && root.classList.contains("is-open")) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+}
+
+/* Profile "More" menu: share, copy link, save a contact card, open the terminal. */
+const PROFILE_URL = "https://www.elpielandoy.space/";
+
+function downloadContactCard() {
+  const card = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    "N:Landoy;Gene Elpie;;;",
+    "FN:Gene Elpie Landoy",
+    "TITLE:Full-Stack Developer & Product Designer",
+    "EMAIL;TYPE=INTERNET:g.landoyelpie@gmail.com",
+    "ADR;TYPE=HOME:;;;Boac;Marinduque;;Philippines",
+    `URL:${PROFILE_URL}`,
+    "URL;TYPE=LinkedIn:https://www.linkedin.com/in/gene-elpie-landoy-b1851b28b/",
+    "URL;TYPE=GitHub:https://github.com/PrimeSalad",
+    "END:VCARD",
+  ].join("\r\n");
+  const url = URL.createObjectURL(new Blob([card], { type: "text/vcard" }));
+  const anchor = Object.assign(document.createElement("a"), { href: url, download: "Gene-Elpie-Landoy.vcf" });
+  document.body.append(anchor);
+  anchor.click();
+  anchor.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function setupProfileMore() {
+  const root = $("#profileMore");
+  const toggle = $("#profileMoreToggle");
+  const menu = $("#profileMoreMenu");
+  const status = $("#profileMoreStatus");
+  if (!root || !toggle || !menu) return;
+
+  const setOpen = (open) => {
+    root.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    menu.inert = !open;
+  };
+  const flash = (button, text) => {
+    const original = button.dataset.label || button.lastChild.textContent;
+    button.dataset.label = original;
+    button.lastChild.textContent = text;
+    if (status) status.textContent = text;
+    window.setTimeout(() => { button.lastChild.textContent = original; }, 1600);
+  };
+  /* Clipboard API first; the hidden-textarea copy covers browsers that refuse it. */
+  const copyLink = async (button) => {
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(PROFILE_URL);
+      copied = true;
+    } catch {
+      const field = Object.assign(document.createElement("textarea"), { value: PROFILE_URL, readOnly: true });
+      field.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+      document.body.append(field);
+      field.select();
+      try { copied = document.execCommand("copy"); } catch { /* unsupported */ }
+      field.remove();
+    }
+    flash(button, copied ? "Link copied ✓" : "Copy failed");
+  };
+
+  setOpen(false);
+  toggle.addEventListener("click", () => setOpen(!root.classList.contains("is-open")));
+  document.addEventListener("click", (event) => { if (!root.contains(event.target)) setOpen(false); });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") setOpen(false); });
+
+  menu.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-profile-action]");
+    if (!button) {
+      if (event.target.closest("[data-open-terminal]")) setOpen(false);
+      return;
+    }
+    const action = button.dataset.profileAction;
+    if (action === "share") {
+      if (navigator.share) {
+        try { await navigator.share({ title: "Gene Elpie Landoy", text: "Full-stack developer & product designer", url: PROFILE_URL }); } catch { /* dismissed */ }
+        setOpen(false);
+      } else {
+        await copyLink(button);
+      }
+    } else if (action === "copy") {
+      await copyLink(button);
+    } else if (action === "vcard") {
+      downloadContactCard();
+      flash(button, "Saved ✓");
+    }
+  });
+}
+
 function setupScrollUX() {
   const progress = $("#pageProgress");
-  const sections = $$("main section[id]");
-  const links = $$(".rail-link");
+  const placeIndicator = setupNavIndicator();
 
   const onScroll = () => {
     const available = document.documentElement.scrollHeight - window.innerHeight;
@@ -1118,15 +1434,147 @@ function setupScrollUX() {
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  if (!("IntersectionObserver" in window)) return;
-  const navObserver = new IntersectionObserver((entries) => {
-    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (!visible) return;
-    const id = visible.target.id === "top" ? "work" : visible.target.id;
-    links.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`));
-  }, { rootMargin: "-22% 0px -58%", threshold: [0.05, 0.2, 0.5] });
-  sections.forEach((section) => navObserver.observe(section));
+  setupViews(placeIndicator);
 }
+
+/* =========================
+   Views: the profile is one long scroll. Nav links jump to sections and the
+   underline follows the scroll. Each section can also open on its own as a
+   full page at #/<id> (LinkedIn's "show all" arrow), with Back and paging.
+========================= */
+const FULL_VIEWS = [
+  { id: "work", label: "Projects" },
+  { id: "profile", label: "Profile" },
+  { id: "experience", label: "Experience" },
+  { id: "toolkit", label: "Stack" },
+  { id: "achievements", label: "Certifications" },
+  { id: "github", label: "GitHub" },
+  { id: "archive", label: "Archive" },
+  { id: "recognition", label: "Recommendations" },
+];
+
+function renderViewPager(index) {
+  const pager = $("#viewPager");
+  if (!pager) return;
+  const previous = FULL_VIEWS[index - 1];
+  const next = FULL_VIEWS[index + 1];
+  pager.innerHTML = `
+    ${previous ? `<a href="#/${previous.id}">← ${previous.label}</a>` : "<span></span>"}
+    ${next ? `<a href="#/${next.id}">${next.label} →</a>` : "<span></span>"}`;
+}
+
+/* The hash for what is showing, so closing an overlay returns to it. */
+function viewHash() {
+  const view = document.documentElement.dataset.view;
+  return view && view !== "top" ? `#/${view}` : "";
+}
+
+/* One line of numbers for the top of each full page. */
+function viewSummary(id) {
+  const projects = data.projects || [];
+  const years = projects.map((project) => Number(project.year)).filter(Boolean);
+  const usedSkills = $$("#toolkit .skill-chips li.is-used").length;
+  const summaries = {
+    work: `${projects.length} projects · ${Math.min(...years)}–${Math.max(...years)}`,
+    profile: "Background, photos, and quick facts",
+    experience: `${(data.timeline || []).length} roles since ${Math.min(...(data.timeline || []).map((role) => Number(role.year)).filter(Boolean))}`,
+    toolkit: `${$$("#toolkit .tool-card").length} groups · ${usedSkills} tools used in shipped work`,
+    achievements: `${$("#certTotal")?.textContent.trim() || ""} credentials · ${(data.certs || []).length} certificates · ${(data.achievements || []).length} honors`,
+    github: "Live from github.com/PrimeSalad",
+    archive: $("#archiveCarouselCount")?.textContent.trim() || "Events and design work",
+    recognition: `${testimonials.length} recommendations`,
+  };
+  return summaries[id] || "";
+}
+
+function setupViews(placeIndicator) {
+  const root = document.documentElement;
+  const sections = $$("main > section[id]");
+  const navLinks = $$(".rail-link, .mobile-menu nav a");
+  const back = $("#viewBack");
+  const baseTitle = document.title;
+
+  /* The arrow in each section header that opens it on its own page. */
+  FULL_VIEWS.forEach(({ id, label }) => {
+    const heading = $(`#${id} .section-heading`);
+    if (!heading || $(".section-expand", heading)) return;
+    heading.insertAdjacentHTML("beforeend", `<a class="section-expand" href="#/${id}" aria-label="Open ${label} on its own page" title="View all"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>`);
+  });
+
+  const setActive = (id) => {
+    navLinks.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`));
+    placeIndicator();
+  };
+
+  const showFull = (id) => {
+    const index = FULL_VIEWS.findIndex((view) => view.id === id);
+    const view = FULL_VIEWS[index];
+    root.dataset.view = id;
+    root.classList.remove("is-home-view");
+    sections.forEach((section) => section.classList.toggle("is-view-hidden", section.id !== id));
+    setActive(id);
+    renderViewPager(index);
+    if (back) {
+      back.innerHTML = `<a href="#${id}"><span aria-hidden="true">←</span> Back to full profile</a><span>${escapeHtml(viewSummary(id))}</span>`;
+      back.hidden = false;
+    }
+    document.title = `${view.label} · Gene Elpie Landoy`;
+    const section = document.getElementById(id);
+    if (section && !reduceMotion.matches) {
+      section.classList.remove("is-entering");
+      void section.offsetWidth;
+      section.classList.add("is-entering");
+    }
+    window.scrollTo({ top: 0, behavior: "instant" });
+    /* Carousels and the sticky sidebar measure themselves on resize. */
+    window.dispatchEvent(new Event("resize"));
+  };
+
+  const showHome = (anchor = "") => {
+    const wasFull = Boolean(root.dataset.view) && root.dataset.view !== "top";
+    root.dataset.view = "top";
+    root.classList.add("is-home-view");
+    sections.forEach((section) => section.classList.remove("is-view-hidden"));
+    $("#viewPager")?.replaceChildren();
+    if (back) back.hidden = true;
+    document.title = baseTitle;
+    if (anchor) setActive(anchor);
+    if (!wasFull) return;
+    window.dispatchEvent(new Event("resize"));
+    /* The browser couldn't scroll to an anchor that was hidden a moment ago. */
+    const target = anchor && document.getElementById(anchor);
+    if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+    else window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
+  const fromHash = () => {
+    const hash = location.hash.slice(1);
+    if (hash.startsWith("/")) {
+      const id = hash.slice(1);
+      if (FULL_VIEWS.some((view) => view.id === id)) showFull(id);
+      else showHome();
+    } else if (hash === "top" || hash === "contact" || FULL_VIEWS.some((view) => view.id === hash)) {
+      showHome(hash);
+    } else if (!hash || !root.dataset.view) {
+      /* No hash, or #case-… / #recruiter opening on top of the profile. */
+      showHome();
+    }
+  };
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+  if (!location.hash) setActive("top");
+
+  /* On the long page the tab underline follows whichever section is in view. */
+  if ("IntersectionObserver" in window) {
+    const spy = new IntersectionObserver((entries) => {
+      if (root.dataset.view !== "top") return;
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActive(visible.target.id);
+    }, { rootMargin: "-22% 0px -58%", threshold: [0.05, 0.2, 0.5] });
+    sections.forEach((section) => spy.observe(section));
+  }
+}
+
 
 function fieldError(id, message = "") {
   const field = $(`#${id}`);
@@ -2101,7 +2549,6 @@ function setupCaseStudies() {
     const frame = Object.assign(document.createElement("iframe"), {
       title: `${project.title} demo video`,
       allow: "autoplay; encrypted-media; picture-in-picture; fullscreen",
-      allowFullscreen: true,
     });
     stage.replaceChildren(frame);
     /* Facebook's player only fills the frame when it is told the exact size. */
@@ -2112,7 +2559,7 @@ function setupCaseStudies() {
     /* Dropping the iframe is the only reliable way to stop third-party playback. */
     $("#caseVideo").replaceChildren();
     if (!location.hash.startsWith("#case-")) return;
-    try { history.replaceState(null, "", location.pathname + location.search); } catch { /* ignore */ }
+    try { history.replaceState(null, "", location.pathname + location.search + viewHash()); } catch { /* ignore */ }
   });
 
   $$("#caseDialog .case-content, #caseDialog .case-body").forEach((area) => {
@@ -2434,7 +2881,9 @@ function init() {
   setupProjectFilters();
   setupCarousel("#projectGrid", "#projectPrev", "#projectNext");
   renderExperience();
+  renderSkillCounts();
   renderCertificates();
+  renderHonors();
   setupCertificateCarousel();
   loadGithubActivity();
   setupArchive();
@@ -2449,7 +2898,12 @@ function init() {
   setupMiniRunner();
   setupCaseStudies();
   setupSwipeMode();
+  setupNavMore();
+  setupProfileMore();
+  const openRecruiter = setupRecruiter({ data });
+  setupTerminal({ data, openCaseStudy, openRecruiter, answer: localPortfolioAnswer, reduceMotion });
   setupScrollUX();
+  setupAsideSticky();
   setCounts();
   setupCountUps();
   observeReveals();

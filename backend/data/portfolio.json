@@ -178,10 +178,18 @@
       "description": "A private, offline Android app that steps in with a 10-second pause before you borrow, buy on pay-later, or doomscroll. Our AppBuildersPH Hackathon 2026 entry, built in 12 hours.",
       "image": "/images/projects/captures/unhooked.png",
       "tech": [
-        "Android",
-        "On-device AI",
+        "React Native",
+        "Expo",
+        "Gemma",
         "LiteRT-LM",
-        "Whisper"
+        "Whisper",
+        "sherpa-onnx",
+        "ML Kit",
+        "Kotlin",
+        "TypeScript",
+        "SQLite",
+        "On-device AI",
+        "Android"
       ],
       "highlights": [
         "Utang Scanner reads loan-app screenshots with on-device OCR, flags collector threats, and exports a dated evidence pack for SEC complaints.",
