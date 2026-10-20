@@ -119,6 +119,15 @@
       "platform": "Facebook Video",
       "role": "Developer",
       "link": "https://www.facebook.com/share/v/1CdRT2mrob/"
+    },
+    {
+      "title": "Unhooked — AppBuildersPH Hackathon 2026",
+      "description": "Unhooked adds a real 10-second pause before you borrow, buy on pay-later, or doomscroll, with all AI running on your phone.",
+      "tag": "product",
+      "duration": "Demo",
+      "platform": "Facebook Video",
+      "role": "Developer",
+      "link": "https://www.facebook.com/share/v/17qUNnPyDn/"
     }
   ],
   "projects": [
@@ -152,6 +161,37 @@
       "highlight_label": "App Store release",
       "featured": true,
       "status": "live"
+    },
+    {
+      "id": "p17",
+      "title": "Unhooked",
+      "year": 2026,
+      "status": "live",
+      "score": 99,
+      "featured": true,
+      "highlight_label": "AppBuildersPH Hackathon 2026",
+      "role": "Developer",
+      "category": "Android App - On-device AI",
+      "impact": "Puts a real 10-second pause between Filipinos and online loans, pay-later checkouts, and doomscrolling.",
+      "outcome": "People see their own numbers before they borrow, buy, or scroll, with every reflection written on the phone by an on-device model, then make the final call themselves.",
+      "description": "A private, offline Android app that steps in with a 10-second pause before you borrow, buy on pay-later, or doomscroll. Our AppBuildersPH Hackathon 2026 entry, built in 12 hours.",
+      "image": "/images/projects/captures/unhooked.png",
+      "tech": [
+        "Android",
+        "On-device AI",
+        "LiteRT-LM",
+        "Whisper"
+      ],
+      "highlights": [
+        "Utang Scanner reads loan-app screenshots with on-device OCR, flags collector threats, and exports a dated evidence pack for SEC complaints.",
+        "Payday Shield, pay-later true-cost checks, and guarded apps with a doomscroll fade cover debt, spend, and scroll in one place.",
+        "LiteRT-LM, Whisper, and ML Kit all run on the phone: no cloud, no account, and Tagalog, Taglish, or English voice input."
+      ],
+      "website": "https://unhooked-ochre.vercel.app",
+      "demo": "https://unhooked-ochre.vercel.app",
+      "preview": "https://unhooked-ochre.vercel.app",
+      "repo": "https://github.com/PrimeSalad/unhooked",
+      "video": "https://www.facebook.com/share/v/17qUNnPyDn/"
     },
     {
       "id": "p16",

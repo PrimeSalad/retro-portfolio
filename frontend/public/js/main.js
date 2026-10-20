@@ -80,7 +80,7 @@ function projectKind(project) {
   const text = `${project.category || ""} ${(project.tech || []).join(" ")}`.toLowerCase();
   const kinds = [];
   if (/\bai\b|gemini|artificial intelligence/.test(text)) kinds.push("ai");
-  if (/mobile|flutter|dart|ios|swiftui|screen time/.test(text)) kinds.push("mobile");
+  if (/mobile|flutter|dart|ios|android|swiftui|screen time/.test(text)) kinds.push("mobile");
   if (/react|javascript|typescript|web|browser|tailwind/.test(text)) kinds.push("web");
   return kinds.join(" ");
 }
@@ -1929,6 +1929,8 @@ function projectLinks(project) {
   const repo = safeUrl(project.repo);
   if (live && live !== appStore) links.push({ href: live, label: "Visit live product" });
   if (appStore) links.push({ href: appStore, label: "App Store", appStore: true });
+  const video = safeUrl(project.video);
+  if (video) links.push({ href: video, label: "Watch demo" });
   /* Bare "https://github.com" placeholders are not real repositories. */
   if (repo && new URL(repo).pathname.length > 1) links.push({ href: repo, label: "Source code" });
   return links;
