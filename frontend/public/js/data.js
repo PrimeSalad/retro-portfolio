@@ -527,10 +527,26 @@ export const PORTFOLIO_DATA = {
   ],
   "timeline": [
     {
+      "id": "3xpo-ai-2026",
+      "year": "2026",
+      "date": "Oct 2026 - Present",
+      "title": "AI Engineer - Web & Mobile Development, 3XPO",
+      "tags": [
+        "ai",
+        "engineering"
+      ],
+      "bullets": [
+        "Design and develop AI-powered features across 3XPO’s web and mobile products, integrating intelligent capabilities into practical user experiences."
+      ],
+      "stack": [
+        "AI Engineering"
+      ]
+    },
+    {
       "id": "t1",
       "year": "2026",
       "date": "Jan - Present",
-      "title": "Software Engineering Lead, DotOrbit Development Team, Marinduque State University",
+      "title": "Software Engineering Lead, DotOrbit Development Team",
       "tags": [
         "backend",
         "leadership",
@@ -551,22 +567,6 @@ export const PORTFOLIO_DATA = {
         "Tailwind",
         "Podman",
         "Postman"
-      ]
-    },
-    {
-      "id": "3xpo-ai-2026",
-      "year": "2026",
-      "date": "Oct 2026 - Present",
-      "title": "AI Engineer - Web & Mobile Development, 3XPO",
-      "tags": [
-        "ai",
-        "engineering"
-      ],
-      "bullets": [
-        "Design and develop AI-powered features across 3XPO’s web and mobile products, integrating intelligent capabilities into practical user experiences."
-      ],
-      "stack": [
-        "AI Engineering"
       ]
     },
     {
