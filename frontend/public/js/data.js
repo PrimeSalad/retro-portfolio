@@ -536,7 +536,7 @@ export const PORTFOLIO_DATA = {
         "engineering"
       ],
       "bullets": [
-        "AI engineering role at 3XPO."
+        "Develop and integrate AI-powered features for 3XPO’s virtual event and education platforms, bringing intelligent capabilities into immersive digital experiences."
       ],
       "stack": [
         "AI Engineering"
