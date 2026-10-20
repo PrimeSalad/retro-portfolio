@@ -521,6 +521,33 @@
   ],
   "timeline": [
     {
+      "id": "t1",
+      "year": "2026",
+      "date": "Jan - Present",
+      "title": "Software Engineering Lead, DotOrbit Development Team, Marinduque State University",
+      "tags": [
+        "backend",
+        "leadership",
+        "design",
+        "publication",
+        "frontend"
+      ],
+      "bullets": [
+        "Lead product planning and full-stack implementation across the team's web, mobile, and AI projects.",
+        "Break product goals into deliverable features, review technical decisions, and coordinate releases across contributors."
+      ],
+      "metrics": [
+        "End-to-end product delivery",
+        "Cross-functional team leadership"
+      ],
+      "stack": [
+        "PostgreSQL",
+        "Tailwind",
+        "Podman",
+        "Postman"
+      ]
+    },
+    {
       "id": "3xpo-ai-2026",
       "year": "2026",
       "date": "Oct 2026 - Present",
@@ -562,33 +589,6 @@
         "LYDS",
         "System Maintenance",
         "Technical Support"
-      ]
-    },
-    {
-      "id": "t1",
-      "year": "2026",
-      "date": "Jan - Present",
-      "title": "Software Engineering Lead, DotOrbit Development Team",
-      "tags": [
-        "backend",
-        "leadership",
-        "design",
-        "publication",
-        "frontend"
-      ],
-      "bullets": [
-        "Lead product planning and full-stack implementation across the team's web, mobile, and AI projects.",
-        "Break product goals into deliverable features, review technical decisions, and coordinate releases across contributors."
-      ],
-      "metrics": [
-        "End-to-end product delivery",
-        "Cross-functional team leadership"
-      ],
-      "stack": [
-        "PostgreSQL",
-        "Tailwind",
-        "Podman",
-        "Postman"
       ]
     },
     {
