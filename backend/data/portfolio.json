@@ -621,7 +621,6 @@
     },
     {
       "id": "t3",
-      "logo": "/images/orgs/sentro.jpg",
       "year": "2025",
       "date": "Jul 2025 - Jul 2026",
       "title": "Organization Canva Admin, MarSU - College of Information and Computing Sciences",
@@ -644,7 +643,7 @@
     },
     {
       "id": "t4",
-      "logo": "/images/orgs/infocus.jpg",
+      "logo": "/images/orgs/sentro.jpg",
       "year": "2025",
       "date": "Jul 2025 - Jan 2026",
       "title": "Correspondent, Sentro Publication",
@@ -723,7 +722,7 @@
     },
     {
       "id": "t7",
-      "logo": "/images/orgs/theheart.jpg",
+      "logo": "/images/orgs/infocus.jpg",
       "year": "2023",
       "date": "Jul 2023 - Jul 2024",
       "title": "Chief Layout Artist, Infocus Publication and Broadcasting Team",
@@ -750,6 +749,7 @@
     },
     {
       "id": "t8",
+      "logo": "/images/orgs/theheart.jpg",
       "year": "2022",
       "date": "Aug 2022 - Sep 2022",
       "title": "Head Layout Artist, The Heart Publication",
