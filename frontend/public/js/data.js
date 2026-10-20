@@ -652,6 +652,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t4",
+      "logo": "/images/orgs/infocus.jpg",
       "year": "2025",
       "date": "Jul 2025 - Jul 2026",
       "title": "Associate Editor-in-Chief, Infocus Publication and Broadcasting Team",
@@ -678,6 +679,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t5",
+      "logo": "/images/orgs/infocus.jpg",
       "year": "2024",
       "date": "Jul 2024 - Jul 2025",
       "title": "Editor-in-Chief, Infocus Publication and Broadcasting Team",
@@ -704,6 +706,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t6",
+      "logo": "/images/orgs/infocus.jpg",
       "year": "2023",
       "date": "Jul 2023 - Jul 2024",
       "title": "Chief Layout Artist, Infocus Publication and Broadcasting Team",
