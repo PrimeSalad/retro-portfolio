@@ -521,9 +521,25 @@
   ],
   "timeline": [
     {
+      "id": "3xpo-ai-2026",
+      "year": "2026",
+      "date": "Oct 2026 - Present",
+      "title": "AI Engineer, 3XPO",
+      "tags": [
+        "ai",
+        "engineering"
+      ],
+      "bullets": [
+        "AI engineering role at 3XPO."
+      ],
+      "stack": [
+        "AI Engineering"
+      ]
+    },
+    {
       "id": "t0",
       "year": "2026",
-      "date": "Jul 2026 - Present",
+      "date": "Jul 2026 - Oct 2026",
       "title": "Full-Stack Developer, Local Youth Development Section",
       "url": "https://lyds-boac-2026.vercel.app/login",
       "link_label": "Open LYDS live system",
