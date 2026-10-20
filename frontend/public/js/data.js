@@ -138,6 +138,38 @@ export const PORTFOLIO_DATA = {
   ],
   "projects": [
     {
+      "id": "p18",
+      "title": "Convertly",
+      "year": 2026,
+      "status": "live",
+      "score": 98,
+      "featured": true,
+      "highlight_label": "On-device AI · files stay local",
+      "role": "Developer",
+      "category": "File Conversion & Private AI",
+      "impact": "Combines everyday file conversion with practical AI while keeping users’ files in their browser.",
+      "outcome": "People can convert documents and media, ask questions about files, transcribe audio, read scans, and remove image backgrounds without uploading files or creating an account.",
+      "description": "A free browser toolbox for file conversion, PDF tools, media downloads, and on-device AI for document Q&A, transcription, OCR, and background removal.",
+      "image": "/images/projects/captures/convertly-preview.svg",
+      "website": "https://tryconvertly.vercel.app/",
+      "preview": "https://tryconvertly.vercel.app/",
+      "demo": "https://tryconvertly.vercel.app/",
+      "repo": "https://github.com/PrimeSalad/pdf-to-ppt",
+      "tech": [
+        "JavaScript",
+        "WebGPU",
+        "WebLLM",
+        "Transformers.js",
+        "Whisper",
+        "Tesseract.js"
+      ],
+      "highlights": [
+        "Converts PDF, Word, spreadsheet, image, audio, and video files directly in the browser.",
+        "On-device AI can answer questions about documents, build study guides, transcribe audio, read scans, and remove image backgrounds.",
+        "No account or file uploads; AI models run locally after the user chooses and downloads them."
+      ]
+    },
+    {
       "id": "p14",
       "title": "Unchainly",
       "year": 2026,
