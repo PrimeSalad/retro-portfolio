@@ -530,13 +530,13 @@ export const PORTFOLIO_DATA = {
       "id": "3xpo-ai-2026",
       "year": "2026",
       "date": "Oct 2026 - Present",
-      "title": "AI Engineer, 3XPO",
+      "title": "AI Engineer - Web & Mobile Development, 3XPO",
       "tags": [
         "ai",
         "engineering"
       ],
       "bullets": [
-        "Develop and integrate AI-powered features for 3XPO’s virtual event and education platforms, bringing intelligent capabilities into immersive digital experiences."
+        "Design and develop AI-powered features across 3XPO’s web and mobile products, integrating intelligent capabilities into practical user experiences."
       ],
       "stack": [
         "AI Engineering"
