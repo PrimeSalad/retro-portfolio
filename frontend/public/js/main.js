@@ -225,7 +225,9 @@ function renderExperience() {
 
     return `
       <article class="experience-item reveal ${index >= 5 ? "is-extra" : ""}" ${index >= 5 ? "hidden" : ""}>
-        <span class="experience-logo" aria-hidden="true">${escapeHtml(initials(org || role))}</span>
+        <span class="experience-logo${item.logo ? " has-image" : ""}" aria-hidden="true">${item.logo
+          ? `<img src="${escapeHtml(resolveImagePath(item.logo))}" alt="" width="48" height="48" loading="lazy" />`
+          : escapeHtml(initials(org || role))}</span>
         <div class="experience-date">${escapeHtml(item.date || item.year || "")}</div>
         <div class="experience-main">
           <h3>${roleHeading}</h3>
@@ -854,6 +856,9 @@ function renderGithubHeatmap(contributionData, events) {
     const contributionText = totalContributions === 1 ? "contribution" : "contributions";
     status.textContent = `${totalContributions.toLocaleString()} ${contributionText} in the last year`;
   }
+
+  const heatmapScroller = $(".github-heatmap-wrapper");
+  if (heatmapScroller) heatmapScroller.scrollLeft = heatmapScroller.scrollWidth;
 
   /* ── Staggered entrance animation ── */
   if (!reduceMotion.matches) {

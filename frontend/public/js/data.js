@@ -528,6 +528,7 @@ export const PORTFOLIO_DATA = {
   "timeline": [
     {
       "id": "3xpo-ai-2026",
+      "logo": "/images/orgs/3xpo.png",
       "year": "2026",
       "date": "Oct 2026 - Present",
       "title": "AI Engineer - Web & Mobile Development, 3XPO",
@@ -544,6 +545,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t1",
+      "logo": "/images/orgs/dotorbit.png",
       "year": "2026",
       "date": "Jan - Present",
       "title": "Software Engineering Lead, DotOrbit Development Team",
@@ -571,6 +573,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t0",
+      "logo": "/images/orgs/lyds.png",
       "year": "2026",
       "date": "Jul 2026 - Oct 2026",
       "title": "Administrative Aide II, Local Youth Development Section",
@@ -599,6 +602,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t2",
+      "logo": "/images/orgs/dost.jpg",
       "year": "2026",
       "date": "Jan - Apr 2026",
       "title": "Backend Developer | Product Owner, DOST League of Developers Initiative",
@@ -623,6 +627,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t3",
+      "logo": "/images/orgs/sentro.jpg",
       "year": "2025",
       "date": "Jul 2025 - Jan 2026",
       "title": "Correspondent, Sentro Publication",
@@ -725,6 +730,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       "id": "t7",
+      "logo": "/images/orgs/theheart.jpg",
       "year": "2022",
       "date": "Aug 2022 - Sep 2022",
       "title": "Head Layout Artist, The Heart Publication",
